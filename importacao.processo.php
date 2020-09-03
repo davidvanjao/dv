@@ -3,7 +3,9 @@
     function impar($var){ // funcao usada para saber se o valor do arrey nao e zero. Retorna se o inteiro informado é impar
         return($var & 1);
     }  
-    $arquivo_glob = glob('arquivos/*.txt'); //Lista os arquivos dentro da pasta.
+
+    //$arquivo_glob = glob('arquivos/*.txt'); //Lista os arquivos dentro da pasta.
+    $arquivo_glob = glob('//192.168.1.52/F/rel-david/*.txt'); //Lista os arquivos dentro da pasta.
     
     if(!empty($arquivo_glob)) {
 

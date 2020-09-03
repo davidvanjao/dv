@@ -5,7 +5,6 @@ require 'conexao.php';
 require 'classes/usuarios.class.php';
 
 if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
-
 } else {
     header("Location: login.php");
 }
@@ -54,6 +53,15 @@ $usuarios->setUsuario($_SESSION['logado']);
                             <a href="importacao.php">
                                 <img src="assets/image/configuracaop.png">
                                 <h1 class="">Configuração</h1>
+                            </a>                        
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if($usuarios->temPermissao('CONF')): ?>
+                        <div class="painel-menu-widget">
+                            <a href="importacao.php">
+                                <img src="assets/image/cestabasica.png">
+                                <h1 class="">Cesta Básica</h1>
                             </a>                        
                         </div>
                     <?php endif; ?>
