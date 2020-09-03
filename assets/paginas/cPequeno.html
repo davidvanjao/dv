@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Cartaz Pequeno</title>
+        <link rel="stylesheet" href="../css/cPequeno.css">
+        <link rel="stylesheet" href="../css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="body">
+            <div class="painel-menu">
+
+
+                <div class="folha-A4">
+                    <div class="corpo-Painel">                    
+                        <div class="painel-Geral">
+                            <div class="painel-Titulo">Editor de Cartaz</div>
+                            <div class="painel-Descricao">
+                                <h3>Produto:</h3>
+                                <textarea maxlength="60" id="painel-Descricao" spellcheck="true" placeholder=""></textarea>
+                            </div>
+                            <div class="painel-Marca">
+                                <h3>Marca:</h3>
+                                <input type="text" id="painel-Marca" maxlength="12" spellcheck="true" placeholder="">
+                            </div>
+                            <div class="painel-Valor">
+                                <div class="painel-Real">
+                                    <h3>Valor Real:</h3>
+                                    <input type="text" id="painel-Real" maxlength="3" placeholder="">
+                                </div>
+                                <div class="painel-Moeda">
+                                    <h3>Valor Moeda:</h3>
+                                    <input type="text" id="painel-Moeda" maxlength="2" placeholder="">
+                                </div>
+                            </div>
+                            <div class="painel-Medida">
+                                <h3>Medida:</h3>
+                                <select id="painel-Medida">
+                                    <option value=""></option>
+                                    <option value="unidade">unidade</option>
+                                    <option value="kilo">kilo</option>
+                                </select>
+                            </div>
+                            <div class="painel-Motivo">
+                                <h3>Descricao:</h3>
+                                <select id="painel-Motivo">
+                                    <option value=""></option>
+                                    <option value="produtoProximo">*Produto Próximo a data de vencimento.</option>
+                                    <option value="ofertaValida">*Oferta válida enquanto durar os estoques.</option>
+                                    <option value="limitado1">*Limitado a 2 unidades por compra.</option>
+                                    <option value="limitado2">*Limitado a 3 unidades por compra.</option>
+                                </select>
+                            </div>
+                            <div class="painel-Escolher">
+                                <form>
+                                    <input id="cartaz-Unico" type="radio" name="cartaz" value="Unico1" checked onclick="checarNumeroCartaz()">Unico
+                                    <input id="cartaz-Duplicar" type="radio" name="cartaz" value="Duplicar1" onclick="checarNumeroCartaz()">Duplicar
+                                    <input id="cartaz-Novo" type="radio" name="cartaz" value="Novo1" onclick="checarNumeroCartaz()">Novo
+                                </form>              
+                            </div>    
+                        </div>
+                        
+                        <div class="painel-Geral painel-novo">
+                            <div class="painel-Descricao">
+                                <h3>Produto:</h3>
+                                <textarea maxlength="60" id="painel-Descricao" spellcheck="true" placeholder=""></textarea>
+                            </div>
+                            <div class="painel-Marca">
+                                <h3>Marca:</h3>
+                                <input type="text" id="painel-Marca" maxlength="12" spellcheck="true" placeholder="">
+                            </div>
+                            <div class="painel-Valor">
+                                <div class="painel-Real">
+                                    <h3>Valor Real:</h3>
+                                    <input type="text" id="painel-Real" maxlength="3" placeholder="">
+                                </div>
+                                <div class="painel-Moeda">
+                                    <h3>Valor Moeda:</h3>
+                                    <input type="text" id="painel-Moeda" maxlength="2" placeholder="">
+                                </div>
+                            </div>
+                            <div class="painel-Medida">
+                                <h3>Medida:</h3>
+                                <select id="painel-Medida">
+                                    <option value=""></option>
+                                    <option value="unidade">unidade</option>
+                                    <option value="kilo">kilo</option>
+                                </select>
+                            </div>
+                            <div class="painel-Motivo">
+                                <h3>Descricao:</h3>
+                                <select id="painel-Motivo">
+                                    <option value=""></option>
+                                    <option value="produtoProximo">*Produto Próximo a data de vencimento.</option>
+                                    <option value="ofertaValida">*Oferta válida enquanto durar os estoques.</option>
+                                    <option value="limitado1">*Limitado a 2 unidades por compra.</option>
+                                    <option value="limitado2">*Limitado a 3 unidades por compra.</option>
+                                </select>
+                            </div> 
+                        </div> 
+                        <div class="corpo-Painel-Botao">
+                            <input type="button" value="Imprimir" onClick="print()">                    
+                        </div>                      
+                    </div>
+
+                    <div class="corpo-Cartaz">
+                        <div class="CartazImpressao-1">
+                            <div class="cartazDobra"></div>
+                            <div class="cartazCabecalho">
+                                <h1>Oferta</h1>
+                            </div>
+                            <div class="corpoCartaz">
+                                <div class="corpoCartaz-Descricao">
+                                    <textarea disabled>Limpador de Carpetes 500ml</textarea>
+                                </div>
+                                <h1 class="corpoCartaz-Titulo">VANISH</h1>
+                                <div class="corpoCartaz-Preco">
+                                    <div class="cifrao">
+                                        <h1>R$</h1>
+                                        <!--<div class="de-por">
+                                            <h1>De R$</h1>
+                                            <h1>Por R$</h1>
+                                        </div>-->
+                                    </div>
+                                    <div class="preco">
+                                        <h1 class="real">999</h1>
+                                        <h1 class="virgula">,</h1>
+                                        <div class="moeda-medida">
+                                            <h1 class="moeda">99</h1>
+                                            <h1 class="medida">unidade</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="corpoCartaz-Motivo">
+                                    <h1>Produto próximo ao vencimento.</h1>
+                                </div>
+                            </div>
+
+                            <div class="corpoRodape">
+                                <div class="corpoRodape-Contato">
+                                    <div class="corpoRodape-Contato-Contato">
+                                        <img src="../image/tel.png">
+                                        <h1>(14) 3496-1060</h1>
+                                    </div>
+                                    <div class="corpoRodape-Contato-Contato">
+                                        <img src="../image/whats.png">
+                                        <h1>(14) 99685-3599</h1>
+                                    </div>
+                                </div>
+                                <div class="corpoRodape-Logo">
+                                    <img src="../image/logo.png">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="CartazImpressao-2">
+                            <div class="cartazDobra"></div>
+                            <div class="cartazCabecalho">
+                                <h1>Oferta</h1>
+                            </div>
+                            <div class="corpoCartaz">
+                                <div class="corpoCartaz-Descricao">
+                                    <textarea disabled>Limpador de Carpetes 500ml</textarea>
+                                </div>
+                                <h1 class="corpoCartaz-Titulo">VANISH</h1>
+                                <div class="corpoCartaz-Preco">
+                                    <div class="cifrao">
+                                        <h1>R$</h1>
+                                        <!--<div class="de-por">
+                                            <h1>De R$</h1>
+                                            <h1>Por R$</h1>
+                                        </div>-->
+                                    </div>
+                                    <div class="preco">
+                                        <h1 class="real">999</h1>
+                                        <h1 class="virgula">,</h1>
+                                        <div class="moeda-medida">
+                                            <h1 class="moeda">99</h1>
+                                            <h1 class="medida">unidade</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="corpoCartaz-Motivo">
+                                    <h1>Produto próximo ao vencimento.</h1>
+                                </div>
+                            </div>
+
+                            <div class="corpoRodape">
+                                <div class="corpoRodape-Contato">
+                                    <div class="corpoRodape-Contato-Contato">
+                                        <img src="../image/tel.png">
+                                        <h1>(14) 3496-1060</h1>
+                                    </div>
+                                    <div class="corpoRodape-Contato-Contato">
+                                        <img src="../image/whats.png">
+                                        <h1>(14) 99685-3599</h1>
+                                    </div>
+                                </div>
+                                <div class="corpoRodape-Logo">
+                                    <img src="../image/logo.png">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="CartazImpressao-3">
+                            <div class="cartazDobra"></div>
+                            <div class="cartazCabecalho">
+                                <h1>Oferta</h1>
+                            </div>
+                            <div class="corpoCartaz">
+                                <div class="corpoCartaz-Descricao">
+                                    <textarea disabled>Limpador de Carpetes 500ml</textarea>
+                                </div>
+                                <h1 class="corpoCartaz-Titulo">VANISH</h1>
+                                <div class="corpoCartaz-Preco">
+                                    <div class="cifrao">
+                                        <h1>R$</h1>
+                                        <!--<div class="de-por">
+                                            <h1>De R$</h1>
+                                            <h1>Por R$</h1>
+                                        </div>-->
+                                    </div>
+                                    <div class="preco">
+                                        <h1 class="real">999</h1>
+                                        <h1 class="virgula">,</h1>
+                                        <div class="moeda-medida">
+                                            <h1 class="moeda">99</h1>
+                                            <h1 class="medida">unidade</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="corpoCartaz-Motivo">
+                                    <h1>Produto próximo ao vencimento.</h1>
+                                </div>
+                            </div>
+
+                            <div class="corpoRodape">
+                                <div class="corpoRodape-Contato">
+                                    <div class="corpoRodape-Contato-Contato">
+                                        <img src="../image/tel.png">
+                                        <h1>(14) 3496-1060</h1>
+                                    </div>
+                                    <div class="corpoRodape-Contato-Contato">
+                                        <img src="../image/whats.png">
+                                        <h1>(14) 99685-3599</h1>
+                                    </div>
+                                </div>
+                                <div class="corpoRodape-Logo">
+                                    <img src="../image/logo.png">
+                                </div>
+                            </div>
+
+                        </div>
+  
+                    </div>
+                </div>          
+<!--============================================================================================-->
+            </div>
+            <div class="footer">
+                <h2>Desenvolvido por <strong>David Vanjão</strong></h2>
+            </div>
+
+        </div>
+        
+        <script type="text/javascript" src="../js/cPequeno.js"></script>
+    </body>
+</html>

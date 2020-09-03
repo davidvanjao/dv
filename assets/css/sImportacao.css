@@ -1,0 +1,49 @@
+*{
+    box-sizing: border-box;
+}
+.painel-Importacao {
+    width: 650px;
+    height: 400px;
+    background-color: #fff;
+    padding: 20px;
+}
+.painel-Importacao-Novos {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    
+}
+.painel-Importacao-Novos input {
+    padding: 5px;
+    margin: 5px;
+
+    
+}
+.inputSelecionar {
+    width: 400px;
+    border: 1px solid #000;
+}
+.inputBotao {
+    width: 115px;
+    height: 33px;
+    border: none;
+}
+.painel-botao {
+    display: flex;
+    justify-content: center;
+}
+.painel-botao input {
+    height: 70px;
+    width: 145px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin: 20px;
+    
+
+}
+.conteiner-resultado {
+    height: 200px;
+    overflow: auto;
+    background-color: #D9D9D9;
+}

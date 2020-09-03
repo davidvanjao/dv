@@ -1,0 +1,121 @@
+
+/*===========================================================*/
+
+.body-busca {
+    width: 850px;
+    max-height: 550px;
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+
+}
+.busca-area {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    margin-bottom: 20px;
+}
+.busca-area input  {
+    margin-right: 10px;
+}
+.busca-area .input-busca-produto  {
+    width: 280px;
+    height: 30px;
+    font-size: 20px;
+}
+.busca-area .input-busca-codigo  {
+    width: 160px;
+    height: 30px;
+    font-size: 20px;
+}
+.busca-area .input-botao {
+    width: 100px;
+    height: 34px;
+}
+
+.busca-resultado {
+    height: 470px;
+    overflow: auto;
+}
+/*===========================================================*/
+
+.tabela-titulo table{
+    width: 100%;
+    padding: 0px 20px 0px 20px;
+    
+}
+.tabela-titulo table th{
+    text-align: left;
+    
+} 
+.tabela-titulo table td { 
+    border: 1px solid #000; 
+}
+
+
+
+
+
+
+/*===========================================================*/
+
+.busca-resultado table{
+    border: 1px solid #000;
+    width: 100%;
+    padding: 20px;
+    
+}
+.busca-resultado table th{
+    text-align: left;
+    
+} 
+.busca-resultado table td { 
+    /*border: 1px solid #000; */
+}
+
+.busca-resultado table tr:nth-child(even){
+    background-color: #E6E6E6;
+    
+} 
+
+/*===========================================================*/
+
+
+
+@media (max-width:475px) {
+    .body-busca {
+        max-width: 350px;
+        min-height: 500px;
+        padding: 10px;
+        margin: 10px;
+
+    }
+    .body-busca input {
+        margin-top: 10px;
+
+    }
+    .busca-resultado {
+        max-height: 360px;
+    }
+    .busca-resultado table {
+        width: 100%;
+
+        font-size: 12px;
+        padding: 2px;
+    }
+    td:last-child {
+        text-align: right;
+        color: #ff0000;
+        font-weight: bold;
+    }   
+
+    .footer {
+        justify-content: center;
+    }
+    .tabela-titulo table {
+        padding: 1px;
+        font-size: 12px;
+    }
+
+
+}
