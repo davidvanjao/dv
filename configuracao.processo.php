@@ -2,9 +2,12 @@
     require 'conexao.php';
 
     //variaveis
-    $pastaArquivo = 'arquivos';
-    $arquivo = glob('arquivos/*.txt'); //Lista os arquivos dentro da pasta.
-    //$arquivo = glob('//192.168.1.52/F/rel-david/*.txt'); //Lista os arquivos dentro da pasta.   
+    $pastaArquivo = '//192.168.1.52/F/rel-david/';
+    //$pastaArquivo = 'arquivos';
+    //$arquivo = glob('arquivos/*.txt'); //Lista os arquivos dentro da pasta.
+    $arquivo = glob('//192.168.1.52/F/rel-david/*.txt'); //Lista os arquivos dentro da pasta.   
+
+    //var_dump($arquivo);
     
     //funcoes
     function impar($var){ // funcao usada para saber se o valor do arrey nao e zero. Retorna se o inteiro informado é impar
@@ -37,6 +40,8 @@
     
                 if($sql->rowCount() > 0) {   
 
+                    //echo "produtos atualizados!</br>";
+
                     $atualizar = "UPDATE tb_produto SET
                         loja = '$loja',
                         n_gondola = '$n_gondola',
@@ -49,6 +54,8 @@
                     $atualizar = $pdo->query($atualizar); 
     
                 } else {
+
+                    echo "produtos inseridos!</br>";
 
                     $adicionar = "INSERT INTO tb_produto
                         (loja, n_gondola, d_gondola, c_produto, d_produto, estoque, preco)
@@ -89,9 +96,11 @@
                 
             }
 
-            $pastaDestino = 'arquivos/destino';
+            $pastaDestino = '//192.168.1.52/F/rel-david/destino';
+            //$pastaDestino = 'arquivos/destino';
             $infoArquivo = pathinfo($arquivos); //informacoes do arquivo
-            $destino = "arquivos/destino/Lido - ".$infoArquivo['basename'].""; //destino do arquivo
+            //$destino = "arquivos/destino/Lido - ".$infoArquivo['basename'].""; //destino do arquivo
+            $destino = "//192.168.1.52/F/rel-david/destino/Lido - ".$infoArquivo['basename'].""; //destino do arquivo
             
             if(file_exists($pastaDestino)) {
                 //echo "A pasta de destino EXISTE!</br>";

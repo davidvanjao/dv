@@ -2,7 +2,7 @@ let atualizar;
 var min;
 var seg;
 
-min = 1;		
+min = 3;		
 seg = 1;
 
 
@@ -39,5 +39,5 @@ function relogio(){
     }		
 }	
 
-atualizar = setInterval(iniciarAtualizar, 10000);
+atualizar = setInterval(iniciarAtualizar, 180000);
 relogio();

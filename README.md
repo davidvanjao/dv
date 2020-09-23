@@ -29,3 +29,4 @@ TABELA: tb_codigo
 
 
 22-09 HOME: Indroducao ao novo arquivo.
+23-09 WORK: Inserção dos caminhos para a leitura do arquivo.
