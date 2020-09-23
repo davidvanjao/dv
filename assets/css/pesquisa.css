@@ -1,0 +1,93 @@
+.ajuste-conteudo {
+    align-items: flex-start;
+}
+
+/*===========================================================*/
+
+.body-busca {
+    padding: 20px;
+    flex: 1;
+}
+.busca-area {
+    margin-bottom: 20px;
+}
+.busca-area .input-busca-produto  {
+    width: 400px;
+    height: 40px;
+    font-size: 16px;
+}
+.busca-area .input-busca-codigo  {
+    width: 250px;
+    height: 40px;
+    font-size: 16px;
+}
+.busca-area .input-botao {
+    width: 150px;
+    height: 40px;
+    font-size: 16px;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+/*===========================================================*/
+
+.tabela-titulo table{
+    width: 100%;
+    
+}
+.tabela-titulo table th{
+    text-align: left;
+    
+} 
+.tabela-titulo table th { 
+    font-size: 20px;
+}
+
+.tabela-titulo table td { 
+    border: 1px solid #000; 
+    font-size: 20px;
+}
+
+/*===========================================================*/
+.busca-resultado {
+    max-height: 615px;
+    overflow: auto;
+    /*background-color: aqua;*/
+}
+.busca-resultado table{
+    border: 1px solid #000;
+    width: 100%;
+    /*padding: 20px;*/
+    
+}
+.busca-resultado table th{
+    text-align: left;
+    
+} 
+.busca-resultado table td { 
+    /*border: 1px solid #000; */
+}
+
+.busca-resultado table tr:nth-child(even){
+    background-color: #E6E6E6;
+    
+} 
+
+.busca-resultado table tr:hover {
+    background-color: green;
+    color: #fff;   
+
+}
+
+/*===========================================================*/
+
+@media (max-width:1440px) {
+   
+    .busca-resultado {
+        max-height: 500px;
+    }
+
+}

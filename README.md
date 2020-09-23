@@ -28,3 +28,4 @@ TABELA: tb_codigo
 2 - CODIGO INTERNO - c_interno - varchar(15)
 
 
+22-09 HOME: Indroducao ao novo arquivo.

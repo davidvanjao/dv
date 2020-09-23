@@ -1,0 +1,64 @@
+.ajuste-conteudo {
+    align-items: flex-start;
+}
+
+/*========================================*/
+
+.body-busca {
+    padding: 20px;
+    flex: 1;
+}
+.painel-Importacao {
+    /*padding: 20px;*/
+}
+.controle {
+    display: flex;
+    background-color: #fff;
+}
+.painel-relogio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    border: 1px solid;
+
+
+}
+#spanRelogio {
+    font-size: 60px;
+}
+
+.painel-botao {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    border: 1px solid;
+}
+.painel-botao input {
+    height: 70px;
+    width: 145px;
+    font-size: 24px;
+    margin: 20px;    
+
+}
+#spanRelogio {
+    font-weight: bold;
+}
+
+.conteiner-resultado {
+    max-height: 550px;
+    overflow: auto;
+    background-color: #D9D9D9;
+    margin-top: 10px;
+
+}
+#spanRelogio {
+    font-weight: bold;
+}
+
+@media (max-width:1440px) {
+    .conteiner-resultado {
+        max-height: 500px;
+    }
+
+}
