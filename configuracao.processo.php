@@ -1,21 +1,18 @@
 <?php           
     require 'conexao.php';
 
-    //variaveis
-    $pastaArquivo = '//192.168.1.52/F/rel-david/';
-    //$pastaArquivo = 'arquivos';
-    //$arquivo = glob('arquivos/*.txt'); //Lista os arquivos dentro da pasta.
-    $arquivo = glob('//192.168.1.52/F/rel-david/*.txt'); //Lista os arquivos dentro da pasta.   
-
-    //var_dump($arquivo);
+    #variaveis
+    $pastaArquivo = 'arquivos';
+    $arquivo = glob('arquivos/*.txt'); //Lista os arquivos dentro da pasta.
+    #$pastaArquivo = '//192.168.1.52/F/rel-david/';
+    #$arquivo = glob('//192.168.1.52/F/rel-david/*.txt'); //Lista os arquivos dentro da pasta.   
     
-    //funcoes
-    function impar($var){ // funcao usada para saber se o valor do arrey nao e zero. Retorna se o inteiro informado é impar
+    #funcoes
+    function impar($var){ //funcao usada para saber se o valor do arrey nao e zero. Retorna se o inteiro informado é impar
         return($var & 1);
     } 
 
     if(file_exists($pastaArquivo)) {
-        //echo "A pasta arquivo existe!</br>";
         if(!empty($arquivo)) {
             $arquivos = reset($arquivo); //Pega o primeiro arquivo.
             $arquivo = file($arquivos); //Pega o arquivo e transforma em um array.
@@ -40,8 +37,6 @@
     
                 if($sql->rowCount() > 0) {   
 
-                    //echo "produtos atualizados!</br>";
-
                     $atualizar = "UPDATE tb_produto SET
                         loja = '$loja',
                         n_gondola = '$n_gondola',
@@ -51,21 +46,17 @@
                         preco = '$preco' 
                     WHERE c_produto = '$c_produto' ";
 
-                    $atualizar = $pdo->query($atualizar); 
-    
-                } else {
+                    $atualizar = $pdo->query($atualizar);
 
-                    echo "produtos inseridos!</br>";
+                } else {
 
                     $adicionar = "INSERT INTO tb_produto
                         (loja, n_gondola, d_gondola, c_produto, d_produto, estoque, preco)
                         VALUES
                         ('$loja', '$n_gondola', '$d_gondola', '$c_produto', '$d_produto', '$estoque', '$preco')";
-
                     $adicionar = $pdo->query($adicionar); 
-                    
-    
-                    $adicionar = "SELECT * FROM tb_produto WHERE c_produto = '$c_produto'";
+
+                    $adicionar = "SELECT * FROM tb_produto WHERE c_produto = '$c_produto'"; //mostra na tela os itens adicionados
                     $adicionar = $pdo->query($adicionar); 
     
                     if($adicionar->rowCount() > 0) {
@@ -75,15 +66,14 @@
     
                         }
                     } 
-                }    
-
+                } 
 
                 $sql = "SELECT * FROM tb_codigo WHERE c_interno = '$c_interno'";
                 $sql = $pdo->query($sql);  
     
                 if($sql->rowCount() > 0) {  
                     
-                    //echo "nao aconteceu nada";
+                    #echo "nao aconteceu nada";
     
                 }  else {
                     $adicionarCodigo = "INSERT INTO tb_codigo
@@ -92,45 +82,47 @@
                         ('$c_produto', '$c_interno')";
 
                     $adicionarCodigo = $pdo->query($adicionarCodigo);  
+
+                    
                 }
                 
             }
 
-            $pastaDestino = '//192.168.1.52/F/rel-david/destino';
-            //$pastaDestino = 'arquivos/destino';
+
             $infoArquivo = pathinfo($arquivos); //informacoes do arquivo
-            //$destino = "arquivos/destino/Lido - ".$infoArquivo['basename'].""; //destino do arquivo
-            $destino = "//192.168.1.52/F/rel-david/destino/Lido - ".$infoArquivo['basename'].""; //destino do arquivo
+
+            #$pastaDestino = '//192.168.1.52/F/rel-david/destino';
+            #$destino = "//192.168.1.52/F/rel-david/destino/Lido - ".$infoArquivo['basename'].""; //destino do arquivo
+
+            $pastaDestino = 'arquivos/destino';
+            $destino = "arquivos/destino/Lido - ".$infoArquivo['basename'].""; //destino do arquivo
+            
             
             if(file_exists($pastaDestino)) {
-                //echo "A pasta de destino EXISTE!</br>";
+                #echo "A pasta de destino EXISTE!</br>";
 
                 if(copy($arquivos, $destino)) {
                     echo "Copia Realizada com sucesso!</br>";
                     unlink($arquivos);
+
                 } else {
+
                     echo "Copia nao efetuada!</br>";
                 }
 
             } else {
-                //echo "A pasta destino NAO EXISTE!</br>";      
+                #echo "A pasta destino NAO EXISTE!</br>";      
 
                 if(mkdir($pastaDestino, 0777)) {
-                    //echo "A pasta Destino foi CRIADA com sucesso!</br>";
 
-                    if(copy($arquivos, $destino)) {
-                        //echo "Copia Realizada com sucesso!</br>";
-                        unlink($arquivos);
-                    } else {
-                        //echo "Copia depois da cracao da pasta nao efetuada!</br>";
-                    }
+                    #echo "A pasta Destino foi CRIADA com sucesso!</br>";
 
                 } else {
+
                     echo "Erro na criacao da pasta DESTINO!</br>";
                 }
         
             }
-
 
     
         } else {
@@ -138,7 +130,7 @@
         }
 
     } else {
-        echo "A pasta em que fica os arquivos, NAO EXISTE! VERIFIQUE!</br>";
+        echo "A pasta onde esta localizado os arquivos nao existe! Verifique.</br>";
     }
   
 ?>

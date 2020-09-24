@@ -1,4 +1,3 @@
-# dv
 03-09 WORK: Criacao do arquivo teste.php para teste no codigo do produto.
 03-09 HOME: Criacao da nova tabela sql. O mesmo possui chave estrangeira.
 
@@ -30,3 +29,4 @@ TABELA: tb_codigo
 
 22-09 HOME: Indroducao ao novo arquivo.
 23-09 WORK: Inserção dos caminhos para a leitura do arquivo.
+24-09 HOME: Atualização do código para tarna-lo mais limpo.
