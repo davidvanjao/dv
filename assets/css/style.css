@@ -19,6 +19,8 @@ body {
 .color-conteudo {
     background-color: #ccc;
 }
+
+
 .menu-lateral {
     background-color: rgb(47, 49, 54);
     padding-top: 70px;
@@ -51,7 +53,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 85vh;
+    height: 87vh;
+    padding: 20px;
 }
 
 /*======================================================*/
@@ -90,12 +93,30 @@ body {
 }
 
 
-@media (max-width:1440px) {
+@media (max-height:1024px) {
     .conteudo {
-        height: 82vh;
+        max-height: 86vh;
     }
     .busca-resultado {
-        max-height: 500px;
+        /*max-height: 500px;*/
+    }
+
+}
+@media (max-height:940px) {
+    .conteudo {
+        max-height: 85vh;
+    }
+    .busca-resultado {
+        /*max-height: 500px;*/
+    }
+
+}
+@media (max-height:870px) {
+    .conteudo {
+        max-height: 82vh;
+    }
+    .busca-resultado {
+        /*max-height: 500px;*/
     }
 
 }
