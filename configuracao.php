@@ -57,7 +57,7 @@ if($usuarios->temPermissao('CONF') == false) {
                             <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
                                     <a href="cesta-basica.php">
-                                        <img src="assets/img/lupa2.svg">
+                                        <img src="assets/img/cestabasica.png">
                                         
                                     </a>                        
                                 </div>
