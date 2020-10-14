@@ -30,3 +30,19 @@ TABELA: tb_codigo
 22-09 HOME: Indroducao ao novo arquivo.
 23-09 WORK: Inserção dos caminhos para a leitura do arquivo.
 24-09 HOME: Atualização do código para tarna-lo mais limpo.
+
+-----------------------------------------------------------------------------
+12-10 - CRIACAO DA TABELA CESTA BASICA
+
+NOME DO BANCO: bd_produto
+TABELA: tb_cestaBasica
+
+0 - ID - id - int(11)
+1 - DATA - data - date
+2 - RESPONSAVEL - responsavel - varchar(255)
+3 - QUANTIDADE - quantidade - int(11)
+4 - VALOR - valor - decimal(8,2)
+5 - TIPO DE CESTA - tipoCesta - varchar(255)
+6 - TIPO PESSOA - tipoPessoa - varchar(255)
+
+

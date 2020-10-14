@@ -32,51 +32,53 @@ if(!empty($_POST['usuario'])) {
     <body>
         <div id="__nex">
             <div class="main_styled">
-                <div class="content">
-                    <header class="desktop_header">
-                        <div class="logo">
-                            <img src="">
-                        </div>
-                        <div class="superiorMenu">
-                            <a href=""></a>
-                        </div>
-                    </header>
-                    <section class="page">
-                        <div class="conteudo">
-                            <div class="login_box">
-                                <div class="login__leftside">
-                                    <form method="POST">
-                                        <label for="email">Usuário</label>
-                                        <input type="text" name="usuario" id="usuario" placeholder="Digite seu usuário">
-                                        <label for="senha">Senha</label>
-                                        <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
-                                        <input type="submit" name="btnLogin" value="Entrar">
-                                    </form>
-                                    <div class="social">
-                                        "Nos acompanhe em nossas redes sociais"
-                                        <div class="socialinks">
-                                            <a href="">
-                                                <img src="assets/img/whats.png">
-                                            </a>
-                                            <a href="">
-                                                <img src="assets/img/tel.png">
-                                            </a>
-                                            <a href="">
-                                                <img src="assets/img/whats.png">
-                                            </a>
+                <div class="conteudo-Central">
+                    <div class="corpo">
+                        <header class="desktop_header">
+                            <div class="logo">
+                                <img src="">
+                            </div>
+                            <div class="superiorMenu">
+                                <a href=""></a>
+                            </div>
+                        </header>
+                        <section class="page">
+                            <div class="conteudo-Geral alinhar-centro">
+                                <div class="login_box">
+                                    <div class="login__leftside">
+                                        <form method="POST">
+                                            <label for="email">Usuário</label>
+                                            <input type="text" name="usuario" id="usuario" placeholder="Digite seu usuário">
+                                            <label for="senha">Senha</label>
+                                            <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
+                                            <input type="submit" name="btnLogin" value="Entrar">
+                                        </form>
+                                        <div class="social">
+                                            "Nos acompanhe em nossas redes sociais"
+                                            <div class="socialinks">
+                                                <a href="">
+                                                    <img src="assets/img/whats.png">
+                                                </a>
+                                                <a href="">
+                                                    <img src="assets/img/tel.png">
+                                                </a>
+                                                <a href="">
+                                                    <img src="assets/img/whats.png">
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="login__rightsite">
-                                    <div class="itemArea">
-                                        <img src="assets/img/logo.png">
+                                    <div class="login__rightsite">
+                                        <div class="itemArea">
+                                            <img src="assets/img/logo.png">
+                                        </div>
                                     </div>
-                                </div>
-    
-                            </div>                            
-                        </div>
-                        
-                    </section>
+        
+                                </div>                            
+                            </div>
+                            
+                        </section>
+                    </div>    
                 </div>
             </div>
         </div>

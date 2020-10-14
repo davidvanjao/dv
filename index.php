@@ -46,25 +46,36 @@ $usuarios->setUsuario($_SESSION['logado']);
                                         
                                     </a>                        
                                 </div>
-                            <?php endif; ?>          
+                            <?php endif; ?>
+
+                            <?php if($usuarios->temPermissao('PES')): ?>
+                                <div class="painel-menu-widget">
+                                    <a href="cesta-basica.php">
+                                        <img src="assets/img/lupa2.svg">
+                                        
+                                    </a>                        
+                                </div>
+                            <?php endif; ?>            
                             
                         </div>
                     </div>
                 </div>
-                <div class="content">
-                    <header class="desktop_header">
-                        <div class="logo">
-                            <img src="">
-                        </div>
-                        <div class="superiorMenu">
-                            <a href="sair.php">Fazer Logoff</a>
-                        </div>
-                    </header>
-                    <section class="page">
-                        <div class="conteudo">
-                            <h1>Seja Bem Vindo!</h1>
-                        </div> 
-                    </section>
+                <div class="conteudo-Central">
+                    <div class="corpo">
+                        <header class="desktop_header">
+                            <div class="logo">
+                                <img src="">
+                            </div>
+                            <div class="superiorMenu">
+                                <a href="sair.php">Fazer Logoff</a>
+                            </div>
+                        </header>
+                        <section class="page">
+                            <div class="conteudo-Geral">
+                                <h1>Seja Bem Vindo!</h1>
+                            </div> 
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>

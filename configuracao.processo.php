@@ -2,10 +2,10 @@
     require 'conexao.php';
 
     #variaveis
-    #$pastaArquivo = 'arquivos';
-    #$arquivo = glob('arquivos/*.txt'); //Lista os arquivos dentro da pasta.
-    $pastaArquivo = '//192.168.1.52/F/rel-david/';
-    $arquivo = glob('//192.168.1.52/F/rel-david/*.txt'); //Lista os arquivos dentro da pasta.   
+    $pastaArquivo = 'arquivos';
+    $arquivo = glob('arquivos/*.txt'); //Lista os arquivos dentro da pasta.
+    #$pastaArquivo = '//192.168.1.52/F/rel-david/';
+    #$arquivo = glob('//192.168.1.52/F/rel-david/*.txt'); //Lista os arquivos dentro da pasta.   
     
     #funcoes
     function impar($var){ //funcao usada para saber se o valor do arrey nao e zero. Retorna se o inteiro informado é impar
@@ -91,11 +91,11 @@
 
             $infoArquivo = pathinfo($arquivos); //informacoes do arquivo
 
-            $pastaDestino = '//192.168.1.52/F/rel-david/destino';
-            $destino = "//192.168.1.52/F/rel-david/destino/Lido - ".$infoArquivo['basename'].""; //destino do arquivo
+            #$pastaDestino = '//192.168.1.52/F/rel-david/destino';
+            #$destino = "//192.168.1.52/F/rel-david/destino/Lido - ".$infoArquivo['basename'].""; //destino do arquivo
 
-            #$pastaDestino = 'arquivos/destino';
-            #$destino = "arquivos/destino/Lido - ".$infoArquivo['basename'].""; //destino do arquivo
+            $pastaDestino = 'arquivos/destino';
+            $destino = "arquivos/destino/Lido - ".$infoArquivo['basename'].""; //destino do arquivo
             
             
             if(file_exists($pastaDestino)) {
