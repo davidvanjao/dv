@@ -19,6 +19,8 @@
             foreach($arquivo as $endereco) {
                 $endereco = trim($endereco);
                 $endereco = explode('	', $endereco); //divide uma string por uma string.
+                var_dump($endereco);
+
 
                 $cep = $endereco[0];
                 $cidadeEstado = $endereco[1];

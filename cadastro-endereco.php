@@ -164,9 +164,9 @@ if(isset($_POST['cep']) && empty($_POST['cep']) == false) {
                                                         echo "<td style='width:10%;'>".$endereco['cep']."</td>";
                                                         echo "<td style='width:10%;'>".$endereco['cidadeEstado']."</td>";
                                                         echo "<td style='width:10%;'>".$endereco['bairro']."</td>";
-                                                        echo "<td style='width:10%;'>R$ ".$endereco['logradouro']."</td>";
+                                                        echo "<td style='width:10%;'>".$endereco['logradouro']."</td>";
                                                         echo "<td style='width:10%;'>".$endereco['nomeEdificio']."</td>";                                 
-                                                        echo '<td style="width:10%;"><a href="cesta-basica.excluir.php?id='.$endereco['id'].'">Excluir</a>';
+                                                        echo '<td style="width:10%;"><a href="--.php?id='.$endereco['id'].'">Excluir</a>';
                                                         echo "</tr>";  
                                                     }
                                                 } else {
