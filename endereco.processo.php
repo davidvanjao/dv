@@ -14,13 +14,33 @@
         if(!empty($arquivo)) {
             $arquivos = reset($arquivo); //Pega o primeiro arquivo.
             $arquivo = file($arquivos); //Pega o arquivo e transforma em um array.
-            $arquivo = array_filter($arquivo, "impar"); // filtro para saber se o valor nao esta vazio.
             $arquivo = array_values(array_filter($arquivo, "trim"));
     
-            foreach($arquivo as $produto) {
-                $produto = trim($produto);
-                $produto = explode('	', $produto); //divide uma string por uma string.
-                var_dump($produto);
+            foreach($arquivo as $endereco) {
+                $endereco = trim($endereco);
+                $endereco = explode('	', $endereco); //divide uma string por uma string.
+
+                $cep = $endereco[0];
+                $cidadeEstado = $endereco[1];
+                $bairro = $endereco[2];
+                $logradouro = $endereco[3];
+                $nomeEdificio = '';
+                if(empty($endereco[4])) {
+                    $nomeEdificio = "";
+                } else {
+                    $nomeEdificio = $endereco[4];
+                }              
+                            
+    
+                $sql = $pdo->prepare("INSERT INTO tb_endereco SET cep = :cep, cidadeEstado = :cidadeEstado, bairro = :bairro, logradouro = :logradouro, nomeEdificio = :nomeEdificio");
+                $sql->bindValue(":cep", $cep);
+                $sql->bindValue(":cidadeEstado", $cidadeEstado);
+                $sql->bindValue(":bairro", $bairro);
+                $sql->bindValue(":logradouro", $logradouro);
+                $sql->bindValue(":nomeEdificio", $nomeEdificio);
+                $sql->execute();
+
+                
 
             }
         } 

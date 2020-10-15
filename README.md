@@ -53,8 +53,7 @@ TABELA: tb_endereco
 
 0 - ID - id - int(11)
 1 - CEP - cep - int(11)
-2 - ESTADO - estado - varchar(255)
-3 - CIDADE - cidade - varchar(255)
-4 - BAIRRO - bairro - varchar(255)
-5 - LOGRADOURO - logradouro - varchar(255)
-6 - NOME DIFICIO - nomeEdificio - varchar(255)
+2 - CIDADE ESTADO - cidadeEstado - varchar(255)
+3 - BAIRRO - bairro - varchar(255)
+4 - LOGRADOURO - logradouro - varchar(255)
+5 - NOME DIFICIO - nomeEdificio - varchar(255)

@@ -55,7 +55,15 @@ $usuarios->setUsuario($_SESSION['logado']);
                                         
                                     </a>                        
                                 </div>
-                            <?php endif; ?>            
+                            <?php endif; ?>  
+
+                            <?php if($usuarios->temPermissao('PES')): ?>
+                                <div class="painel-menu-widget">
+                                    <a href="cadastro-endereco.php">
+                                        <img src="assets/img/endereco.png">                                        
+                                    </a>                        
+                                </div>
+                            <?php endif; ?>             
                             
                         </div>
                     </div>
