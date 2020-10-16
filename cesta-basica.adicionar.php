@@ -1,7 +1,7 @@
 <?php
-
-require 'conexao.php';
-require 'cesta-basica.php';
+session_start();
+require 'conexao.banco.php';
+require 'classes/usuarios.class.php';
 
 
 if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
@@ -21,7 +21,7 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
 	$data = $_POST['data'];
     $responsavel = $_POST['responsavel'];
     $quantidade = $_POST['quantidade'];
-    $valor = $_POST['valor'];
+    $valor = str_replace(",",".",$_POST['valor']);
     $tipoCesta = $_POST['tipoCesta'];
 	$tipoPessoa = $_POST['tipoPessoa'];
 
@@ -33,10 +33,14 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
     $sql->bindValue(":tipoCesta", $tipoCesta);
 	$sql->bindValue(":tipoPessoa", $tipoPessoa);
     $sql->execute();
-    
-    header("Location:cesta-basica.php");
-    exit;
-	
-}
 
+    header("Location:/cesta-basica.painel.php");
+
+    exit;
+
+} else {
+
+    header("Location:/cesta-basica.painel.php");
+
+}
 ?>

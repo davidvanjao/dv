@@ -1,5 +1,5 @@
 <?php           
-    require 'conexao.php';
+    require 'conexao.banco.php';
 
     #variaveis
     $pastaArquivo = 'arquivos';

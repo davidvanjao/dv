@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require 'conexao.php';
+require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
 if(!empty($_POST['usuario'])) {

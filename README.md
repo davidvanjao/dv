@@ -57,3 +57,19 @@ TABELA: tb_endereco
 3 - BAIRRO - bairro - varchar(255)
 4 - LOGRADOURO - logradouro - varchar(255)
 5 - NOME DIFICIO - nomeEdificio - varchar(255)
+
+-----------------------------------------------------------------------------
+15-10 - CRIACAO DA TABELA ENTREGA
+
+NOME DO BANCO: bd_produto
+TABELA: tb_entrega
+
+0 - ID - id - int(11)
+1 - DATA - dataa - date
+2 - CEP - cep - int(11)
+3 - CIDADE ESTADO - cidadeEstado - varchar(255)
+4 - BAIRRO - bairro - varchar(255)
+5 - LOGRADOURO - logradouro - varchar(255)
+6 - VALOR - valor - decimal(8,2)
+7 - COMPRA - compra - int(11)
+8 - NUMERO DE CAIXAS - nCaixas - int(11)

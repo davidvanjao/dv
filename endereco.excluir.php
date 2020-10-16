@@ -20,14 +20,14 @@ if($usuarios->temPermissao('PES') == false) {
 if(isset($_GET['id']) && empty($_GET['id']) == false) {
     $id = addslashes($_GET['id']);
 
-    $sql = $pdo->prepare("DELETE FROM tb_cestabasica WHERE id = '$id'");
+    $sql = $pdo->prepare("DELETE FROM tb_endereco WHERE id = '$id'");
     $sql->execute();
 
-    header("Location: cesta-basica.painel.php");
+    header("Location: endereco.painel.php");
 
 } else {
     
-    header("Location: cesta-basica.painel.php");
+    header("Location: endereco.painel.php");
 }
 
 ?>

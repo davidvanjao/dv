@@ -18,6 +18,7 @@
 .cesta-area {
     display: flex;
     align-items: flex-end;
+    flex-wrap: wrap;
 }
 .cesta-area div {
     margin-right: 10px;

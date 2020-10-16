@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require 'conexao.php';
+require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
 
@@ -18,24 +18,6 @@ if($usuarios->temPermissao('PES') == false) {
     exit;
 }
 
-if(isset($_POST['data']) && empty($_POST['data']) == false) {
-	$data = $_POST['data'];
-    $responsavel = $_POST['responsavel'];
-    $quantidade = $_POST['quantidade'];
-    $valor = str_replace(",",".",$_POST['valor']);
-    $tipoCesta = $_POST['tipoCesta'];
-	$tipoPessoa = $_POST['tipoPessoa'];
-
-	$sql = $pdo->prepare("INSERT INTO tb_cestabasica SET dataa = :dataa, responsavel = :responsavel, quantidade = :quantidade, valor = :valor, tipoCesta = :tipoCesta, tipoPessoa = :tipoPessoa");
-	$sql->bindValue(":dataa", $data);
-    $sql->bindValue(":responsavel", $responsavel);
-    $sql->bindValue(":quantidade", $quantidade);
-    $sql->bindValue(":valor", $valor);
-    $sql->bindValue(":tipoCesta", $tipoCesta);
-	$sql->bindValue(":tipoPessoa", $tipoPessoa);
-    $sql->execute();
-	
-}
 
 ?>
 
@@ -55,9 +37,9 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
                     <div class="painel-menu">
                         <div class="painel-menu-menu">
         
-                            <?php if($usuarios->temPermissao('PES')): ?>
+                        <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="pesquisa.php">
+                                    <a href="produto.pesquisa.php">
                                         <img src="assets/img/lupa2.svg">
                                         
                                     </a>                        
@@ -66,7 +48,7 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
         
                             <?php if($usuarios->temPermissao('CONF')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="configuracao.php">
+                                    <a href="produto.adicionar.php">
                                         <img src="assets/img/engrenagem2.svg">
                                         
                                     </a>                        
@@ -75,20 +57,28 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
 
                             <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="cesta-basica.php">
+                                    <a href="cesta-basica.painel.php">
                                         <img src="assets/img/cestabasica.png">
                                         
                                     </a>                        
                                 </div>
-                            <?php endif; ?>   
+                            <?php endif; ?>  
 
                             <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="cadastro-endereco.php">
+                                    <a href="endereco.painel.php">
                                         <img src="assets/img/endereco.png">                                        
                                     </a>                        
                                 </div>
-                            <?php endif; ?>            
+                            <?php endif; ?>       
+
+                            <?php if($usuarios->temPermissao('PES')): ?>
+                                <div class="painel-menu-widget">
+                                    <a href="entrega.painel.php">
+                                        <img src="assets/img/caminhao.png">                                        
+                                    </a>                        
+                                </div>
+                            <?php endif; ?>          
                             
                         </div>
                     </div>
@@ -109,7 +99,7 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
 
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST">
+                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="entrega.adicionar.php">
 
                                             <div class="">
                                                 <label>Data:</label></br>
@@ -117,16 +107,23 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
                                             </div>
 
                                             <div class="">
-                                                <label>Responsavel:</label></br>
-                                                <select required="required" name="responsavel">
-                                                    <option value="Equipe">Equipe</option>
-                                                    <option value=""></option>
-                                                </select>
+                                                <label>Cep:</label></br>
+                                                <input type="text" id="cep" autocomplete="off" name="cep" placeholder="" required="required" value="">
                                             </div>
 
                                             <div class="">
-                                                <label>Quantidade:</label></br>
-                                                <input type="number" autocomplete="off" name="quantidade" placeholder="" required="required">
+                                                <label>Cidade/Estado:</label></br>
+                                                <input type="text" id="cidade" autocomplete="off" name="cidade" placeholder="" required="required" value=""/>
+                                            </div>
+
+                                            <div class="">
+                                                <label>Bairro:</label></br>
+                                                <input type="text" autocomplete="off" name="bairro" placeholder="" required="required" value=""/>
+                                            </div>
+
+                                            <div class="">
+                                                <label>Longradouro:</label></br>
+                                                <input type="text" autocomplete="off" name="logradouro" required="required" value=""/>
                                             </div>
 
                                             <div class="">
@@ -135,38 +132,33 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
                                             </div>
 
                                             <div class="">
-                                                <label>Tipo de Cesta:</label></br>
-                                                <select required="required" name="tipoCesta">
-                                                    <option value=""></option>
-                                                    <option value="Personalizada">Personalizada</option>
-                                                    <option value="Venda 1">Venda 1</option>
-                                                    <option value="Venda 2">Venda 2</option>
-                                                    <option value="Venda 3">Venda 3</option>
-                                                </select>
+                                                <label>Compras:</label></br>
+                                                <input type="number" autocomplete="off" name="compra" placeholder="" required="required" value="1">
                                             </div>
 
                                             <div class="">
-                                                <label>Tipo de Pessoa:</label></br>
-                                                <select required="required" name="tipoPessoa">
-                                                    <option value=""></option>
-                                                    <option value="Fisica">Física</option>
-                                                    <option value="Juridica">Jurídica</option>
-                                                </select>
+                                                <label>Numero de Caixas:</label></br>
+                                                <input type="number" autocomplete="off" name="quantidade" placeholder="" required="required">
                                             </div>
 
                                             <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
                                         </form>
+
+                                        <form class="" id="" name="" method="POST" action="endereco.pesquisa.php">
+                                            <input class="" type="submit" name="botao-endereco" value="Buscar Endereço">
+                                        </form>
+
                                     </div>
 
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
                                                 <th style="width:10%;">Data</th>
-                                                <th style="width:10%;">Responsável</th>
-                                                <th style="width:10%;">Quantidade</th>
+                                                <th style="width:10%;">Cidade</th>
+                                                <th style="width:10%;">Endereço</th>
                                                 <th style="width:10%;">Valor</th>
-                                                <th style="width:10%;">Tipo Cesta</th>
-                                                <th style="width:10%;">Tipo Pessoa</th>
+                                                <th style="width:10%;">Compra</th>
+                                                <th style="width:10%;">Numero de Caixas</th>
                                                 <th style="width:10%;">Ações</th>
                                             </tr>
                                         </table> 
@@ -176,19 +168,19 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
                                         <div class="tabela-lancamentos">
                                             <table>
                                                 <?php
-                                                $sql = "SELECT * FROM tb_cestabasica";
+                                                $sql = "SELECT * FROM tb_entrega";
                                                 $sql = $pdo->query($sql);   
                                                 if($sql->rowCount() > 0) {
-                                                    foreach($sql->fetchAll() as $cesta) {
+                                                    foreach($sql->fetchAll() as $entrega) {
 
                                                         echo "<tr>";
-                                                        echo "<td style='width:10%;'>".$cesta['dataa']."</td>";
-                                                        echo "<td style='width:10%;'>".$cesta['responsavel']."</td>";
-                                                        echo "<td style='width:10%;'>".$cesta['quantidade']."</td>";
-                                                        echo "<td style='width:10%;'>R$ ".$cesta['valor']."</td>";
-                                                        echo "<td style='width:10%;'>".$cesta['tipoCesta']."</td>";
-                                                        echo "<td style='width:10%;'>".$cesta['tipoPessoa']."</td>";                                   
-                                                        echo '<td style="width:10%;"><a href="cesta-basica.excluir.php?id='.$cesta['id'].'">Excluir</a>';
+                                                        echo "<td style='width:10%;'>".$entrega['dataa']."</td>";
+                                                        echo "<td style='width:10%;'>".$entrega['cidadeEstado']."</td>";
+                                                        echo "<td style='width:10%;'>".$entrega['logradouro']."</td>";
+                                                        echo "<td style='width:10%;'>".$entrega['valor']."</td>";  
+                                                        echo "<td style='width:10%;'>".$entrega['compra']."</td>"; 
+                                                        echo "<td style='width:10%;'>".$entrega['nCaixas']."</td>";                                  
+                                                        echo '<td style="width:10%;"><a href="cesta-basica.excluir.php?id='.$entrega['id'].'">Excluir</a>';
                                                         echo "</tr>";  
                                                     }
                                                 } else {

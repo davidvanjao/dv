@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require 'conexao.php';
+require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
 
@@ -36,9 +36,9 @@ if($usuarios->temPermissao('CONF') == false) {
                     <div class="painel-menu">
                         <div class="painel-menu-menu">
         
-                            <?php if($usuarios->temPermissao('PES')): ?>
+                        <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="pesquisa.php">
+                                    <a href="produto.pesquisa.php">
                                         <img src="assets/img/lupa2.svg">
                                         
                                     </a>                        
@@ -47,7 +47,7 @@ if($usuarios->temPermissao('CONF') == false) {
         
                             <?php if($usuarios->temPermissao('CONF')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="configuracao.php">
+                                    <a href="produto.adicionar.php">
                                         <img src="assets/img/engrenagem2.svg">
                                         
                                     </a>                        
@@ -56,20 +56,28 @@ if($usuarios->temPermissao('CONF') == false) {
 
                             <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="cesta-basica.php">
+                                    <a href="cesta-basica.painel.php">
                                         <img src="assets/img/cestabasica.png">
                                         
                                     </a>                        
                                 </div>
-                            <?php endif; ?>      
+                            <?php endif; ?>  
 
                             <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="cadastro-endereco.php">
+                                    <a href="endereco.painel.php">
                                         <img src="assets/img/endereco.png">                                        
                                     </a>                        
                                 </div>
-                            <?php endif; ?>         
+                            <?php endif; ?>       
+
+                            <?php if($usuarios->temPermissao('PES')): ?>
+                                <div class="painel-menu-widget">
+                                    <a href="entrega.painel.php">
+                                        <img src="assets/img/caminhao.png">                                        
+                                    </a>                        
+                                </div>
+                            <?php endif; ?>   
                             
                         </div>
                     </div>
@@ -109,7 +117,7 @@ if($usuarios->temPermissao('CONF') == false) {
 
                                         <div class="conteiner-resultado">
                                             
-                                            <?php require 'configuracao.processo.php';?>      
+                                            <?php require 'produto.processo-externo.php';?>      
                                             
                                         </div>                
                                     </div>                                

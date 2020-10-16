@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require 'conexao.php';
+require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
 if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
@@ -32,7 +32,7 @@ $usuarios->setUsuario($_SESSION['logado']);
         
                             <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="pesquisa.php">
+                                    <a href="produto.pesquisa.php">
                                         <img src="assets/img/lupa2.svg">
                                         
                                     </a>                        
@@ -41,7 +41,7 @@ $usuarios->setUsuario($_SESSION['logado']);
         
                             <?php if($usuarios->temPermissao('CONF')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="configuracao.php">
+                                    <a href="produto.adicionar.php">
                                         <img src="assets/img/engrenagem2.svg">
                                         
                                     </a>                        
@@ -50,7 +50,7 @@ $usuarios->setUsuario($_SESSION['logado']);
 
                             <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="cesta-basica.php">
+                                    <a href="cesta-basica.painel.php">
                                         <img src="assets/img/cestabasica.png">
                                         
                                     </a>                        
@@ -59,11 +59,19 @@ $usuarios->setUsuario($_SESSION['logado']);
 
                             <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="cadastro-endereco.php">
+                                    <a href="endereco.painel.php">
                                         <img src="assets/img/endereco.png">                                        
                                     </a>                        
                                 </div>
-                            <?php endif; ?>             
+                            <?php endif; ?>       
+
+                            <?php if($usuarios->temPermissao('PES')): ?>
+                                <div class="painel-menu-widget">
+                                    <a href="entrega.painel.php">
+                                        <img src="assets/img/caminhao.png">                                        
+                                    </a>                        
+                                </div>
+                            <?php endif; ?>      
                             
                         </div>
                     </div>
