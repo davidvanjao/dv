@@ -102,7 +102,7 @@ if($usuarios->temPermissao('PES') == false) {
 
                                             <div class="">
                                                 <label>Cep:</label></br>
-                                                <input type="text" id="cep" autocomplete="off" name="cep" placeholder="" required="required">
+                                                <input type="text" id="cep" autocomplete="off" name="cep" placeholder="00000-000" required="required" pattern= "\d{5}-?\d{3}">
                                             </div>
 
                                             <div class="">

@@ -99,55 +99,11 @@ if($usuarios->temPermissao('PES') == false) {
 
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="entrega.adicionar.php">
 
-                                            <div class="">
-                                                <label>Data:</label></br>
-                                                <input type="date" id="data" autocomplete="off" name="data" placeholder="" required="required">
-                                            </div>
-
-                                            <div class="">
-                                                <label>Cep:</label></br>
-                                                <input type="text" id="cep" autocomplete="off" name="cep" placeholder="" required="required" value="">
-                                            </div>
-
-                                            <div class="">
-                                                <label>Cidade/Estado:</label></br>
-                                                <input type="text" id="cidade" autocomplete="off" name="cidade" placeholder="" required="required" value=""/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Bairro:</label></br>
-                                                <input type="text" autocomplete="off" name="bairro" placeholder="" required="required" value=""/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Longradouro:</label></br>
-                                                <input type="text" autocomplete="off" name="logradouro" required="required" value=""/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Valor:</label></br>
-                                                <input type="text" autocomplete="off" name="valor" required="required" pattern="[0-9.,]{2,}"/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Compras:</label></br>
-                                                <input type="number" autocomplete="off" name="compra" placeholder="" required="required" value="1">
-                                            </div>
-
-                                            <div class="">
-                                                <label>Numero de Caixas:</label></br>
-                                                <input type="number" autocomplete="off" name="quantidade" placeholder="" required="required">
-                                            </div>
-
+                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="endereco.pesquisa.php">
                                             <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
                                         </form>
-
-                                        <form class="" id="" name="" method="POST" action="endereco.pesquisa.php">
-                                            <input class="" type="submit" name="botao-endereco" value="Buscar Endereço">
-                                        </form>
-
+                                        
                                     </div>
 
                                     <div class="tabela-titulo">
@@ -180,7 +136,7 @@ if($usuarios->temPermissao('PES') == false) {
                                                         echo "<td style='width:10%;'>".$entrega['valor']."</td>";  
                                                         echo "<td style='width:10%;'>".$entrega['compra']."</td>"; 
                                                         echo "<td style='width:10%;'>".$entrega['nCaixas']."</td>";                                  
-                                                        echo '<td style="width:10%;"><a href="cesta-basica.excluir.php?id='.$entrega['id'].'">Excluir</a>';
+                                                        echo '<td style="width:10%;"><a href="entrega.excluir.php?id='.$entrega['id'].'">Excluir</a>';
                                                         echo "</tr>";  
                                                     }
                                                 } else {

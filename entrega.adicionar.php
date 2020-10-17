@@ -23,8 +23,8 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
     $cidadeEstado = $_POST['cidade'];
     $bairro = $_POST['bairro'];
     $logradouro = $_POST['logradouro'];
-    $valor = $_POST['valor'];     
-    $compra = $_POST['compras'];  
+    $valor = str_replace(",",".",$_POST['valor']);   
+    $compra = $_POST['compra'];  
     $nCaixas = $_POST['quantidade'];             
 
     $sql = $pdo->prepare("INSERT INTO tb_entrega SET dataa = :dataa, cep = :cep, cidadeEstado = :cidadeEstado, bairro = :bairro, logradouro = :logradouro, valor = :valor, compra = :compra, nCaixas = :nCaixas");
