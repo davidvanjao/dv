@@ -129,6 +129,7 @@ if($usuarios->temPermissao('PES') == false) {
                                                 if($sql->rowCount() > 0) {
                                                     foreach($sql->fetchAll() as $entrega) {
 
+
                                                         echo "<tr>";
                                                         echo "<td style='width:10%;'>".$entrega['dataa']."</td>";
                                                         echo "<td style='width:10%;'>".$entrega['cidadeEstado']."</td>";
@@ -138,6 +139,8 @@ if($usuarios->temPermissao('PES') == false) {
                                                         echo "<td style='width:10%;'>".$entrega['nCaixas']."</td>";                                  
                                                         echo '<td style="width:10%;"><a href="entrega.excluir.php?id='.$entrega['id'].'">Excluir</a>';
                                                         echo "</tr>";  
+
+                                                    
                                                     }
                                                 } else {
                                                         

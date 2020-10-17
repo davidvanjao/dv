@@ -3,7 +3,6 @@
     require 'conexao.banco.php';
     require 'classes/usuarios.class.php';
 
-
     if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
     } else {
         header("Location: login.php");
@@ -20,11 +19,6 @@
     #variaveis
     $pastaArquivo = 'arquivos';
     $arquivo = glob('arquivos/*.txt'); //Lista os arquivos dentro da pasta.
-    
-    #funcoes
-    function impar($var){ //funcao usada para saber se o valor do arrey nao e zero. Retorna se o inteiro informado é impar
-        return($var & 1);
-    } 
 
     if(file_exists($pastaArquivo)) {
         if(!empty($arquivo)) {
@@ -56,13 +50,10 @@
                 $sql->bindValue(":bairro", $bairro);
                 $sql->bindValue(":logradouro", $logradouro);
                 $sql->bindValue(":nomeEdificio", $nomeEdificio);
-                $sql->execute();
-
-                
+                $sql->execute();                
 
             }
         } 
     } 
-  
+    
 ?>
-	

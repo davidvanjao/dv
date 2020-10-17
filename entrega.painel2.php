@@ -93,7 +93,7 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
 
                                             <div class="">
                                                 <label>Valor:</label></br>
-                                                <input type="text" autocomplete="off" name="valor2" required="required" pattern="[0-9.,]{2,}"/>
+                                                <input type="text" autocomplete="off" name="valor" required="required" pattern="[0-9.,]{2,}"/>
                                             </div>
 
                                             <div class="">
