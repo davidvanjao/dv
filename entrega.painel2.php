@@ -41,7 +41,7 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
 <html lang="pt-br">
     <head>
         <meta charset="utf-8">
-        <title>Tela de Cesta Basica</title>
+        <title>Tela de Entrega</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/cesta-basica.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,6 +68,11 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
                                         <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="entrega.adicionar.php">
 
                                             <div class="">
+                                                <label>Data:</label></br>
+                                                <input type="date" value="<?php echo date('Y-m-d');?>" id="data" autocomplete="off" name="data" required="required"/>
+                                            </div>
+
+                                            <div class="">
                                                 <input type="hidden" id="cep" autocomplete="off" name="cep" placeholder="" required="required" value="<?php echo $endereco['cep'];?>" readonly="readonly"/>
                                             </div>
 
@@ -87,18 +92,13 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
                                             </div>
 
                                             <div class="">
-                                                <label>Data:</label></br>
-                                                <input type="date" value="<?php echo date('Y-m-d');?>" id="data" autocomplete="off" name="data" required="required"/>
+                                                <label>Compras:</label></br>
+                                                <input type="number" autocomplete="off" name="compra" placeholder="" required="required" value="1" readonly="readonly"/>
                                             </div>
 
                                             <div class="">
                                                 <label>Valor:</label></br>
                                                 <input type="text" autocomplete="off" name="valor" required="required" pattern="[0-9.,]{2,}"/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Compras:</label></br>
-                                                <input type="number" autocomplete="off" name="compra" placeholder="" required="required" value="1" readonly="readonly"/>
                                             </div>
 
                                             <div class="">

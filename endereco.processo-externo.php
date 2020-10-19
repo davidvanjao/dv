@@ -16,6 +16,14 @@
         exit;
     }
 
+    function retiraAcentos($string){
+        $acentos  =  'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿŔŕ';
+        $sem_acentos  =  'aaaaaaaceeeeiiiidnoooooouuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr';
+        $string = strtr($string, utf8_decode($acentos), $sem_acentos);
+        $string = str_replace('	',";",$string);
+        return utf8_decode($string);
+     } 
+
     #variaveis
     $pastaArquivo = 'arquivos';
     $arquivo = glob('arquivos/*.txt'); //Lista os arquivos dentro da pasta.
@@ -25,12 +33,14 @@
             $arquivos = reset($arquivo); //Pega o primeiro arquivo.
             $arquivo = file($arquivos); //Pega o arquivo e transforma em um array.
             $arquivo = array_values(array_filter($arquivo, "trim"));
-    
-            foreach($arquivo as $endereco) {
-                $endereco = trim($endereco);
-                $endereco = explode('	', $endereco); //divide uma string por uma string.
-                var_dump($endereco);
 
+            //var_dump($arquivo);
+
+            foreach($arquivo as $endereco) {
+                $endereco = trim($endereco); 
+                $endereco = retiraAcentos($endereco); // funcao para tirar acentos
+
+                $endereco = explode(';', $endereco); //divide uma string por uma string.  
 
                 $cep = $endereco[0];
                 $cidadeEstado = $endereco[1];
@@ -41,8 +51,7 @@
                     $nomeEdificio = "";
                 } else {
                     $nomeEdificio = $endereco[4];
-                }              
-                            
+                }           
     
                 $sql = $pdo->prepare("INSERT INTO tb_endereco SET cep = :cep, cidadeEstado = :cidadeEstado, bairro = :bairro, logradouro = :logradouro, nomeEdificio = :nomeEdificio");
                 $sql->bindValue(":cep", $cep);

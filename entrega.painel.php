@@ -25,7 +25,7 @@ if($usuarios->temPermissao('PES') == false) {
 <html lang="pt-br">
     <head>
         <meta charset="utf-8">
-        <title>Tela de Cesta Basica</title>
+        <title>Tela de Entrega</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/cesta-basica.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
