@@ -78,6 +78,14 @@ if($usuarios->temPermissao('CONF') == false) {
                                     </a>                        
                                 </div>
                             <?php endif; ?>   
+
+                            <?php if($usuarios->temPermissao('PES')): ?>
+                                <div class="painel-menu-widget">
+                                    <a href="cartaz-preco.painel.php">
+                                        <img src="assets/img/cartazPreco.png">                                        
+                                    </a>                        
+                                </div>
+                            <?php endif; ?> 
                             
                         </div>
                     </div>

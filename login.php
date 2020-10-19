@@ -43,7 +43,7 @@ if(!empty($_POST['usuario'])) {
                             </div>
                         </header>
                         <section class="page">
-                            <div class="conteudo-Geral alinhar-centro">
+                            <div class="conteudo-Geral alinhar-centro semCorFundo">
                                 <div class="login_box">
                                     <div class="login__leftside">
                                         <form method="POST">
@@ -53,7 +53,7 @@ if(!empty($_POST['usuario'])) {
                                             <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
                                             <input type="submit" name="btnLogin" value="Entrar">
                                         </form>
-                                        <div class="social">
+                                        <!--<div class="social">
                                             "Nos acompanhe em nossas redes sociais"
                                             <div class="socialinks">
                                                 <a href="">
@@ -66,7 +66,7 @@ if(!empty($_POST['usuario'])) {
                                                     <img src="assets/img/whats.png">
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                     <div class="login__rightsite">
                                         <div class="itemArea">

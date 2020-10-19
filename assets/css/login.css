@@ -1,3 +1,8 @@
+.semCorFundo {
+    background-color: transparent;
+}
+
+
 .alinhar-centro {
     align-items: center;
 
@@ -5,8 +10,7 @@
 
 .login_box {
     max-width: 900px;
-    height: 440px;
-    box-shadow: rgb(61, 65, 73) 0px 0px 5px;
+    box-shadow: rgb(61, 65, 73) 0px 0px 2px;
     border-radius: 20px;
     margin: 50px auto;
     display: flex;
@@ -15,8 +19,7 @@
 }
 .login__leftside {
     flex: 1 1 0%;
-    padding: 50px 80px;
-    font-size: 13px;
+    padding: 20px;
     text-align: center;
 }
 .login__leftside label {
@@ -33,6 +36,7 @@
     font-size: 15px;
     outline: 0px;
     margin-bottom: 20px;
+    padding: 5px;
 }
 .login__leftside input[type="submit"] {
     background-color: rgb(0, 113, 183);

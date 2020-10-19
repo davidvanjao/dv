@@ -18,7 +18,7 @@ $usuarios->setUsuario($_SESSION['logado']);
 <html lang="pt-br">
     <head>
         <meta charset="utf-8">
-        <title>Tela do Sistema</title>
+        <title>Cartaz de Preço</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/index.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,7 +71,7 @@ $usuarios->setUsuario($_SESSION['logado']);
                                         <img src="assets/img/caminhao.png">                                        
                                     </a>                        
                                 </div>
-                            <?php endif; ?> 
+                            <?php endif; ?>    
                             
                             <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
@@ -79,7 +79,7 @@ $usuarios->setUsuario($_SESSION['logado']);
                                         <img src="assets/img/cartazPreco.png">                                        
                                     </a>                        
                                 </div>
-                            <?php endif; ?>  
+                            <?php endif; ?> 
                             
                         </div>
                     </div>

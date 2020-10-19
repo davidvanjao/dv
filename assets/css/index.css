@@ -1,6 +1,12 @@
+.semCorFundo {
+    background-color: transparent;
+}
+.alinhar-centro {
+    align-items: center;
 
+}
 .conteudo-Geral h1 {
     font-size: 100px;
     text-align: center;
-    color: rgb(0, 0, 0)
+    color: rgb(255, 255,255)
 }
