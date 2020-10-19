@@ -47,10 +47,12 @@ if($usuarios->temPermissao('PES') == false) {
                             <div class="conteudo-Geral">
 
                                 <div class="body-busca">
-                                    <form class="busca-area" name="buscar-form" method="POST">
-                                        <input class="input-busca-produto" type="text" autocomplete="off" name="endereco" placeholder="Digite o endereço">
-                                        <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
-                                    </form>
+                                    <div class="campo-inserir">
+                                        <form class="busca-area" name="buscar-form" method="POST">
+                                            <input class="input-busca-produto" type="text" autocomplete="off" name="endereco" placeholder="Digite o endereço">
+                                            <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
+                                        </form>
+                                    </div>
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
