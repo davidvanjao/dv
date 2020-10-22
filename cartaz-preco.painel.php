@@ -12,6 +12,12 @@ if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
 $usuarios = new Usuarios($pdo);
 $usuarios->setUsuario($_SESSION['logado']);
 
+if($usuarios->temPermissao('USUARIO') == false) {
+    header("Location:index.php");
+    exit;
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +36,7 @@ $usuarios->setUsuario($_SESSION['logado']);
                     <div class="painel-menu">
                         <div class="painel-menu-menu">
         
-                            <?php if($usuarios->temPermissao('PES')): ?>
+                            <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
                                     <a href="produto.pesquisa.php">
                                         <img src="assets/img/lupa2.svg">
@@ -39,7 +45,7 @@ $usuarios->setUsuario($_SESSION['logado']);
                                 </div>
                             <?php endif; ?>        
         
-                            <?php if($usuarios->temPermissao('CONF')): ?>
+                            <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
                                     <a href="produto.adicionar.php">
                                         <img src="assets/img/engrenagem2.svg">
@@ -48,7 +54,7 @@ $usuarios->setUsuario($_SESSION['logado']);
                                 </div>
                             <?php endif; ?>
 
-                            <?php if($usuarios->temPermissao('PES')): ?>
+                            <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
                                     <a href="cesta-basica.painel.php">
                                         <img src="assets/img/cestabasica.png">
@@ -57,7 +63,7 @@ $usuarios->setUsuario($_SESSION['logado']);
                                 </div>
                             <?php endif; ?>  
 
-                            <?php if($usuarios->temPermissao('PES')): ?>
+                            <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
                                     <a href="endereco.painel.php">
                                         <img src="assets/img/endereco.png">                                        
@@ -65,7 +71,7 @@ $usuarios->setUsuario($_SESSION['logado']);
                                 </div>
                             <?php endif; ?>       
 
-                            <?php if($usuarios->temPermissao('PES')): ?>
+                            <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
                                     <a href="entrega.painel.php">
                                         <img src="assets/img/caminhao.png">                                        
@@ -73,7 +79,7 @@ $usuarios->setUsuario($_SESSION['logado']);
                                 </div>
                             <?php endif; ?>    
                             
-                            <?php if($usuarios->temPermissao('PES')): ?>
+                            <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
                                     <a href="cartaz-preco.painel.php">
                                         <img src="assets/img/cartazPreco.png">                                        
@@ -82,6 +88,7 @@ $usuarios->setUsuario($_SESSION['logado']);
                             <?php endif; ?> 
                             
                         </div>
+                        
                     </div>
                 </div>
                 <div class="conteudo-Central">

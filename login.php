@@ -53,20 +53,6 @@ if(!empty($_POST['usuario'])) {
                                             <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
                                             <input type="submit" name="btnLogin" value="Entrar">
                                         </form>
-                                        <!--<div class="social">
-                                            "Nos acompanhe em nossas redes sociais"
-                                            <div class="socialinks">
-                                                <a href="">
-                                                    <img src="assets/img/whats.png">
-                                                </a>
-                                                <a href="">
-                                                    <img src="assets/img/tel.png">
-                                                </a>
-                                                <a href="">
-                                                    <img src="assets/img/whats.png">
-                                                </a>
-                                            </div>
-                                        </div>-->
                                     </div>
                                     <div class="login__rightsite">
                                         <div class="itemArea">
