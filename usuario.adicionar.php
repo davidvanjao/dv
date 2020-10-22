@@ -79,13 +79,13 @@ if(isset($_POST['nome']) && empty($_POST['nome']) == false) {
 
     $sql->execute();
 
-    header("Location:/cadastrar-usuario.painel.php");
+    header("Location:/usuario.painel.php");
 
     exit;
 
 } else {
 
-    header("Location:/cadastrar-usuario.painel.php");
+    header("Location:/usuario.painel.php");
 
 }
 

@@ -4,7 +4,6 @@ session_start();
 require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
-
 if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
 } else {
     header("Location: login.php");
@@ -24,20 +23,19 @@ if($usuarios->temPermissao('PES') == false) {
 <html lang="pt-br">
     <head>
         <meta charset="utf-8">
-        <title>Tela de Login</title>
+        <title>Catalogo de Endereço</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/cadastro.usuario.css">
+        <link rel="stylesheet" href="assets/css/cesta-basica.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <div id="__nex">
             <div class="main_styled">
-
                 <div class="menu-lateral">
                     <div class="painel-menu">
                         <div class="painel-menu-menu">
         
-                            <?php if($usuarios->temPermissao('PES')): ?>
+                        <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
                                     <a href="produto.pesquisa.php">
                                         <img src="assets/img/lupa2.svg">
@@ -78,7 +76,7 @@ if($usuarios->temPermissao('PES') == false) {
                                         <img src="assets/img/caminhao.png">                                        
                                     </a>                        
                                 </div>
-                            <?php endif; ?> 
+                            <?php endif; ?>      
                             
                             <?php if($usuarios->temPermissao('PES')): ?>
                                 <div class="painel-menu-widget">
@@ -86,13 +84,12 @@ if($usuarios->temPermissao('PES') == false) {
                                         <img src="assets/img/cartazPreco.png">                                        
                                     </a>                        
                                 </div>
-                            <?php endif; ?>  
+                            <?php endif; ?> 
                             
                         </div>
                     </div>
                 </div>
-                
-            
+
                 <div class="conteudo-Central">
                     <div class="corpo">
                         <header class="desktop_header">
@@ -100,50 +97,67 @@ if($usuarios->temPermissao('PES') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href=""></a>
+                                <a href="sair.php">Fazer Logoff</a>
                             </div>
                         </header>
                         <section class="page">
-                            <div class="conteudo-Geral alinhar-centro semCorFundo">
+                            <div class="conteudo-Geral">
 
-
-                                <div class="login_box">
-                                    <div class="login__leftside">
-                                        <form method="POST" action="cadastrar-usuario.adicionar.php">
-                                            <label for="email">Nome</label>
-                                            <input type="text" name="nome" id="nome" placeholder="Digite seu nome completo">
-                                            <label for="email">Usuário</label>
-                                            <input type="text" name="usuario" id="usuario" placeholder="Digite seu usuário">
-                                            <label for="senha">Senha</label>
-                                            <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
-
-                                            <div class="checkbox">
-
-                                            <label for="senha">Permissão</label><br>
-                                            <input type="checkbox" name="permissao[]" value="PESQUISA">Pesquisa
-                                            <input type="checkbox" name="permissao[]" value="CARGA">Carga de Produto
-                                            <input type="checkbox" name="permissao[]" value="CESTA">Cesta Básica
-                                            <input type="checkbox" name="permissao[]" value="ENDERECO">Endereço
-                                            <input type="checkbox" name="permissao[]" value="ENTREGA">Entrega
-                                            <input type="checkbox" name="permissao[]" value="PRECO">Preço
-                                            
-                                            </div>  
-
-                                            <input type="submit" name="btnCadastar" value="Cadastar">
+                                <div class="body-cesta">
+                                    <div class="campo-inserir">
+                                        
+                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="usuario-form.painel.php">
+                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
                                         </form>
 
                                     </div>
-                                
-        
-                                </div>                            
-                            </div>
-                            
+
+                                    <div class="tabela-titulo">
+                                        <table>
+                                            <tr>
+                                                <th style="width:10%;">Id</th>
+                                                <th style="width:10%;">Nome</th>
+                                                <th style="width:10%;">Usuário</th>
+                                                <th style="width:10%;">Permições</th>
+                                                <th style="width:10%;">Ações</th>
+                                            </tr>
+                                        </table> 
+                                    </div>
+
+                                    <div class="campo-listar">                
+                                        <div class="tabela-lancamentos">
+                                            <table>
+                                                <?php
+                                                $sql = "SELECT * FROM tb_usuarios ORDER BY nome";
+                                                $sql = $pdo->query($sql);   
+                                                if($sql->rowCount() > 0) {
+                                                    foreach($sql->fetchAll() as $usuario) {
+
+                                                        echo "<tr>";
+                                                        echo "<td style='width:10%;'>".$usuario['id']."</td>";
+                                                        echo "<td style='width:10%;'>".$usuario['nome']."</td>";
+                                                        echo "<td style='width:10%;'>".$usuario['usuario']."</td>";
+                                                        echo "<td style='width:10%;'>".$usuario['permissao']."</td>";                                
+                                                        echo '<td style="width:10%;"><a href="endereco.excluir.php?id='.$usuario['id'].'">Excluir</a>';
+                                                        echo "</tr>";  
+                                                    }
+                                                } else {
+                                                        
+                                                        echo "Nenhum produto encontrado.";
+                                                    }
+                                                ?>                                             
+
+                                            </table>
+                                        </div>
+                                    </div>                                    
+                                </div> 
+
+                            </div> 
                         </section>
-                    </div>    
+                    </div>
                 </div>
             </div>
         </div>
-
     </body>
 
 
