@@ -167,11 +167,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
-            parent.document.getElementById("cesta-area").reset();
-            parent.document.getElementById("data").value = '';
-        </script>
-
+        
     </body>
 
 

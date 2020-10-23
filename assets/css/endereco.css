@@ -1,0 +1,84 @@
+
+.body-cesta {
+    flex: 1;
+    height: 100%;
+}
+
+.campo-inserir {
+    margin-bottom: 20px;
+    border: 1px solid;
+    padding: 10px;
+}
+.campo-listar {
+    /*border: 1px solid;*/
+    height: 80%;
+    overflow: auto;
+
+}
+.cesta-area {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+.cesta-area div {
+    margin-right: 10px;
+}
+.cesta-area input, select {
+    width: 150px;
+    height: 35px;
+}
+
+
+
+
+.busca-area input {
+    height: 35px;
+    font-size: 16px;
+}
+.input-busca-produto {
+    width: 400px;
+}
+
+.input-botao {
+    width: 150px;
+}
+
+
+
+
+.tabela-titulo table{
+    width: 100%;
+    border: 1px solid;
+    margin-bottom: 10px;
+    
+}
+.tabela-titulo table th {
+    text-align: left;
+}
+.tabela-lancamentos table{
+    width: 100%;
+    /*border: 1px solid;*/
+    
+}
+
+
+
+.tabela-lancamentos table tr:nth-child(even){
+    background-color: #E6E6E6;
+    
+} 
+
+.tabela-lancamentos table tr:hover {
+    background-color: green;
+    color: #fff;   
+
+}
+.tabela-lancamentos table a {
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #ff0000;
+    font-size: 14px;
+    margin-bottom: 2px;
+
+}

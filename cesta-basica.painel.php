@@ -106,53 +106,11 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="cesta-basica.adicionar.php">
 
-                                            <div class="">
-                                                <label>Data:</label></br>
-                                                <input type="date" id="data" autocomplete="off" name="data" placeholder="" required="required">
-                                            </div>
-
-                                            <div class="">
-                                                <label>Responsavel:</label></br>
-                                                <select required="required" name="responsavel">
-                                                    <option value="Equipe">Equipe</option>
-                                                    <option value=""></option>
-                                                </select>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Quantidade:</label></br>
-                                                <input type="number" autocomplete="off" name="quantidade" placeholder="" required="required">
-                                            </div>
-
-                                            <div class="">
-                                                <label>Valor:</label></br>
-                                                <input type="text" autocomplete="off" name="valor" required="required" pattern="[0-9.,]{2,}"/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Tipo de Cesta:</label></br>
-                                                <select required="required" name="tipoCesta">
-                                                    <option value=""></option>
-                                                    <option value="Personalizada">Personalizada</option>
-                                                    <option value="Venda 1">Venda 1</option>
-                                                    <option value="Venda 2">Venda 2</option>
-                                                    <option value="Venda 3">Venda 3</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Tipo de Pessoa:</label></br>
-                                                <select required="required" name="tipoPessoa">
-                                                    <option value=""></option>
-                                                    <option value="Fisica">Física</option>
-                                                    <option value="Juridica">Jurídica</option>
-                                                </select>
-                                            </div>
-
+                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="cesta-basica.painel2.php">
                                             <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
                                         </form>
+                                        
                                     </div>
 
                                     <div class="tabela-titulo">
@@ -205,11 +163,6 @@ if($usuarios->temPermissao('USUARIO') == false) {
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
-            parent.document.getElementById("cesta-area").reset();
-            parent.document.getElementById("data").value = '';
-        </script>
-
     </body>
 
 
