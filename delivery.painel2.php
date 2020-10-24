@@ -75,26 +75,26 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
 
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="cliente.adicionar.php">
+                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="delivery.adicionar.php">
 
                                             <div class="">
                                                 <label>Data:</label></br>
-                                                <input type="date" value="<?php echo date('Y-m-d');?>" id="data" autocomplete="off" name="data" required="required"/>
+                                                <input type="date" value="<?php echo date('Y-m-d');?>" name="data" autocomplete="off" required="required"/>
                                             </div>
 
                                             <div class="">
                                                 <label>Nome:</label></br>
-                                                <input type="text" autocomplete="off" name="nome" placeholder="" required="required" value="<?php echo $cliente['nome'];?>"/>
+                                                <input type="text" autocomplete="off" name="nome" placeholder="" required="required" value="<?php echo $cliente['nome'];?>" readonly="readonly"/>
                                             </div>
 
                                             <div class="">
                                                 <label>Telefone:</label></br>
-                                                <input type="text" autocomplete="off" name="telefone" placeholder="" required="required" value="<?php echo $cliente['telefone'];?>"/>
+                                                <input type="text" autocomplete="off" name="telefone" placeholder="" value="<?php echo $cliente['telefone'];?>" readonly="readonly"/>
                                             </div>
 
                                             <div class="">
                                                 <label>Endereço:</label></br>
-                                                <input type="text" autocomplete="off" name="idEndereco" placeholder="" required="required" value="<?php echo $cliente['logradouro'];?>" readonly="readonly"/>
+                                                <input type="text" autocomplete="off" name="Endereco" placeholder="" required="required" value="<?php echo $cliente['logradouro'];?>" readonly="readonly"/>
                                             </div>
 
                                             <div class="">
@@ -109,19 +109,17 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
 
                                             <div class="">
                                                 <label>Numero:</label></br>
-                                                <input type="number" autocomplete="off" name="numero" required="required" value="<?php echo $cliente['numero'];?>"/>
+                                                <input type="number" autocomplete="off" name="numero" required="required" value="<?php echo $cliente['numero'];?>" readonly="readonly"/>
+                                            </div>
+
+                                            <div class="">
+                                                <input type="number" autocomplete="off" name="idCliente" placeholder="" required="required" value="<?php echo $cliente['id'];?>" readonly="readonly"/>
+                                            </div>
+                                            <div class="">
+                                                <input type="number" autocomplete="off" name="idEndereco" placeholder="" required="required" value="<?php echo $cliente['idEndereco'];?>" readonly="readonly"/>
                                             </div>
 
                                             <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar"/>
-
-
-                                            <div class="">
-                                                <input type="number" id="cep" autocomplete="off" name="cep" placeholder="" required="required" value="<?php echo $cliente['id'];?>" readonly="readonly"/>
-                                            </div>
-                                            <div class="">
-                                                <input type="number" id="cep" autocomplete="off" name="cep" placeholder="" required="required" value="<?php echo $cliente['idEndereco'];?>" readonly="readonly"/>
-                                            </div>
-
 
                                         </form>
                                     </div>

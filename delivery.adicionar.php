@@ -17,26 +17,36 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
-if(isset($_POST['idEndereco']) && empty($_POST['idEndereco']) == false) {
-    $nome = $_POST['nome'];
-    $telefone = $_POST['telefone'];
-	$idEndereco = $_POST['idEndereco'];
-    $numero = $_POST['numero'];           
+if(isset($_POST['idCliente']) && empty($_POST['idCliente']) == false) {
+    $data = $_POST['data'];
+    $idCliente = $_POST['idCliente'];
+    $idEndereco = $_POST['idEndereco'];
+    $cupom = "";     
+    $compra = "";  
+    $valor = "";  
+    $status = 'PEDIDO REALIZADO';
+    
+    echo $data.";".$idCliente.";".$idEndereco.";".$status;
 
-    $sql = $pdo->prepare("INSERT INTO tb_cliente SET nome = :nome, idEndereco = :idEndereco, numero = :numero, telefone = :telefone");
-    $sql->bindValue(":nome", $nome);
-    $sql->bindValue(":telefone", $telefone);
-    $sql->bindValue(":idEndereco", $idEndereco);
-    $sql->bindValue(":numero", $numero);
+    $sql = $pdo->prepare("INSERT INTO tb_log_delivery SET dataa = :dataa, idCliente = :idCliente, , idEndereco = :idEndereco, cupom = :cupom, compra = :compra, valor = :valor, statuss = :statuss");
+    $sql->bindValue(":dataa", $data);
+    $sql->bindValue(":idCliente", $idCliente);
+    $sql->bindValue(":idEndereco", $idEndereco);    
+    $sql->bindValue(":cupom", $cupom);
+    $sql->bindValue(":compra", $compra);
+    $sql->bindValue(":valor", $valor);
+    $sql->bindValue(":statuss", $status);
     $sql->execute();
 
-    header("Location:/cliente.painel.php");
+
+
+    //header("Location:/delivery.painel.php");
 
     exit;
 
 } else {
 
-    header("Location:/cliente.painel.php");
+    //header("Location:/delivery.painel.php");
 
 }
 

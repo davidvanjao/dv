@@ -125,7 +125,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:10%;">Ticket</th>
+                                                <th style="width:05%;">Ticket</th>
                                                 <th style="width:10%;">Data</th>
                                                 <th style="width:10%;">Nome</th>
                                                 <th style="width:10%;">Cidade</th>
@@ -152,13 +152,13 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                     foreach($sql->fetchAll() as $delivery) {
 
                                                         echo "<tr>";
-                                                        echo "<td style='width:10%;'>".$$delivery['id']."</td>";
-                                                        echo "<td style='width:10%;'>".$$delivery['dataa']."</td>";
-                                                        echo "<td style='width:10%;'>".$$delivery['nome']."</td>";
-                                                        echo "<td style='width:10%;'>".$$delivery['cidadeEstado']."</td>";
-                                                        echo "<td style='width:10%;'>".$$delivery['logradouro']."</td>";  
-                                                        echo "<td style='width:10%;'>".$$delivery['numero']."</td>";     
-                                                        echo "<td style='width:10%;'>".$$delivery['status']."</td>";                           
+                                                        echo "<td style='width:5%;'>".$delivery['id']."</td>";
+                                                        echo "<td style='width:10%;'>".$delivery['dataa']."</td>";
+                                                        echo "<td style='width:10%;'>".$delivery['nome']."</td>";
+                                                        echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
+                                                        echo "<td style='width:10%;'>".$delivery['logradouro']."</td>";  
+                                                        echo "<td style='width:10%;'>".$delivery['numero']."</td>";     
+                                                        echo "<td style='width:10%;'>".$delivery['statuss']."</td>";                           
                                                         echo "</tr>";  
 
                                                     

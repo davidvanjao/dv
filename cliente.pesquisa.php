@@ -28,6 +28,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
         <title>Tela de Entrega</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/cesta-basica.css">
+        <link rel="stylesheet" href="assets/css/pesquisa.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -54,8 +55,9 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
 
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="endereco.pesquisa.cliente.php">
-                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
+                                        <form class="busca-area" name="buscar-form" method="POST">
+                                            <input class="input-busca-produto" type="text" autocomplete="off" name="cliente" placeholder="Digite o cliente">
+                                            <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
                                         </form>
                                         
                                     </div>
@@ -79,30 +81,35 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                             <table>
                                                 <?php
 
-                                                $sql = "SELECT a.id, a.nome, a.telefone, b.cidadeEstado, b.bairro, b.logradouro, a.numero 
-                                                from tb_cliente as a join tb_endereco as b 
-                                                on a.idEndereco = b.id 
-                                                order by a.nome";
+                                                    if(isset($_POST['cliente']) && empty($_POST['cliente']) == false) { //se existir/ e ele nao estiver vazio.
 
-                                                $sql = $pdo->query($sql);   
-                                                if($sql->rowCount() > 0) {
-                                                    foreach($sql->fetchAll() as $cliente) {
+                                                        $cliente = addslashes($_POST['cliente']);
 
-                                                        echo "<tr>";
-                                                        echo "<td style='width:10%;'>".$cliente['nome']."</td>";
-                                                        echo "<td style='width:10%;'>".$cliente['telefone']."</td>";
-                                                        echo "<td style='width:10%;'>".$cliente['cidadeEstado']."</td>";
-                                                        echo "<td style='width:10%;'>".$cliente['bairro']."</td>";
-                                                        echo "<td style='width:10%;'>".$cliente['logradouro']."</td>";  
-                                                        echo "<td style='width:10%;'>".$cliente['numero']."</td>";
-                                                        echo '<td style="width:10%;"><a href="delivery.painel2.php?id='.$cliente['id'].'">adicionar</a>';                               
-                                                        echo "</tr>";  
-
-                                                    
-                                                    }
-                                                } else {
+                                                        $sql = "SELECT a.id, a.nome, a.telefone, b.cidadeEstado, b.bairro, b.logradouro, a.numero 
+                                                        from tb_cliente as a join tb_endereco as b
+                                                        on a.idEndereco = b.id 
+                                                        WHERE a.nome LIKE '%".$cliente."%' 
+                                                        order by a.nome";
                                                         
-                                                        echo "Nenhum produto encontrado.";
+                                                        $sql = $pdo->query($sql);   
+
+                                                        if($sql->rowCount() > 0) {
+                                                            foreach($sql->fetchAll() as $cliente) {
+
+                                                                echo "<tr>";
+                                                                echo "<td style='width:10%;'>".$cliente['nome']."</td>";
+                                                                echo "<td style='width:10%;'>".$cliente['telefone']."</td>";
+                                                                echo "<td style='width:10%;'>".$cliente['cidadeEstado']."</td>";
+                                                                echo "<td style='width:10%;'>".$cliente['bairro']."</td>";
+                                                                echo "<td style='width:10%;'>".$cliente['logradouro']."</td>";  
+                                                                echo "<td style='width:10%;'>".$cliente['numero']."</td>";                                 
+                                                                echo '<td style="width:10%;"><a href="delivery.painel2.php?id='.$cliente['id'].'">adicionar</a>'; 
+                                                                echo "</tr>";  
+                                                            }
+                                                        } else {
+
+                                                            echo "Nenhum resultado!";
+                                                        }
                                                     }
                                                 ?>                                             
 
