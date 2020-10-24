@@ -17,18 +17,15 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
-if(isset($_POST['idCliente']) && empty($_POST['idCliente']) == false) {
+if(isset($_POST['id']) && empty($_POST['id']) == false) {
     $data = $_POST['data'];
-    $idCliente = $_POST['idCliente'];
-    $idEndereco = $_POST['idEndereco'];
-    $cupom = "";     
-    $compra = "";  
-    $valor = "";  
-    $status = 'PEDIDO REALIZADO';
+    $cupom = $_POST['cupom']; 
+    $valor = str_replace(",",".",$_POST['valor']);    
+    $status = 'LIBERADO PARA ENTREGA';
     
-   //echo $data.";".$idCliente.";".$idEndereco.";".$status;
+   echo $data.";".$cupom.";".$valor.";".$status;
 
-    $sql = $pdo->prepare("INSERT INTO tb_log_delivery SET dataa = :dataa, idCliente = :idCliente, idEndereco = :idEndereco, cupom = :cupom, compra = :compra, valor = :valor, statuss = :statuss");
+    /*$sql = $pdo->prepare("INSERT INTO tb_log_delivery SET dataa = :dataa, idCliente = :idCliente, idEndereco = :idEndereco, cupom = :cupom, compra = :compra, valor = :valor, statuss = :statuss");
     $sql->bindValue(":dataa", $data);
     $sql->bindValue(":idCliente", $idCliente);
     $sql->bindValue(":idEndereco", $idEndereco);    
@@ -36,17 +33,17 @@ if(isset($_POST['idCliente']) && empty($_POST['idCliente']) == false) {
     $sql->bindValue(":compra", $compra);
     $sql->bindValue(":valor", $valor);
     $sql->bindValue(":statuss", $status);
-    $sql->execute();
+    $sql->execute();*/
 
 
 
-    header("Location:/delivery.painel.php");
+    //header("Location:/delivery.painel.php");
 
     exit;
 
 } else {
 
-    header("Location:/delivery.painel.php");
+    //header("Location:/delivery.painel.php");
 
 }
 

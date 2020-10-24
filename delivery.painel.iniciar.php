@@ -35,68 +35,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
             <div class="main_styled">
                 <div class="menu-lateral">
                     <div class="painel-menu">
-                        <div class="painel-menu-menu">
-            
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="produto.pesquisa.php">
-                                        <img src="assets/img/lupa2.svg">
-                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>        
 
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="produto.adicionar.php">
-                                        <img src="assets/img/engrenagem2.svg">
-                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>
-
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="cesta-basica.painel.php">
-                                        <img src="assets/img/cestabasica.png">
-                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>  
-
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="endereco.painel.php">
-                                        <img src="assets/img/endereco.png">                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>       
-
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="entrega.painel.php">
-                                        <img src="assets/img/caminhao.png">                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>    
-                            
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="cartaz-preco.painel.php">
-                                        <img src="assets/img/cartazPreco.png">                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?> 
-
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="usuario.painel.php">
-                                        <img src="assets/img/user.png">                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?> 
-                            
-                        </div>
                     </div>
                 </div>
 
@@ -116,9 +55,6 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
 
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="cliente.pesquisa.php">
-                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
-                                        </form>
                                         
                                     </div>
 
@@ -132,6 +68,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 <th style="width:10%;">Endereço</th>
                                                 <th style="width:10%;">Numero</th>
                                                 <th style="width:10%;">Status</th>
+                                                <th style="width:10%;">Ações</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -159,7 +96,8 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['logradouro']."</td>";  
                                                         echo "<td style='width:10%;'>".$delivery['numero']."</td>";     
-                                                        echo "<td style='width:10%;'>".$delivery['statuss']."</td>";                           
+                                                        echo "<td style='width:10%;'>".$delivery['statuss']."</td>";
+                                                        echo '<td style="width:10%;"><a href="delivery.processo.status.php?id='.$delivery['id'].'">Iniciar Compra</a>';                           
                                                         echo "</tr>";  
 
                                                     
@@ -172,6 +110,8 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                             </table>
                                         </div>
+
+                                        
                                     </div>                                    
                                 </div> 
 
