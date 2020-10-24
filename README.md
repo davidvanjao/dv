@@ -73,3 +73,31 @@ TABELA: tb_entrega
 6 - VALOR - valor - decimal(8,2)
 7 - COMPRA - compra - int(11)
 8 - NUMERO DE CAIXAS - nCaixas - int(11)
+
+-----------------------------------------------------------------------------
+23-10 - CRIACAO DA TABELA ENTREGA
+
+NOME DO BANCO: bd_produto
+TABELA: tb_cliente
+
+0 - ID - id - int(11)
+1 - NOME - nome - varchar(255)
+2 - NUMERO - numero - int(11)
+3 - TELEFONE - telefone - varchar(255)
+4 - ID ENDERECO - idEndereco - int(11) - chave estrangeira
+
+-----------------------------------------------------------------------------
+23-10 - CRIACAO DA TABELA LOG DELIVERY
+
+NOME DO BANCO: bd_produto
+TABELA: tb_log_delivery
+
+0 - ID - id - int(11)
+1 - DATA - dataa - date
+2 - ID CLIENTE - idCliente - int(11)
+3 - CUPOM FISCAL - cupom - varchar(255)
+4 - COMPRA - compra - int(11)
+5 - VALOR - valor - decimal(8,2)
+6 - STATUS - status - varchar(255)
+
+

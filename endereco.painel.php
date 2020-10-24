@@ -25,7 +25,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
         <meta charset="utf-8">
         <title>Catalogo de Endereço</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/cesta-basica.css">
+        <link rel="stylesheet" href="assets/css/endereco.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -85,6 +85,14 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                     </a>                        
                                 </div>
                             <?php endif; ?> 
+
+                            <?php if($usuarios->temPermissao('USUARIO')): ?>
+                                <div class="painel-menu-widget">
+                                    <a href="usuario.painel.php">
+                                        <img src="assets/img/user.png">                                        
+                                    </a>                        
+                                </div>
+                            <?php endif; ?> 
                             
                         </div>
                     </div>
@@ -105,34 +113,12 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="endereco.adicionar.php">
-
-                                            <div class="">
-                                                <label>Cep:</label></br>
-                                                <input type="text" id="cep" autocomplete="off" name="cep" placeholder="00000-000" required="required" pattern= "\d{5}-?\d{3}">
-                                            </div>
-
-                                            <div class="">
-                                                <label>Cidade/Estado:</label></br>
-                                                <input type="text" id="cidade" autocomplete="off" name="cidade" placeholder="" required="required">
-                                            </div>
-
-                                            <div class="">
-                                                <label>Bairro:</label></br>
-                                                <input type="text" autocomplete="off" name="bairro" placeholder="" required="required">
-                                            </div>
-
-                                            <div class="">
-                                                <label>Longradouro:</label></br>
-                                                <input type="text" autocomplete="off" name="logradouro" required="required"/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Complemento:</label></br>
-                                                <input type="text" autocomplete="off" name="complemento"/>
-                                            </div>
-
-                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
+                                        <form class="busca-area margin-baixo" name="buscar-form" method="POST">
+                                            <input class="input-busca-produto" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o endereço">
+                                            <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
+                                        </form>
+                                        <form class="busca-area" name="buscar-form" method="POST" action="endereco.painel2.php">
+                                            <input class="input-botao" type="submit" name="" value="Adicionar">
                                         </form>
                                     </div>
 
@@ -153,24 +139,32 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                         <div class="tabela-lancamentos">
                                             <table>
                                                 <?php
-                                                $sql = "SELECT * FROM tb_endereco ORDER BY cidadeEstado";
-                                                $sql = $pdo->query($sql);   
-                                                if($sql->rowCount() > 0) {
-                                                    foreach($sql->fetchAll() as $endereco) {
 
-                                                        echo "<tr>";
-                                                        echo "<td style='width:10%;'>".$endereco['cep']."</td>";
-                                                        echo "<td style='width:10%;'>".$endereco['cidadeEstado']."</td>";
-                                                        echo "<td style='width:10%;'>".$endereco['bairro']."</td>";
-                                                        echo "<td style='width:10%;'>".$endereco['logradouro']."</td>";
-                                                        echo "<td style='width:10%;'>".$endereco['nomeEdificio']."</td>";                                 
-                                                        echo '<td style="width:10%;"><a href="endereco.excluir.php?id='.$endereco['id'].'">Excluir</a>';
-                                                        echo "</tr>";  
+                                                if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
+
+                                                    $pesquisa = addslashes($_POST['pesquisa']);
+                                                    $sql = "SELECT * FROM tb_endereco WHERE logradouro LIKE '%".$pesquisa."%' LIMIT 10";
+                                                    
+                                                    $sql = $pdo->query($sql); 
+ 
+                                                    if($sql->rowCount() > 0) {
+                                                        foreach($sql->fetchAll() as $endereco) {
+
+                                                            echo "<tr>";
+                                                            echo "<td style='width:10%;'>".$endereco['cep']."</td>";
+                                                            echo "<td style='width:10%;'>".$endereco['cidadeEstado']."</td>";
+                                                            echo "<td style='width:10%;'>".$endereco['bairro']."</td>";
+                                                            echo "<td style='width:10%;'>".$endereco['logradouro']."</td>";
+                                                            echo "<td style='width:10%;'>".$endereco['nomeEdificio']."</td>";                                 
+                                                            echo '<td style="width:10%;"><a href="endereco.excluir.php?id='.$endereco['id'].'">Excluir</a>';
+                                                            echo "</tr>";  
+                                                        }
                                                     }
-                                                } else {
-                                                        
-                                                        echo "Nenhum produto encontrado.";
-                                                    }
+                                                
+                                                } else {   
+
+                                                    echo "Nenhum endereço encontrado.";
+                                                }
                                                 ?>                                             
 
                                             </table>

@@ -86,6 +86,14 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                     </a>                        
                                 </div>
                             <?php endif; ?> 
+
+                            <?php if($usuarios->temPermissao('USUARIO')): ?>
+                                <div class="painel-menu-widget">
+                                    <a href="usuario.painel.php">
+                                        <img src="assets/img/user.png">                                        
+                                    </a>                        
+                                </div>
+                            <?php endif; ?> 
                             
                         </div>
                     </div>

@@ -4,6 +4,7 @@ session_start();
 require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
+
 if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
 } else {
     header("Location: login.php");
@@ -17,13 +18,30 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
+
+$id = 0;
+if(isset($_GET['id']) && empty($_GET['id']) == false) {
+    $id = addslashes($_GET['id']);
+
+
+    $sql = "SELECT * FROM tb_endereco WHERE id = '$id'";
+    $sql = $pdo->query($sql);
+    if($sql->rowCount() > 0) {
+
+        $endereco = $sql->fetch();
+    }
+
+} else {
+    echo "Não deu certo!";
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
         <meta charset="utf-8">
-        <title>Catalogo de Endereço</title>
+        <title>Tela de Entrega</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/cesta-basica.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,11 +49,6 @@ if($usuarios->temPermissao('USUARIO') == false) {
     <body>
         <div id="__nex">
             <div class="main_styled">
-                <div class="menu-lateral">
-                    <div class="painel-menu">
-
-                    </div>
-                </div>
 
                 <div class="conteudo-Central">
                     <div class="corpo">
@@ -44,7 +57,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="endereco.painel.php">Voltar para Painel de Endereços</a>
+                                <a href="cliente.painel.php">voltar ao menu entrega</a>
                             </div>
                         </header>
                         <section class="page">
@@ -52,44 +65,60 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="endereco.adicionar.php">
+                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="cliente.adicionar.php">
+
+                                            <div class="">
+                                                <label>Nome:</label></br>
+                                                <input type="text" autocomplete="off" name="nome" placeholder="" required="required" value=""/>
+                                            </div>
+
+                                            <div class="">
+                                                <label>Telefone:</label></br>
+                                                <input type="text" autocomplete="off" name="telefone" placeholder="" required="required" value=""/>
+                                            </div>
+
+                                            <div class="">
+                                                <label>Id Endereço:</label></br>
+                                                <input type="number" autocomplete="off" name="idEndereco" placeholder="" required="required" value="<?php echo $endereco['id'];?>" readonly="readonly"/>
+                                            </div>
 
                                             <div class="">
                                                 <label>Cep:</label></br>
-                                                <input type="text" id="cep" autocomplete="off" name="cep" placeholder="00000-000" required="required" pattern= "\d{5}-?\d{3}">
+                                                <input type="text" autocomplete="off" name="cep" placeholder="" required="required" value="<?php echo $endereco['cep'];?>" readonly="readonly"/>
                                             </div>
 
                                             <div class="">
                                                 <label>Cidade/Estado:</label></br>
-                                                <input type="text" id="cidade" autocomplete="off" name="cidade" placeholder="" required="required">
+                                                <input type="text" autocomplete="off" name="cidade" placeholder="" required="required" value="<?php echo $endereco['cidadeEstado'];?>" readonly="readonly"/>
                                             </div>
 
                                             <div class="">
                                                 <label>Bairro:</label></br>
-                                                <input type="text" autocomplete="off" name="bairro" placeholder="" required="required">
+                                                <input type="text" autocomplete="off" name="bairro" placeholder="" required="required" value="<?php echo $endereco['bairro'];?>" readonly="readonly"/>
                                             </div>
 
                                             <div class="">
                                                 <label>Longradouro:</label></br>
-                                                <input type="text" autocomplete="off" name="logradouro" required="required"/>
+                                                <input type="text" autocomplete="off" name="logradouro" required="required" value="<?php echo $endereco['logradouro'];?>" readonly="readonly"/>
                                             </div>
 
                                             <div class="">
-                                                <label>Complemento:</label></br>
-                                                <input type="text" autocomplete="off" name="complemento"/>
+                                                <label>Numero:</label></br>
+                                                <input type="number" autocomplete="off" name="numero" required="required" value=""/>
                                             </div>
 
-                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
+                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar"/>
+
                                         </form>
                                     </div>
 
                                     <div class="tabela-titulo">
-
+                                       
                                     </div>
 
                                     <div class="campo-listar">                
                                         <div class="tabela-lancamentos">
-
+                                            
                                         </div>
                                     </div>                                    
                                 </div> 
