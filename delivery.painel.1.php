@@ -25,7 +25,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 <html lang="pt-br">
     <head>
         <meta charset="utf-8">
-        <title>Tela de Entrega</title>
+        <title>Delivery Adicionar</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/cesta-basica.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,6 +55,9 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
 
+                                        <form class="cesta-area" name="buscar-form" method="POST" action="delivery.cliente.pesquisa.php">
+                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
+                                        </form>
                                         
                                     </div>
 
@@ -68,7 +71,6 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 <th style="width:10%;">Endereço</th>
                                                 <th style="width:10%;">Numero</th>
                                                 <th style="width:10%;">Status</th>
-                                                <th style="width:10%;">Ações</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -96,22 +98,19 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['logradouro']."</td>";  
                                                         echo "<td style='width:10%;'>".$delivery['numero']."</td>";     
-                                                        echo "<td style='width:10%;'>".$delivery['statuss']."</td>";
-                                                        echo '<td style="width:10%;"><a href="delivery.processo.status.php?id='.$delivery['id'].'">Iniciar Compra</a>';                           
+                                                        echo "<td style='width:10%;'>".$delivery['statuss']."</td>";                           
                                                         echo "</tr>";  
 
                                                     
                                                     }
                                                 } else {
                                                         
-                                                        echo "Nenhum produto encontrado.";
+                                                        echo "Nenhuma compra pendente.";
                                                     }
                                                 ?>                                             
 
                                             </table>
                                         </div>
-
-                                        
                                     </div>                                    
                                 </div> 
 

@@ -20,22 +20,24 @@ if($usuarios->temPermissao('USUARIO') == false) {
 if(isset($_GET['id']) && empty($_GET['id']) == false) {
     $id = $_GET['id'];
     $status = 'EM ANDAMENTO';
+    $dataIniciar = date('Y-m-d H:i');
     
    //echo $data.";".$idCliente.";".$idEndereco.";".$status;
 
-    $sql = $pdo->prepare("UPDATE tb_log_delivery SET statuss = :statuss WHERE id = $id");
+    $sql = $pdo->prepare("UPDATE tb_log_delivery SET statuss = :statuss, dataIniciar = :dataIniciar WHERE id = $id");
     $sql->bindValue(":statuss", $status);
+    $sql->bindValue(":dataIniciar", $dataIniciar);
     $sql->execute();
 
 
 
-    header("Location:/delivery.painel.iniciar.php");
+    header("Location:/delivery.painel.2.php");
 
     exit;
 
 } else {
 
-    header("Location:/delivery.painel.iniciar.php");
+    header("Location:/delivery.painel.2.php");
 
 }
 

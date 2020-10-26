@@ -24,24 +24,20 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
     $id = addslashes($_GET['id']);
 
 
-
-    $sql = "SELECT b.id, b.idEndereco, b.nome, b.telefone, c.cidadeEstado, c.logradouro, c.bairro, b.numero
-    from tb_cliente as b join tb_endereco as c 
-    on b.idEndereco = c.id
-    where b.id = '$id'";
-
-
-
-
-
+    $sql = "SELECT a.id, a.dataa, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss
+    from tb_log_delivery as a join tb_cliente as b join tb_endereco as c 
+    on a.idCliente = b.id 
+    and b.idEndereco = c.id
+    where a.id = '$id'";
 
     $sql = $pdo->query($sql);
     if($sql->rowCount() > 0) {
 
-        $cliente = $sql->fetch();
+        $log = $sql->fetch();
     }
 
 } else {
+
     echo "Não deu certo!";
 }
 
@@ -75,48 +71,38 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
 
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="delivery.adicionar.php">
+                                        <form class="cesta-area" name="buscar-form" method="POST" action="delivery.processo.adicionar3.php">
+
+                                            <input type="hidden" value="<?php echo $log['id'];?>" name="id" autocomplete="off" required="required"/>
 
                                             <div class="">
                                                 <label>Data:</label></br>
-                                                <input type="date" value="<?php echo date('Y-m-d');?>" name="data" autocomplete="off" required="required"/>
+                                                <input type="date" value="<?php echo $log['dataa'];?>" name="data" autocomplete="off" required="required"/>
                                             </div>
 
                                             <div class="">
                                                 <label>Nome:</label></br>
-                                                <input type="text" autocomplete="off" name="nome" placeholder="" required="required" value="<?php echo $cliente['nome'];?>" readonly="readonly"/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Telefone:</label></br>
-                                                <input type="text" autocomplete="off" name="telefone" placeholder="" value="<?php echo $cliente['telefone'];?>" readonly="readonly"/>
+                                                <input type="text" value="<?php echo $log['nome'];?>" autocomplete="off" name="nome" placeholder="" required="required" readonly="readonly"/>
                                             </div>
 
                                             <div class="">
                                                 <label>Endereço:</label></br>
-                                                <input type="text" autocomplete="off" name="Endereco" placeholder="" required="required" value="<?php echo $cliente['logradouro'];?>" readonly="readonly"/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Cidade/Estado:</label></br>
-                                                <input type="text" autocomplete="off" name="cidade" placeholder="" required="required" value="<?php echo $cliente['cidadeEstado'];?>" readonly="readonly"/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Bairro:</label></br>
-                                                <input type="text" autocomplete="off" name="bairro" placeholder="" required="required" value="<?php echo $cliente['bairro'];?>" readonly="readonly"/>
+                                                <input type="text" value="<?php echo $log['logradouro'];?>" autocomplete="off" name="Endereco" placeholder="" required="required" readonly="readonly"/>
                                             </div>
 
                                             <div class="">
                                                 <label>Numero:</label></br>
-                                                <input type="number" autocomplete="off" name="numero" required="required" value="<?php echo $cliente['numero'];?>" readonly="readonly"/>
+                                                <input type="number" value="<?php echo $log['numero'];?>" autocomplete="off" name="numero" required="required" readonly="readonly"/>
                                             </div>
 
                                             <div class="">
-                                                <input type="number" autocomplete="off" name="idCliente" placeholder="" required="required" value="<?php echo $cliente['id'];?>" readonly="readonly"/>
+                                                <label>Cupom:</label></br>
+                                                <input type="text" autocomplete="off" name="cupom" placeholder="" required="required"/>
                                             </div>
+
                                             <div class="">
-                                                <input type="number" autocomplete="off" name="idEndereco" placeholder="" required="required" value="<?php echo $cliente['idEndereco'];?>" readonly="readonly"/>
+                                                <label>Valor:</label></br>
+                                                <input type="text" autocomplete="off" name="valor" placeholder="" required="required"/>
                                             </div>
 
                                             <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar"/>

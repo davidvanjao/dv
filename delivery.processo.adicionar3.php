@@ -17,35 +17,34 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
+
+
 if(isset($_POST['id']) && empty($_POST['id']) == false) {
+    $id = $_POST['id'];
     $data = $_POST['data'];
     $cupom = $_POST['cupom']; 
     $valor = str_replace(",",".",$_POST['valor']);    
     $status = 'LIBERADO PARA ENTREGA';
+    $dataLiberar = date('Y-m-d H:i');
     
-   echo $data.";".$cupom.";".$valor.";".$status;
+   //echo $data.";".$cupom.";".$valor.";".$status;
 
-    /*$sql = $pdo->prepare("INSERT INTO tb_log_delivery SET dataa = :dataa, idCliente = :idCliente, idEndereco = :idEndereco, cupom = :cupom, compra = :compra, valor = :valor, statuss = :statuss");
+    $sql = $pdo->prepare("UPDATE tb_log_delivery SET dataa = :dataa, cupom = :cupom, valor = :valor, statuss = :statuss, dataLiberar = :dataLiberar WHERE id = $id");
     $sql->bindValue(":dataa", $data);
-    $sql->bindValue(":idCliente", $idCliente);
-    $sql->bindValue(":idEndereco", $idEndereco);    
     $sql->bindValue(":cupom", $cupom);
-    $sql->bindValue(":compra", $compra);
     $sql->bindValue(":valor", $valor);
     $sql->bindValue(":statuss", $status);
-    $sql->execute();*/
+    $sql->bindValue("dataLiberar", $dataLiberar);
+    $sql->execute();
 
-
-
-    //header("Location:/delivery.painel.php");
+    header("Location:/delivery.painel.3.php");
 
     exit;
 
 } else {
 
-    //header("Location:/delivery.painel.php");
+    header("Location:/delivery.painel.3.php");
 
 }
-
 
 ?>

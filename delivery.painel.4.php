@@ -25,7 +25,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 <html lang="pt-br">
     <head>
         <meta charset="utf-8">
-        <title>Tela de Entrega</title>
+        <title>Delivery Entrega</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/cesta-basica.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,6 +67,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 <th style="width:10%;">Cidade</th>
                                                 <th style="width:10%;">Endereço</th>
                                                 <th style="width:10%;">Numero</th>
+                                                <th style="width:10%;">Região</th>
                                                 <th style="width:10%;">Status</th>
                                                 <th style="width:10%;">Ações</th>
                                             </tr>
@@ -82,7 +83,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 from tb_log_delivery as a join tb_cliente as b join tb_endereco as c 
                                                 on a.idCliente = b.id 
                                                 and b.idEndereco = c.id
-                                                where a.statuss = 'EM ANDAMENTO'
+                                                where a.statuss = 'LIBERADO PARA ENTREGA'
                                                 order by a.id";
 
                                                 $sql = $pdo->query($sql);   
@@ -95,9 +96,10 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         echo "<td style='width:10%;'>".$delivery['nome']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['logradouro']."</td>";  
+                                                        echo "<td style='width:10%;'>".$delivery['numero']."</td>"; 
                                                         echo "<td style='width:10%;'>".$delivery['numero']."</td>";     
                                                         echo "<td style='width:10%;'>".$delivery['statuss']."</td>";
-                                                        echo '<td style="width:10%;"><a href="delivery.painel3.php?id='.$delivery['id'].'">Liberar para Entrega</a>';                           
+                                                        echo '<td style="width:10%;"><a href="delivery.processo.adicionar4.php?id='.$delivery['id'].'">Saiu para Entrega</a>';                           
                                                         echo "</tr>";  
 
                                                     
