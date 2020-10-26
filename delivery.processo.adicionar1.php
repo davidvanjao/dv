@@ -39,17 +39,18 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
         $idEndereco = $cliente['idEndereco'];
         $compra = "1";
         $status = 'PEDIDO REALIZADO';
-        $dataPedido = date('Y-m-d H:i');
+        //$dataPedido = date('Y-m-d H:i');
+        $dataPedido = "";
             
         //echo $data.";".$idCliente.";".$idEndereco.";".$status;
     
-        $sql = $pdo->prepare("INSERT INTO tb_log_delivery SET dataa = :dataa, idCliente = :idCliente, idEndereco = :idEndereco, compra = :compra, statuss = :statuss, dataPedido = :dataPedido");
+        $sql = $pdo->prepare("INSERT INTO tb_log_delivery SET dataa = :dataa, idCliente = :idCliente, idEndereco = :idEndereco, compra = :compra, statuss = :statuss, dataPedido = NOW()");
         $sql->bindValue(":dataa", $data);
         $sql->bindValue(":idCliente", $idCliente);
         $sql->bindValue(":idEndereco", $idEndereco);    
         $sql->bindValue(":compra", $compra);
         $sql->bindValue(":statuss", $status);
-        $sql->bindValue(":dataPedido", $dataPedido);
+        //$sql->bindValue(":dataPedido", $dataPedido);
         $sql->execute();
     
         header("Location:/delivery.painel.1.php");

@@ -37,14 +37,15 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
         
         $status = 'SAIU PARA ENTREGA';
         $data = date('Y-m-d');
-        $dataEntregar = date('Y-m-d H:i');
+        //$dataEntregar = date('Y-m-d H:i');
+        $dataEntregar = "";
             
         //echo $data.";".$idCliente.";".$idEndereco.";".$status;
     
-        $sql = $pdo->prepare("UPDATE tb_log_delivery SET dataa = :dataa, statuss = :statuss, dataEntregar = :dataEntregar WHERE id = $id");
+        $sql = $pdo->prepare("UPDATE tb_log_delivery SET dataa = :dataa, statuss = :statuss, dataEntregar = NOW() WHERE id = $id");
         $sql->bindValue(":dataa", $data);
         $sql->bindValue(":statuss", $status);
-        $sql->bindValue(":dataEntregar", $dataEntregar);
+        //$sql->bindValue(":dataEntregar", $dataEntregar);
         $sql->execute();
     
         header("Location:/delivery.painel.4.php");

@@ -47,6 +47,9 @@ if($usuarios->temPermissao('USUARIO') == false) {
                             </div>
                             <div class="superiorMenu">
                                 <a href="sair.php">Fazer Logoff</a>
+                                <a href="sair.php">Fazer Logoff</a>
+                                <a href="sair.php">Fazer Logoff</a>
+                                <a href="sair.php">Fazer Logoff</a>
                             </div>
                         </header>
                         <section class="page">

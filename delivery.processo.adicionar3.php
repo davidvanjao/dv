@@ -25,16 +25,17 @@ if(isset($_POST['id']) && empty($_POST['id']) == false) {
     $cupom = $_POST['cupom']; 
     $valor = str_replace(",",".",$_POST['valor']);    
     $status = 'LIBERADO PARA ENTREGA';
-    $dataLiberar = date('Y-m-d H:i');
+    //$dataLiberar = date('Y-m-d H:i');
+    $dataLiberar = "";
     
    //echo $data.";".$cupom.";".$valor.";".$status;
 
-    $sql = $pdo->prepare("UPDATE tb_log_delivery SET dataa = :dataa, cupom = :cupom, valor = :valor, statuss = :statuss, dataLiberar = :dataLiberar WHERE id = $id");
+    $sql = $pdo->prepare("UPDATE tb_log_delivery SET dataa = :dataa, cupom = :cupom, valor = :valor, statuss = :statuss, dataLiberar = NOW() WHERE id = $id");
     $sql->bindValue(":dataa", $data);
     $sql->bindValue(":cupom", $cupom);
     $sql->bindValue(":valor", $valor);
     $sql->bindValue(":statuss", $status);
-    $sql->bindValue("dataLiberar", $dataLiberar);
+    //$sql->bindValue("dataLiberar", $dataLiberar);
     $sql->execute();
 
     header("Location:/delivery.painel.3.php");
