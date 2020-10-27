@@ -138,7 +138,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                                     $pesquisa = addslashes($_POST['pesquisa']);
                                                     $sql = "SELECT * FROM tb_produto
-                                                    WHERE preco !='0' AND d_produto LIKE '%".$pesquisa."%'";
+                                                    WHERE preco !='0' AND d_produto LIKE '%".$pesquisa."%' LIMIT 20";
                                                     
                                                     $sql = $pdo->query($sql);                                    
 

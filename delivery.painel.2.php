@@ -51,6 +51,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <a href="delivery.painel.3.php">Peinel 3</a>
                                 <a href="delivery.painel.4.php">Painel 4</a>
                                 <a href="delivery.painel.5.php">Painel 5</a>
+                                <a href="index.php">Ínicio</a>
                                 <a href="sair.php">Fazer Logoff</a>
                             </div>
                         </header>
@@ -102,7 +103,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         echo "<td style='width:10%;'>".$delivery['logradouro']."</td>";  
                                                         echo "<td style='width:10%;'>".$delivery['numero']."</td>";     
                                                         echo "<td style='width:10%;'>".$delivery['statuss']."</td>";
-                                                        echo '<td style="width:10%;"><a href="delivery.processo.iniciar2.php?id='.$delivery['id'].'">Iniciar Compra</a>';                           
+                                                        echo '<td style="width:10%;"><a href="delivery.processo.iniciar2.php?id='.$delivery['id'].'">Iniciar Compra</a></td>';                           
                                                         echo "</tr>";  
 
                                                     
