@@ -23,11 +23,11 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
     $sql = $pdo->prepare("DELETE FROM tb_entrega WHERE id = '$id'");
     $sql->execute();
 
-    header("Location: entrega.painel.php");
+    header("Location: entrega.painel.1.php");
 
 } else {
     
-    header("Location: entrega.painel.php");
+    header("Location: entrega.painel.1.php");
 }
 
 ?>

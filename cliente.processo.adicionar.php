@@ -30,13 +30,13 @@ if(isset($_POST['idEndereco']) && empty($_POST['idEndereco']) == false) {
     $sql->bindValue(":numero", $numero);
     $sql->execute();
 
-    header("Location:/cliente.painel.php");
+    header("Location:/cliente.painel.1.php");
 
     exit;
 
 } else {
 
-    header("Location:/cliente.painel.php");
+    header("Location:/cliente.painel.1.php");
 
 }
 

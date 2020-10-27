@@ -8,6 +8,10 @@
     margin-bottom: 20px;
     border: 1px solid;
     padding: 10px;
+    display: flex;
+}
+.campo-inserir form {
+    margin-right: 5px;
 }
 .campo-listar {
     /*border: 1px solid;*/

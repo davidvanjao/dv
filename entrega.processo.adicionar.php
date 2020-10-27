@@ -17,28 +17,34 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
-if(isset($_POST['cep']) && empty($_POST['cep']) == false) {
+if(isset($_POST['data']) && empty($_POST['data']) == false) {
+    $data = $_POST['data'];
 	$cep = $_POST['cep'];
     $cidadeEstado = $_POST['cidade'];
     $bairro = $_POST['bairro'];
     $logradouro = $_POST['logradouro'];
-    $nomeEdificio = $_POST['complemento'];                
+    $valor = str_replace(",",".",$_POST['valor']);   
+    $compra = $_POST['compra'];  
+    $nCaixas = $_POST['quantidade'];             
 
-    $sql = $pdo->prepare("INSERT INTO tb_endereco SET cep = :cep, cidadeEstado = :cidadeEstado, bairro = :bairro, logradouro = :logradouro, nomeEdificio = :nomeEdificio");
+    $sql = $pdo->prepare("INSERT INTO tb_entrega SET dataa = :dataa, cep = :cep, cidadeEstado = :cidadeEstado, bairro = :bairro, logradouro = :logradouro, valor = :valor, compra = :compra, nCaixas = :nCaixas");
+    $sql->bindValue(":dataa", $data);
     $sql->bindValue(":cep", $cep);
     $sql->bindValue(":cidadeEstado", $cidadeEstado);
     $sql->bindValue(":bairro", $bairro);
     $sql->bindValue(":logradouro", $logradouro);
-    $sql->bindValue(":nomeEdificio", $nomeEdificio);
+    $sql->bindValue(":valor", $valor);
+    $sql->bindValue(":compra", $compra);
+    $sql->bindValue(":nCaixas", $nCaixas);
     $sql->execute();
 
-    header("Location:/endereco.painel.php");
+    header("Location:/entrega.painel.1.php");
 
     exit;
 
 } else {
 
-    header("Location:/endereco.painel.php");
+    header("Location:/entrega.painel.1.php");
 
 }
 

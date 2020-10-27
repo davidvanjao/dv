@@ -57,7 +57,7 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="cliente.painel.php">voltar ao menu entrega</a>
+                                <a href="cliente.painel.1.php">voltar</a>
                             </div>
                         </header>
                         <section class="page">
@@ -65,7 +65,7 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
 
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="cliente.adicionar.php">
+                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="cliente.processo.adicionar.php">
 
                                             <div class="">
                                                 <label>Nome:</label></br>
@@ -75,17 +75,7 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
                                             <div class="">
                                                 <label>Telefone:</label></br>
                                                 <input type="text" autocomplete="off" name="telefone" placeholder="" required="required" value=""/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Id Endereço:</label></br>
-                                                <input type="number" autocomplete="off" name="idEndereco" placeholder="" required="required" value="<?php echo $endereco['id'];?>" readonly="readonly"/>
-                                            </div>
-
-                                            <div class="">
-                                                <label>Cep:</label></br>
-                                                <input type="text" autocomplete="off" name="cep" placeholder="" required="required" value="<?php echo $endereco['cep'];?>" readonly="readonly"/>
-                                            </div>
+                                            </div>      
 
                                             <div class="">
                                                 <label>Cidade/Estado:</label></br>
@@ -104,8 +94,10 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
 
                                             <div class="">
                                                 <label>Numero:</label></br>
-                                                <input type="number" autocomplete="off" name="numero" required="required" value=""/>
+                                                <input type="number" min='0' autocomplete="off" name="numero" required="required" value=""/>
                                             </div>
+
+                                            <input type="hidden" autocomplete="off" name="idEndereco" placeholder="" required="required" value="<?php echo $endereco['id'];?>" readonly="readonly"/>
 
                                             <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar"/>
 

@@ -45,7 +45,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="cesta-basica.painel.php">Voltar ao painel Cesta Básica</a>
+                                <a href="cesta-basica.painel.php">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
@@ -53,24 +53,23 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="cesta-basica.adicionar.php">
+                                        <form class="cesta-area" name="buscar-form" method="POST" action="cesta-basica.adicionar.php">
 
                                             <div class="">
                                                 <label>Data:</label></br>
-                                                <input type="date" value="<?php echo date('Y-m-d');?>" id="data" name="data" required="required">
+                                                <input type="date" value="<?php echo date('Y-m-d');?>" name="data" required="required">
                                             </div>
 
                                             <div class="">
-                                                <label>Responsavel:</label></br>
+                                                <label>Responsável:</label></br>
                                                 <select required="required" name="responsavel">
                                                     <option value="Equipe">Equipe</option>
-                                                    <option value=""></option>
                                                 </select>
                                             </div>
 
                                             <div class="">
                                                 <label>Quantidade:</label></br>
-                                                <input type="number" autocomplete="off" name="quantidade" placeholder="" required="required">
+                                                <input type="number" min='0' autocomplete="off" name="quantidade" placeholder="" required="required">
                                             </div>
 
                                             <div class="">

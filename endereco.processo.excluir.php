@@ -23,11 +23,11 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
     $sql = $pdo->prepare("DELETE FROM tb_endereco WHERE id = '$id'");
     $sql->execute();
 
-    header("Location: endereco.painel.php");
+    header("Location: endereco.painel.1.php");
 
 } else {
     
-    header("Location: endereco.painel.php");
+    header("Location: endereco.painel.1.php");
 }
 
 ?>

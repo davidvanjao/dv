@@ -37,36 +37,35 @@ if($usuarios->temPermissao('USUARIO') == false) {
                     <div class="painel-menu">
                         <div class="painel-menu-menu">
             
+                        <div class="painel-menu-menu">
+        
                             <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="produto.pesquisa.php">
-                                        <img src="assets/img/lupa2.svg">
-                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>        
-
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="produto.adicionar.php">
-                                        <img src="assets/img/engrenagem2.svg">
-                                        
+                                    <a href="produto.painel.pesquisa.php">
+                                        <img src="assets/img/lupa.png">                                        
                                     </a>                        
                                 </div>
                             <?php endif; ?>
 
                             <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
+                                    <a href="delivery.painel.1.php">
+                                        <img src="assets/img/delivery.png">                                        
+                                    </a>                        
+                                </div>
+                            <?php endif; ?>        
+
+                            <?php if($usuarios->temPermissao('USUARIO')): ?>
+                                <div class="painel-menu-widget">
                                     <a href="cesta-basica.painel.php">
-                                        <img src="assets/img/cestabasica.png">
-                                        
+                                        <img src="assets/img/cesta-basica.png">                                        
                                     </a>                        
                                 </div>
                             <?php endif; ?>  
 
                             <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="endereco.painel.php">
+                                    <a href="endereco.painel.1.php">
                                         <img src="assets/img/endereco.png">                                        
                                     </a>                        
                                 </div>
@@ -74,27 +73,29 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                             <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="entrega.painel.php">
-                                        <img src="assets/img/caminhao.png">                                        
+                                    <a href="entrega.painel.1.php">
+                                        <img src="assets/img/entrega.png">                                        
                                     </a>                        
                                 </div>
                             <?php endif; ?>    
-                            
+
                             <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="cartaz-preco.painel.php">
-                                        <img src="assets/img/cartazPreco.png">                                        
+                                    <a href="cliente.painel.1.php">
+                                        <img src="assets/img/usuario.png">                                        
                                     </a>                        
                                 </div>
                             <?php endif; ?> 
 
                             <?php if($usuarios->temPermissao('USUARIO')): ?>
                                 <div class="painel-menu-widget">
-                                    <a href="usuario.painel.php">
-                                        <img src="assets/img/user.png">                                        
+                                    <a href="configuracao.painel.php">
+                                        <img src="assets/img/config.png">                                        
                                     </a>                        
                                 </div>
-                            <?php endif; ?> 
+                            <?php endif; ?>
+                            
+                        </div>
                             
                         </div>
                     </div>
@@ -116,7 +117,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <div class="body-cesta">
                                     <div class="campo-inserir">
 
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="endereco.pesquisa.cliente.php">
+                                        <form class="cesta-area" name="buscar-form" method="POST" action="cliente.endereco.pesquisa.php">
                                             <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
                                         </form>
                                         
@@ -125,12 +126,12 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:10%;">Nome</th>
-                                                <th style="width:10%;">Telefone</th>
+                                                <th style="width:20%;">Nome</th>
+                                                <th style="width:5%;">Telefone</th>
                                                 <th style="width:10%;">Cidade</th>
                                                 <th style="width:10%;">Bairro</th>
-                                                <th style="width:10%;">Endereço</th>
-                                                <th style="width:10%;">Numero</th>
+                                                <th style="width:20%;">Endereço</th>
+                                                <th style="width:5%;">Numero</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -150,12 +151,12 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                     foreach($sql->fetchAll() as $cliente) {
 
                                                         echo "<tr>";
-                                                        echo "<td style='width:10%;'>".$cliente['nome']."</td>";
-                                                        echo "<td style='width:10%;'>".$cliente['telefone']."</td>";
+                                                        echo "<td style='width:20%;'>".$cliente['nome']."</td>";
+                                                        echo "<td style='width:5%;'>".$cliente['telefone']."</td>";
                                                         echo "<td style='width:10%;'>".$cliente['cidadeEstado']."</td>";
                                                         echo "<td style='width:10%;'>".$cliente['bairro']."</td>";
-                                                        echo "<td style='width:10%;'>".$cliente['logradouro']."</td>";  
-                                                        echo "<td style='width:10%;'>".$cliente['numero']."</td>";                               
+                                                        echo "<td style='width:20%;'>".$cliente['logradouro']."</td>";  
+                                                        echo "<td style='width:5%;'>".$cliente['numero']."</td>";                               
                                                         echo "</tr>";  
 
                                                     

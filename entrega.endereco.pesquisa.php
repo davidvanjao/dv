@@ -56,11 +56,12 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:10%;">Cep</th>
+                                                <th style="width:5%;">Cep</th>
                                                 <th style="width:10%;">Cidade/Estado</th>
                                                 <th style="width:10%;">Bairro</th>
-                                                <th style="width:10%;">Logradouro</th>
+                                                <th style="width:20%;">Logradouro</th>
                                                 <th style="width:10%;">Complemento</th>
+                                                <th style="width:5%;">Região</th>
                                                 <th style="width:10%;">Ações</th>
                                             </tr>
                                         </table> 
@@ -74,7 +75,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                     $endereco = addslashes($_POST['endereco']);
 
                                                     $sql = "SELECT * FROM tb_endereco
-                                                    WHERE logradouro LIKE '%".$endereco."%'";
+                                                    WHERE logradouro LIKE '%".$endereco."%' LIMIT 10";
                                                     
                                                     $sql = $pdo->query($sql);   
 
@@ -82,12 +83,13 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         foreach($sql->fetchAll() as $endereco) {
 
                                                             echo "<tr>";
-                                                            echo "<td style='width:10%;'>".$endereco['cep']."</td>";
+                                                            echo "<td style='width:5%;'>".$endereco['cep']."</td>";
                                                             echo "<td style='width:10%;'>".$endereco['cidadeEstado']."</td>";
                                                             echo "<td style='width:10%;'>".$endereco['bairro']."</td>";
-                                                            echo "<td style='width:10%;'>".$endereco['logradouro']."</td>";
-                                                            echo "<td style='width:10%;'>".$endereco['nomeEdificio']."</td>";                                 
-                                                            echo '<td style="width:10%;"><a href="cliente.painel2.php?id='.$endereco['id'].'">adicionar</a>';
+                                                            echo "<td style='width:20%;'>".$endereco['logradouro']."</td>";
+                                                            echo "<td style='width:10%;'>".$endereco['nomeEdificio']."</td>";      
+                                                            echo "<td style='width:5%;'>".$endereco['regiao']."</td>";                            
+                                                            echo '<td style="width:10%;"><a href="entrega.painel.2.php?id='.$endereco['id'].'">adicionar</a>';
                                                             echo "</tr>";  
                                                         }
                                                     } else {

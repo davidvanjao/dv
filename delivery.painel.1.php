@@ -46,6 +46,11 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
+                                <a href="delivery.painel.1.php">Painel 1</a>
+                                <a href="delivery.painel.2.php">Painel 2</a>
+                                <a href="delivery.painel.3.php">Peinel 3</a>
+                                <a href="delivery.painel.4.php">Painel 4</a>
+                                <a href="delivery.painel.5.php">Painel 5</a>
                                 <a href="sair.php">Fazer Logoff</a>
                             </div>
                         </header>
