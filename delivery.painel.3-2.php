@@ -63,7 +63,7 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="delivery.painel.3.php">Voltar</a>
+                                <a href="delivery.painel.2.php">Voltar</a>
                             </div>
                         </header>
                         <section class="page">

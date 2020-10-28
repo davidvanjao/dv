@@ -25,7 +25,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 <html lang="pt-br">
     <head>
         <meta charset="utf-8">
-        <title>Delivery Iniciar</title>
+        <title>Delivery Logistica</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/cesta-basica.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,13 +46,10 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="delivery.painel.1.php">Painel 1</a>
-                                <a href="delivery.painel.2.php">Painel 2</a>
-                                <a href="delivery.painel.3.php">Peinel 3</a>
-                                <a href="delivery.painel.4.php">Painel 4</a>
-                                <a href="delivery.painel.5.php">Painel 5</a>
-                                <a href="index.php">Ínicio</a>
-                                <a href="sair.php">Fazer Logoff</a>
+                                <a href="delivery.painel.1.php">Delivery</a>
+                                <a href="delivery.painel.2.php">Logistica</a>
+                                <a href="delivery.painel.5.php">Painel Geral</a>
+                                <a href="sair.php">Sair</a>
                             </div>
                         </header>
                         <section class="page">
@@ -67,14 +64,13 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:05%;">Ticket</th>
+                                                <th style="width:5%;">Ticket</th>
                                                 <th style="width:10%;">Data</th>
-                                                <th style="width:10%;">Nome</th>
+                                                <th style="width:20%;">Nome</th>
                                                 <th style="width:10%;">Cidade</th>
-                                                <th style="width:10%;">Endereço</th>
-                                                <th style="width:10%;">Numero</th>
-                                                <th style="width:10%;">Status</th>
-                                                <th style="width:10%;">Ações</th>
+                                                <th style="width:20%;">Endereço</th>
+                                                <th style="width:20%;">Status</th>
+                                                <th style="width:20%;">Ações</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -88,22 +84,43 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 from tb_log_delivery as a join tb_cliente as b join tb_endereco as c 
                                                 on a.idCliente = b.id 
                                                 and b.idEndereco = c.id
-                                                where a.statuss = 'PEDIDO REALIZADO'
+                                                where a.statuss IN('PEDIDO REALIZADO','EM ANDAMENTO','LIBERADO PARA ENTREGA')
                                                 order by a.id";
+
+
+                                                
 
                                                 $sql = $pdo->query($sql);   
                                                 if($sql->rowCount() > 0) {
                                                     foreach($sql->fetchAll() as $delivery) {
 
+                                                        if($delivery['statuss']=="PEDIDO REALIZADO"){
+                                                            $cor="";
+                                                        }
+                                                        if($delivery['statuss']=="EM ANDAMENTO"){
+                                                            $cor="#ff0000";
+                                                        }
+                                                        if($delivery['statuss']=="LIBERADO PARA ENTREGA"){
+                                                            $cor="#ffa500";
+                                                        }
+                                                        if($delivery['statuss']=="SAIU PARA ENTREGA"){
+                                                            $cor="#008000";
+                                                        }             
+
                                                         echo "<tr>";
                                                         echo "<td style='width:5%;'>".$delivery['id']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['dataa']."</td>";
-                                                        echo "<td style='width:10%;'>".$delivery['nome']."</td>";
+                                                        echo "<td style='width:20%;'>".$delivery['nome']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
-                                                        echo "<td style='width:10%;'>".$delivery['logradouro']."</td>";  
-                                                        echo "<td style='width:10%;'>".$delivery['numero']."</td>";     
-                                                        echo "<td style='width:10%;'>".$delivery['statuss']."</td>";
-                                                        echo '<td style="width:10%;"><a href="delivery.processo.iniciar2.php?id='.$delivery['id'].'">Iniciar Compra</a></td>';                           
+                                                        echo "<td style='width:20%;'>".$delivery['logradouro']."</td>";      
+                                                        echo "<td style='width:20%; background-color:$cor;'>".$delivery['statuss']."</td>";
+                                                        echo '<td style="width:20%;">
+                                                                <div class="teste">
+                                                                    <a class="iniciar" href="delivery.processo.iniciar2.php?id='.$delivery['id'].'">Iniciar</a>
+                                                                    <a class="liberar" href="delivery.painel.3-2.php?id='.$delivery['id'].'">Liberar</a>
+                                                                    <a class="entregar" href="delivery.processo.adicionar4.php?id='.$delivery['id'].'">Entregar</a>
+                                                                </div>                                                                
+                                                            </td>';                           
                                                         echo "</tr>";  
 
                                                     

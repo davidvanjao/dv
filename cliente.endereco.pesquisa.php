@@ -40,7 +40,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="entrega.painel.php">voltar ao formulario de entrega</a>
+                                <a href="cliente.painel.1.php">voltar</a>
                             </div>
                         </header>
                         <section class="page">

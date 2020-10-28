@@ -46,13 +46,10 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="delivery.painel.1.php">Painel 1</a>
-                                <a href="delivery.painel.2.php">Painel 2</a>
-                                <a href="delivery.painel.3.php">Peinel 3</a>
-                                <a href="delivery.painel.4.php">Painel 4</a>
-                                <a href="delivery.painel.5.php">Painel 5</a>
-                                <a href="index.php">Ínicio</a>
-                                <a href="sair.php">Fazer Logoff</a>
+                                <a href="delivery.painel.1.php">Delivery</a>
+                                <a href="delivery.painel.2.php">Logistica</a>
+                                <a href="delivery.painel.5.php">Painel Geral</a>
+                                <a href="sair.php">Sair</a>
                             </div>
                         </header>
                         <section class="page">
@@ -84,7 +81,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                             <table>
                                                 <?php
 
-                                                $sql = "SELECT a.id, a.dataa, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss
+                                                $sql = "SELECT a.id, a.dataa, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, c.regiao, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
                                                 from tb_log_delivery as a join tb_cliente as b join tb_endereco as c 
                                                 on a.idCliente = b.id 
                                                 and b.idEndereco = c.id
@@ -94,15 +91,30 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 if($sql->rowCount() > 0) {
                                                     foreach($sql->fetchAll() as $delivery) {
 
+                                                        if($delivery['statuss']=="PEDIDO REALIZADO"){
+                                                            $cor="";
+                                                        }
+                                                        if($delivery['statuss']=="EM ANDAMENTO"){
+                                                            $cor="#ff0000";
+                                                        }
+                                                        if($delivery['statuss']=="LIBERADO PARA ENTREGA"){
+                                                            $cor="##ffa500";
+                                                        }
+                                                        if($delivery['statuss']=="SAIU PARA ENTREGA"){
+                                                            $cor="#008000";
+                                                        }  
+
                                                         echo "<tr>";
                                                         echo "<td style='width:5%;'>".$delivery['id']."</td>";
-                                                        echo "<td style='width:10%;'>".$delivery['dataa']."</td>";
+                                                        echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['nome']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['logradouro']."</td>";  
                                                         echo "<td style='width:10%;'>".$delivery['numero']."</td>"; 
-                                                        echo "<td style='width:10%;'>".$delivery['numero']."</td>";     
-                                                        echo "<td style='width:10%;'>".$delivery['statuss']."</td>";                        
+                                                        echo "<td style='width:10%;'>".$delivery['regiao']."</td>";
+
+
+                                                        echo "<td style='width:10%; background-color:$cor;'>".$delivery['statuss']."</td>";                        
                                                         echo "</tr>";  
 
                                                     

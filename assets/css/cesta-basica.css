@@ -48,11 +48,11 @@
     
 } 
 
-.tabela-lancamentos table tr:hover {
+/*.tabela-lancamentos table tr:hover {
     background-color: green;
     color: #fff;   
 
-}
+}*/
 .tabela-lancamentos table a {
     text-decoration: none;
     color: #fff;
@@ -60,7 +60,25 @@
     background-color: #ff0000;
     display: block;
     text-align: center;
-    line-height: 50px;
-    margin-right: 5px;
+    /*line-height: 50px;*/
+    width: 70px;
+    margin-right: 4px;
+
+}
+
+.tabela-lancamentos .teste {
+    display: flex;
+
+}
+.teste .iniciar{
+    background-color: #ff0000;
+
+}
+.teste .liberar{
+    background-color: #ffa500;
+
+}
+.teste .entregar{
+    background-color: #008000;
 
 }

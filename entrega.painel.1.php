@@ -129,9 +129,9 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 <th style="width:10%;">Data</th>
                                                 <th style="width:10%;">Cidade</th>
                                                 <th style="width:20%;">Endereço</th>
-                                                <th style="width:5%;">Valor</th>
                                                 <th style="width:5%;">Compra</th>
-                                                <th style="width:5%;">Numero de Caixas</th>
+                                                <th style="width:5%;">Caixas</th>
+                                                <th style="width:5%;">Valor</th>
                                                 <th style="width:10%;">Ações</th>
                                             </tr>
                                         </table> 
@@ -150,10 +150,10 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         echo "<tr>";
                                                         echo "<td style='width:10%;'>".$entrega['saida_data']."</td>";
                                                         echo "<td style='width:10%;'>".$entrega['cidadeEstado']."</td>";
-                                                        echo "<td style='width:20%;'>".$entrega['logradouro']."</td>";
-                                                        echo "<td style='width:5%;'>R$ ".$entrega['valor']."</td>";  
+                                                        echo "<td style='width:20%;'>".$entrega['logradouro']."</td>";                                                         
                                                         echo "<td style='width:5%;'>".$entrega['compra']."</td>"; 
-                                                        echo "<td style='width:5%;'>".$entrega['nCaixas']."</td>";                                  
+                                                        echo "<td style='width:5%;'>".$entrega['nCaixas']."</td>"; 
+                                                        echo "<td style='width:5%;'>R$ ".$entrega['valor']."</td>";                                  
                                                         echo '<td style="width:10%;"><a href="entrega.processo.excluir.php?id='.$entrega['id'].'">Excluir</a>';
                                                         echo "</tr>";  
 

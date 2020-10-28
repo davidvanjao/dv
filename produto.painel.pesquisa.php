@@ -116,7 +116,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <div class="body-busca">
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST">
-                                            <input class="input-busca-produto" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
+                                            <input class="input-busca-produto" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
                                             <input class="input-busca-codigo" type="number" autocomplete="off" name="codigo" placeholder="Cód. do Produto">
                                             <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
                                         </form>
@@ -138,7 +138,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                                     $pesquisa = addslashes($_POST['pesquisa']);
                                                     $sql = "SELECT * FROM tb_produto
-                                                    WHERE preco !='0' AND d_produto LIKE '%".$pesquisa."%' LIMIT 20";
+                                                    WHERE preco !='0' AND d_produto LIKE '".$pesquisa."%'";
                                                     
                                                     $sql = $pdo->query($sql);                                    
 

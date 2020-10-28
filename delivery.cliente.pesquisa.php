@@ -46,7 +46,9 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
+                                <a href="cliente.endereco.pesquisa.php">Cadastrar Cliente</a>
                                 <a href="delivery.painel.1.php">Voltar</a>
+
                             </div>
                         </header>
                         <section class="page">
@@ -105,7 +107,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                                 echo "<td style='width:10%;'>".$cliente['logradouro']."</td>";  
                                                                 echo "<td style='width:10%;'>".$cliente['numero']."</td>";
                                                                 echo "<td style='width:10%;'>".$cliente['regiao']."</td>";                                  
-                                                                echo '<td style="width:10%;"><a href="delivery.processo.adicionar1.php?id='.$cliente['id'].'">adicionar</a>'; 
+                                                                echo '<td style="width:10%;"><a href="delivery.processo.adicionar1.php?id='.$cliente['id'].'">Add</a>'; 
                                                                 echo "</tr>";  
                                                             }
                                                         } else {

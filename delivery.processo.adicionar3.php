@@ -19,7 +19,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
 
 
-if(isset($_POST['id']) && empty($_POST['id']) == false) {
+if(isset($_POST['cupom']) && empty($_POST['cupom']) == false) {
     $id = $_POST['id'];
     $data = $_POST['data'];
     $cupom = $_POST['cupom']; 
@@ -38,13 +38,15 @@ if(isset($_POST['id']) && empty($_POST['id']) == false) {
     //$sql->bindValue("dataLiberar", $dataLiberar);
     $sql->execute();
 
-    header("Location:/delivery.painel.3.php");
+    header("Location:/delivery.painel.2.php");
 
     exit;
 
 } else {
 
-    header("Location:/delivery.painel.3.php");
+
+    
+    header("Location:/delivery.painel.2.php");
 
 }
 

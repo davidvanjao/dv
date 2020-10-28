@@ -48,7 +48,7 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
         //$sql->bindValue(":dataEntregar", $dataEntregar);
         $sql->execute();
     
-        header("Location:/delivery.painel.4.php");
+        header("Location:/delivery.painel.2.php");
     
         exit;
         
