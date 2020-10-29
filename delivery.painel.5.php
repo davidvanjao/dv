@@ -66,11 +66,11 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                             <tr>
                                                 <th style="width:05%;">Ticket</th>
                                                 <th style="width:10%;">Data</th>
-                                                <th style="width:10%;">Nome</th>
+                                                <th style="width:20%;">Nome</th>
                                                 <th style="width:10%;">Cidade</th>
-                                                <th style="width:10%;">Endereço</th>
-                                                <th style="width:10%;">Numero</th>
-                                                <th style="width:10%;">Região</th>
+                                                <th style="width:20%;">Endereço</th>
+                                                <th style="width:5%;">Numero</th>
+                                                <th style="width:6%;">Região</th>
                                                 <th style="width:10%;">Status</th>
                                             </tr>
                                         </table> 
@@ -98,7 +98,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                             $cor="#ff0000";
                                                         }
                                                         if($delivery['statuss']=="LIBERADO PARA ENTREGA"){
-                                                            $cor="##ffa500";
+                                                            $cor="#ffa500";
                                                         }
                                                         if($delivery['statuss']=="SAIU PARA ENTREGA"){
                                                             $cor="#008000";
@@ -107,11 +107,11 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         echo "<tr>";
                                                         echo "<td style='width:5%;'>".$delivery['id']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
-                                                        echo "<td style='width:10%;'>".$delivery['nome']."</td>";
+                                                        echo "<td style='width:20%;'>".$delivery['nome']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
-                                                        echo "<td style='width:10%;'>".$delivery['logradouro']."</td>";  
-                                                        echo "<td style='width:10%;'>".$delivery['numero']."</td>"; 
-                                                        echo "<td style='width:10%;'>".$delivery['regiao']."</td>";
+                                                        echo "<td style='width:20%;'>".$delivery['logradouro']."</td>";  
+                                                        echo "<td style='width:5%;'>".$delivery['numero']."</td>"; 
+                                                        echo "<td style='width:6%;'>".$delivery['regiao']."</td>";
 
 
                                                         echo "<td style='width:10%; background-color:$cor;'>".$delivery['statuss']."</td>";                        
