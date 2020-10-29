@@ -9,6 +9,18 @@
     border: 1px solid;
     padding: 10px;
 }
+
+.busca-area .input-busca-delivery {
+    
+    height: 35px;
+    font-size: 16px;
+}
+
+.busca-area .input-botao {
+    width: 150px;
+    height: 35px;
+    font-size: 16px;
+}
 .campo-listar {
     /*border: 1px solid;*/
     height: 80%;
