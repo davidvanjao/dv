@@ -80,14 +80,12 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                             <table>
                                                 <?php
 
-                                                $sql = "SELECT a.id, a.dataa, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss
+                                                $sql = "SELECT a.id, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
                                                 from tb_log_delivery as a join tb_cliente as b join tb_endereco as c 
                                                 on a.idCliente = b.id 
                                                 and b.idEndereco = c.id
                                                 where a.statuss IN('PEDIDO REALIZADO','EM ANDAMENTO','LIBERADO PARA ENTREGA')
                                                 order by a.id";
-
-
                                                 
 
                                                 $sql = $pdo->query($sql);   
@@ -109,28 +107,48 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                                         echo "<tr>";
                                                         echo "<td style='width:5%;'>".$delivery['id']."</td>";
-                                                        echo "<td style='width:10%;'>".$delivery['dataa']."</td>";
+                                                        echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
                                                         echo "<td style='width:20%;'>".$delivery['nome']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
                                                         echo "<td style='width:20%;'>".$delivery['logradouro']."</td>";      
                                                         echo "<td style='width:20%; background-color:$cor;'>".$delivery['statuss']."</td>";
-                                                        echo '<td style="width:20%;">
-                                                                <div class="teste">
-                                                                    <a class="iniciar" href="delivery.processo.iniciar2.php?id='.$delivery['id'].'">Iniciar</a>
-                                                                    <a class="liberar" href="delivery.painel.3-2.php?id='.$delivery['id'].'">Liberar</a>
+                                                        echo '<td style="width:20%;">';
+                                                        echo '<div class="teste">';
+                                                        
 
-                                                                    <a class="entregar" href="delivery.processo.adicionar4.php?id='.$delivery['id'].'">Entregar</a>
+                                                                    if($delivery['statuss'] == 'PEDIDO REALIZADO') {
 
-                                                                </div>                                                                
-                                                            </td>';                           
-                                                        echo "</tr>";  
+                                                                        echo '<a class="iniciar" href="delivery.processo.iniciar2.php?id='.$delivery['id'].'">Iniciar</a>';
 
-                                                    
+                                                                    }
+
+                                                                    
+                                                                    if($delivery['statuss'] == 'EM ANDAMENTO') {
+
+                                                                       echo '<a class="liberar" href="delivery.painel.3-2.php?id='.$delivery['id'].'">Liberar</a>';
+
+                                                                    }
+                                                                    if($delivery['statuss'] == 'LIBERADO PARA ENTREGA') {
+
+                                                                        echo '<a class="entregar" href="delivery.processo.adicionar4.php?id='.$delivery['id'].'">Entregar</a>';
+ 
+                                                                    }
+                                                                    
+                                                                    ?>
+                                                                    <?php                                                                    
+
+                                                                
+
+                                                        echo '</div>';                                                             
+                                                        echo '</td>';                           
+                                                        echo "</tr>";                                                      
+                                                                     
                                                     }
+
                                                 } else {
                                                         
-                                                        echo "Nenhum produto encontrado.";
-                                                    }
+                                                    echo "Nenhum produto encontrado.";
+                                                }
                                                 ?>                                             
 
                                             </table>
