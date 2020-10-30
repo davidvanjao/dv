@@ -89,6 +89,8 @@
     background-color: #ff0000;
     display: block;
     text-align: center;
-    line-height: 50px;
+    /* line-height: 50px; */
+    width: 70px;
+    margin-right: 4px;
 
 }

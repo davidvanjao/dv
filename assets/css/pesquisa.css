@@ -79,3 +79,14 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 /*===========================================================*/
 
+.busca-resultado table a {
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #ff0000;
+    display: block;
+    text-align: center;
+    /* line-height: 50px; */
+    width: 70px;
+    margin-right: 4px;
+}

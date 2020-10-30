@@ -103,7 +103,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="sair.php">Fazer Logoff</a>
+                                <a href="sair.php">Sair</a>
                             </div>
                         </header>
                         <section class="page">

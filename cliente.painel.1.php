@@ -108,7 +108,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="sair.php">Fazer Logoff</a>
+                                <a href="sair.php">Sair</a>
                             </div>
                         </header>
                         <section class="page">
@@ -132,6 +132,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 <th style="width:10%;">Bairro</th>
                                                 <th style="width:20%;">Endereço</th>
                                                 <th style="width:5%;">Numero</th>
+                                                <th style="width:10%;">Ações</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -141,7 +142,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                             <table>
                                                 <?php
 
-                                                $sql = "SELECT a.nome, a.telefone, b.cidadeEstado, b.bairro, b.logradouro, a.numero 
+                                                $sql = "SELECT a.id, a.nome, a.telefone, b.cidadeEstado, b.bairro, b.logradouro, a.numero 
                                                 from tb_cliente as a join tb_endereco as b 
                                                 on a.idEndereco = b.id 
                                                 order by a.nome";
@@ -156,7 +157,8 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         echo "<td style='width:10%;'>".$cliente['cidadeEstado']."</td>";
                                                         echo "<td style='width:10%;'>".$cliente['bairro']."</td>";
                                                         echo "<td style='width:20%;'>".$cliente['logradouro']."</td>";  
-                                                        echo "<td style='width:5%;'>".$cliente['numero']."</td>";                               
+                                                        echo "<td style='width:5%;'>".$cliente['numero']."</td>";    
+                                                        echo '<td style="width:10%;"><a href="cliente.painel.editar.php?id='.$cliente['id'].'">Editar</a>';                           
                                                         echo "</tr>";  
 
                                                     
