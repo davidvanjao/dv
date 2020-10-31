@@ -4,6 +4,8 @@ session_start();
 require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
+$erro = "";
+
 if(!empty($_POST['usuario'])) {
     $usuario = addslashes($_POST['usuario']);
     $senha = addslashes($_POST['senha']);
@@ -14,7 +16,8 @@ if(!empty($_POST['usuario'])) {
         header("Location: index.php");
         exit;
     } else {
-        echo "Usuário ou senha incorretos!";
+        $erro = "Usuário ou senha incorretos!";
+
     }
 }
 
@@ -53,6 +56,9 @@ if(!empty($_POST['usuario'])) {
                                             <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
                                             <input type="submit" name="btnLogin" value="Entrar">
                                         </form>
+                                        <?php 
+                                        echo "<h3 style='color:#fff;'>$erro</h3>";
+                                        ?>
                                     </div>
                                     <div class="login__rightsite">
                                         <div class="itemArea">

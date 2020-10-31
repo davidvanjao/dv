@@ -121,13 +121,13 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                                         echo '<a class="iniciar" href="delivery.processo.iniciar2.php?id='.$delivery['id'].'">Iniciar</a>';
 
                                                                     }
-
                                                                     
                                                                     if($delivery['statuss'] == 'EM ANDAMENTO') {
 
                                                                        echo '<a class="liberar" href="delivery.painel.3-2.php?id='.$delivery['id'].'">Liberar</a>';
 
                                                                     }
+                                                                    
                                                                     if($delivery['statuss'] == 'LIBERADO PARA ENTREGA') {
 
                                                                         echo '<a class="entregar" href="delivery.processo.adicionar4.php?id='.$delivery['id'].'">Entregar</a>';
