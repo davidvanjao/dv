@@ -12,6 +12,24 @@ if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
 $usuarios = new Usuarios($pdo);
 $usuarios->setUsuario($_SESSION['logado']);
 
+$nomeUsuario = $_SESSION['logado'];
+
+
+        $sql = "SELECT nome FROM tb_usuarios WHERE id = '$nomeUsuario'";
+        $sql = $pdo->query($sql);
+
+        if($sql->rowCount() > 0) {
+
+            $nome = $sql->fetch();     
+            $nome = explode(" ", $nome['nome']); //divide uma string por uma string.
+
+
+            #var_dump($nome[0]);
+
+        }
+
+
+
 
 ?>
 
@@ -102,7 +120,7 @@ $usuarios->setUsuario($_SESSION['logado']);
                         </header>
                         <section class="page">
                             <div class="conteudo-Geral semCorFundo alinhar-centro">
-                                <h1>Seja Bem Vindo!</h1>
+                                <h1>Seja Bem Vindo <?php echo $nome[0]?>!</h1>
                             </div> 
                         </section>
                     </div>
