@@ -1,0 +1,129 @@
+
+/*===========================================================*/
+
+.body-busca {
+    flex: 1;
+    /*background-color: red;*/
+    height: 100%;
+}
+
+.busca-area {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.busca-area input, label {
+    height: 35px;
+    font-size: 16px;
+    margin-left: 10px;
+    
+
+}
+
+.busca-area input[type=submit] {
+    height: 35px;
+    width: 150px;
+    margin-left: 10px;
+
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+}
+.busca-area .input1 {
+    width: 250px;
+
+}
+.busca-area .input2 {
+    width: 150px;
+
+}
+.busca-area .input3 {
+    width: 150px;
+
+}
+.busca-area .input5 {
+    width: 70px;
+
+}
+
+.formulario-documento, .formulario-busca {
+    display: flex;
+    margin-top: 10px;
+    align-items: flex-end;
+}
+.formulario-busca {
+    margin-top: 20px;
+
+}
+
+
+.formulario-busca input[type=text] {
+    height: 35px;
+    width: 520px;
+    margin-left: 10px;
+}
+/*===========================================================*/
+
+.campo-inserir {
+    margin-bottom: 20px;
+    border: 1px solid;
+    padding: 10px;
+}
+.tabela-titulo table{
+    width: 100%;
+    border: 1px solid;
+    
+}
+.tabela-titulo table th{
+    text-align: left;
+    
+} 
+.tabela-titulo table th { 
+    font-size: 16px;
+}
+
+.tabela-titulo table td { 
+    border: 1px solid #000; 
+    font-size: 20px;
+}
+
+/*===========================================================*/
+.busca-resultado {
+    /*height: 87%;*/
+    overflow: auto;
+}
+.busca-resultado table{
+    width: 100%;
+    
+}
+.busca-resultado table th{
+    text-align: left;
+    
+} 
+.busca-resultado table tr:nth-child(even){
+    background-color: #E6E6E6;
+    
+} 
+
+.busca-resultado table tr:hover {
+    background-color: green;
+    color: #fff;   
+
+}
+
+/*===========================================================*/
+
+.busca-resultado table a {
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #ff0000;
+    display: block;
+    text-align: center;
+    /* line-height: 50px; */
+    width: 70px;
+    margin-right: 4px;
+}

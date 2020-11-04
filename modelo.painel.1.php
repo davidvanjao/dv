@@ -19,63 +19,6 @@ if($usuarios->temPermissao('USUARIO') == false) {
 }
 
 
-
-
-
-$sql = "SELECT MAX(id) FROM tb_log_delivery";
-$sql = $pdo->query($sql);
-
-if($sql->rowCount() > 0) {
-
-    $orcamento = $sql->fetch();
-
-    $orcamento = $orcamento[0];
-    $orcamento = $orcamento + '1';    
-
-    $_SESSION['orcamento'] = $orcamento;
-
-}
-
-
-var_dump($orcamento);
-var_dump($_SESSION);
-//session_destroy();
-
-
-if(isset($_GET['adicionar'])) {
-
-$idProduto = (int)$_GET['adicionar'];
-
-$sql = "SELECT * FROM tb_produto WHERE id = $idProduto";    
-$sql = $pdo->query($sql);                                    
-
-if($sql->rowCount() > 0) {
-    foreach($sql as $key => $value) {
-
-           
-    }
-
-
-    if(isset($value['id']) == $idProduto) {
-        if(isset($_SESSION['orcamento'][$idProduto])){
-            $_SESSION['orcamento'][$idProduto]['quantidade']++;
-        }else{
-            $_SESSION['orcamento'][$idProduto] = array('quantidade'=>1, 'produto'=>$value['d_produto'], 'preco'=>$value['preco'], 'estoque'=>$value['estoque'], 'codigo'=>$value['c_produto'], 'id'=>$value['id']);
-        }
-        //echo '<script>alert("O item foi adicionado ao carrinho.");</script>';
-    }else{
-        die('voce nao pode adicionar um item que nao existe.');
-    }
-
-    
-} 
-
-}
-
-
- var_dump($_SESSION);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -115,7 +58,7 @@ if($sql->rowCount() > 0) {
 
                                 <div class="body-busca">
                                     <div class="campo-inserir">
-                                        <form class="busca-area" name="buscar-form" method="POST" action="modelo.painel.pesquisa.php">
+                                        <form class="busca-area" name="buscar-form" method="POST" action="modelo.painel.2.php">
                                             <input class="input-botao" type="submit" name="botao-pesquisar" value="Adicionar">
                                         </form>
                                     </div>
@@ -135,22 +78,45 @@ if($sql->rowCount() > 0) {
                                         <table>
                                             <?php                                 
 
-                                                foreach($_SESSION['orcamento'] as $key=>$value) {
+                                            $sql = "SELECT a.id, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+                                            from tb_log_delivery as a join tb_cliente as b join tb_endereco as c 
+                                            on a.idCliente = b.id 
+                                            and b.idEndereco = c.id
+                                            where a.statuss = 'PEDIDO REALIZADO'
+                                            order by a.id";
+
+                                            $sql = $pdo->query($sql);   
+                                            if($sql->rowCount() > 0) {
+                                                foreach($sql->fetchAll() as $delivery) {
+
+                                                    if($delivery['statuss']=="PEDIDO REALIZADO"){
+                                                        $cor="";
+                                                    }
+                                                    if($delivery['statuss']=="EM ANDAMENTO"){
+                                                        $cor="#ff0000";
+                                                    }
+                                                    if($delivery['statuss']=="LIBERADO PARA ENTREGA"){
+                                                        $cor="##ffa500";
+                                                    }
+                                                    if($delivery['statuss']=="SAIU PARA ENTREGA"){
+                                                        $cor="#008000";
+                                                    }  
+
                                                     echo "<tr>";
-                                                    echo "<td style='width:10%;'>".$value['codigo']."</td>";
-                                                    echo "<td style='width:50%;'>".$value['produto']."</td>";
-                                                    echo "<td style='width:10%;'>".$value['quantidade']."</td>";
-                                                    echo "<td style='width:10%;'>".$value['preco']."</td>";
-                                                    echo "<td style='width:10%;'>".$value['estoque']."</td>";                                                    
-                                                    echo '<td style="width:10%;"><a href="?adicionar='.$value['id'].'">Excluir</a>';
+                                                    echo "<td style='width:5%;'>".$delivery['id']."</td>";
+                                                    echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
+                                                    echo "<td style='width:10%;'>".$delivery['nome']."</td>";
+                                                    echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
+                                                    echo "<td style='width:10%;'>".$delivery['logradouro']."</td>";  
+                                                    echo "<td style='width:10%;'>".$delivery['numero']."</td>";     
+                                                    echo "<td style='width:10%; background-color:$cor;'>".$delivery['statuss']."</td>";                           
                                                     echo "</tr>";  
 
-                                                    //print_r($value);
-                                                    //var_dump($value); 
-                                                    //echo $value['id'];    
-                                                }        
                                                 
-                                                //session_destroy();
+                                                }
+                                            } else {                                                    
+                                                echo "Nenhuma compra pendente.";
+                                            }
 
                                                 
                                             ?>                                        
