@@ -33,7 +33,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
         margin: 0;
 }
 .busca-area .input1 {
-    width: 250px;
+    width: 390px;
 
 }
 .busca-area .input2 {
@@ -112,6 +112,16 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     background-color: green;
     color: #fff;   
 
+}
+.inputOrcamento {
+    height: 35px;
+    font-size: 16px;
+    margin-left: 10px;
+    width: 110px;
+}
+.formulario-cliente {
+    display: flex;
+    justify-content: space-between;
 }
 
 /*===========================================================*/

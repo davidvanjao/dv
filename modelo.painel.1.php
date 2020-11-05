@@ -18,6 +18,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
+//var_dump($_SESSION);
 
 ?>
 
@@ -50,6 +51,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
+                                <a href="configuracao.painel.php">Voltar</a>
                                 <a href="sair.php">Sair</a>
                             </div>
                         </header>

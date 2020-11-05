@@ -22,3 +22,12 @@ if(isset($_GET['excluir'])) {
 
 
 }
+
+if(isset($_POST['limpar'])) {
+
+    unset( $_SESSION['orcamento'] );
+    unset( $_SESSION['cliente'] );
+
+    header("Location:/modelo.painel.1.php");
+
+}

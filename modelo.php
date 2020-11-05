@@ -69,3 +69,37 @@
     }
 
 ?>
+
+
+
+
+/*if(isset($_GET['id']) && empty($_GET['id']) == false) {
+    $id = addslashes($_GET['id']);
+
+    $sql = "SELECT a.id, a.nome, a.telefone, b.cidadeEstado, b.bairro, b.logradouro, a.numero 
+    from tb_cliente a, tb_endereco b 
+    where a.id = '$id'
+    and a.idEndereco = b.id";
+ 
+
+    $sql = $pdo->query($sql);
+
+    if($sql->rowCount() > 0) {
+
+        $cliente = $sql->fetch();
+        
+        
+    } else {
+
+        //$cliente = "";
+
+    }
+} */
+
+/*if(isset($_GET['id']) && empty($_GET['id']) == false) { 
+    $idCliente = $valueCliente['id'];
+    $nomeCliente = $valueCliente['nome'];
+} else {
+    $idCliente = "";
+    $nomeCliente ="";
+}*/

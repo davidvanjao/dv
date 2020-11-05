@@ -19,7 +19,77 @@ if($usuarios->temPermissao('USUARIO') == false) {
 }
 
 
+$idCliente = "";
+$nomeCliente ="";
 
+
+if(isset($_GET['adicionar'])) {
+
+    $idProduto = (int)$_GET['adicionar'];
+    
+    $sql = "SELECT * FROM tb_produto WHERE id = $idProduto";    
+    $sql = $pdo->query($sql);                                    
+    
+    if($sql->rowCount() > 0) {
+        foreach($sql as $key => $value) {
+
+            if(isset($value['id']) == $idProduto) {
+                if(isset($_SESSION['orcamento'][$idProduto])){
+
+                    $_SESSION['orcamento'][$idProduto]['quantidade']++;
+
+                }else{
+
+                    $_SESSION['orcamento'][$idProduto] = array('quantidade'=>1, 'produto'=>$value['d_produto'], 'preco'=>$value['preco'], 'estoque'=>$value['estoque'], 'codigo'=>$value['c_produto'], 'id'=>$value['id']);
+                }
+                //echo '<script>alert("O item foi adicionado ao carrinho.");</script>';
+            }else{
+
+                die('voce nao pode adicionar um item que nao existe.');
+            }
+        
+                    
+        }   
+        
+        
+    } 
+    
+}
+
+if(isset($_GET['id'])) {
+
+    $idCliente = addslashes($_GET['id']);
+    
+    $sql = "SELECT a.id, a.nome, a.telefone, b.cidadeEstado, b.bairro, b.logradouro, a.numero 
+    from tb_cliente a, tb_endereco b 
+    where a.id = '$idCliente'
+    and a.idEndereco = b.id";
+
+    $sql = $pdo->query($sql);
+
+    if($sql->rowCount() > 0) {
+
+        foreach($sql as $key => $valueCliente) {
+
+
+            if(isset($valueCliente['id']) == $idCliente) {
+                
+
+                $_SESSION['cliente'][$idCliente] = array('idCliente'=>$valueCliente['id'], 'nomeCliente'=>$valueCliente['nome']);
+
+                
+            } else{
+
+                die('Operacao de adicionar cliente deu errado!');
+            }        
+                    
+        }          
+        
+    }                              
+    
+   
+    
+}
 
 
 $sql = "SELECT MAX(id) FROM tb_log_delivery";
@@ -28,48 +98,39 @@ $sql = $pdo->query($sql);
 if($sql->rowCount() > 0) {
 
     $orcamento = $sql->fetch();
+    $orcamento = $orcamento[0] + 1;   
 
-    $orcamento = $orcamento[0];
-    $orcamento = $orcamento + '1';    
+} else {
 
+    echo "Não deu certo o orcamento";
 }
 
 
-//echo $orcamento;
-//var_dump($_SESSION);
-//session_destroy();
 
+if(!empty($_SESSION['cliente'])) {
 
-if(isset($_GET['adicionar'])) {
+    foreach($_SESSION['cliente'] as $key=>$valueCliente) {
 
-$idProduto = (int)$_GET['adicionar'];
-
-$sql = "SELECT * FROM tb_produto WHERE id = $idProduto";    
-$sql = $pdo->query($sql);                                    
-
-if($sql->rowCount() > 0) {
-    foreach($sql as $key => $value) {
-                   
-    }
-
-    if(isset($value['id']) == $idProduto) {
-        if(isset($_SESSION['orcamento'][$idProduto])){
-            $_SESSION['orcamento'][$idProduto]['quantidade']++;
-        }else{
-            $_SESSION['orcamento'][$idProduto] = array('quantidade'=>1, 'produto'=>$value['d_produto'], 'preco'=>$value['preco'], 'estoque'=>$value['estoque'], 'codigo'=>$value['c_produto'], 'id'=>$value['id']);
+        if(!empty($_SESSION['cliente'])) { 
+            $idCliente = $valueCliente['idCliente'];
+            $nomeCliente = $valueCliente['nomeCliente'];
+        } else {
+            
         }
-        //echo '<script>alert("O item foi adicionado ao carrinho.");</script>';
-    }else{
-        die('voce nao pode adicionar um item que nao existe.');
+
     }
 
     
-} 
-
 }
 
 
- //var_dump($_SESSION);
+
+
+    //echo $orcamento;
+    //echo $cliente;
+    //var_dump($_SESSION);
+    //session_destroy();
+
 
 
 ?>
@@ -114,65 +175,45 @@ if($sql->rowCount() > 0) {
                                     <div class="campo-inserir">
 
                                         <div class="formulario-cliente">                                   
-                                            <form class="busca-area" name="buscar-form" method="POST" action="cliente.processo.adicionar.php">
+                                            <form class="busca-area" name="buscar-form" method="POST" action="modelo.cliente.pesquisa.php">
+                                                <div>
+                                                    <label>Id:</label></br>
+                                                    <input class="input5" type="number" min='0' autocomplete="off" name="numero" value="<?php echo $idCliente ?>" readonly="readonly"/>
+                                                </div> 
+
                                                 <div>
                                                     <label>Nome:</label></br>
-                                                    <input class="input1" type="text" autocomplete="off" name="nome" placeholder="" required="required" value=""/>    
-                                                </div>                                        
-
-                                                <div>
-                                                    <label>Telefone:</label></br>
-                                                    <input class="input2" type="text" autocomplete="off" name="telefone" placeholder="" required="required" value=""/>   
-                                                </div>                                              
-
-                                                <div>
-                                                    <label>Cidade/Estado:</label></br>
-                                                    <input class="input3" type="text" autocomplete="off" name="cidade" placeholder="" required="required" value="" readonly="readonly"/>  
+                                                    <input class="input1" type="text" autocomplete="off" name="nome" placeholder="" value="<?php echo $nomeCliente ?>" readonly="readonly"/>    
                                                 </div> 
-
-                                                <div>
-                                                    <label>Longradouro:</label></br>
-                                                    <input class="input4" type="text" autocomplete="off" name="logradouro" required="required" value="" readonly="readonly"/>    
-                                                </div>                                         
-
-                                                <div>
-                                                    <label>Numero:</label></br>
-                                                    <input class="input5" type="number" min='0' autocomplete="off" name="numero" required="required" value=""/>
-                                                </div> 
-                                            
                                                 
-                                                    <input class="input-botao" type="submit" name="botao-adicionar" value="Buscar"/>                                            
+                                                <input class="input-botao" type="submit" name="botao-adicionar" value="Cliente"/>                                            
 
                                             </form>
+
+                                            <div>
+                                                <label>N. Orcamento</label></br>
+                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="buscar produto" value="<?php echo $orcamento ?>">                                            
+                                            </div>
+                                            
                                         </div>
 
-                                        <div class="formulario-documento">         
+                                        <div class="formulario-documento">      
+
+                                            <form class="busca-area" name="buscar-form" method="POST" action="modelo.painel.pesquisa.php">
+                                                 <input type="submit" name="botao-pesquisar" value="Adicionar">
+                                            </form>   
+
+                                            <form class="busca-area" name="buscar-form" method="POST" action="modelo.painel.excluir.php">
+                                                <input type="submit" name="limpar" value="Limpar">
+                                            </form>
 
                                             <form class="busca-area" name="buscar-form" method="POST" action="">
-                                                <div>
-                                                    <label>N. Orcamento</label></br>
-                                                    <input minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="buscar produto" value="<?php echo $orcamento ?>">
-                                                </div> 
-
                                                 <input type="submit" name="botao-pesquisar" value="Salvar">
                                             </form>
 
-                                            <form class="busca-area" name="buscar-form" method="POST" action="">
-                                                <input type="submit" name="botao-pesquisar" value="Limpar">
-                                            </form>
 
                                         </div>
 
-                                        <div class="formulario-busca">         
-                                            
-                                             <form class="busca-area" name="buscar-form" method="POST">
-                                            
-                                                <input id ="busca" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="buscar produto">
-
-                                                <!--<input type="submit" name="botao-pesquisar" value="Pesquisar">-->
-                                            </form>
-
-                                        </div>
 
                                     </div>
                                     <div class="tabela-titulo">
@@ -189,7 +230,12 @@ if($sql->rowCount() > 0) {
                                     </div>                                    
                                     <div class="busca-resultado"> 
                                         <table>
-                                            <?php                                 
+                                            <?php
+
+                                            
+
+                                            if(!empty($_SESSION['orcamento'])) {
+
 
                                                 foreach($_SESSION['orcamento'] as $key=>$value) {
                                                     echo "<tr>";
@@ -201,7 +247,15 @@ if($sql->rowCount() > 0) {
                                                     echo '<td style="width:10%;"><a href="modelo.painel.excluir.php?excluir='.$value['id'].'">Excluir</a>';
                                                     echo "</tr>";  
   
-                                                }        
+                                                }
+ 
+                                                
+                                            } else {
+
+                                                echo "</br>";
+                                                echo "Lista não iniciada!";
+                                               
+                                            }      
                                                 
                                                 
                                             ?>                                        
@@ -216,8 +270,8 @@ if($sql->rowCount() > 0) {
             </div>
         </div>
 
-        <script type="text/javascript" src="jquery.min.js"></script>
-        <script type="text/javascript" src="script2.js"></script>
+        <!--<script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="script2.js"></script>-->
 
     </body>
 
