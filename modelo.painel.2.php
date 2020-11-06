@@ -3,6 +3,7 @@
 session_start();
 require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
+require 'modelo.processo.php';
 
 
 if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
@@ -17,120 +18,6 @@ if($usuarios->temPermissao('USUARIO') == false) {
     header("Location:index.php");
     exit;
 }
-
-
-$idCliente = "";
-$nomeCliente ="";
-
-
-if(isset($_GET['adicionar'])) {
-
-    $idProduto = (int)$_GET['adicionar'];
-    
-    $sql = "SELECT * FROM tb_produto WHERE id = $idProduto";    
-    $sql = $pdo->query($sql);                                    
-    
-    if($sql->rowCount() > 0) {
-        foreach($sql as $key => $value) {
-
-            if(isset($value['id']) == $idProduto) {
-                if(isset($_SESSION['orcamento'][$idProduto])){
-
-                    $_SESSION['orcamento'][$idProduto]['quantidade']++;
-
-                }else{
-
-                    $_SESSION['orcamento'][$idProduto] = array('quantidade'=>1, 'produto'=>$value['d_produto'], 'preco'=>$value['preco'], 'estoque'=>$value['estoque'], 'codigo'=>$value['c_produto'], 'id'=>$value['id']);
-                }
-                //echo '<script>alert("O item foi adicionado ao carrinho.");</script>';
-            }else{
-
-                die('voce nao pode adicionar um item que nao existe.');
-            }
-        
-                    
-        }   
-        
-        
-    } 
-    
-}
-
-if(isset($_GET['id'])) {
-
-    $idCliente = addslashes($_GET['id']);
-    
-    $sql = "SELECT a.id, a.nome, a.telefone, b.cidadeEstado, b.bairro, b.logradouro, a.numero 
-    from tb_cliente a, tb_endereco b 
-    where a.id = '$idCliente'
-    and a.idEndereco = b.id";
-
-    $sql = $pdo->query($sql);
-
-    if($sql->rowCount() > 0) {
-
-        foreach($sql as $key => $valueCliente) {
-
-
-            if(isset($valueCliente['id']) == $idCliente) {
-                
-
-                $_SESSION['cliente'][$idCliente] = array('idCliente'=>$valueCliente['id'], 'nomeCliente'=>$valueCliente['nome']);
-
-                
-            } else{
-
-                die('Operacao de adicionar cliente deu errado!');
-            }        
-                    
-        }          
-        
-    }                              
-    
-   
-    
-}
-
-
-$sql = "SELECT MAX(id) FROM tb_log_delivery";
-$sql = $pdo->query($sql);
-
-if($sql->rowCount() > 0) {
-
-    $orcamento = $sql->fetch();
-    $orcamento = $orcamento[0] + 1;   
-
-} else {
-
-    echo "Não deu certo o orcamento";
-}
-
-
-
-if(!empty($_SESSION['cliente'])) {
-
-    foreach($_SESSION['cliente'] as $key=>$valueCliente) {
-
-        if(!empty($_SESSION['cliente'])) { 
-            $idCliente = $valueCliente['idCliente'];
-            $nomeCliente = $valueCliente['nomeCliente'];
-        } else {
-            
-        }
-
-    }
-
-    
-}
-
-
-
-
-    //echo $orcamento;
-    //echo $cliente;
-    //var_dump($_SESSION);
-    //session_destroy();
-
 
 
 ?>
@@ -192,7 +79,7 @@ if(!empty($_SESSION['cliente'])) {
 
                                             <div>
                                                 <label>N. Orcamento</label></br>
-                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="buscar produto" value="<?php echo $orcamento ?>">                                            
+                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="buscar produto" value="<?php echo $orcamento ?>" readonly="readonly">                                            
                                             </div>
                                             
                                         </div>
@@ -200,7 +87,7 @@ if(!empty($_SESSION['cliente'])) {
                                         <div class="formulario-documento">      
 
                                             <form class="busca-area" name="buscar-form" method="POST" action="modelo.painel.pesquisa.php">
-                                                 <input type="submit" name="botao-pesquisar" value="Adicionar">
+                                                 <input type="submit" name="botao-adicionar" value="Adicionar">
                                             </form>   
 
                                             <form class="busca-area" name="buscar-form" method="POST" action="modelo.painel.excluir.php">
@@ -210,7 +97,6 @@ if(!empty($_SESSION['cliente'])) {
                                             <form class="busca-area" name="buscar-form" method="POST" action="">
                                                 <input type="submit" name="botao-pesquisar" value="Salvar">
                                             </form>
-
 
                                         </div>
 
@@ -241,7 +127,19 @@ if(!empty($_SESSION['cliente'])) {
                                                     echo "<tr>";
                                                     echo "<td style='width:10%;'>".$value['codigo']."</td>";
                                                     echo "<td style='width:50%;'>".$value['produto']."</td>";
-                                                    echo "<td style='width:10%;'>".$value['quantidade']."</td>";
+
+
+                                                    echo "<td style='width:10%;'>
+
+                                                    <form class='' name='buscar-form' method='POST'>
+                                                    
+                                                    <input value=".$value['quantidade']." class='quantidade' type='number' min='0'  name='quantProd' required='required' onchange='this.form.submit()'>
+
+                                                    </form>     
+                                                    </td>";
+                                                    
+
+                                                    
                                                     echo "<td style='width:10%;'>".$value['preco']."</td>";
                                                     echo "<td style='width:10%;'>".$value['estoque']."</td>";                                                    
                                                     echo '<td style="width:10%;"><a href="modelo.painel.excluir.php?excluir='.$value['id'].'">Excluir</a>';

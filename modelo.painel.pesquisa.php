@@ -56,6 +56,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                             <div class="conteudo-Geral">
 
                                 <div class="body-busca">
+                                    
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST">
                                             <input class="input-busca-produto" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
