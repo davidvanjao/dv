@@ -27,6 +27,7 @@ if(isset($_POST['limpar'])) {
 
     unset( $_SESSION['orcamento'] );
     unset( $_SESSION['cliente'] );
+    unset( $_SESSION['numeroOrcamento'] );
 
     header("Location:/modelo.painel.1.php");
 

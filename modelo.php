@@ -103,3 +103,51 @@
     $idCliente = "";
     $nomeCliente ="";
 }*/
+
+
+
+
+
+if(isset($_GET['adicionar'])) {
+
+$idProduto = (int)$_GET['adicionar'];
+
+$sql = "SELECT * FROM tb_produto WHERE id = $idProduto";    
+$sql = $pdo->query($sql);                                    
+
+if($sql->rowCount() > 0) {
+    foreach($sql as $key => $value) {
+
+        if(isset($value['id']) == $idProduto) {
+            if(isset($_SESSION['orcamento'][$idProduto])){
+
+                if(isset($_POST['quantProd'])) {
+
+
+                    $prodQuantidade = $_POST['quantProd'];
+                    $_SESSION['orcamento'][$idProduto]['quantidade'] = $prodQuantidade;                                        
+                
+                    
+                }
+
+                    //$_SESSION['orcamento'][$idProduto]['quantidade']++;
+
+                    //echo '<script>alert("Esse produto já existe na lista!");</script>';
+
+            }else{
+
+                $_SESSION['orcamento'][$idProduto] = array('quantidade'=>1, 'produto'=>$value['d_produto'], 'preco'=>$value['preco'], 'estoque'=>$value['estoque'], 'codigo'=>$value['c_produto'], 'id'=>$value['id']);
+            }
+            
+        }else{
+
+            die('voce nao pode adicionar um item que nao existe.');
+        }
+    
+                
+    }   
+    
+    
+} 
+
+}

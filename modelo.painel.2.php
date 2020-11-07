@@ -19,8 +19,90 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
+//=================================================================================================================
+if(isset($_GET['orcamento'])) {
+
+    $numeroOrcamento = (int)$_GET['orcamento'];    
+
+    if(!empty($numeroOrcamento)) {                
+
+        $_SESSION['numeroOrcamento'][$numeroOrcamento] = array('orcamento'=>$numeroOrcamento);
+        
+    } else{
+
+        die('Operacao de adicionar cliente deu errado!');
+    } 
+
+}
+
+if(!empty($_SESSION['numeroOrcamento'])) {
+
+    foreach($_SESSION['numeroOrcamento'] as $key=>$valueOrcamento) {
+
+        $numeroOrc = $valueOrcamento['orcamento'];
+
+    }
+    
+}
+
+
+//=================================================================================================================
+
+if(isset($_GET['id'])) {
+
+    $idCliente = addslashes($_GET['id']);
+    
+    $sql = "SELECT a.id, a.idEndereco, a.nome, a.telefone, b.cidadeEstado, b.bairro, b.logradouro, a.numero 
+    from tb_cliente a, tb_endereco b 
+    where a.id = '$idCliente'
+    and a.idEndereco = b.id";
+
+    $sql = $pdo->query($sql);
+
+    if($sql->rowCount() > 0) {        
+
+        foreach($sql as $key => $valueCliente) {    
+
+            if(isset($_SESSION['cliente'])) {   
+
+                $_SESSION['cliente'][$idCliente] = array('idCliente'=>$valueCliente['id'], 'idEndereco'=>$valueCliente['idEndereco'], 'nomeCliente'=>$valueCliente['nome']);
+
+            } else {
+
+                $_SESSION['cliente'][$idCliente] = array('idCliente'=>$valueCliente['id'], 'idEndereco'=>$valueCliente['idEndereco'], 'nomeCliente'=>$valueCliente['nome']);            
+
+            }
+                      
+        }   
+                
+    }      
+    
+}
+
+if(!empty($_SESSION['cliente'])) {
+
+    foreach($_SESSION['cliente'] as $key=>$valueCliente) {    
+        
+            $idCliente = $valueCliente['idCliente'];
+            $nomeCliente = $valueCliente['nomeCliente'];            
+
+    }
+
+    
+} 
+
+//=================================================================================================================
+
+
+
+
+
+
+var_dump($_SESSION);
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -79,7 +161,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                             <div>
                                                 <label>N. Orcamento</label></br>
-                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="buscar produto" value="<?php echo $orcamento ?>" readonly="readonly">                                            
+                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" value="<?php echo $numeroOrc?>" readonly="readonly">                                            
                                             </div>
                                             
                                         </div>

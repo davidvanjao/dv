@@ -18,7 +18,25 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
-//var_dump($_SESSION);
+if(isset($_SESSION['logado'])) {
+
+    $sql = "SELECT MAX(id) FROM tb_log_delivery";
+    $sql = $pdo->query($sql);
+    
+    if($sql->rowCount() > 0) {
+    
+        $orcamento = $sql->fetch();
+        $orcamento = $orcamento[0] + 1;   
+    
+    } else {
+    
+        echo "Não deu certo o orcamento";
+    }
+
+
+}
+
+var_dump($_SESSION);
 
 ?>
 
@@ -60,8 +78,9 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                 <div class="body-busca">
                                     <div class="campo-inserir">
-                                        <form class="busca-area" name="buscar-form" method="POST" action="modelo.painel.2.php">
-                                            <input class="input-botao" type="submit" name="botao-pesquisar" value="Adicionar">
+                                        <form class="busca-area" name="buscar-form" method="POST" action="modelo.processo.php">
+                                            <input type="hidden" name="orcamentoPainel" value="<?php echo $orcamento ?>">
+                                            <input class="input-botao" type="submit" name="botaoIniciarOrcamento" value="Adicionar">
                                         </form>
                                     </div>
                                     <div class="tabela-titulo">

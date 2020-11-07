@@ -1,10 +1,29 @@
 <?php
 
+//session_start();
+
+//================================================================================================
+
 $idCliente = "";
 $nomeCliente ="";
+$numeroOrcamento="";
+
+if(isset($_POST['orcamentoPainel'])) {
+    $numeroOrcamento = $_POST['orcamentoPainel'];
+ 
+    header("Location:/modelo.painel.2.php?orcamento=$numeroOrcamento");
 
 
-if(isset($_GET['adicionar'])) {
+}
+
+
+//echo $orcamento;
+//echo $cliente;
+//echo $numeroOrcamento;
+//var_dump($_SESSION);
+//session_destroy();
+
+/*if(isset($_GET['adicionar'])) {
 
     $idProduto = (int)$_GET['adicionar'];
     
@@ -116,7 +135,7 @@ if(isset($_SESSION['logado'])) {
     }
 
 
-}
+}*/
 
 
 //echo $orcamento;
