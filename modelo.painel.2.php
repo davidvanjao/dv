@@ -64,12 +64,13 @@ if(isset($_GET['id'])) {
         foreach($sql as $key => $valueCliente) {    
 
             if(isset($_SESSION['cliente'])) {   
-
+                
+                unset( $_SESSION['cliente'] );
                 $_SESSION['cliente'][$idCliente] = array('idCliente'=>$valueCliente['id'], 'idEndereco'=>$valueCliente['idEndereco'], 'nomeCliente'=>$valueCliente['nome']);
 
             } else {
 
-                $_SESSION['cliente'][$idCliente] = array('idCliente'=>$valueCliente['id'], 'idEndereco'=>$valueCliente['idEndereco'], 'nomeCliente'=>$valueCliente['nome']);            
+                $_SESSION['cliente'][$idCliente] = array('idCliente'=>$valueCliente['id'], 'idEndereco'=>$valueCliente['idEndereco'], 'nomeCliente'=>$valueCliente['nome']);           
 
             }
                       
@@ -92,8 +93,6 @@ if(!empty($_SESSION['cliente'])) {
 } 
 
 //=================================================================================================================
-
-
 
 
 
