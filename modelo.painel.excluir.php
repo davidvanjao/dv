@@ -2,6 +2,8 @@
 
 session_start();
 
+require 'conexao.banco.php';
+
 if(isset($_GET['excluir'])) {
 
     $idProduto = (int)$_GET['excluir'];
@@ -10,9 +12,9 @@ if(isset($_GET['excluir'])) {
     //var_dump($_SESSION);
 
     
-    if(isset($_SESSION['orcamento'])){
+    if(isset($_SESSION['lista'])){
 
-        unset($_SESSION['orcamento'][$idProduto]);
+        unset($_SESSION['lista'][$idProduto]);
 
         header("Location:/modelo.painel.2.php");
         
@@ -23,11 +25,19 @@ if(isset($_GET['excluir'])) {
 
 }
 
-if(isset($_POST['limpar'])) {
 
-    unset( $_SESSION['orcamento'] );
+if(isset($_GET['orcamentoPainelExcluir'])) {
+
+    $numeroOrcamento = $_GET['orcamentoPainelExcluir'];
+        
+    $sql = $pdo->prepare("DELETE FROM tb_log_delivery WHERE orcamento = '$numeroOrcamento'");
+    $sql->bindValue(":orcamento", $numeroOrcamento);
+    $sql->execute();   
+
+    unset( $_SESSION['lista'] );
     unset( $_SESSION['cliente'] );
     unset( $_SESSION['numeroOrcamento'] );
+    
 
     header("Location:/modelo.painel.1.php");
 

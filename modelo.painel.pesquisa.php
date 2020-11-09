@@ -92,7 +92,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                             echo "<td style='width:50%;'>".$produto['d_produto']."</td>";
                                                             echo "<td style='width:20%;'>R$ ".$produto['preco']."</td>";
                                                             echo "<td style='width:10%;'>".$produto['estoque']."</td>";
-                                                            echo '<td style="width:10%;"><a href="modelo.painel.2.php?adicionar='.$produto['id'].'">Add</a>';
+                                                            echo '<td style="width:10%;"><a href="modelo.painel.2.php?adicionar='.$produto['c_produto'].'">Add</a>';
                                                             echo "</tr>";  
                                                         }
                                                     } 

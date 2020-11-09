@@ -95,9 +95,63 @@ if(!empty($_SESSION['cliente'])) {
 //=================================================================================================================
 
 
+if(isset($_SESSION['cliente']) && !empty($_GET['adicionar'])) {
+
+    $idProduto = $_GET['adicionar'];
+    
+    $sql = "SELECT c_produto, d_produto, preco, estoque FROM tb_produto WHERE c_produto = $idProduto";    
+    $sql = $pdo->query($sql);                                    
+    
+    if($sql->rowCount() > 0) {
+        foreach($sql as $key => $value) {
+
+            if(isset($value['c_produto']) == $idProduto) {
+
+                if(isset($_SESSION['lista'][$idProduto])){
+
+                    if(isset($_POST['quantidade'])) {
+
+                        $quantProduto2 = $_POST['quantidade'];
+
+                        $_SESSION['lista'][$idProduto]['quantidade'] = $quantProduto2;
+
+                    }
+
+                    //echo '<script>alert("O item já foi adicionado ao carrinho.");</script>';
+
+                }else{
+
+                    $_SESSION['lista'][$idProduto] = array('quantidade'=>1, 'produto'=>$value['d_produto'], 'preco'=>floatval($value['preco']), 'estoque'=>$value['estoque'],
+                    'codigo'=>$value['c_produto']);
+                }
+                
+            }
+        
+                    
+        }   
+        
+        
+    } else {
+         echo "Não deu certo!";
+    }
+    
+}
+if(isset($_SESSION['lista'])) {
+    foreach($_SESSION['lista'] as $key=>$value) {
+
+        $soma=$value['preco']*$value['quantidade'];
+
+        $valorGeral += $soma;
+    }
+
+}
+
+$valorGeral = number_format($valorGeral,2,",",".");
 
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
+//var_dump($valorGeral);
+
 
 ?>
 
@@ -154,14 +208,18 @@ var_dump($_SESSION);
                                                     <input class="input1" type="text" autocomplete="off" name="nome" placeholder="" value="<?php echo $nomeCliente ?>" readonly="readonly"/>    
                                                 </div> 
                                                 
-                                                <input class="input-botao" type="submit" name="botao-adicionar" value="Cliente"/>                                            
-
+                                                <input class="input-botao" type="submit" name="botao-adicionar" value="Cliente"/>  
                                             </form>
 
                                             <div>
                                                 <label>N. Orcamento</label></br>
-                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" value="<?php echo $numeroOrc?>" readonly="readonly">                                            
+                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" value="<?php echo $numeroOrc?>" readonly="readonly">
                                             </div>
+                                            <div>
+                                                <label>V.Total</label></br>
+                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" value="<?php echo "R$ $valorGeral "?>" readonly="readonly">
+                                            </div>
+
                                             
                                         </div>
 
@@ -171,7 +229,8 @@ var_dump($_SESSION);
                                                  <input type="submit" name="botao-adicionar" value="Adicionar">
                                             </form>   
 
-                                            <form class="busca-area" name="buscar-form" method="POST" action="modelo.painel.excluir.php">
+                                            <form class="busca-area" name="buscar-form" method="GET" action="modelo.painel.excluir.php">
+                                                <input type="hidden" name="orcamentoPainelExcluir" value="<?php echo $numeroOrc ?>">
                                                 <input type="submit" name="limpar" value="Limpar">
                                             </form>
 
@@ -181,7 +240,7 @@ var_dump($_SESSION);
 
                                         </div>
 
-
+                                            
                                     </div>
                                     <div class="tabela-titulo">
                                         <table>
@@ -190,6 +249,7 @@ var_dump($_SESSION);
                                                 <th style="width:50%;">Produto</th>
                                                 <th style="width:10%;">Quantidade</th>
                                                 <th style="width:10%;">Preco</th>
+                                                <th style="width:10%;">Total</th>                                                
                                                 <th style="width:10%;">Estoque</th>
                                                 <th style="width:10%;">Acoes</th>
                                             </tr>
@@ -201,10 +261,16 @@ var_dump($_SESSION);
 
                                             
 
-                                            if(!empty($_SESSION['orcamento'])) {
+                                            if(!empty($_SESSION['lista'])) {
 
 
-                                                foreach($_SESSION['orcamento'] as $key=>$value) {
+                                                foreach($_SESSION['lista'] as $key=>$value) {
+
+                                                    $preco = $value['preco'];
+                                                    $quantidade = $value['quantidade'];
+
+                                                    $resultado = number_format($preco*$quantidade,2,",",".");
+
                                                     echo "<tr>";
                                                     echo "<td style='width:10%;'>".$value['codigo']."</td>";
                                                     echo "<td style='width:50%;'>".$value['produto']."</td>";
@@ -214,17 +280,20 @@ var_dump($_SESSION);
 
                                                     <form class='' name='buscar-form' method='POST'>
                                                     
-                                                    <input value=".$value['quantidade']." class='quantidade' type='number' min='0'  name='quantProd' required='required' onchange='this.form.submit()'>
+                                                    <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>
 
                                                     </form>     
                                                     </td>";
                                                     
 
                                                     
-                                                    echo "<td style='width:10%;'>".$value['preco']."</td>";
+                                                    echo "<td style='width:10%;'>R$".number_format($preco,2,",",".")."</td>";
+                                                    echo "<td style='width:10%;'>R$".$resultado."</td>";
                                                     echo "<td style='width:10%;'>".$value['estoque']."</td>";                                                    
-                                                    echo '<td style="width:10%;"><a href="modelo.painel.excluir.php?excluir='.$value['id'].'">Excluir</a>';
+                                                    echo '<td style="width:10%;"><a href="modelo.painel.excluir.php?excluir='.$value['codigo'].'">Excluir</a>';
                                                     echo "</tr>";  
+
+
   
                                                 }
  

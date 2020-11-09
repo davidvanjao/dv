@@ -1,20 +1,43 @@
 <?php
 
-//session_start();
+require 'conexao.banco.php';
 
 //================================================================================================
 
 $idCliente = "";
 $nomeCliente ="";
 $numeroOrcamento="";
+$resultado=0;
+$valorGeral=0;
 
 if(isset($_POST['orcamentoPainel'])) {
     $numeroOrcamento = $_POST['orcamentoPainel'];
- 
+    $data = date('Y-m-d');
+        
+    $sql = $pdo->prepare("INSERT INTO tb_log_delivery SET orcamento = :orcamento, dataa = :dataa, dataPedido = NOW()");
+    $sql->bindValue(":dataa", $data);
+    $sql->bindValue(":orcamento", $numeroOrcamento);
+    $sql->execute();   
+    
     header("Location:/modelo.painel.2.php?orcamento=$numeroOrcamento");
-
+    exit;
 
 }
+
+
+
+
+/*if(isset($_GET['quantidade']) && isset($_GET['codigo'])) {
+
+    $codigoProduto = $_GET['codigo'];
+    $quantidadeProduto = $_GET['quantidade'];
+
+    echo $codigoProduto;
+    echo $quantidadeProduto;
+                                
+    //header("Location:/modelo.painel.2.php");
+    
+}*/
 
 
 //echo $orcamento;
