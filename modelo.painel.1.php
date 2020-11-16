@@ -88,12 +88,15 @@ var_dump($_SESSION);
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:10%;">Código</th>
-                                                <th style="width:50%;">Produto</th>
-                                                <th style="width:10%;">Quantidade</th>
-                                                <th style="width:10%;">Preço</th>
-                                                <th style="width:10%;">Estoque</th>
-                                                <th style="width:10%;">Ações</th>
+
+                                                <th style="width:5%;">Ticket</th>
+                                                <th style="width:10%;">Data</th>
+                                                <th style="width:20%;">Nome</th>
+                                                <th style="width:10%;">Cidade</th>
+                                                <th style="width:20%;">Endereço</th>
+                                                <th style="width:20%;">Status</th>
+                                                <th style="width:20%;">Ações</th>
+
                                             </tr>
                                         </table> 
                                     </div>                                    
