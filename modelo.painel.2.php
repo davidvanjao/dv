@@ -149,7 +149,7 @@ if(isset($_SESSION['lista'])) {
 $valorGeral = number_format($valorGeral,2,",",".");
 
 
-//var_dump($_SESSION);
+var_dump($_SESSION);
 //var_dump($valorGeral);
 
 
@@ -235,7 +235,7 @@ $valorGeral = number_format($valorGeral,2,",",".");
                                             </form>
 
                                             <form class="busca-area" name="buscar-form" method="POST" action="">
-                                                <input type="submit" name="botao-pesquisar" value="Salvar">
+                                                <input type="submit" name="botao-salvar" value="Salvar">
                                             </form>
 
                                         </div>

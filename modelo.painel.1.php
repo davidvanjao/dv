@@ -20,7 +20,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
 if(isset($_SESSION['logado'])) {
 
-    $sql = "SELECT MAX(orcamento) FROM tb_log_delivery";
+    $sql = "SELECT MAX(orcamento) FROM tb_orcamento";
     $sql = $pdo->query($sql);
     
     if($sql->rowCount() > 0) {
@@ -30,13 +30,13 @@ if(isset($_SESSION['logado'])) {
     
     } else {
     
-        echo "Não deu certo o orcamento";
+        $orcamento = 1;
     }
 
 
 }
 
-//var_dump($_SESSION);
+var_dump($_SESSION);
 
 ?>
 
@@ -80,9 +80,11 @@ if(isset($_SESSION['logado'])) {
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST" action="modelo.processo.php">
                                             <input type="hidden" name="orcamentoPainel" value="<?php echo $orcamento ?>">
+                                            <input type="hidden" name="usuario" value="<?php echo $_SESSION['logado']?>">
                                             <input class="input-botao" type="submit" name="botaoIniciarOrcamento" value="Adicionar">
                                         </form>
                                     </div>
+                                    
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
