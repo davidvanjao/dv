@@ -19,7 +19,8 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
-//=================================================================================================================
+//=========================================SE REFERE AO ORCAMENTO========================================================================
+
 if(isset($_GET['orcamento'])) {
 
     $numeroOrcamento = (int)$_GET['orcamento'];    
@@ -30,7 +31,7 @@ if(isset($_GET['orcamento'])) {
         
     } else{
 
-        die('Operacao de adicionar cliente deu errado!');
+        die('Operacao de adicionar numero de orçamento.');
     } 
 
 }
@@ -46,7 +47,7 @@ if(!empty($_SESSION['numeroOrcamento'])) {
 }
 
 
-//=================================================================================================================
+//=========================================SE REFERE AO CLIENTE========================================================================
 
 if(isset($_GET['id'])) {
 
@@ -64,12 +65,15 @@ if(isset($_GET['id'])) {
         foreach($sql as $key => $valueCliente) {    
 
             if(isset($_SESSION['cliente'])) {   
-                
+
+
+                //SE EXISTIR, APAGUE E COLOQUE
                 unset( $_SESSION['cliente'] );
                 $_SESSION['cliente'][$idCliente] = array('idCliente'=>$valueCliente['id'], 'idEndereco'=>$valueCliente['idEndereco'], 'nomeCliente'=>$valueCliente['nome']);
 
             } else {
 
+                //SE NAO EXISTIR, COLOQUE
                 $_SESSION['cliente'][$idCliente] = array('idCliente'=>$valueCliente['id'], 'idEndereco'=>$valueCliente['idEndereco'], 'nomeCliente'=>$valueCliente['nome']);           
 
             }
@@ -92,7 +96,7 @@ if(!empty($_SESSION['cliente'])) {
     
 } 
 
-//=================================================================================================================
+//===========================================SE REFERE AO PRODUTO======================================================================
 
 
 if(isset($_SESSION['cliente']) && !empty($_GET['adicionar'])) {
@@ -136,6 +140,7 @@ if(isset($_SESSION['cliente']) && !empty($_GET['adicionar'])) {
     }
     
 }
+
 if(isset($_SESSION['lista'])) {
     foreach($_SESSION['lista'] as $key=>$value) {
 
@@ -278,9 +283,9 @@ $valorGeral = number_format($valorGeral,2,",",".");
 
                                                     echo "<td style='width:10%;'>
 
-                                                    <form class='' name='buscar-form' method='POST'>
+                                                    <form class='' name='' method='POST'>
                                                     
-                                                    <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>
+                                                        <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>
 
                                                     </form>     
                                                     </td>";
