@@ -24,24 +24,24 @@ if(isset($_POST['salvar'])) {
 
     if(!empty($_SESSION['cliente'])) {       
 
-        foreach($_SESSION['cliente'] as $key=>$value) {
+        foreach($_SESSION['cliente'] as $key=> $value) {
     
         $idCliente = $value['idCliente']; 
         $idEndereco = $value['idEndereco'];
         $status = 'PEDIDO REALIZADO';  
         
-        $sql = $pdo->prepare("INSERT INTO tb_log_delivery SET idCliente = :idCliente, idEndereco = :idEndereco, statuss = :statuss, dataPedido = NOW() WHERE orcamento = :orcamento");
+        $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, idEndereco = :idEndereco, statuss = :statuss, dataPedido = NOW() WHERE orcamento = '$numeroOrc'");
         $sql->bindValue(":idCliente", $idCliente);
         $sql->bindValue(":idEndereco", $idEndereco);    
         $sql->bindValue(":statuss", $status);
-        $sql->bindValue(":orcamento", $numeroOrc);
-        $dataPedido = "";
         $sql->execute();
+        
 
         }
     
     
-    }
+    }    
+
 
     if(!empty($_SESSION['lista'])) {
 
@@ -62,8 +62,8 @@ if(isset($_POST['salvar'])) {
             $sql->bindValue(":quantidade",$quantidade);
             $sql->bindValue(":valorTotal", $preco);
             $sql->bindValue(":usuario", $usuario);
-
             $sql->execute();        
+            
 
     
         }
@@ -71,14 +71,12 @@ if(isset($_POST['salvar'])) {
             unset( $_SESSION['lista'] );
             unset( $_SESSION['cliente'] );
             unset( $_SESSION['numeroOrcamento'] );
-
-            //header("Location:/modelo.painel.1.php");
-
-            //exit;
         
     }
+
     
 
-    //header("Location:/modelo.painel.1.php");
+    header("Location:/modelo.painel.1.php");
+    exit;
 
 }

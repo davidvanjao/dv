@@ -91,11 +91,11 @@ if(isset($_SESSION['logado'])) {
 
                                                 <th style="width:5%;">Ticket</th>
                                                 <th style="width:10%;">Data</th>
-                                                <th style="width:20%;">Nome</th>
+                                                <th style="width:10%;">Nome</th>
                                                 <th style="width:10%;">Cidade</th>
-                                                <th style="width:20%;">Endereço</th>
-                                                <th style="width:20%;">Status</th>
-                                                <th style="width:20%;">Ações</th>
+                                                <th style="width:10%;">Endereço</th>
+                                                <th style="width:10%;">Numero</th>
+                                                <th style="width:10%;">Status</th>
 
                                             </tr>
                                         </table> 
@@ -104,7 +104,7 @@ if(isset($_SESSION['logado'])) {
                                         <table>
                                             <?php                                 
 
-                                            $sql = "SELECT a.id, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+                                            $sql = "SELECT a.id, a.orcamento, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
                                             from tb_log_delivery as a join tb_cliente as b join tb_endereco as c 
                                             on a.idCliente = b.id 
                                             and b.idEndereco = c.id
@@ -129,7 +129,7 @@ if(isset($_SESSION['logado'])) {
                                                     }  
 
                                                     echo "<tr>";
-                                                    echo "<td style='width:5%;'>".$delivery['id']."</td>";
+                                                    echo "<td style='width:5%;'>".$delivery['orcamento']."</td>";
                                                     echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
                                                     echo "<td style='width:10%;'>".$delivery['nome']."</td>";
                                                     echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
