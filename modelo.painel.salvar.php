@@ -8,8 +8,7 @@ if(isset($_POST['salvar'])) {
 
     if(!empty($_SESSION['logado'])) {       
     
-            $usuario = $_SESSION['logado'];   
-        
+        $usuario = $_SESSION['logado'];           
         
     }
 
@@ -22,6 +21,28 @@ if(isset($_POST['salvar'])) {
         }
         
     }
+
+    if(!empty($_SESSION['cliente'])) {       
+
+        foreach($_SESSION['cliente'] as $key=>$value) {
+    
+        $idCliente = $value['idCliente']; 
+        $idEndereco = $value['idEndereco'];
+        $status = 'PEDIDO REALIZADO';  
+        
+        $sql = $pdo->prepare("INSERT INTO tb_log_delivery SET idCliente = :idCliente, idEndereco = :idEndereco, statuss = :statuss, dataPedido = NOW() WHERE orcamento = :orcamento");
+        $sql->bindValue(":idCliente", $idCliente);
+        $sql->bindValue(":idEndereco", $idEndereco);    
+        $sql->bindValue(":statuss", $status);
+        $sql->bindValue(":orcamento", $numeroOrc);
+        $dataPedido = "";
+        $sql->execute();
+
+        }
+    
+    
+    }
+
     if(!empty($_SESSION['lista'])) {
 
         foreach($_SESSION['lista'] as $key=>$value) {
@@ -32,7 +53,8 @@ if(isset($_POST['salvar'])) {
             $preco = $value['preco'];
             $codigo = $value['codigo'];
 
-            $sql = $pdo->prepare("INSERT INTO tb_orcamento SET dataa = :dataa, orcamento = :orcamento, c_gondola = :c_gondola, c_produto = :c_produto, quantidade = :quantidade, valor_total = :valorTotal, usuario = :usuario");
+            $sql = $pdo->prepare("INSERT INTO tb_orcamento SET dataa = :dataa, orcamento = :orcamento, c_gondola = :c_gondola,
+            c_produto = :c_produto, quantidade = :quantidade, valor_total = :valorTotal, usuario = :usuario");
             $sql->bindValue(":dataa", $data);
             $sql->bindValue(":orcamento", $numeroOrc);
             $sql->bindValue(":c_gondola", $gondola);
@@ -50,9 +72,9 @@ if(isset($_POST['salvar'])) {
             unset( $_SESSION['cliente'] );
             unset( $_SESSION['numeroOrcamento'] );
 
-            header("Location:/modelo.painel.1.php");
+            //header("Location:/modelo.painel.1.php");
 
-            exit;
+            //exit;
         
     }
     
