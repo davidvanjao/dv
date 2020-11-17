@@ -31,7 +31,8 @@ if(isset($_GET['orcamento'])) {
         
     } else{
 
-        die('Operacao de adicionar numero de orçamento.');
+        header("Location:/modelo.painel.1.php");
+        echo "Problemas com relação ao numero do orçamento.";
     } 
 
 }
@@ -103,7 +104,7 @@ if(isset($_SESSION['cliente']) && !empty($_GET['adicionar'])) {
 
     $idProduto = $_GET['adicionar'];
     
-    $sql = "SELECT c_produto, d_produto, preco, estoque FROM tb_produto WHERE c_produto = $idProduto";    
+    $sql = "SELECT n_gondola, c_produto, d_produto, preco, estoque FROM tb_produto WHERE c_produto = $idProduto";    
     $sql = $pdo->query($sql);                                    
     
     if($sql->rowCount() > 0) {
@@ -125,7 +126,7 @@ if(isset($_SESSION['cliente']) && !empty($_GET['adicionar'])) {
 
                 }else{
 
-                    $_SESSION['lista'][$idProduto] = array('quantidade'=>1, 'produto'=>$value['d_produto'], 'preco'=>floatval($value['preco']), 'estoque'=>$value['estoque'],
+                    $_SESSION['lista'][$idProduto] = array('quantidade'=>1, 'gondola'=>$value['n_gondola'], 'produto'=>$value['d_produto'], 'preco'=>floatval($value['preco']), 'estoque'=>$value['estoque'],
                     'codigo'=>$value['c_produto']);
                 }
                 
@@ -154,7 +155,7 @@ if(isset($_SESSION['lista'])) {
 $valorGeral = number_format($valorGeral,2,",",".");
 
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
 //var_dump($valorGeral);
 
 
@@ -239,8 +240,8 @@ var_dump($_SESSION);
                                                 <input type="submit" name="limpar" value="Limpar">
                                             </form>
 
-                                            <form class="busca-area" name="buscar-form" method="POST" action="">
-                                                <input type="submit" name="botao-salvar" value="Salvar">
+                                            <form class="busca-area" name="buscar-form" method="POST" action="modelo.painel.salvar.php">
+                                                <input type="submit" name="salvar" value="Salvar">
                                             </form>
 
                                         </div>

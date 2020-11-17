@@ -30,7 +30,7 @@ if(isset($_GET['orcamentoPainelExcluir'])) {
 
     $numeroOrcamento = $_GET['orcamentoPainelExcluir'];
         
-    $sql = $pdo->prepare("DELETE FROM tb_log_delivery WHERE orcamento = '$numeroOrcamento'");
+    $sql = $pdo->prepare("DELETE FROM tb_orcamento WHERE orcamento = '$numeroOrcamento'");
     $sql->bindValue(":orcamento", $numeroOrcamento);
     $sql->execute();   
 

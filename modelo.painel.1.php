@@ -20,7 +20,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
 if(isset($_SESSION['logado'])) {
 
-    $sql = "SELECT MAX(orcamento) FROM tb_orcamento";
+    $sql = "SELECT MAX(orcamento) FROM tb_log_delivery";
     $sql = $pdo->query($sql);
     
     if($sql->rowCount() > 0) {
@@ -36,7 +36,7 @@ if(isset($_SESSION['logado'])) {
 
 }
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
 
 ?>
 

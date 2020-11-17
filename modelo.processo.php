@@ -22,7 +22,7 @@ if(isset($_POST['orcamentoPainel'])) {
     $data = date('Y-m-d');
     $usuario = $_POST['usuario'];
         
-    $sql = $pdo->prepare("INSERT INTO tb_orcamento SET orcamento = :orcamento, dataa = :dataa, usuario = :usuario");
+    $sql = $pdo->prepare("INSERT INTO tb_log_delivery SET orcamento = :orcamento, dataa = :dataa, usuario = :usuario");
     $sql->bindValue(":dataa", $data);
     $sql->bindValue(":orcamento", $numeroOrcamento);
     $sql->bindValue(":usuario", $usuario);
