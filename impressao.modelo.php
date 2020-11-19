@@ -10,9 +10,11 @@ if(isset($_GET['orcamento'])) {
 
     $orcamento = addslashes($_GET['orcamento']);
     
-    $sql = "SELECT a.id, a.nome, a.telefone, b.cidadeEstado, a.idEndereco, b.logradouro, a.numero, c.orcamento, c.dataPedido
-    from tb_cliente a, tb_endereco b, tb_log_delivery c
+    $sql = "SELECT a.id, a.nome, a.idEndereco, b.logradouro, a.numero, a.telefone, b.cidadeEstado, c.orcamento, c.dataPedido, d.c_produto, e.d_produto, d.quantidade, d.valor_total
+    from tb_cliente a, tb_endereco b, tb_log_delivery c, tb_orcamento d, tb_produto e
     where c.orcamento = '$orcamento'
+    and c.orcamento = d.orcamento
+    and d.c_produto = e.c_produto
     and c.idCliente = a.id
     and c.idEndereco = b.id";
 
@@ -20,19 +22,30 @@ if(isset($_GET['orcamento'])) {
 
     if($sql->rowCount() > 0) {        
 
-        foreach($sql->fetchAll() as $cabecalho) { 
-            $html .= $idNome = $cabecalho['id']. "<br>";
-            $html .= $nome = $cabecalho['nome']. "<br>";
-            $html .= $idEndereco = $cabecalho['idEndereco']. "<br>";
-            $html .= $endereco = $cabecalho['logradouro']. "<br>";
-            $html .= $numero = $cabecalho['numero']. "<br>";
-            $html .= $orcamento = $cabecalho['orcamento']. "<hr>";     
+        foreach($sql->fetchAll() as $delivery) { 
+            $idNome = $delivery['id'];
+            $nome = $delivery['nome'];
+            $idEndereco = $delivery['idEndereco'];
+            $endereco = $delivery['logradouro'];
+            $numero = $delivery['numero'];
+            $orcamento = $delivery['orcamento'];
+            $dataPedido = $delivery['dataPedido'];  
+            
+            $cProduto = $delivery['c_produto'];
+            $dProduto = $delivery['d_produto'];
+            $quantidade = $delivery['quantidade'];
+            $valor = $delivery['valor_total'];
+            
+
         }   
                 
     }
     
 }
-echo $html;
+
+
+//var_dump($delivery);
+
 
 //referenciar o DomPDF com namespace
 use Dompdf\Dompdf;
@@ -53,7 +66,41 @@ $dompdf->load_html('
 					<title>Celke</title>
                 </head>
                 <body>
-					'.$html.'
+                    <div class="cabecalho">
+                        <h3>'.$nome.'</h3>
+                        <h3>'.$endereco.'</h3>
+                        <h3>'.$numero.'</h3>
+                        <h3>'.$orcamento.'</h3>
+                        <h3>'.$dataPedido.'</h3>
+                        <hr>
+                    </div>
+                    <div class="listaProduto>
+
+                    <div class="tabela-titulo">
+                        <table>
+                            <tr>
+
+                                <th style="width:5%;">Codigo</th>
+                                <th style="width:10%;">Produto</th>
+                                <th style="width:10%;">Quantidade</th>
+                                <th style="width:10%;">Valor</th>
+
+                            </tr>
+                        </table> 
+
+                        <table>                            
+
+                            echo "<tr>";
+                            echo "<td style="width:5%;">'.$cProduto.'</td>";
+                            echo "<td style="width:10%;">'.$dProduto.'</td>";
+                            echo "<td style="width:10%;">'.$quantidade.'</td>";
+                            echo "<td style="width:10%;">'.$valor.'</td>";
+                            echo "</tr>";  
+                                     
+                        </table>
+
+
+                    </div>
 				</body>
 			</html>
 
