@@ -96,6 +96,7 @@ if(isset($_SESSION['logado'])) {
                                                 <th style="width:10%;">Endereço</th>
                                                 <th style="width:10%;">Numero</th>
                                                 <th style="width:10%;">Status</th>
+                                                <th style="width:10%;">Acoes</th>
 
                                             </tr>
                                         </table> 
@@ -135,7 +136,8 @@ if(isset($_SESSION['logado'])) {
                                                     echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
                                                     echo "<td style='width:10%;'>".$delivery['logradouro']."</td>";  
                                                     echo "<td style='width:10%;'>".$delivery['numero']."</td>";     
-                                                    echo "<td style='width:10%; background-color:$cor;'>".$delivery['statuss']."</td>";                           
+                                                    echo "<td style='width:10%; background-color:$cor;'>".$delivery['statuss']."</td>";  
+                                                    echo '<td style="width:10%;"><a href="impressao.modelo.php?orcamento='.$delivery['orcamento'].'" target="_blank">Imprimir</a>';                       
                                                     echo "</tr>";  
 
                                                 

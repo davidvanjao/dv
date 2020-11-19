@@ -110,7 +110,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <a href="produto.painel.processo.php">Carregar Produtos</a>
                                 <a href="endereco.processo-externo.php">Carregar Enderecos</a>
                                 <a href="modelo.painel.1.php">Pesquisa Modelo</a>
-                                <a href="">Painel 4</a>
+                                <a href="impressao.modelo.php">Teste Impressão</a>
                                 <a href="usuario.painel.php">Painel de Usuários</a>
                                 <a href="sair.php">Sair</a>
                             </div>
