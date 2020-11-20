@@ -4,17 +4,15 @@ require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
 $html = "";
-
+$orcamento = "";
 
 if(isset($_GET['orcamento'])) {
 
     $orcamento = addslashes($_GET['orcamento']);
     
-    $sql = "SELECT a.id, a.nome, a.idEndereco, b.logradouro, a.numero, a.telefone, b.cidadeEstado, c.orcamento, c.dataPedido, d.c_produto, e.d_produto, d.quantidade, d.valor_total
-    from tb_cliente a, tb_endereco b, tb_log_delivery c, tb_orcamento d, tb_produto e
+    $sql = "SELECT a.id, a.nome, a.idEndereco, b.logradouro, a.numero, a.telefone, b.cidadeEstado, c.orcamento, c.dataPedido
+    from tb_cliente a, tb_endereco b, tb_log_delivery c
     where c.orcamento = '$orcamento'
-    and c.orcamento = d.orcamento
-    and d.c_produto = e.c_produto
     and c.idCliente = a.id
     and c.idEndereco = b.id";
 
@@ -30,18 +28,46 @@ if(isset($_GET['orcamento'])) {
             $numero = $delivery['numero'];
             $orcamento = $delivery['orcamento'];
             $dataPedido = $delivery['dataPedido'];  
-            
-            $cProduto = $delivery['c_produto'];
-            $dProduto = $delivery['d_produto'];
-            $quantidade = $delivery['quantidade'];
-            $valor = $delivery['valor_total'];
-            
+
 
         }   
                 
     }
+}
+
+if(!empty($orcamento)) {
+    
+    $sql = "SELECT d.c_produto, e.d_produto, d.quantidade, d.valor_total
+    from tb_log_delivery c, tb_orcamento d, tb_produto e
+    where c.orcamento = '$orcamento'
+    and c.orcamento = d.orcamento
+    and d.c_produto = e.c_produto";
+
+    $sql = $pdo->query($sql);
+
+    $html .= '<table width=100%>';
+    $html .= '<thead>';
+    $html .= '<tr>';
+    $html .= '<th>Codigo</th>';
+    $html .= '<th>Produto</th>';
+    $html .= '<th>Quantidade</th>';
+    $html .= '<th>Valor</th>';
+    $html .= '</tr>';
+    $html .= '</thead>';
+
+
+    while ($linha = $sql->fetch(PDO::FETCH_ASSOC)) {
+        $html .='<tbody>';
+        $html .= '<tr><td>'.$linha['c_produto'] .'</td>';
+        $html .= '<td>'.$linha['d_produto'] .'</td>';
+        $html .= '<td>'.$linha['quantidade'] .'</td>';
+        $html .= '<td>'.$linha['valor_total'] .'</td>';
+        $html .='</tbody>';	
+    }
+    $html .='</table>';
     
 }
+
 
 
 //var_dump($delivery);
@@ -59,50 +85,40 @@ $dompdf = new DOMPDF();
 //carrega o html
 $dompdf->load_html('
 
-            <!DOCTYPE html>
-			<html lang="pt-br">
-				<head>
-					<meta charset="utf-8">
-					<title>Celke</title>
-                </head>
-                <body>
-                    <div class="cabecalho">
-                        <h3>'.$nome.'</h3>
-                        <h3>'.$endereco.'</h3>
-                        <h3>'.$numero.'</h3>
-                        <h3>'.$orcamento.'</h3>
-                        <h3>'.$dataPedido.'</h3>
-                        <hr>
-                    </div>
-                    <div class="listaProduto>
+    <html lang="pt-br">
+        <head>
+            <meta charset="utf-8">
+            <title>Impressao</title>
 
-                    <div class="tabela-titulo">
-                        <table>
-                            <tr>
+        </head>
+        <body>
+            <div class="cabecalho">
+            <table width=100%>>
+                <tr>
+                    <th>Nome</th>
+                    <th>Endereco</th>
+                    <th>Numero</th>
+                    <th>Orcamento</th>
+                    <th>Data</th>
+                </tr>
+                <tr>
+                    <td>'.$nome.'</td>
+                    <td>'.$endereco.'</td>
+                    <td>'.$numero.'</td>
+                    <td>'.$orcamento.'</td>
+                    <td>'.$dataPedido.'</td>
+                </tr>
+            </table> 
+            <hr>
 
-                                <th style="width:5%;">Codigo</th>
-                                <th style="width:10%;">Produto</th>
-                                <th style="width:10%;">Quantidade</th>
-                                <th style="width:10%;">Valor</th>
+            </div>    
 
-                            </tr>
-                        </table> 
+            <div class="produto">
+                '.$html.'
+            </div>
 
-                        <table>                            
-
-                            echo "<tr>";
-                            echo "<td style="width:5%;">'.$cProduto.'</td>";
-                            echo "<td style="width:10%;">'.$dProduto.'</td>";
-                            echo "<td style="width:10%;">'.$quantidade.'</td>";
-                            echo "<td style="width:10%;">'.$valor.'</td>";
-                            echo "</tr>";  
-                                     
-                        </table>
-
-
-                    </div>
-				</body>
-			</html>
+        </body>
+    </html>
 
 
 ');
