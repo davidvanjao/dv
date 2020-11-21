@@ -4,16 +4,17 @@ require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
 $html = "";
-$orcamento = "";
+
 
 if(isset($_GET['orcamento'])) {
 
     $orcamento = addslashes($_GET['orcamento']);
     
-    $sql = "SELECT a.id, a.nome, a.idEndereco, b.logradouro, a.numero, a.telefone, b.cidadeEstado, c.orcamento, c.dataPedido
-    from tb_cliente a, tb_endereco b, tb_log_delivery c
+    $sql = "SELECT a.id, a.nome, a.idEndereco, b.logradouro, a.numero, b.cidadeEstado, a.telefone, b.cidadeEstado, c.orcamento, c.dataPedido, d.usuario
+    from tb_cliente a, tb_endereco b, tb_log_delivery c, tb_usuarios d
     where c.orcamento = '$orcamento'
     and c.idCliente = a.id
+    and c.usuario = d.id
     and c.idEndereco = b.id";
 
     $sql = $pdo->query($sql);
@@ -28,12 +29,15 @@ if(isset($_GET['orcamento'])) {
             $numero = $delivery['numero'];
             $orcamento = $delivery['orcamento'];
             $dataPedido = $delivery['dataPedido'];  
+            $usuario = $delivery['usuario']; 
+            $cidade = $delivery['cidadeEstado']; 
 
 
         }   
                 
     }
 }
+
 
 if(!empty($orcamento)) {
     
@@ -89,30 +93,36 @@ $dompdf->load_html('
         <head>
             <meta charset="utf-8">
             <title>Impressao</title>
+            <link rel="stylesheet" href="assets/css/impressao.css">
 
         </head>
         <body>
+
             <div class="cabecalho">
-            <table width=100%>>
+            <table width=100%;>
                 <tr>
-                    <th>Nome</th>
-                    <th>Endereco</th>
-                    <th>Numero</th>
-                    <th>Orcamento</th>
-                    <th>Data</th>
+                    <td style="width:70%;"><strong>Nome:</strong> '.$nome.'</td>
+                    <td style="text-align:right;"><strong>Orcamento Nº:</strong> '.$orcamento.'</td>
                 </tr>
+            </table>
+            <table width=100%;>
                 <tr>
-                    <td>'.$nome.'</td>
-                    <td>'.$endereco.'</td>
-                    <td>'.$numero.'</td>
-                    <td>'.$orcamento.'</td>
-                    <td>'.$dataPedido.'</td>
+                    <td style="width:50%;"><strong>Endereco:</strong> '.$endereco.' </td>
+                    <td style="width:10%;"><strong>N°:</strong> '.$numero.'</td>
+                    <td style="text-align:right;"><strong>Cidade:</strong> '.$cidade.'</td>
                 </tr>
-            </table> 
-            <hr>
+            </table>
+            <table width=100%;>
+                <tr>
+                    <td ><strong>Usuario:</strong> '.$usuario.'</td>
+                    <td><strong>Data:</strong> '.$dataPedido.'</td>
+                    <td style="text-align:right;"><strong>Valor Total:</strong> R$00,00</td>
+                </tr>
+            </table>           
 
             </div>    
 
+            <hr>
             <div class="produto">
                 '.$html.'
             </div>
