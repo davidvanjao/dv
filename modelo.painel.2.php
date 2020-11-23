@@ -122,7 +122,7 @@ if(isset($_SESSION['cliente']) && !empty($_GET['adicionar'])) {
 
                     }
 
-                    //echo '<script>alert("O item já foi adicionado ao carrinho.");</script>';
+                    echo '<script>alert("O item já foi adicionado ao carrinho.");</script>';
 
                 }else{
 
@@ -155,7 +155,7 @@ if(isset($_SESSION['lista'])) {
 $valorGeral = number_format($valorGeral,2,",",".");
 
 
-//var_dump($_SESSION);
+var_dump($_SESSION);
 //var_dump($valorGeral);
 
 
@@ -286,7 +286,8 @@ $valorGeral = number_format($valorGeral,2,",",".");
 
                                                     <form class='' name='' method='POST'>
                                                     
-                                                        <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>
+                                                        <!--<input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>-->
+                                                        <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required'  onclick=location.href='modelo.painel.2.php?editar=".$value['codigo']."' >
 
                                                     </form>     
                                                     </td>";

@@ -70,7 +70,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 <th style="width:50%;">Produto</th>
                                                 <th style="width:20%;">Preço</th>
                                                 <th style="width:10%;">Estoque</th>
-                                                <th style="width:10%;">Ações</th>
+                                                <!--<th style="width:10%;">Ações</th>-->
                                             </tr>
                                         </table> 
                                     </div>                                    
@@ -87,13 +87,13 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                                     if($sql->rowCount() > 0) {
                                                         foreach($sql->fetchAll() as $produto) {
-                                                            echo "<tr>";
+                                                            echo '<tr ondblclick=location.href="modelo.painel.2.php?adicionar='.$produto['c_produto'].'" style="cursor:pointer">';
                                                             echo "<td style='width:10%;'>".$produto['c_produto']."</td>";
                                                             echo "<td style='width:50%;'>".$produto['d_produto']."</td>";
                                                             echo "<td style='width:20%;'>R$ ".$produto['preco']."</td>";
                                                             echo "<td style='width:10%;'>".$produto['estoque']."</td>";
-                                                            echo '<td style="width:10%;"><a href="modelo.painel.2.php?adicionar='.$produto['c_produto'].'">Add</a>';
-                                                            echo "</tr>";  
+                                                            //echo '<td style="width:10%;"><a href="modelo.painel.2.php?adicionar='.$produto['c_produto'].'">Add</a>';
+                                                            echo '</tr>';  
                                                         }
                                                     } 
                                                 }
