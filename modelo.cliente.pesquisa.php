@@ -59,7 +59,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                         <form class="busca-area" name="buscar-form" method="POST">
                                             <input class="input-busca-produto" type="text" autocomplete="off" name="cliente" placeholder="Digite o cliente">
-                                            <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
+                                            <input class="input-botao" type="submit" name="pesquisar" value="Pesquisar Cliente">
                                         </form>
                                         
                                     </div>
@@ -74,7 +74,6 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 <th style="width:10%;">Endereço</th>
                                                 <th style="width:10%;">Numero</th>
                                                 <th style="width:10%;">Região</th>
-                                                <th style="width:10%;">Ações</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -89,9 +88,9 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         $cliente = addslashes($_POST['cliente']);
 
                                                         $sql = "SELECT a.id, a.nome, a.telefone, b.cidadeEstado, b.bairro, b.logradouro, a.numero, b.regiao
-                                                        from tb_cliente as a join tb_endereco as b
-                                                        on a.idEndereco = b.id 
-                                                        WHERE a.nome LIKE '%".$cliente."%' 
+                                                        from tb_cliente a, tb_endereco b
+                                                        WHERE a.nome LIKE '".$cliente."%' 
+                                                        AND a.idEndereco = b.id 
                                                         order by a.nome";
                                                         
                                                         $sql = $pdo->query($sql);   
@@ -99,7 +98,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         if($sql->rowCount() > 0) {
                                                             foreach($sql->fetchAll() as $cliente) {
 
-                                                                echo "<tr>";
+                                                                echo '<tr ondblclick=location.href="modelo.processo.php?cliente='.$cliente['id'].'" style="cursor:pointer">';
                                                                 echo "<td style='width:10%;'>".$cliente['nome']."</td>";
                                                                 echo "<td style='width:10%;'>".$cliente['telefone']."</td>";
                                                                 echo "<td style='width:10%;'>".$cliente['cidadeEstado']."</td>";
@@ -107,7 +106,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                                 echo "<td style='width:10%;'>".$cliente['logradouro']."</td>";  
                                                                 echo "<td style='width:10%;'>".$cliente['numero']."</td>";
                                                                 echo "<td style='width:10%;'>".$cliente['regiao']."</td>";                                  
-                                                                echo '<td style="width:10%;"><a href="modelo.painel.2.php?id='.$cliente['id'].'">Add</a>'; 
+                                                                //echo '<td style="width:10%;"><a href="modelo.painel.2.php?id='.$cliente['id'].'">Add</a>'; 
                                                                 echo "</tr>";  
                                                             }
                                                         } else {

@@ -3,7 +3,6 @@
 session_start();
 require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
-require 'modelo.processo.php';
 
 
 if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
@@ -19,88 +18,28 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
+//=========================================VARIAVEIS========================================================================
+
+$codigoCliente = "";
+$nomeCliente = "";
+
 //=========================================SE REFERE AO ORCAMENTO========================================================================
 
-if(isset($_GET['orcamento'])) {
-
-    $numeroOrcamento = (int)$_GET['orcamento'];    
-
-    if(!empty($numeroOrcamento)) {                
-
-        $_SESSION['numeroOrcamento'][$numeroOrcamento] = array('orcamento'=>$numeroOrcamento);
-        
-    } else{
-
-        header("Location:/modelo.painel.1.php");
-        echo "Problemas com relação ao numero do orçamento.";
-    } 
-
+if(isset($_SESSION['orcamento'])) {
+    $orcamento = $_SESSION['orcamento'];
 }
-
-if(!empty($_SESSION['numeroOrcamento'])) {
-
-    foreach($_SESSION['numeroOrcamento'] as $key=>$valueOrcamento) {
-
-        $numeroOrc = $valueOrcamento['orcamento'];
-
-    }
-    
-}
-
 
 //=========================================SE REFERE AO CLIENTE========================================================================
 
-if(isset($_GET['id'])) {
-
-    $idCliente = addslashes($_GET['id']);
-    
-    $sql = "SELECT a.id, a.idEndereco, a.nome, a.telefone, b.cidadeEstado, b.bairro, b.logradouro, a.numero 
-    from tb_cliente a, tb_endereco b 
-    where a.id = '$idCliente'
-    and a.idEndereco = b.id";
-
-    $sql = $pdo->query($sql);
-
-    if($sql->rowCount() > 0) {        
-
-        foreach($sql as $key => $valueCliente) {    
-
-            if(isset($_SESSION['cliente'])) {   
-
-
-                //SE EXISTIR, APAGUE E COLOQUE
-                unset( $_SESSION['cliente'] );
-                $_SESSION['cliente'][$idCliente] = array('idCliente'=>$valueCliente['id'], 'idEndereco'=>$valueCliente['idEndereco'], 'nomeCliente'=>$valueCliente['nome']);
-
-            } else {
-
-                //SE NAO EXISTIR, COLOQUE
-                $_SESSION['cliente'][$idCliente] = array('idCliente'=>$valueCliente['id'], 'idEndereco'=>$valueCliente['idEndereco'], 'nomeCliente'=>$valueCliente['nome']);           
-
-            }
-                      
-        }   
-                
-    }      
-    
+if(isset($_GET['cliente'])) {
+    $codigoCliente = $_SESSION['cliente']['id'];
+    $nomeCliente = $_SESSION['cliente']['nome'];
 }
-
-if(!empty($_SESSION['cliente'])) {
-
-    foreach($_SESSION['cliente'] as $key=>$valueCliente) {    
-        
-            $idCliente = $valueCliente['idCliente'];
-            $nomeCliente = $valueCliente['nomeCliente'];            
-
-    }
-
-    
-} 
 
 //===========================================SE REFERE AO PRODUTO======================================================================
 
 
-if(isset($_SESSION['cliente']) && !empty($_GET['adicionar'])) {
+if(!empty($_GET['adicionar'])) {
 
     $idProduto = $_GET['adicionar'];
     
@@ -122,7 +61,7 @@ if(isset($_SESSION['cliente']) && !empty($_GET['adicionar'])) {
 
                     }
 
-                    echo '<script>alert("O item já foi adicionado ao carrinho.");</script>';
+                    //echo '<script>alert("O item já foi adicionado ao carrinho.");</script>';
 
                 }else{
 
@@ -142,6 +81,12 @@ if(isset($_SESSION['cliente']) && !empty($_GET['adicionar'])) {
     
 }
 
+//===========================================SE REFERE A QUANTIDADE======================================================================
+
+
+
+//===========================================SE REFERE AO PRODUTO======================================================================
+
 if(isset($_SESSION['lista'])) {
     foreach($_SESSION['lista'] as $key=>$value) {
 
@@ -152,8 +97,7 @@ if(isset($_SESSION['lista'])) {
 
 }
 
-$valorGeral = number_format($valorGeral,2,",",".");
-
+//$valorGeral = number_format($valorGeral,2,",",".");
 
 var_dump($_SESSION);
 //var_dump($valorGeral);
@@ -202,11 +146,12 @@ var_dump($_SESSION);
                                 <div class="body-busca">
                                     <div class="campo-inserir">
 
-                                        <div class="formulario-cliente">                                   
+                                        <div class="formulario-cliente">    
+                                                                      
                                             <form class="busca-area" name="buscar-form" method="POST" action="modelo.cliente.pesquisa.php">
                                                 <div>
-                                                    <label>Id:</label></br>
-                                                    <input class="input5" type="number" min='0' autocomplete="off" name="numero" value="<?php echo $idCliente ?>" readonly="readonly"/>
+                                                    <label>Codigo:</label></br>
+                                                    <input class="input5" type="number" min='0' autocomplete="off" name="numero" value="<?php echo $codigoCliente ?>" readonly="readonly"/>
                                                 </div> 
 
                                                 <div>
@@ -214,16 +159,16 @@ var_dump($_SESSION);
                                                     <input class="input1" type="text" autocomplete="off" name="nome" placeholder="" value="<?php echo $nomeCliente ?>" readonly="readonly"/>    
                                                 </div> 
                                                 
-                                                <input class="input-botao" type="submit" name="botao-adicionar" value="Cliente"/>  
+                                                <input class="input-botao" type="submit" name="adicionarCliente" value="Cliente"/>  
                                             </form>
 
                                             <div>
                                                 <label>N. Orcamento</label></br>
-                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" value="<?php echo $numeroOrc?>" readonly="readonly">
+                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" value="<?php echo $orcamento?>" readonly="readonly">
                                             </div>
                                             <div>
                                                 <label>V.Total</label></br>
-                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" value="<?php echo "R$ $valorGeral "?>" readonly="readonly">
+                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" value="<?php echo "R$  "?>" readonly="readonly">
                                             </div>
 
                                             
@@ -236,7 +181,7 @@ var_dump($_SESSION);
                                             </form>   
 
                                             <form class="busca-area" name="buscar-form" method="GET" action="modelo.painel.excluir.php">
-                                                <input type="hidden" name="orcamentoPainelExcluir" value="<?php echo $numeroOrc ?>">
+                                                <input type="hidden" name="orcamentoPainelExcluir" value="<?php echo $orcamento ?>">
                                                 <input type="submit" name="limpar" value="Limpar">
                                             </form>
 
@@ -277,7 +222,7 @@ var_dump($_SESSION);
 
                                                     $resultado = number_format($preco*$quantidade,2,",",".");
 
-                                                    echo "<tr>";
+                                                    echo "<tr ondblclick=location.href='modelo.painel.2.php?adicionar=".$value['codigo']."'>";
                                                     echo "<td style='width:10%;'>".$value['codigo']."</td>";
                                                     echo "<td style='width:50%;'>".$value['produto']."</td>";
 
@@ -286,8 +231,8 @@ var_dump($_SESSION);
 
                                                     <form class='' name='' method='POST'>
                                                     
-                                                        <!--<input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>-->
-                                                        <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required'  onclick=location.href='modelo.painel.2.php?editar=".$value['codigo']."' >
+                                                        
+                                                        <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>
 
                                                     </form>     
                                                     </td>";

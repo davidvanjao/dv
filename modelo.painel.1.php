@@ -18,23 +18,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
-if(isset($_SESSION['logado'])) {
-
-    $sql = "SELECT MAX(orcamento) FROM tb_log_delivery";
-    $sql = $pdo->query($sql);
-    
-    if($sql->rowCount() > 0) {
-    
-        $orcamento = $sql->fetch();
-        $orcamento = $orcamento[0] + 1;   
-    
-    } else {
-    
-        $orcamento = 1;
-    }
-
-
-}
+//=================================================================================================================
 
 //var_dump($_SESSION);
 
@@ -79,9 +63,7 @@ if(isset($_SESSION['logado'])) {
                                 <div class="body-busca">
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST" action="modelo.processo.php">
-                                            <input type="hidden" name="orcamentoPainel" value="<?php echo $orcamento ?>">
-                                            <input type="hidden" name="usuario" value="<?php echo $_SESSION['logado']?>">
-                                            <input class="input-botao" type="submit" name="botaoIniciarOrcamento" value="Adicionar">
+                                            <input class="input-botao" type="submit" name="adicionaLista" value="Adicionar Lista">
                                         </form>
                                     </div>
                                     
@@ -89,12 +71,12 @@ if(isset($_SESSION['logado'])) {
                                         <table>
                                             <tr>
 
-                                                <th style="width:5%;">Ticket</th>
-                                                <th style="width:10%;">Data</th>
-                                                <th style="width:10%;">Nome</th>
+                                                <th style="width:3%;">Ticket</th>
+                                                <th style="width:5%;">Data</th>
+                                                <th style="width:15%;">Nome</th>
                                                 <th style="width:10%;">Cidade</th>
-                                                <th style="width:10%;">Endereço</th>
-                                                <th style="width:10%;">Numero</th>
+                                                <th style="width:15%;">Endereço</th>
+                                                <th style="width:3%;">Numero</th>
                                                 <th style="width:10%;">Status</th>
                                                 <th style="width:10%;">Acoes</th>
 
@@ -130,19 +112,20 @@ if(isset($_SESSION['logado'])) {
                                                     }  
 
                                                     echo "<tr>";
-                                                    echo "<td style='width:5%;'>".$delivery['orcamento']."</td>";
-                                                    echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
-                                                    echo "<td style='width:10%;'>".$delivery['nome']."</td>";
+                                                    echo "<td style='width:3%;'>".$delivery['orcamento']."</td>";
+                                                    echo "<td style='width:5%;'>".$delivery['saida_data']."</td>";
+                                                    echo "<td style='width:15%;'>".$delivery['nome']."</td>";
                                                     echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
-                                                    echo "<td style='width:10%;'>".$delivery['logradouro']."</td>";  
-                                                    echo "<td style='width:10%;'>".$delivery['numero']."</td>";     
+                                                    echo "<td style='width:15%;'>".$delivery['logradouro']."</td>";  
+                                                    echo "<td style='width:3%;'>".$delivery['numero']."</td>";     
                                                     echo "<td style='width:10%; background-color:$cor;'>".$delivery['statuss']."</td>";  
                                                     echo '<td style="width:10%;"><a href="impressao.modelo.php?orcamento='.$delivery['orcamento'].'" target="_blank">Imprimir</a>';                       
                                                     echo "</tr>";  
 
                                                 
                                                 }
-                                            } else {                                                    
+                                            } else {   
+
                                                 echo "Nenhuma compra pendente.";
                                             }
 

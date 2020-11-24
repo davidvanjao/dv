@@ -151,3 +151,4 @@ if($sql->rowCount() > 0) {
 } 
 
 }
+<!--<input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>-->
