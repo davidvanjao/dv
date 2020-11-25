@@ -202,3 +202,35 @@ if($sql->rowCount() > 0) {
 }
 
 ondblclick=location.href='modelo.painel.2.php?quantidade=".$value['codigo']."'
+
+
+
+
+
+
+
+<table>
+    <?php
+        if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
+
+            $pesquisa = addslashes($_POST['pesquisa']);
+            $sql = "SELECT * FROM tb_produto
+            WHERE preco !='0' AND d_produto LIKE '".$pesquisa."%'";
+            
+            $sql = $pdo->query($sql);                                    
+
+            if($sql->rowCount() > 0) {
+                foreach($sql->fetchAll() as $produto) {
+                    echo '<tr ondblclick=location.href="modelo.processo.php?produto='.$produto['c_produto'].'" style="cursor:pointer">';
+                    echo "<td style='width:10%;'>".$produto['c_produto']."</td>";
+                    echo "<td style='width:50%;'>".$produto['d_produto']."</td>";
+                    echo "<td style='width:20%;'>R$ ".$produto['preco']."</td>";
+                    echo "<td style='width:10%;'>".$produto['estoque']."</td>";
+                    //echo '<td style="width:10%;"><a href="modelo.painel.2.php?adicionar='.$produto['c_produto'].'">Add</a>';
+                    echo '</tr>';  
+                }
+            } 
+        }
+        
+    ?>                                        
+</table>

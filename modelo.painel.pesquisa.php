@@ -59,7 +59,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                     
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST">
-                                            <input class="input-busca-produto" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
+                                            <input class="input-busca-produto" id="pesquisa" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
                                             <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
                                         </form>
                                     </div>
@@ -75,31 +75,14 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                         </table> 
                                     </div>                                    
                                     <div class="busca-resultado"> 
-                                        <table>
-                                            <?php
-                                                if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
+                                        
+                                        <div id="resultado">
 
-                                                    $pesquisa = addslashes($_POST['pesquisa']);
-                                                    $sql = "SELECT * FROM tb_produto
-                                                    WHERE preco !='0' AND d_produto LIKE '".$pesquisa."%'";
-                                                    
-                                                    $sql = $pdo->query($sql);                                    
+                                        
+                                        
+                                        
+                                        </div>
 
-                                                    if($sql->rowCount() > 0) {
-                                                        foreach($sql->fetchAll() as $produto) {
-                                                            echo '<tr ondblclick=location.href="modelo.processo.php?produto='.$produto['c_produto'].'" style="cursor:pointer">';
-                                                            echo "<td style='width:10%;'>".$produto['c_produto']."</td>";
-                                                            echo "<td style='width:50%;'>".$produto['d_produto']."</td>";
-                                                            echo "<td style='width:20%;'>R$ ".$produto['preco']."</td>";
-                                                            echo "<td style='width:10%;'>".$produto['estoque']."</td>";
-                                                            //echo '<td style="width:10%;"><a href="modelo.painel.2.php?adicionar='.$produto['c_produto'].'">Add</a>';
-                                                            echo '</tr>';  
-                                                        }
-                                                    } 
-                                                }
-                                                
-                                            ?>                                        
-                                        </table>
                                     </div>
                                 </div> 
 
@@ -109,6 +92,9 @@ if($usuarios->temPermissao('USUARIO') == false) {
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/js/script3.js"></script>
 
     </body>
 
