@@ -45,18 +45,19 @@ if(isset($_SESSION['lista'])) {
 
         $soma = $value['preco'] * $value['quantidade'];
 
-        $valorTotal += $soma;
+        $valorTotal += number_format($soma,2,".",",");
     }
 
 }
+
+//=================================================================================================================
+
 
 //var_dump($_SESSION);
 //var_dump($valorGeral);
 
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -138,8 +139,8 @@ if(isset($_SESSION['lista'])) {
                                                 <input type="submit" name="limpar" value="Excluir Lista">
                                             </form>
 
-                                            <form class="busca-area" name="buscar-form" method="POST" action="modelo.painel.salvar.php">
-                                                <input type="submit" name="salvar" value="Salvar Lista">
+                                            <form class="busca-area" name="buscar-form" method="POST" action="modelo.processo.php">
+                                                <input type="submit" name="salvarLista" value="Salvar Lista">
                                             </form>
 
                                         </div>

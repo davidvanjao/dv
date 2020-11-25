@@ -1,17 +1,15 @@
 $(function(){
-
-	$('#pesquisa').on('keyup', function(){
-		var texto = $(this).val();
+	$('#pesquisaModelo').on('keyup', function(){
+		var pesquisa = $(this).val();
 
 		$.ajax({
-			url:'busca.php',
+			url:'modelo.processo.php',
 			type:'POST',
-			data:{texto:texto},
+			data:{pesquisa:pesquisa},
 			success:function(html) {
 				$('#resultado').html(html);
 
 			}
 		});
 	});
-
 });

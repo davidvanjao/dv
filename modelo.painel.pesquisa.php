@@ -59,7 +59,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                     
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST">
-                                            <input class="input-busca-produto" id="pesquisa" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
+                                            <input class="input-busca-produto" id="pesquisaModelo" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
                                             <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
                                         </form>
                                     </div>
@@ -74,14 +74,8 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                             </tr>
                                         </table> 
                                     </div>                                    
-                                    <div class="busca-resultado"> 
+                                    <div class="busca-resultado" id="resultado"> 
                                         
-                                        <div id="resultado">
-
-                                        
-                                        
-                                        
-                                        </div>
 
                                     </div>
                                 </div> 
