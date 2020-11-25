@@ -152,3 +152,53 @@ if($sql->rowCount() > 0) {
 
 }
 <!--<input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>-->
+
+
+
+
+
+
+
+if(!empty($_GET['adicionar'])) {
+
+$idProduto = $_GET['adicionar'];
+
+$sql = "SELECT n_gondola, c_produto, d_produto, preco, estoque FROM tb_produto WHERE c_produto = $idProduto";    
+$sql = $pdo->query($sql);                                    
+
+if($sql->rowCount() > 0) {
+    foreach($sql as $key => $value) {
+
+        if(isset($value['c_produto']) == $idProduto) {
+
+            if(isset($_SESSION['lista'][$idProduto])){
+
+                if(isset($_POST['quantidade'])) {
+
+                    $quantProduto2 = $_POST['quantidade'];
+
+                    $_SESSION['lista'][$idProduto]['quantidade'] = $quantProduto2;
+
+                }
+
+                //echo '<script>alert("O item já foi adicionado ao carrinho.");</script>';
+
+            }else{
+
+                $_SESSION['lista'][$idProduto] = array('quantidade'=>1, 'gondola'=>$value['n_gondola'], 'produto'=>$value['d_produto'], 'preco'=>floatval($value['preco']), 'estoque'=>$value['estoque'],
+                'codigo'=>$value['c_produto']);
+            }
+            
+        }
+    
+                
+    }   
+    
+    
+} else {
+     echo "Não deu certo!";
+}
+
+}
+
+ondblclick=location.href='modelo.painel.2.php?quantidade=".$value['codigo']."'

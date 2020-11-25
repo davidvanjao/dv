@@ -5,7 +5,7 @@ require 'conexao.banco.php';
 
 //================================VARIAVEIS=========================================================================
 
-
+$quantidade = "1.000";
 
 
 //================================NUMERO DE ORÇAMENTO================================================================
@@ -93,5 +93,47 @@ if(isset($_GET['cliente'])) {
         }
            
     }      
+    
+}
+
+//================================ADICIONAR PRODUTO================================================================
+
+if(isset($_GET['produto'])) {
+
+    $produto = $_GET['produto'];
+    
+    $sql = "SELECT n_gondola, c_produto, d_produto, preco, estoque FROM tb_produto WHERE c_produto = $produto";    
+    $sql = $pdo->query($sql);                                    
+    
+    if($sql->rowCount() > 0) {
+        foreach($sql as $key => $value) {
+
+            if(isset($_SESSION['lista'][$produto])) {
+
+                $quantidade = number_format($_GET['quantidade'],3,".",",");
+
+                $_SESSION['lista'][$produto]['quantidade'] = $quantidade;
+
+                echo $quantidade;
+
+                header("Location:/modelo.painel.2.php");
+
+            } else {
+
+                $_SESSION['lista'][$produto] = array('quantidade'=>$quantidade, 'gondola'=>$value['n_gondola'], 'produto'=>$value['d_produto'],
+                'preco'=>floatval($value['preco']), 'estoque'=>$value['estoque'], 'codigo'=>$value['c_produto']);
+
+                header("Location:/modelo.painel.2.php");
+
+            }        
+                    
+        }   
+        
+        
+    } else {
+
+         echo "Pesquisa no banco não deu certo!";
+    }
+
     
 }

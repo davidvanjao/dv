@@ -87,7 +87,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                                     if($sql->rowCount() > 0) {
                                                         foreach($sql->fetchAll() as $produto) {
-                                                            echo '<tr ondblclick=location.href="modelo.painel.2.php?adicionar='.$produto['c_produto'].'" style="cursor:pointer">';
+                                                            echo '<tr ondblclick=location.href="modelo.processo.php?produto='.$produto['c_produto'].'" style="cursor:pointer">';
                                                             echo "<td style='width:10%;'>".$produto['c_produto']."</td>";
                                                             echo "<td style='width:50%;'>".$produto['d_produto']."</td>";
                                                             echo "<td style='width:20%;'>R$ ".$produto['preco']."</td>";
