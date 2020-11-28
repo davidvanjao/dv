@@ -111,15 +111,25 @@ if(isset($_GET['produto'])) {
 
             if(isset($_SESSION['lista'][$produto])) {
 
-                $quantidade = number_format($_GET['quantidade'],3,".",",");
+                if(isset($_GET['observacao'])) {
 
-                $_SESSION['lista'][$produto]['quantidade'] = $quantidade;
-                $_SESSION['lista'][$produto]['observacao'] = $observacao;
+                    $produto = $_GET['produto'];
+                    $observacao = $_GET['observacao'];                       
+                
+                    $_SESSION['lista'][$produto]['observacao'] = $observacao;                
+                
+                    header("Location:/modelo.painel.2.php");     
 
-                echo $quantidade;
-                echo $observacao;
+                } else {
+                
+                    $produto = $_GET['produto'];
+                    $quantidade = number_format($_GET['quantidade'],3,".",",");
+                
+                    $_SESSION['lista'][$produto]['quantidade'] = $quantidade;
 
-                //header("Location:/modelo.painel.2.php");
+                    header("Location:/modelo.painel.2.php");                
+                
+                }                
 
             } else {
 
@@ -140,6 +150,7 @@ if(isset($_GET['produto'])) {
 
     
 }
+
 
 //================================PESQUISAR PRODUTO================================================================
 
@@ -165,7 +176,7 @@ if(!empty($_POST['pesquisa'])) { //se existir/ e ele nao estiver vazio.
 }
 
 
-//================================PESQUISAR PRODUTO================================================================
+//================================SALVAR LISTA DE PRODUTOS================================================================
 
 if(isset($_POST['salvarLista'])) {
 
@@ -205,9 +216,10 @@ if(isset($_POST['salvarLista'])) {
             $preco = $value['preco'];
             $codigo = $value['codigo'];
             $estoque = $value['estoque'];
+            $observacao = $value['observacao'];
 
             $sql = $pdo->prepare("INSERT INTO tb_orcamento SET dataa = :dataa, orcamento = :orcamento, c_gondola = :c_gondola,
-            c_produto = :c_produto, quantidade = :quantidade, valor_total = :valorTotal, estoque = :estoque, usuario = :usuario");
+            c_produto = :c_produto, quantidade = :quantidade, valor_total = :valorTotal, estoque = :estoque, observacao = :observacao, usuario = :usuario");
             $sql->bindValue(":dataa", $data);
             $sql->bindValue(":orcamento", $orcamento);
             $sql->bindValue(":c_gondola", $gondola);
@@ -216,6 +228,7 @@ if(isset($_POST['salvarLista'])) {
             $sql->bindValue(":valorTotal", $preco);
             $sql->bindValue(":usuario", $usuario);
             $sql->bindValue(":estoque", $estoque);
+            $sql->bindValue(":observacao", $observacao);
             $sql->execute();        
             
 
@@ -233,5 +246,27 @@ if(isset($_POST['salvarLista'])) {
     exit;
 
     
+
+}
+
+//================================LIMPAR LISTA DE PRODUTOS================================================================
+
+if(isset($_POST['excluirLista'])) {
+
+    $orcamento = $_SESSION['orcamento'];
+
+    $sql = $pdo->prepare("DELETE FROM tb_log_delivery WHERE orcamento = :orcamento");
+    $sql->bindValue(":orcamento", $orcamento);
+    $sql->execute();   
+
+    unset( $_SESSION['orcamento'] );
+    unset( $_SESSION['cliente'] );
+    unset( $_SESSION['lista'] );
+    
+
+    header("Location:/modelo.painel.1.php");
+    
+    
+
 
 }

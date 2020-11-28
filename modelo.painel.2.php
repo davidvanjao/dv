@@ -53,7 +53,7 @@ if(isset($_SESSION['lista'])) {
 //=================================================================================================================
 
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
 //var_dump($valorGeral);
 
 
@@ -134,9 +134,8 @@ var_dump($_SESSION);
                                                  <input type="submit" name="adicionarProduto" value="Incluir Produto">
                                             </form>   
 
-                                            <form class="busca-area" name="buscar-form" method="GET" action="modelo.painel.excluir.php">
-                                                <input type="hidden" name="orcamentoPainelExcluir" value="<?php echo $orcamento ?>">
-                                                <input type="submit" name="limpar" value="Excluir Lista">
+                                            <form class="busca-area" name="buscar-form" method="POST" action="modelo.processo.php">
+                                                <input type="submit" name="excluirLista" value="Excluir Lista">
                                             </form>
 
                                             <form class="busca-area" name="buscar-form" method="POST" action="modelo.processo.php">
