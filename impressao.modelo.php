@@ -37,11 +37,11 @@ if(isset($_GET['orcamento'])) {
                 
     }
 }
-
+$total = "";
 
 if(!empty($orcamento)) {
     
-    $sql = "SELECT d.c_produto, e.d_produto, d.quantidade, d.valor_total
+    $sql = "SELECT d.c_produto, e.d_produto, d.quantidade, e.preco, e.estoque, d.observacao
     from tb_log_delivery c, tb_orcamento d, tb_produto e
     where c.orcamento = '$orcamento'
     and c.orcamento = d.orcamento
@@ -55,17 +55,28 @@ if(!empty($orcamento)) {
     $html .= '<th>Codigo</th>';
     $html .= '<th>Produto</th>';
     $html .= '<th>Quantidade</th>';
-    $html .= '<th>Valor</th>';
+    $html .= '<th>Valor Un</th>';
+    $html .= '<th>Valor Total</th>';
+    $html .= '<th>Estoque</th>';
+    $html .= '<th>Observacao</th>';
     $html .= '</tr>';
     $html .= '</thead>';
 
 
     while ($linha = $sql->fetch(PDO::FETCH_ASSOC)) {
+        
+        $preco = $linha['preco'];
+        $quantidade = $linha['quantidade'];
+        $resultado = number_format($preco*$quantidade,2,",",".");
+
         $html .='<tbody>';
         $html .= '<tr><td>'.$linha['c_produto'] .'</td>';
         $html .= '<td>'.$linha['d_produto'] .'</td>';
         $html .= '<td>'.$linha['quantidade'] .'</td>';
-        $html .= '<td>'.$linha['valor_total'] .'</td>';
+        $html .= '<td>'.$linha['preco'] .'</td>';
+        $html .= '<td>'.$resultado.'</td>';
+        $html .= '<td>'.$linha['estoque'] .'</td>';
+        $html .= '<td>'.$linha['observacao'] .'</td>';
         $html .='</tbody>';	
     }
     $html .='</table>';

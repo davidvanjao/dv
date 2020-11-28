@@ -6,6 +6,7 @@ require 'conexao.banco.php';
 //================================VARIAVEIS=========================================================================
 
 $quantidade = "1.000";
+$observacao = "1";
 
 
 //================================NUMERO DE ORÇAMENTO================================================================
@@ -113,15 +114,17 @@ if(isset($_GET['produto'])) {
                 $quantidade = number_format($_GET['quantidade'],3,".",",");
 
                 $_SESSION['lista'][$produto]['quantidade'] = $quantidade;
+                $_SESSION['lista'][$produto]['observacao'] = $observacao;
 
                 echo $quantidade;
+                echo $observacao;
 
-                header("Location:/modelo.painel.2.php");
+                //header("Location:/modelo.painel.2.php");
 
             } else {
 
                 $_SESSION['lista'][$produto] = array('quantidade'=>$quantidade, 'gondola'=>$value['n_gondola'], 'produto'=>$value['d_produto'],
-                'preco'=>floatval($value['preco']), 'estoque'=>$value['estoque'], 'codigo'=>$value['c_produto']);
+                'preco'=>floatval($value['preco']), 'estoque'=>$value['estoque'], 'codigo'=>$value['c_produto'], 'observacao'=>$observacao);
 
                 header("Location:/modelo.painel.2.php");
 

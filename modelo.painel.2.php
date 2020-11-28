@@ -22,7 +22,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
 $codigoCliente = "";
 $nomeCliente = "";
-$valorTotal = "";
+$valorTotal = "00.00";
 
 //=========================================SE REFERE AO ORCAMENTO========================================================================
 
@@ -45,7 +45,7 @@ if(isset($_SESSION['lista'])) {
 
         $soma = $value['preco'] * $value['quantidade'];
 
-        $valorTotal += number_format($soma,2,".",",");
+        $valorTotal += $soma;
     }
 
 }
@@ -53,7 +53,7 @@ if(isset($_SESSION['lista'])) {
 //=================================================================================================================
 
 
-//var_dump($_SESSION);
+var_dump($_SESSION);
 //var_dump($valorGeral);
 
 
@@ -120,7 +120,7 @@ if(isset($_SESSION['lista'])) {
                                             </div>
                                             <div>
                                                 <label>Valor Total</label></br>
-                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" value="<?php echo "R$ $valorTotal"?>" readonly="readonly">
+                                                <input class="inputOrcamento" minlength="3" type="text" autocomplete="off" name="pesquisa" value='<?php echo "R$ ".number_format($valorTotal,2,",",".")?>' readonly="readonly">
                                             </div>
 
                                             
@@ -156,6 +156,7 @@ if(isset($_SESSION['lista'])) {
                                                 <th style="width:10%;">Preco</th>
                                                 <th style="width:10%;">Total</th>                                                
                                                 <th style="width:10%;">Estoque</th>
+                                                <th style="width:10%;">Observacoes</th>
                                                 <th style="width:10%;">Acoes</th>
                                             </tr>
                                         </table> 
@@ -173,6 +174,7 @@ if(isset($_SESSION['lista'])) {
 
                                                     $preco = $value['preco'];
                                                     $quantidade = $value['quantidade'];
+                                                    $observacao = $value['observacao'];
 
                                                     $resultado = number_format($preco*$quantidade,2,",",".");
 
@@ -195,7 +197,20 @@ if(isset($_SESSION['lista'])) {
                                                     
                                                     echo "<td style='width:10%;'>R$".number_format($preco,2,",",".")."</td>";
                                                     echo "<td style='width:10%;'>R$".$resultado."</td>";
-                                                    echo "<td style='width:10%;'>".$value['estoque']."</td>";                                                    
+                                                    echo "<td style='width:10%;'>".$value['estoque']."</td>"; 
+
+
+                                                    echo "<td style='width:10%;'>
+
+                                                    <form class='' name='teste' method='GET' action='modelo.processo.php'>      
+
+                                                        <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
+                                                        <input value=".$observacao." class='quantidade' type='text' min='0'  name='observacao' onchange='this.form.submit()'>                                                        
+
+                                                    </form>     
+                                                    </td>";
+                                                    
+                                                    
                                                     echo '<td style="width:10%;"><a href="modelo.painel.excluir.php?excluir='.$value['codigo'].'">Excluir</a>';
                                                     echo "</tr>";  
 
