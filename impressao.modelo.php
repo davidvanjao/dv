@@ -5,6 +5,7 @@ require 'classes/usuarios.class.php';
 
 $html = "";
 $seq = "1";
+$pagamento = "";
 
 
 if(isset($_GET['orcamento'])) {
@@ -33,6 +34,7 @@ if(isset($_GET['orcamento'])) {
             $usuario  = explode(".", $delivery['usuario']);
             $pagamento = $delivery['pagamento']; 
             $cidade = $delivery['cidadeEstado']; 
+            $telefone = $delivery['telefone']; 
 
 
         }   
@@ -80,7 +82,7 @@ if(!empty($orcamento)) {
         $html .= '<td>'.$linha['c_produto'] .'</td>';
         $html .= '<td>'.$linha['d_produto'] .'</td>';
         $html .= '<td>'.$linha['quantidade'] .'</td>';
-        $html .= '<td> R$ '.$linha['preco'] .'</td>';
+        $html .= '<td> R$ '.number_format($preco,2,",",".") .'</td>';
         $html .= '<td> R$ '.$resultado.'</td>';
         $html .= '<td>'.$linha['estoque'] .'</td>';
         $html .= '<td>'.$linha['observacao'] .'</td>';
@@ -117,42 +119,51 @@ $dompdf->load_html('
             <link rel="stylesheet" href="assets/css/impressao.css">
 
         </head>
+        
         <body>
 
             <div class="cabecalho">
-            <table width=100%;>
-                <tr>
-                    <td style="width:70%;"><strong>Nome:</strong> '.$nome.'</td>
-                    <td style="text-align:right;"><strong>Orcamento Nº:</strong> '.$orcamento.'</td>
-                </tr>
-            </table>
-            <table width=100%;>
-                <tr>
-                    <td style="width:50%;"><strong>Endereco:</strong> '.$endereco.' <strong>N°:</strong>'.$numero.' </td>
-                    
-                    <td style="text-align:right;"><strong>Cidade:</strong> '.$cidade.'</td>
-                </tr>
-            </table>
-            <table width=100%;>
-                <tr>
-                    <td ><strong>Usuario:</strong> '.$usuario['0'].'</td>
-                    <td><strong>Data:</strong> '.$dataPedido.'</td>
-                    <td><strong>F. Pagamento</strong> '.$pagamento.'</td>
-                    <td style="text-align:right;"><strong>Total:</strong> R$'.number_format($valorTotal,2,",",".").'</td>
-                </tr>
-            </table>           
-
+                <table width=100%;>
+                    <tr>
+                        <td style="width:60%;"><strong>Nome:</strong> '.$nome.'</td>
+                        <td><strong>Tel:</strong> '.$telefone.'</td>   
+                        <td style="text-align:right; font-size:20px;"><strong>Orç. Nº:'.$orcamento.'</strong></td>
+                    </tr>
+                </table>
+                <table width=100%;>
+                    <tr>
+                        <td style="width:60%;"><strong>Endereco:</strong> '.$endereco.' <strong>N°:</strong>'.$numero.' </td>
+                                             
+                        <td style="text-align:right;"><strong>Cidade:</strong> '.$cidade.'</td>
+                    </tr>
+                </table>
+                <table width=100%;>
+                    <tr>
+                        <td style="text-transform: capitalize"><strong>Usuario:</strong> '.$usuario['0'].'</td>
+                        <td><strong>Data:</strong> '.$dataPedido.'</td>
+                        <td><strong>F. Pagamento:</strong> '.$pagamento.'</td>
+                        <td style="text-align:right; font-size:20px;"><strong>Total: R$'.number_format($valorTotal,2,",",".").'</strong></td>
+                    </tr>
+                </table>        
             </div>    
 
             <hr>
-            <div class="produto">
-
-                
+            <div class="produto">                
 
                 '.$html.'
             </div>
 
+            <script type="text/php">
+            if (isset($dompdf)) 
+            {               
+                $dompdf = utf8_encode("Página {PAGE_NUM} de {PAGE_COUNT} ") ;
+                
+            }
+            </script>
+
+
         </body>
+
     </html>
 
 
@@ -166,11 +177,14 @@ $dompdf->render();
 
 //exibir a página
 $dompdf->stream(
-    "relatorio_celke.pdf",
+    "relatorio_orcamento.pdf",
     array(
         "Attachment" => false //para realizar o dowload somente alterar para true
     )
 );
+
+//$dompdf->getDOMPdf()->set_option('isPhpEnabled', true);
+
 
 ?>
 
