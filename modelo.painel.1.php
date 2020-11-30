@@ -71,7 +71,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                         <table>
                                             <tr>
 
-                                                <th style="width:3%;">Ticket</th>
+                                                <th style="width:5%;">Ticket</th>
                                                 <th style="width:5%;">Data</th>
                                                 <th style="width:15%;">Nome</th>
                                                 <th style="width:10%;">Cidade</th>
@@ -91,7 +91,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                             from tb_log_delivery as a join tb_cliente as b join tb_endereco as c 
                                             on a.idCliente = b.id 
                                             and b.idEndereco = c.id
-                                            where a.statuss = 'PEDIDO REALIZADO'
+                                            where a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
                                             order by a.id";
 
                                             $sql = $pdo->query($sql);   
@@ -105,14 +105,14 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         $cor="#ff0000";
                                                     }
                                                     if($delivery['statuss']=="LIBERADO PARA ENTREGA"){
-                                                        $cor="##ffa500";
+                                                        $cor="#ffa500";
                                                     }
                                                     if($delivery['statuss']=="SAIU PARA ENTREGA"){
                                                         $cor="#008000";
                                                     }  
 
                                                     echo "<tr>";
-                                                    echo "<td style='width:3%;'>".$delivery['orcamento']."</td>";
+                                                    echo "<td style='width:5%;'>".$delivery['orcamento']."</td>";
                                                     echo "<td style='width:5%;'>".$delivery['saida_data']."</td>";
                                                     echo "<td style='width:15%;'>".$delivery['nome']."</td>";
                                                     echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";

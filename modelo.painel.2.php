@@ -149,7 +149,7 @@ if(isset($_SESSION['lista'])) {
 
                                         <div class="formulario-documento">      
 
-                                            <form class="busca-area" name="buscar-form" method="POST" action="modelo.painel.pesquisa.php">
+                                            <form class="busca-area" name="buscar-form" method="POST" action="modelo.produto.pesquisa.php">
                                                  <input type="submit" name="adicionarProduto" value="Incluir Produto">
                                             </form>   
 
