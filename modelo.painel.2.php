@@ -23,6 +23,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 $codigoCliente = "";
 $nomeCliente = "";
 $valorTotal = "00.00";
+$formaPagamento = "";
 
 //=========================================SE REFERE AO ORCAMENTO========================================================================
 
@@ -35,6 +36,12 @@ if(isset($_SESSION['orcamento'])) {
 if(isset($_SESSION['cliente'])) {
     $codigoCliente = $_SESSION['cliente']['id'];
     $nomeCliente = $_SESSION['cliente']['nome'];
+}
+
+//=========================================SE REFERE A FORMA DE PAGAMENTO========================================================================
+
+if(isset($_SESSION['formaPagamento'])) {
+    $formaPagamento = $_SESSION['formaPagamento'];
 }
 
 //===========================================SE REFERE AO TOTAL DOS PRODUTOS======================================================================
@@ -113,6 +120,18 @@ if(isset($_SESSION['lista'])) {
                                                 
                                                 <input class="input-botao" type="submit" name="adicionarCliente" value="Cliente"/>  
                                             </form>
+
+                                            <div>
+                                                <form action='modelo.processo.php' method='POST'>
+                                                    <label>F. Pagamento</label></br>
+                                                    <select class="inputOrcamento" name="formaPagamento" onchange="this.form.submit()">
+                                                        <option value=""><?php echo $formaPagamento?></option> 
+                                                        <option value="Dinheiro">Dinheiro</option> 
+                                                        <option value="Cartão">Cartão</option>
+                                                        <option value="Cheque">Cheque</option>
+                                                    </select>
+                                                </form>
+                                            </div>
 
                                             <div>
                                                 <label>N. Orcamento</label></br>
@@ -210,7 +229,7 @@ if(isset($_SESSION['lista'])) {
                                                     </td>";
                                                     
                                                     
-                                                    echo '<td style="width:10%;"><a href="modelo.painel.excluir.php?excluir='.$value['codigo'].'">Excluir</a>';
+                                                    echo '<td style="width:10%;"><a href="modelo.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
                                                     echo "</tr>";  
 
 

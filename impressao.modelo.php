@@ -4,13 +4,14 @@ require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
 $html = "";
+$seq = "1";
 
 
 if(isset($_GET['orcamento'])) {
 
     $orcamento = addslashes($_GET['orcamento']);
     
-    $sql = "SELECT a.id, a.nome, a.idEndereco, b.logradouro, a.numero, b.cidadeEstado, a.telefone, b.cidadeEstado, c.orcamento, c.dataPedido, d.usuario
+    $sql = "SELECT a.id, a.nome, a.idEndereco, b.logradouro, a.numero, b.cidadeEstado, a.telefone, b.cidadeEstado, c.orcamento, c.pagamento, d.usuario, DATE_FORMAT(c.dataPedido,'%d/%m/%Y %H:%i') as saida_data
     from tb_cliente a, tb_endereco b, tb_log_delivery c, tb_usuarios d
     where c.orcamento = '$orcamento'
     and c.idCliente = a.id
@@ -28,8 +29,9 @@ if(isset($_GET['orcamento'])) {
             $endereco = $delivery['logradouro'];
             $numero = $delivery['numero'];
             $orcamento = $delivery['orcamento'];
-            $dataPedido = $delivery['dataPedido'];  
-            $usuario = $delivery['usuario']; 
+            $dataPedido = $delivery['saida_data'];  
+            $usuario  = explode(".", $delivery['usuario']);
+            $pagamento = $delivery['pagamento']; 
             $cidade = $delivery['cidadeEstado']; 
 
 
@@ -38,6 +40,7 @@ if(isset($_GET['orcamento'])) {
     }
 }
 $total = "";
+$valorTotal = "00,00";
 
 if(!empty($orcamento)) {
     
@@ -50,15 +53,16 @@ if(!empty($orcamento)) {
     $sql = $pdo->query($sql);
 
     $html .= '<table width=100%>';
-    $html .= '<thead>';
+    $html .= '<thead class="tabelaProduto">';
     $html .= '<tr>';
-    $html .= '<th>Codigo</th>';
+    $html .= '<th>Seq</th>';
+    $html .= '<th>Cod</th>';
     $html .= '<th>Produto</th>';
-    $html .= '<th>Quantidade</th>';
-    $html .= '<th>Valor Un</th>';
-    $html .= '<th>Valor Total</th>';
+    $html .= '<th>Qtd</th>';
+    $html .= '<th>Un</th>';
+    $html .= '<th>Total</th>';
     $html .= '<th>Estoque</th>';
-    $html .= '<th>Observacao</th>';
+    $html .= '<th>Obs</th>';
     $html .= '</tr>';
     $html .= '</thead>';
 
@@ -69,15 +73,21 @@ if(!empty($orcamento)) {
         $quantidade = $linha['quantidade'];
         $resultado = number_format($preco*$quantidade,2,",",".");
 
-        $html .='<tbody>';
-        $html .= '<tr><td>'.$linha['c_produto'] .'</td>';
+
+        $html .='<tbody class="tabelaProduto">';
+        $html .= '<tr>';
+        $html .= '<td>'.$seq++.'</td>';
+        $html .= '<td>'.$linha['c_produto'] .'</td>';
         $html .= '<td>'.$linha['d_produto'] .'</td>';
         $html .= '<td>'.$linha['quantidade'] .'</td>';
-        $html .= '<td>'.$linha['preco'] .'</td>';
-        $html .= '<td>'.$resultado.'</td>';
+        $html .= '<td> R$ '.$linha['preco'] .'</td>';
+        $html .= '<td> R$ '.$resultado.'</td>';
         $html .= '<td>'.$linha['estoque'] .'</td>';
         $html .= '<td>'.$linha['observacao'] .'</td>';
+        $html .= '</tr>';
         $html .='</tbody>';	
+
+        $valorTotal += $resultado;
     }
     $html .='</table>';
     
@@ -118,16 +128,17 @@ $dompdf->load_html('
             </table>
             <table width=100%;>
                 <tr>
-                    <td style="width:50%;"><strong>Endereco:</strong> '.$endereco.' </td>
-                    <td style="width:10%;"><strong>N°:</strong> '.$numero.'</td>
+                    <td style="width:50%;"><strong>Endereco:</strong> '.$endereco.' <strong>N°:</strong>'.$numero.' </td>
+                    
                     <td style="text-align:right;"><strong>Cidade:</strong> '.$cidade.'</td>
                 </tr>
             </table>
             <table width=100%;>
                 <tr>
-                    <td ><strong>Usuario:</strong> '.$usuario.'</td>
+                    <td ><strong>Usuario:</strong> '.$usuario['0'].'</td>
                     <td><strong>Data:</strong> '.$dataPedido.'</td>
-                    <td style="text-align:right;"><strong>Valor Total:</strong> R$00,00</td>
+                    <td><strong>F. Pagamento</strong> '.$pagamento.'</td>
+                    <td style="text-align:right;"><strong>Total:</strong> R$'.number_format($valorTotal,2,",",".").'</td>
                 </tr>
             </table>           
 
@@ -135,6 +146,9 @@ $dompdf->load_html('
 
             <hr>
             <div class="produto">
+
+                
+
                 '.$html.'
             </div>
 

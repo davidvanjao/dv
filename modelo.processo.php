@@ -6,7 +6,7 @@ require 'conexao.banco.php';
 //================================VARIAVEIS=========================================================================
 
 $quantidade = "1.000";
-$observacao = "1";
+$observacao = ".";
 
 
 //================================NUMERO DE ORÇAMENTO================================================================
@@ -94,6 +94,35 @@ if(isset($_GET['cliente'])) {
         }
            
     }      
+    
+}
+
+//================================ADICIONAR FORMA DE PAGAMENTO================================================================
+
+if(isset($_POST['formaPagamento'])) {
+
+    $formaPagamento= addslashes($_POST['formaPagamento']);
+    
+
+    if(isset($_SESSION['formaPagamento'])) {   
+
+        //SE EXISTIR, APAGUE E COLOQUE
+        unset( $_SESSION['formaPagamento'] );
+        $_SESSION['formaPagamento'] = $formaPagamento;         
+        
+        header("Location:/modelo.painel.2.php");
+
+    } else {
+
+        //SE NAO EXISTIR, COLOQUE
+        $_SESSION['formaPagamento'] = $formaPagamento;    
+
+        header("Location:/modelo.painel.2.php");        
+
+    }
+        
+           
+        
     
 }
 
@@ -196,11 +225,13 @@ if(isset($_POST['salvarLista'])) {
     
         $idCliente = $_SESSION['cliente']['id']; 
         $idEndereco = $_SESSION['cliente']['idEndereco'];
+        $formaPagamento = $_SESSION['formaPagamento'];
         $status = 'PEDIDO REALIZADO';     
         
-        $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, idEndereco = :idEndereco, statuss = :statuss, dataPedido = NOW() WHERE orcamento = '$orcamento'");
+        $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, idEndereco = :idEndereco, pagamento = :pagamento, statuss = :statuss, dataPedido = NOW() WHERE orcamento = '$orcamento'");
         $sql->bindValue(":idCliente", $idCliente);
         $sql->bindValue(":idEndereco", $idEndereco);    
+        $sql->bindValue(":pagamento", $formaPagamento);
         $sql->bindValue(":statuss", $status);
         $sql->execute();          
     
@@ -237,7 +268,8 @@ if(isset($_POST['salvarLista'])) {
 
         unset( $_SESSION['lista'] );
         unset( $_SESSION['cliente'] );
-        unset( $_SESSION['orcamento'] );     
+        unset( $_SESSION['orcamento'] );    
+        unset( $_SESSION['formaPagamento'] );  
     }
 
     
@@ -264,9 +296,20 @@ if(isset($_POST['excluirLista'])) {
     unset( $_SESSION['lista'] );
     
 
-    header("Location:/modelo.painel.1.php");
-    
-    
+    header("Location:/modelo.painel.1.php");  
 
+}
 
+//================================EXCLUIR PRODUTO================================================================
+
+if(isset($_GET['excluir'])) {
+
+    $produto = $_GET['excluir'];
+
+    if(isset($_SESSION['lista'])){
+
+        unset($_SESSION['lista'][$produto]);
+        header("Location:/modelo.painel.2.php");
+        
+    }
 }
