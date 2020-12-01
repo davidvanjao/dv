@@ -24,6 +24,8 @@ $codigoCliente = "";
 $nomeCliente = "";
 $valorTotal = "00.00";
 $formaPagamento = "";
+$bloco ="";
+$checkbox = "";
 
 //=========================================SE REFERE AO ORCAMENTO========================================================================
 
@@ -57,10 +59,20 @@ if(isset($_SESSION['lista'])) {
 
 }
 
+//===========================================SE REFERE AO BLOCO DE NOTAS======================================================================
+
+if(isset($_SESSION['blocoNotas'])) {
+
+    $checkbox = $_SESSION['blocoNotas']['checkbox'];
+    $bloco = $_SESSION['blocoNotas']['bloco'];
+
+}
+
 //=================================================================================================================
 
 
-//var_dump($_SESSION);
+var_dump($_SESSION);
+//echo $bloco;
 //var_dump($valorGeral);
 
 
@@ -162,8 +174,27 @@ if(isset($_SESSION['lista'])) {
                                             </form>
 
                                             <div class="blocoNotas">
-                                                <input type="checkbox" id="blocoNotas" name="blocoNotas" onclick="blocoNotas()>
-                                                <label for="blocoNotas">Bloco de Notas</label>
+                                                <?php 
+
+                                                if(isset($_SESSION['blocoNotas']['checkbox'])) {
+
+                                                ?>
+
+                                                <input type="checkbox" checked id="blocoNotas" name="blocoNotas" onclick="ativarBloco();">
+                                                <label for="blocoNotas2">Bloco de Notas</label> 
+
+                                                <?php                                                
+
+                                                } else {
+                                                ?>
+
+                                                <input type="checkbox" id="blocoNotas" name="blocoNotas" onclick="ativarBloco();">
+                                                <label for="blocoNotas2">Bloco de Notas</label>
+                                                <?php
+                                                
+                                                }
+
+                                                ?>
                                             </div>
 
                                         </div>
@@ -258,8 +289,8 @@ if(isset($_SESSION['lista'])) {
                                             </table>
                                         </div>
                                         <div class="copiarColar">
-                                            <form class='' name='teste' method='GET' action='modelo.processo.php'>                                            
-                                                <textarea resize="none" onchange='this.form.submit()'></textarea>
+                                            <form class='' name='teste' method='POST' action='modelo.processo.php'>                                            
+                                                <textarea resize="none" value="" name="blocoNotas" onchange='this.form.submit()'><?php echo $bloco ?></textarea>
                                             </form>                                         
                                         </div>
 

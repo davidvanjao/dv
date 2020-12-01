@@ -126,6 +126,35 @@ if(isset($_POST['formaPagamento'])) {
     
 }
 
+//================================BLOCO DE NOTAS================================================================
+
+if(isset($_POST['blocoNotas'])) {
+
+    $blocoNotas= addslashes($_POST['blocoNotas']);
+    
+
+    if(isset($_SESSION['blocoNotas'])) {   
+
+        //SE EXISTIR, APAGUE E COLOQUE
+        unset($_SESSION['blocoNotas']);
+        $_SESSION['blocoNotas'] = array('checkbox' => 'checked', 'bloco'=>$blocoNotas);     
+
+        header("Location:/modelo.painel.2.php");
+
+    } else {
+
+        //SE NAO EXISTIR, COLOQUE
+        $_SESSION['blocoNotas'] = array('checkbox' => 'checked', 'bloco'=>$blocoNotas);  
+
+        header("Location:/modelo.painel.2.php");        
+
+    }
+        
+           
+        
+    
+}
+
 //================================ADICIONAR PRODUTO================================================================
 
 if(isset($_GET['produto'])) {
@@ -294,6 +323,8 @@ if(isset($_POST['excluirLista'])) {
     unset( $_SESSION['orcamento'] );
     unset( $_SESSION['cliente'] );
     unset( $_SESSION['lista'] );
+    unset( $_SESSION['formaPagamento'] );
+    unset( $_SESSION['blocoNotas']);
     
 
     header("Location:/modelo.painel.1.php");  
