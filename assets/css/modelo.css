@@ -144,3 +144,48 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     width: 70px;
     margin-right: 4px;
 }
+
+
+/*========================TESTE===================================*/
+.conteudo-Geral {
+    overflow: scroll;
+}
+.teste{
+    display: flex;
+    height: 80%;
+    /*overflow: auto;*/
+}
+.copiarColar {
+    display: block;
+    width: 30%;
+    height: 96%;
+    flex: 1;
+    margin-left: 20px;
+}
+.copiarColar form, textarea {
+    width: 100%;    
+    height: 100%;
+    resize: none;
+    margin-top: 12px;
+}
+
+.largura {
+    width: 70%;
+}
+
+.blocoNotas {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    
+}
+.blocoNotas input {
+    width: 20px;
+    height: 20px;
+
+}
+.blocoNotas label {
+    text-align: center;
+    line-height: 34px;
+}

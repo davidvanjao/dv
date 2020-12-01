@@ -161,13 +161,27 @@ if(isset($_SESSION['lista'])) {
                                                 <input type="submit" name="salvarLista" value="Salvar Lista">
                                             </form>
 
+                                            <div class="blocoNotas">
+                                                <input type="checkbox" id="blocoNotas" name="blocoNotas" onclick="blocoNotas()>
+                                                <label for="blocoNotas">Bloco de Notas</label>
+                                            </div>
+
                                         </div>
 
                                             
                                     </div>
                                     <div class="tabela-titulo">
                                         <table>
-                                            <tr>
+                                            
+                                        </table> 
+                                    </div>
+                                    <div class="teste">        
+
+                                        <div class="busca-resultado largura"> 
+                                            <table>
+                                                
+
+                                                <tr>
                                                 <th style="width:5%;">Codigo</th>
                                                 <th style="width:40%;">Produto</th>
                                                 <th style="width:10%;">Quantidade</th>
@@ -176,78 +190,80 @@ if(isset($_SESSION['lista'])) {
                                                 <th style="width:10%;">Estoque</th>
                                                 <th style="width:10%;">Observacoes</th>
                                                 <th style="width:10%;">Acoes</th>
-                                            </tr>
-                                        </table> 
-                                    </div>                                    
-                                    <div class="busca-resultado"> 
-                                        <table>
-                                            <?php
+                                                </tr>
 
-                                            
+                                                <?php
 
-                                            if(!empty($_SESSION['lista'])) {
+                                                if(!empty($_SESSION['lista'])) {
 
 
-                                                foreach($_SESSION['lista'] as $key=>$value) {
+                                                    foreach($_SESSION['lista'] as $key=>$value) {
 
-                                                    $preco = $value['preco'];
-                                                    $quantidade = $value['quantidade'];
-                                                    $observacao = $value['observacao'];
+                                                        $preco = $value['preco'];
+                                                        $quantidade = $value['quantidade'];
+                                                        $observacao = $value['observacao'];
 
-                                                    $resultado = number_format($preco*$quantidade,2,",",".");
+                                                        $resultado = number_format($preco*$quantidade,2,",",".");
 
-                                                    echo "<tr>";
-                                                    echo "<td style='width:5%;'>".$value['codigo']."</td>";
-                                                    echo "<td style='width:40%;'>".$value['produto']."</td>";
+                                                        echo "<tr>";
+                                                        echo "<td style='width:5%;'>".$value['codigo']."</td>";
+                                                        echo "<td style='width:40%;'>".$value['produto']."</td>";
 
 
-                                                    echo "<td style='width:10%;'>
+                                                        echo "<td style='width:10%;'>
 
-                                                    <form class='' name='teste' method='GET' action='modelo.processo.php'>      
+                                                        <form class='' name='teste' method='GET' action='modelo.processo.php'>      
 
-                                                        <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
-                                                        <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>                                                        
+                                                            <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
+                                                            <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>                                                        
 
-                                                    </form>     
-                                                    </td>";
+                                                        </form>     
+                                                        </td>";
+                                                        
+
+                                                        
+                                                        echo "<td style='width:10%;'>R$".number_format($preco,2,",",".")."</td>";
+                                                        echo "<td style='width:10%;'>R$".$resultado."</td>";
+                                                        echo "<td style='width:10%;'>".$value['estoque']."</td>"; 
+
+
+                                                        echo "<td style='width:10%;'>
+
+                                                        <form class='' name='teste' method='GET' action='modelo.processo.php'>      
+
+                                                            <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
+                                                            <input value=".$observacao." class='quantidade' type='text' min='0'  name='observacao' onchange='this.form.submit()'>                                                        
+
+                                                        </form>     
+                                                        </td>";
+                                                        
+                                                        
+                                                        echo '<td style="width:10%;"><a href="modelo.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
+                                                        echo "</tr>";  
+
+
+    
+                                                    }
+    
                                                     
+                                                } else {
 
-                                                    
-                                                    echo "<td style='width:10%;'>R$".number_format($preco,2,",",".")."</td>";
-                                                    echo "<td style='width:10%;'>R$".$resultado."</td>";
-                                                    echo "<td style='width:10%;'>".$value['estoque']."</td>"; 
-
-
-                                                    echo "<td style='width:10%;'>
-
-                                                    <form class='' name='teste' method='GET' action='modelo.processo.php'>      
-
-                                                        <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
-                                                        <input value=".$observacao." class='quantidade' type='text' min='0'  name='observacao' onchange='this.form.submit()'>                                                        
-
-                                                    </form>     
-                                                    </td>";
-                                                    
-                                                    
-                                                    echo '<td style="width:10%;"><a href="modelo.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
-                                                    echo "</tr>";  
-
-
-  
-                                                }
- 
+                                                    echo "</br>";
+                                                    echo "Lista não iniciada!";
                                                 
-                                            } else {
+                                                }      
+                                                    
+                                                    
+                                                ?>                                        
+                                            </table>
+                                        </div>
+                                        <div class="copiarColar">
+                                            <form class='' name='teste' method='GET' action='modelo.processo.php'>                                            
+                                                <textarea resize="none" onchange='this.form.submit()'></textarea>
+                                            </form>                                         
+                                        </div>
 
-                                                echo "</br>";
-                                                echo "Lista não iniciada!";
-                                               
-                                            }      
-                                                
-                                                
-                                            ?>                                        
-                                        </table>
-                                    </div>
+                                    </div>   
                                 </div> 
 
                             </div> 
@@ -256,7 +272,7 @@ if(isset($_SESSION['lista'])) {
                 </div>
             </div>
         </div>
-
+        <script type="text/javascript" src="assets/js/scriptcheckbox.js"></script>                                       
         <!--<script type="text/javascript" src="jquery.min.js"></script>
         <script type="text/javascript" src="script2.js"></script>-->
 
