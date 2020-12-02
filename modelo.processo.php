@@ -238,74 +238,77 @@ if(!empty($_POST['pesquisa'])) { //se existir/ e ele nao estiver vazio.
 
 if(isset($_POST['salvarLista'])) {
 
-    if(!empty($_SESSION['logado'])) {       
-    
-        $usuario = $_SESSION['logado'];           
+    if(isset($_SESSION['cliente'], $_SESSION['formaPagamento'], $_SESSION['orcamento'], $_SESSION['lista'])) {  
+
+        if(!empty($_SESSION['logado'])) {       
         
-    }
-
-    if(!empty($_SESSION['orcamento'])) {
-
-        $orcamento = $_SESSION['orcamento'];
-        
-    }
-
-    if(!empty($_SESSION['cliente'])) {               
-    
-        $idCliente = $_SESSION['cliente']['id']; 
-        $idEndereco = $_SESSION['cliente']['idEndereco'];
-        $formaPagamento = $_SESSION['formaPagamento'];
-        $status = 'PEDIDO REALIZADO';     
-        
-        $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, idEndereco = :idEndereco, pagamento = :pagamento, statuss = :statuss, dataPedido = NOW() WHERE orcamento = '$orcamento'");
-        $sql->bindValue(":idCliente", $idCliente);
-        $sql->bindValue(":idEndereco", $idEndereco);    
-        $sql->bindValue(":pagamento", $formaPagamento);
-        $sql->bindValue(":statuss", $status);
-        $sql->execute();          
-    
-    }    
-
-    if(!empty($_SESSION['lista'])) {
-
-        foreach($_SESSION['lista'] as $key=>$value) {
-            $data = date('Y-m-d');
-    
-            $quantidade = $value['quantidade'];
-            $gondola = $value['gondola'];
-            $preco = $value['preco'];
-            $codigo = $value['codigo'];
-            $estoque = $value['estoque'];
-            $observacao = $value['observacao'];
-
-            $sql = $pdo->prepare("INSERT INTO tb_orcamento SET dataa = :dataa, orcamento = :orcamento, c_gondola = :c_gondola,
-            c_produto = :c_produto, quantidade = :quantidade, valor_total = :valorTotal, estoque = :estoque, observacao = :observacao, usuario = :usuario");
-            $sql->bindValue(":dataa", $data);
-            $sql->bindValue(":orcamento", $orcamento);
-            $sql->bindValue(":c_gondola", $gondola);
-            $sql->bindValue(":c_produto", $codigo);
-            $sql->bindValue(":quantidade",$quantidade);
-            $sql->bindValue(":valorTotal", $preco);
-            $sql->bindValue(":usuario", $usuario);
-            $sql->bindValue(":estoque", $estoque);
-            $sql->bindValue(":observacao", $observacao);
-            $sql->execute();        
+            $usuario = $_SESSION['logado'];           
             
-
-    
         }
 
-        unset( $_SESSION['lista'] );
-        unset( $_SESSION['cliente'] );
-        unset( $_SESSION['orcamento'] );    
-        unset( $_SESSION['formaPagamento'] );  
+        if(!empty($_SESSION['orcamento'])) {
+
+            $orcamento = $_SESSION['orcamento'];
+            
+        }
+
+        if(!empty($_SESSION['cliente'])) {               
+        
+            $idCliente = $_SESSION['cliente']['id']; 
+            $idEndereco = $_SESSION['cliente']['idEndereco'];
+            $formaPagamento = $_SESSION['formaPagamento'];
+            $status = 'PEDIDO REALIZADO';     
+            
+            $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, idEndereco = :idEndereco, pagamento = :pagamento, statuss = :statuss, dataPedido = NOW() WHERE orcamento = '$orcamento'");
+            $sql->bindValue(":idCliente", $idCliente);
+            $sql->bindValue(":idEndereco", $idEndereco);    
+            $sql->bindValue(":pagamento", $formaPagamento);
+            $sql->bindValue(":statuss", $status);
+            $sql->execute();          
+        
+        }    
+
+        if(!empty($_SESSION['cliente'])) {
+
+            foreach($_SESSION['lista'] as $key=>$value) {
+                $data = date('Y-m-d');
+        
+                $quantidade = $value['quantidade'];
+                $gondola = $value['gondola'];
+                $preco = $value['preco'];
+                $codigo = $value['codigo'];
+                $estoque = $value['estoque'];
+                $observacao = $value['observacao'];
+
+                $sql = $pdo->prepare("INSERT INTO tb_orcamento SET dataa = :dataa, orcamento = :orcamento, c_gondola = :c_gondola,
+                c_produto = :c_produto, quantidade = :quantidade, valor_total = :valorTotal, estoque = :estoque, observacao = :observacao, usuario = :usuario");
+                $sql->bindValue(":dataa", $data);
+                $sql->bindValue(":orcamento", $orcamento);
+                $sql->bindValue(":c_gondola", $gondola);
+                $sql->bindValue(":c_produto", $codigo);
+                $sql->bindValue(":quantidade",$quantidade);
+                $sql->bindValue(":valorTotal", $preco);
+                $sql->bindValue(":usuario", $usuario);
+                $sql->bindValue(":estoque", $estoque);
+                $sql->bindValue(":observacao", $observacao);
+                $sql->execute();       
+            }
+
+            unset( $_SESSION['lista'] );
+            unset( $_SESSION['cliente'] );
+            unset( $_SESSION['orcamento'] );    
+            unset( $_SESSION['formaPagamento'] ); 
+            unset( $_SESSION['formaPagamento'] );
+            unset( $_SESSION['blocoNotas']); 
+        }
+
+        header("Location:/modelo.painel.1.php");
+        exit;
+
+    } else {
+
+       header("Location:/modelo.painel.2.php");
     }
-
-    
-
-    header("Location:/modelo.painel.1.php");
-    exit;
-
     
 
 }

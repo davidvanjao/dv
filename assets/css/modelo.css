@@ -131,6 +131,10 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     width: 100px;
 }
 
+.titulo {
+    border: 1px solid #000;
+}
+
 /*===========================================================*/
 
 .busca-resultado table a {
@@ -155,14 +159,14 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     height: 80%;
     /*overflow: auto;*/
 }
-.copiarColar {
+.blocoNotasCorpo {
     display: none;
     width: 30%;
     height: 96%;
     flex: 1;
     margin-left: 20px;
 }
-.copiarColar form, textarea {
+.blocoNotasCorpo form, textarea {
     width: 100%;    
     height: 100%;
     resize: none;
@@ -180,12 +184,14 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     align-items: center;
     
 }
+
 .blocoNotas input {
     width: 20px;
     height: 20px;
-
 }
+
 .blocoNotas label {
     text-align: center;
     line-height: 34px;
 }
+

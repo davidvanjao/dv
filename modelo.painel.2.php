@@ -24,7 +24,7 @@ $codigoCliente = "";
 $nomeCliente = "";
 $valorTotal = "00.00";
 $formaPagamento = "";
-$bloco ="";
+$bloco =".";
 $checkbox = "";
 
 //=========================================SE REFERE AO ORCAMENTO========================================================================
@@ -46,7 +46,7 @@ if(isset($_SESSION['formaPagamento'])) {
     $formaPagamento = $_SESSION['formaPagamento'];
 }
 
-//===========================================SE REFERE AO TOTAL DOS PRODUTOS======================================================================
+//=========================================SE REFERE AO TOTAL DOS PRODUTOS======================================================================
 
 if(isset($_SESSION['lista'])) {
 
@@ -71,7 +71,7 @@ if(isset($_SESSION['blocoNotas'])) {
 //=================================================================================================================
 
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
 //echo $bloco;
 //var_dump($valorGeral);
 
@@ -170,7 +170,17 @@ var_dump($_SESSION);
                                             </form>
 
                                             <form class="busca-area" name="buscar-form" method="POST" action="modelo.processo.php">
-                                                <input type="submit" name="salvarLista" value="Salvar Lista">
+
+                                                <?php 
+                                                if(isset($_SESSION['cliente'], $_SESSION['formaPagamento'], $_SESSION['orcamento'], $_SESSION['lista'])) {
+                                                ?>
+                                                    <input type="submit" name="salvarLista" value="Salvar Lista">
+                                                <?php
+                                                } else {
+
+                                                    
+                                                }
+                                                ?>
                                             </form>
 
                                             <div class="blocoNotas">
@@ -182,7 +192,7 @@ var_dump($_SESSION);
 
                                                 <input type="checkbox" checked id="blocoNotas" name="blocoNotas" onclick="ativarBloco();">
                                                 <label for="blocoNotas2">Bloco de Notas</label> 
-
+                                                
                                                 <?php                                                
 
                                                 } else {
@@ -190,6 +200,7 @@ var_dump($_SESSION);
 
                                                 <input type="checkbox" id="blocoNotas" name="blocoNotas" onclick="ativarBloco();">
                                                 <label for="blocoNotas2">Bloco de Notas</label>
+
                                                 <?php
                                                 
                                                 }
@@ -209,9 +220,7 @@ var_dump($_SESSION);
                                     <div class="teste">        
 
                                         <div class="busca-resultado largura"> 
-                                            <table>
-                                                
-
+                                            <table>   
                                                 <tr>
                                                 <th style="width:5%;">Codigo</th>
                                                 <th style="width:40%;">Produto</th>
@@ -222,73 +231,54 @@ var_dump($_SESSION);
                                                 <th style="width:10%;">Observacoes</th>
                                                 <th style="width:10%;">Acoes</th>
                                                 </tr>
-
                                                 <?php
 
                                                 if(!empty($_SESSION['lista'])) {
-
 
                                                     foreach($_SESSION['lista'] as $key=>$value) {
 
                                                         $preco = $value['preco'];
                                                         $quantidade = $value['quantidade'];
                                                         $observacao = $value['observacao'];
-
                                                         $resultado = number_format($preco*$quantidade,2,",",".");
 
                                                         echo "<tr>";
                                                         echo "<td style='width:5%;'>".$value['codigo']."</td>";
                                                         echo "<td style='width:40%;'>".$value['produto']."</td>";
-
-
                                                         echo "<td style='width:10%;'>
+                                                                    <form class='' name='teste' method='GET' action='modelo.processo.php'>      
 
-                                                        <form class='' name='teste' method='GET' action='modelo.processo.php'>      
+                                                                        <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
+                                                                        <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>                                                        
 
-                                                            <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
-                                                            <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>                                                        
-
-                                                        </form>     
-                                                        </td>";
-                                                        
-
-                                                        
+                                                                    </form>     
+                                                               </td>";                                                       
                                                         echo "<td style='width:10%;'>R$".number_format($preco,2,",",".")."</td>";
                                                         echo "<td style='width:10%;'>R$".$resultado."</td>";
                                                         echo "<td style='width:10%;'>".$value['estoque']."</td>"; 
-
-
                                                         echo "<td style='width:10%;'>
+                                                                    <form class='' name='teste' method='GET' action='modelo.processo.php'>      
 
-                                                        <form class='' name='teste' method='GET' action='modelo.processo.php'>      
+                                                                        <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
+                                                                        <input value=".$observacao." class='quantidade' type='text' min='0'  name='observacao' onchange='this.form.submit()'>                                                        
 
-                                                            <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
-                                                            <input value=".$observacao." class='quantidade' type='text' min='0'  name='observacao' onchange='this.form.submit()'>                                                        
-
-                                                        </form>     
-                                                        </td>";
-                                                        
-                                                        
+                                                                    </form>     
+                                                              </td>";
                                                         echo '<td style="width:10%;"><a href="modelo.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
                                                         echo "</tr>";  
-
-
-    
                                                     }
-    
-                                                    
+
                                                 } else {
 
                                                     echo "</br>";
                                                     echo "Lista não iniciada!";
                                                 
-                                                }      
-                                                    
-                                                    
+                                                } 
                                                 ?>                                        
                                             </table>
                                         </div>
-                                        <div class="copiarColar">
+
+                                        <div class="blocoNotasCorpo">
                                             <form class='' name='teste' method='POST' action='modelo.processo.php'>                                            
                                                 <textarea resize="none" value="" name="blocoNotas" onchange='this.form.submit()'><?php echo $bloco ?></textarea>
                                             </form>                                         
@@ -303,7 +293,8 @@ var_dump($_SESSION);
                 </div>
             </div>
         </div>
-        <script type="text/javascript" src="assets/js/scriptcheckbox.js"></script>                                       
+        <script type="text/javascript" src="assets/js/scriptcheckbox.js"></script> 
+                                            
         <!--<script type="text/javascript" src="jquery.min.js"></script>
         <script type="text/javascript" src="script2.js"></script>-->
 

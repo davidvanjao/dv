@@ -42,7 +42,7 @@ if(isset($_GET['orcamento'])) {
     }
 }
 $total = "";
-$valorTotal = "00,00";
+$valorTotal = floatval("00,00");
 
 if(!empty($orcamento)) {
     
@@ -71,9 +71,9 @@ if(!empty($orcamento)) {
 
     while ($linha = $sql->fetch(PDO::FETCH_ASSOC)) {
         
-        $preco = $linha['preco'];
-        $quantidade = $linha['quantidade'];
-        $resultado = number_format($preco*$quantidade,2,",",".");
+        $preco = floatval($linha['preco']);
+        $quantidade = floatval($linha['quantidade']);
+        $resultado = $preco*$quantidade;
 
 
         $html .='<tbody class="tabelaProduto">';
@@ -83,7 +83,7 @@ if(!empty($orcamento)) {
         $html .= '<td>'.$linha['d_produto'] .'</td>';
         $html .= '<td>'.$linha['quantidade'] .'</td>';
         $html .= '<td> R$ '.number_format($preco,2,",",".") .'</td>';
-        $html .= '<td> R$ '.$resultado.'</td>';
+        $html .= '<td> R$ '.number_format($resultado,2,",",".").'</td>';
         $html .= '<td>'.$linha['estoque'] .'</td>';
         $html .= '<td>'.$linha['observacao'] .'</td>';
         $html .= '</tr>';
