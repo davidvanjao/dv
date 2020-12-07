@@ -2,6 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -138,52 +139,50 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                                     $pesquisa = addslashes($_POST['pesquisa']);
 
+                                                    $consulta = "SELECT a.nroempresa, a.nrogondola, c.gondola, a.seqproduto, b.desccompleta, d.qtdembalagem, a.estqloja, d.codacesso, consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
+                                                    consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom
+                                                    FROM
+                                                    consinco.mrl_produtoempresa a, 
+                                                    consinco.map_produto b, 
+                                                    consinco.mrl_gondola c,
+                                                    consinco.map_prodcodigo d,
+                                                    consinco.max_empresa e
+                                                    WHERE
+                                                    a.nroempresa = '1'
+                                                    AND e.nroempresa = '1'
+                                                    AND d.qtdembalagem = '1'
+                                                    AND a.nrogondola = c.nrogondola
+                                                    AND a.seqproduto = b.seqproduto
+                                                    AND a.seqproduto = d.seqproduto
+                                                    AND d.tipcodigo IN ('E', 'B')
+                                                    AND b.desccompleta LIKE '%BANANA%'
+                                                    ORDER BY a.seqproduto";
                                                     
-                                                    $sql = "SELECT * FROM tb_produto
-                                                    WHERE preco !='0' AND d_produto LIKE '".$pesquisa."%'";
-                                                    
-                                                    $sql = $pdo->query($sql);                                    
+                                                    $resultado = oci_parse($ora_conexao, $consulta);
+                                                    $row = oci_execute($resultado);
 
-                                                    if($sql->rowCount() > 0) {
-                                                        foreach($sql->fetchAll() as $produto) {
-                                                            echo "<tr>";
-                                                            echo "<td style='width:10%;'>".$produto['c_produto']."</td>";
-                                                            echo "<td style='width:50%;'>".$produto['d_produto']."</td>";
-                                                            echo "<td style='width:20%;'>R$ ".$produto['preco']."</td>";
-                                                            echo "<td style='width:10%;'>".$produto['estoque']."</td>";
-                                                            echo "</tr>";  
+                                                    $nrows = oci_fetch_all($row, $teste);
+                                                    if ($nrows > 0) {
+                                                    
+                                                        foreach ($nrows as $key => $val) {
+                                                            var_dump($key);
+                                                            var_dump($val);
+                                                            
                                                         }
-                                                    } 
-                                                }
-                                                if(isset($_POST['codigo']) && empty($_POST['codigo']) == false) { //se existir/ e ele nao estiver vazio.
-
-                                                    $codigo = addslashes($_POST['codigo']);
-
-                                                    //$sql = "SELECT * FROM tb_produto WHERE c_produto = $codigo";
-
-                                                    $sql = "SELECT * FROM
-                                                    tb_produto join tb_codigo
-                                                    on tb_produto.c_produto = tb_codigo.c_produto
-                                                    where tb_codigo.c_interno LIKE '$codigo'";
-
-                                                    
-                                                    $sql = $pdo->query($sql);                                    
-
-                                                    if($sql->rowCount() > 0) {
-                                                        foreach($sql->fetchAll() as $produto) {
-
-                                                            echo "<tr>";
-                                                            echo "<td style='width:10%;'>".$produto['c_produto']."</td>";
-                                                            echo "<td style='width:50%;'>".$produto['d_produto']."</td>";
-                                                            echo "<td style='width:20%;'>R$ ".$produto['preco']."</td>";
-                                                            echo "<td style='width:10%;'>".$produto['estoque']."</td>";
-                                                            echo "</tr>";  
-                                                        }
-                                                    } else {
-                                                        
-                                                        echo "<td style='width:10%;'>".$codigo. " Nenhum produto encontrado.</td>";
-                                                        //exit;
                                                     }
+
+                                                    
+
+                                                        
+
+                                                           
+                                                           
+                                                        
+
+                                                    
+
+                                                    
+                                                    
                                                 }
                                             ?>                                        
                                         </table>
