@@ -11,7 +11,7 @@ $ora_bd = "(DESCRIPTION=
                             (SERVICE_NAME=bdsg)
                      )
                  )";
-
+// conexao com o banco de dados
 $ora_conexao = oci_connect($ora_user, $ora_senha, $ora_bd);
 
 if ($ora_conexao == true) {

@@ -155,22 +155,20 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                     AND a.seqproduto = b.seqproduto
                                                     AND a.seqproduto = d.seqproduto
                                                     AND d.tipcodigo IN ('E', 'B')
-                                                    AND b.desccompleta LIKE '%BANANA%'
+                                                    AND b.desccompleta LIKE '%".$pesquisa."%'
                                                     ORDER BY a.seqproduto";
                                                     
-                                                    $resultado = oci_parse($ora_conexao, $consulta);
-                                                    $row = oci_execute($resultado);
+                                                    //prepara uma instrucao para execulsao
+                                                    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
 
-                                                    $nrows = oci_fetch_all($row, $teste);
-                                                    if ($nrows > 0) {
-                                                    
-                                                        foreach ($nrows as $key => $val) {
-                                                            var_dump($key);
-                                                            var_dump($val);
-                                                            
-                                                        }
+                                                    //Executa os comandos SQL
+                                                    $exec = oci_execute($resultado);
+
+                                                    foreach($exec as $value) {
+                                                        var_dump($value);
                                                     }
 
+                                                    
                                                     
 
                                                         
