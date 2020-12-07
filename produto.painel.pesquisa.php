@@ -137,6 +137,8 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
 
                                                     $pesquisa = addslashes($_POST['pesquisa']);
+
+                                                    
                                                     $sql = "SELECT * FROM tb_produto
                                                     WHERE preco !='0' AND d_produto LIKE '".$pesquisa."%'";
                                                     
