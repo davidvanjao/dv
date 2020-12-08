@@ -15,7 +15,7 @@ $ora_bd = "(DESCRIPTION=
 $ora_conexao = oci_connect($ora_user, $ora_senha, $ora_bd);
 
 if ($ora_conexao == true) {
-    echo "Conectado";
+    //echo "Conectado";
 } else {
     echo "Não conectado!";
 }

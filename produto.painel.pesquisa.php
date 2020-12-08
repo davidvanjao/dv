@@ -125,10 +125,12 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:10%;">Código</th>
-                                                <th style="width:50%;">Produto</th>
-                                                <th style="width:20%;">Preço</th>
-                                                <th style="width:10%;">Estoque</th>
+                                                <th style="width:5%;">EAN</th>
+                                                <th style="width:5%;">COD</th>
+                                                <th style="width:20%;">PRODUTO</th>
+                                                <th style="width:5%;">PREÇO</th>
+                                                <th style="width:5%;">PROMOÇÃO</th>
+                                                <th style="width:5%;">ESTOQUE</th>
                                             </tr>
                                         </table> 
                                     </div>                                    
@@ -162,25 +164,21 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                     $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
 
                                                     //Executa os comandos SQL
-                                                    $exec = oci_execute($resultado);
+                                                    oci_execute($resultado);
 
-                                                    foreach($exec as $value) {
-                                                        var_dump($value);
+                                                    while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
+
+                                                        echo "<tr>";
+                                                        echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
+                                                        echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
+                                                        echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  
+                                                        echo "<td style='width:5%;'>".$produto['PRECO']."</td>";   
+                                                        echo "<td style='width:5%;'>".$produto['PRECOPROM']."</td>";  
+                                                        echo "<td style='width:5%;'>".$produto['ESTQLOJA']."</td>";    
+                                                        
+                                                        echo "</tr>"; 
                                                     }
 
-                                                    
-                                                    
-
-                                                        
-
-                                                           
-                                                           
-                                                        
-
-                                                    
-
-                                                    
-                                                    
                                                 }
                                             ?>                                        
                                         </table>
