@@ -117,8 +117,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <div class="body-busca">
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST">
-                                            <input class="input-busca-produto" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
-                                            <input class="input-busca-codigo" type="number" autocomplete="off" name="codigo" placeholder="Cód. do Produto">
+                                            <input class="input-busca-produto" id="pesquisaProduto" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
                                             <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
                                         </form>
                                     </div>
@@ -134,54 +133,57 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                             </tr>
                                         </table> 
                                     </div>                                    
-                                    <div class="busca-resultado"> 
-                                        <table>
-                                            <?php
-                                                if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
+                                    <div class="busca-resultado" id="resultado"> 
 
-                                                    $pesquisa = addslashes($_POST['pesquisa']);
+                                    <table>
+                                        <?php
+                                            if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
 
-                                                    $consulta = "SELECT a.nroempresa, a.nrogondola, c.gondola, a.seqproduto, b.desccompleta, d.qtdembalagem, a.estqloja, d.codacesso, consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
-                                                    consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom
-                                                    FROM
-                                                    consinco.mrl_produtoempresa a, 
-                                                    consinco.map_produto b, 
-                                                    consinco.mrl_gondola c,
-                                                    consinco.map_prodcodigo d,
-                                                    consinco.max_empresa e
-                                                    WHERE
-                                                    a.nroempresa = '1'
-                                                    AND e.nroempresa = '1'
-                                                    AND d.qtdembalagem = '1'
-                                                    AND a.nrogondola = c.nrogondola
-                                                    AND a.seqproduto = b.seqproduto
-                                                    AND a.seqproduto = d.seqproduto
-                                                    AND d.tipcodigo IN ('E', 'B')
-                                                    AND b.desccompleta LIKE '%".$pesquisa."%'
-                                                    ORDER BY a.seqproduto";
-                                                    
-                                                    //prepara uma instrucao para execulsao
-                                                    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
+                                                $pesquisa = addslashes($_POST['pesquisa']);
+                                                $pesquisa = strtoupper($pesquisa);
 
-                                                    //Executa os comandos SQL
-                                                    oci_execute($resultado);
+                                                $consulta = "SELECT a.nroempresa, a.nrogondola, c.gondola, a.seqproduto, b.desccompleta, d.qtdembalagem, a.estqloja, d.codacesso, consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
+                                                consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom
+                                                FROM
+                                                consinco.mrl_produtoempresa a, 
+                                                consinco.map_produto b, 
+                                                consinco.mrl_gondola c,
+                                                consinco.map_prodcodigo d,
+                                                consinco.max_empresa e
+                                                WHERE
+                                                a.nroempresa = '1'
+                                                AND e.nroempresa = '1'
+                                                AND d.qtdembalagem = '1'
+                                                AND a.nrogondola = c.nrogondola
+                                                AND a.seqproduto = b.seqproduto
+                                                AND a.seqproduto = d.seqproduto
+                                                AND d.tipcodigo IN ('E', 'B')
+                                                AND b.desccompleta LIKE '%".$pesquisa."%'
+                                                ORDER BY a.seqproduto";
+                                                
+                                                //prepara uma instrucao para execulsao
+                                                $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
 
-                                                    while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
+                                                //Executa os comandos SQL
+                                                oci_execute($resultado);
 
-                                                        echo "<tr>";
-                                                        echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
-                                                        echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
-                                                        echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  
-                                                        echo "<td style='width:5%;'>".$produto['PRECO']."</td>";   
-                                                        echo "<td style='width:5%;'>".$produto['PRECOPROM']."</td>";  
-                                                        echo "<td style='width:5%;'>".$produto['ESTQLOJA']."</td>";    
-                                                        
-                                                        echo "</tr>"; 
-                                                    }
+                                                while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
 
+                                                echo "<tr>";
+                                                echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
+                                                echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
+                                                echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  
+                                                echo "<td style='width:5%;'>".$produto['PRECO']."</td>";   
+                                                echo "<td style='width:5%;'>".$produto['PRECOPROM']."</td>";  
+                                                echo "<td style='width:5%;'>".$produto['ESTQLOJA']."</td>";    
+                                                
+                                                echo "</tr>"; 
                                                 }
-                                            ?>                                        
-                                        </table>
+
+                                            }
+                                        ?>                                        
+                                    </table>
+                                        
                                     </div>
                                 </div> 
 
@@ -191,7 +193,6 @@ if($usuarios->temPermissao('USUARIO') == false) {
                 </div>
             </div>
         </div>
-
     </body>
 
 
