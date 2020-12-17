@@ -19,12 +19,12 @@ if($usuarios->temPermissao('USUARIO') == false) {
 }
 
 
-$id = 0;
-if(isset($_GET['id']) && empty($_GET['id']) == false) {
-    $id = addslashes($_GET['id']);
+$idEnd = 0;
+if(isset($_GET['idEnd']) && empty($_GET['idEnd']) == false) {
+    $idEnd = addslashes($_GET['idEnd']);
 
 
-    $sql = "SELECT * FROM tb_endereco WHERE id = '$id'";
+    $sql = "SELECT * FROM tb_endereco WHERE id = '$idEnd'";
     $sql = $pdo->query($sql);
     if($sql->rowCount() > 0) {
 
@@ -43,7 +43,7 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
         <meta charset="utf-8">
         <title>Tela de Entrega</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/entrega.css">
+        <link rel="stylesheet" href="assets/css/cadastroCliente.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -57,7 +57,7 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="entrega.painel.php">voltar</a>
+                                <a href="cadastro.cliente.painel.1.php">voltar</a>
                             </div>
                         </header>
                         <section class="page">
@@ -65,16 +65,22 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
 
                                 <div class="body-conteudo">
                                     <div class="campo-inserir">
-                                        <form class="form-cesta-2" name="buscar-form" method="POST" action="entrega.processo.php">
+                                        <form method="POST" action="cadastro.cliente.processo.php">
 
                                             <div class="">
-                                                <label>Data:</label></br>
-                                                <input type="date" value="<?php echo date('Y-m-d');?>" id="data" autocomplete="off" name="data" required="required"/>
+                                                <label>Nome:</label></br>
+                                                <input type="text" autocomplete="off" name="nome" placeholder="" required="required" value=""/>
                                             </div>
 
                                             <div class="">
-                                                <input type="hidden" autocomplete="off" name="cep" placeholder="" required="required" value="<?php echo $endereco['cep'];?>" readonly="readonly"/>
-                                            </div>
+                                                <label>Telefone:</label></br>
+                                                <input type="tel"  pattern="^\(\d{2}\)\d{5}-\d{4}$" title="Se atentar ao formato correto: (XX)91234-1234" autocomplete="off" name="telefone" placeholder="(XX)9XXXX-XXXX" required="required"/>
+                                            </div>      
+
+                                            <div class="">
+                                                <label>CPF:</label></br>
+                                                <input type="text"  pattern="^\d{3}\.\d{3}\.\d{3}-\d{2}$" title="Se atentar ao formato correto: 123.123.123-00" autocomplete="off" name="cpf" placeholder="XXX.XXX.XXX-XX" required="required"/>
+                                            </div>   
 
                                             <div class="">
                                                 <label>Cidade/Estado:</label></br>
@@ -92,23 +98,17 @@ if(isset($_GET['id']) && empty($_GET['id']) == false) {
                                             </div>
 
                                             <div class="">
-                                                <label>Compras:</label></br>
-                                                <input type="number" autocomplete="off" name="compra" placeholder="" required="required" value="1" readonly="readonly"/>
+                                                <label>Numero:</label></br>
+                                                <input type="number" min='0' autocomplete="off" name="numero" required="required"/>
                                             </div>
 
-                                            <div class="">
-                                                <label>Valor:</label></br>
-                                                <input type="text" autocomplete="off" name="valor" required="required" pattern="[0-9.,]{2,}"/>
-                                            </div>
+                                            <input type="hidden" autocomplete="off" name="idEndereco" placeholder="" required="required" value="<?php echo $endereco['id'];?>" readonly="readonly"/>
 
-                                            <div class="">
-                                                <label>Numero de Caixas:</label></br>
-                                                <input type="number" min='0' autocomplete="off" name="quantidade" placeholder="" required="required"/>
-                                            </div>
+                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Salvar"/>
 
-                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar"/>
                                         </form>
-                                    </div>                                  
+                                    </div>
+                                  
                                 </div> 
 
                             </div> 

@@ -39,61 +39,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
         
                         <div class="painel-menu-menu">
         
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="produto.painel.pesquisa.php">
-                                        <img src="assets/img/lupa.png">                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>      
-
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="delivery.painel.1.php">
-                                        <img src="assets/img/delivery.png">                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>  
-
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="cesta-basica.painel.php">
-                                        <img src="assets/img/cesta-basica.png">                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>  
-
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="endereco.painel.1.php">
-                                        <img src="assets/img/endereco.png">                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>       
-
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="entrega.painel.1.php">
-                                        <img src="assets/img/entrega.png">                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>    
-
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="cliente.painel.1.php">
-                                        <img src="assets/img/usuario.png">                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?> 
-
-                            <?php if($usuarios->temPermissao('USUARIO')): ?>
-                                <div class="painel-menu-widget">
-                                    <a href="configuracao.painel.php">
-                                        <img src="assets/img/config.png">                                        
-                                    </a>                        
-                                </div>
-                            <?php endif; ?>
+                        <?php require 'menuLateral.php'; ?>
                             
                         </div>
                             

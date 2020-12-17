@@ -47,19 +47,3 @@ input[type=number]::-webkit-inner-spin-button {
 .campo-inserir {
     display: flex;
 }
-
-@media (max-height:1000px) {
-    .campo-listar {
-        height:85%;
-    }
-}
-@media (max-height:800px) {
-    .campo-listar {
-        height:80%;
-    }
-}
-@media (max-height:655px) {
-    .campo-listar {
-        height:75%;
-    }
-}

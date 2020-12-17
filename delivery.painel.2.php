@@ -18,6 +18,63 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
+//=========================================VARIAVEIS========================================================================
+
+$codigoCliente = "";
+$nomeCliente = "";
+$valorTotal = "00.00";
+$formaPagamento = "";
+$bloco =".";
+$checkbox = "";
+
+//=========================================SE REFERE AO ORCAMENTO========================================================================
+
+if(isset($_SESSION['orcamento'])) {
+    $orcamento = $_SESSION['orcamento'];
+}
+
+//=========================================SE REFERE AO CLIENTE========================================================================
+
+if(isset($_SESSION['cliente'])) {
+    $codigoCliente = $_SESSION['cliente']['id'];
+    $nomeCliente = $_SESSION['cliente']['nome'];
+}
+
+//=========================================SE REFERE A FORMA DE PAGAMENTO========================================================================
+
+if(isset($_SESSION['formaPagamento'])) {
+    $formaPagamento = $_SESSION['formaPagamento'];
+}
+
+//=========================================SE REFERE AO TOTAL DOS PRODUTOS======================================================================
+
+if(isset($_SESSION['lista'])) {
+
+    foreach($_SESSION['lista'] as $key=>$value) {
+
+        $soma = $value['preco'] * $value['quantidade'];
+
+        $valorTotal += $soma;
+    }
+
+}
+
+//===========================================SE REFERE AO BLOCO DE NOTAS======================================================================
+
+if(isset($_SESSION['blocoNotas'])) {
+
+    $checkbox = $_SESSION['blocoNotas']['checkbox'];
+    $bloco = $_SESSION['blocoNotas']['bloco'];
+
+}
+
+//=================================================================================================================
+
+
+var_dump($_SESSION);
+//echo $bloco;
+//var_dump($valorGeral);
+
 
 ?>
 
@@ -25,9 +82,9 @@ if($usuarios->temPermissao('USUARIO') == false) {
 <html lang="pt-br">
     <head>
         <meta charset="utf-8">
-        <title>Delivery Logistica</title>
+        <title>Tela de Pesquisa</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/cesta-basica.css">
+        <link rel="stylesheet" href="assets/css/delivery.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -35,7 +92,11 @@ if($usuarios->temPermissao('USUARIO') == false) {
             <div class="main_styled">
                 <div class="menu-lateral">
                     <div class="painel-menu">
+                        <div class="painel-menu-menu">
+        
 
+                            
+                        </div>
                     </div>
                 </div>
 
@@ -46,116 +107,201 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="delivery.painel.1.php">Delivery</a>
-                                <a href="delivery.painel.2.php">Logistica</a>
-                                <a href="delivery.painel.5.php">Painel Geral</a>
-                                <a href="sair.php">Sair</a>
+                                <a href="delivery.processo.php?excluirLista">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
                             <div class="conteudo-Geral">
 
-                                <div class="body-cesta">
+                                <div class="body-conteudo">
                                     <div class="campo-inserir">
 
-                                        
-                                    </div>
+                                        <div class="formulario-cliente">    
+                                            <div class="form-cliente-caixa">
+                                                <form class="form-cliente" name="buscar-form" method="POST" action="delivery.cliente.pesquisa.php">
+                                                    <div>
+                                                        <input class="input5" type="hidden" min='0' autocomplete="off" name="numero" value="<?php echo $codigoCliente ?>" readonly="readonly"/>
+                                                    </div> 
+                                                    <div>
+                                                        <label>Nome:</label></br>
+                                                        <input class="input-nome" type="text" autocomplete="off" name="nome" placeholder="" value="<?php echo $nomeCliente ?>" readonly="readonly"/>    
+                                                    </div> 
+                                                    
+                                                    <input class="input-botao" type="submit" name="adicionarCliente" value="Cliente"/>  
+                                                </form>
+                                            </div>
 
+                                            <div class="form-cliente-caixa">
+                                                <form class="form-pagamento" action='delivery.processo.php' method='POST'>
+                                                    <div>
+                                                        <label>F. Pagamento</label></br>
+                                                        <select class="input-pagamento" name="formaPagamento" onchange="this.form.submit()">
+                                                            <option value=""><?php echo $formaPagamento?></option> 
+                                                            <option value="Dinheiro">Dinheiro</option> 
+                                                            <option value="Cartão">Cartão</option>
+                                                            <option value="Cheque">Cheque</option>
+                                                        </select>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            
+                                            <div class="form-cliente-caixa">
+                                                <div>
+                                                    <label>N. Orç.</label></br>
+                                                    <input class="input-orc" minlength="3" type="text" autocomplete="off" name="pesquisa" value="<?php echo $orcamento?>" readonly="readonly">
+                                                </div>
+                                                <div class="valor-total">
+                                                    <label>V. Total</label></br>
+                                                    <input class="input-total" minlength="3" type="text" autocomplete="off" name="pesquisa" value='<?php echo "R$ ".number_format($valorTotal,2,",",".")?>' readonly="readonly">
+                                                </div>
+                                            </div>
+
+                                            
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="formulario-controle">     
+
+                                            <div class="bottoens">
+                                                <form class="busca-area" name="buscar-form" method="POST" action="delivery.produto.pesquisa.php">
+                                                    <input type="submit" name="adicionarProduto" value="Incluir Produto">
+                                                </form>   
+
+                                                <form class="busca-area" name="buscar-form" method="POST" action="delivery.processo.php">
+                                                    <input type="submit" name="excluirLista" value="Excluir Lista">
+                                                </form>
+
+                                                <form class="busca-area" name="buscar-form" method="POST" action="delivery.processo.php">
+
+                                                    <?php 
+                                                    if(isset($_SESSION['cliente'], $_SESSION['formaPagamento'], $_SESSION['orcamento'], $_SESSION['lista'])) {
+                                                    ?>
+                                                        <input type="submit" name="salvarLista" value="Salvar Lista">
+                                                    <?php
+                                                    } else {
+                                                    }
+                                                    ?>
+                                                </form>
+                                            </div>
+
+                                            <div class="blocoNotas">
+                                                <?php 
+
+                                                if(isset($_SESSION['blocoNotas']['checkbox'])) {
+
+                                                ?>
+
+                                                <input type="checkbox" checked id="blocoNotas" name="blocoNotas" onclick="ativarBloco();">
+                                                <label for="blocoNotas2">Bloco de Notas</label> 
+                                                
+                                                <?php                                                
+
+                                                } else {
+                                                ?>
+
+                                                <input type="checkbox" id="blocoNotas" name="blocoNotas" onclick="ativarBloco();">
+                                                <label for="blocoNotas2">Bloco de Notas</label>
+
+                                                <?php
+                                                
+                                                }
+
+                                                ?>
+                                            </div>
+
+                                        </div>
+
+                                            
+                                    </div>
                                     <div class="tabela-titulo">
                                         <table>
-                                            <tr>
-                                                <th style="width:5%;">Ticket</th>
-                                                <th style="width:10%;">Data</th>
-                                                <th style="width:20%;">Nome</th>
-                                                <th style="width:10%;">Cidade</th>
-                                                <th style="width:20%;">Endereço</th>
-                                                <th style="width:20%;">Status</th>
-                                                <th style="width:20%;">Ações</th>
-                                            </tr>
+                                                                                       
                                         </table> 
                                     </div>
+                                    <div class="corpo-lista">        
 
-                                    <div class="campo-listar">                
-                                        <div class="tabela-lancamentos">
-                                            <table>
+                                        <div class="busca-resultado largura"> 
+                                            <table>   
+                                                <tr>
+                                                    <th style="width:5%;">Código</th>
+                                                    <th style="width:40%;">Produto</th>
+                                                    <th style="width:5%;">Med</th>
+                                                    <th style="width:5%;">Qtd</th>
+                                                    <th style="width:5%;">Preco</th>
+                                                    <th style="width:5%;">Total</th>                                                
+                                                    <th style="width:5%;">Est</th>
+                                                    <th style="width:5%;">Obs</th>
+                                                    <th style="width:10%;" >Ações</th>
+                                                </tr> 
                                                 <?php
 
-                                                $sql = "SELECT a.id, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
-                                                from tb_log_delivery as a join tb_cliente as b join tb_endereco as c 
-                                                on a.idCliente = b.id 
-                                                and b.idEndereco = c.id
-                                                where a.statuss IN('PEDIDO REALIZADO','EM ANDAMENTO','LIBERADO PARA ENTREGA')
-                                                order by a.id";
-                                                
+                                                if(!empty($_SESSION['lista'])) {
 
-                                                $sql = $pdo->query($sql);   
-                                                if($sql->rowCount() > 0) {
-                                                    foreach($sql->fetchAll() as $delivery) {
+                                                    foreach($_SESSION['lista'] as $key=>$value) {
 
-                                                        if($delivery['statuss']=="PEDIDO REALIZADO"){
-                                                            $cor="";
-                                                        }
-                                                        if($delivery['statuss']=="EM ANDAMENTO"){
-                                                            $cor="#ff0000";
-                                                        }
-                                                        if($delivery['statuss']=="LIBERADO PARA ENTREGA"){
-                                                            $cor="#ffa500";
-                                                        }
-                                                        if($delivery['statuss']=="SAIU PARA ENTREGA"){
-                                                            $cor="#008000";
-                                                        }             
+                                                        $preco = $value['preco'];
+                                                        $quantidade = $value['quantidade'];
+                                                        $observacao = $value['observacao'];
+                                                        $medida = $value['medida'];
+                                                        $resultado = number_format($preco*$quantidade,2,",",".");
 
                                                         echo "<tr>";
-                                                        echo "<td style='width:5%;'>".$delivery['id']."</td>";
-                                                        echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
-                                                        echo "<td style='width:20%;'>".$delivery['nome']."</td>";
-                                                        echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
-                                                        echo "<td style='width:20%;'>".$delivery['logradouro']."</td>";      
-                                                        echo "<td style='width:20%; background-color:$cor;'>".$delivery['statuss']."</td>";
-                                                        echo '<td style="width:20%;">';
-                                                        echo '<div class="teste">';
-                                                        
+                                                        echo "<td>".$value['codigo']."</td>";
+                                                        echo "<td>".$value['produto']."</td>";
+                                                        echo "<td>
+                                                                    <form class='form-pagamento' action='delivery.processo.php' method='GET'>
+                                                                        <div>
+                                                                            <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
+                                                                            <select class='input-pagamento' name='medida' onchange='this.form.submit()'>
+                                                                                <option value=''>".$medida."</option> 
+                                                                                <option value='Kg'>Kg</option> 
+                                                                                <option value='Un'>Un</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </form>    
+                                                                </td>"; 
 
-                                                                    if($delivery['statuss'] == 'PEDIDO REALIZADO') {
+                                                        echo "<td>
+                                                                    <form class='' name='teste' method='GET' action='delivery.processo.php'>      
 
-                                                                        echo '<a class="iniciar" href="delivery.processo.iniciar2.php?id='.$delivery['id'].'">Iniciar</a>';
+                                                                        <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
+                                                                        <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>                                                        
 
-                                                                    }
-                                                                    
-                                                                    if($delivery['statuss'] == 'EM ANDAMENTO') {
+                                                                    </form>     
+                                                               </td>";                                                       
+                                                        echo "<td>R$".number_format($preco,2,",",".")."</td>";
+                                                        echo "<td>R$".$resultado."</td>";
+                                                        echo "<td>".$value['estoque']."</td>"; 
+                                                        echo "<td>
+                                                                    <form class='' name='teste' method='GET' action='delivery.processo.php'>      
 
-                                                                       echo '<a class="liberar" href="delivery.painel.3-2.php?id='.$delivery['id'].'">Liberar</a>';
+                                                                        <input value=".$value['codigo']." class='observacao' type='hidden' min='0'  name='produto' required='required'>
+                                                                        <input value=".$observacao." class='observacao' type='text' min='0'  name='observacao' onchange='this.form.submit()'>                                                        
 
-                                                                    }
-                                                                    
-                                                                    if($delivery['statuss'] == 'LIBERADO PARA ENTREGA') {
-
-                                                                        echo '<a class="entregar" href="delivery.processo.adicionar4.php?id='.$delivery['id'].'">Entregar</a>';
- 
-                                                                    }
-                                                                    
-                                                                    ?>
-                                                                    <?php                                                                    
-
-                                                                
-
-                                                        echo '</div>';                                                             
-                                                        echo '</td>';                           
-                                                        echo "</tr>";                                                      
-                                                                     
+                                                                    </form>     
+                                                              </td>";
+                                                        echo '<td><a href="delivery.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
+                                                        echo "</tr>";  
                                                     }
 
                                                 } else {
-                                                        
-                                                    echo "Nenhum produto encontrado.";
-                                                }
-                                                ?>                                             
 
+                                                    echo "</br>";
+                                                    echo "Lista não iniciada!";
+                                                
+                                                } 
+                                                ?>                                        
                                             </table>
                                         </div>
 
-                                        
-                                    </div>                                    
+                                        <div class="blocoNotasCorpo">
+                                            <form class='' name='teste' method='POST' action='delivery.processo.php'>                                            
+                                                <textarea resize="none" value="" name="blocoNotas" onchange='this.form.submit()'><?php echo $bloco ?></textarea>
+                                            </form>                                         
+                                        </div>
+
+                                    </div>   
                                 </div> 
 
                             </div> 
@@ -164,7 +310,11 @@ if($usuarios->temPermissao('USUARIO') == false) {
                 </div>
             </div>
         </div>
-        
+        <script type="text/javascript" src="assets/js/scriptcheckbox.js"></script> 
+                                            
+        <!--<script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="script2.js"></script>-->
+
     </body>
 
 

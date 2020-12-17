@@ -42,7 +42,7 @@ if(!empty($_POST['usuario'])) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href=""></a>
+                                
                             </div>
                         </header>
                         <section class="page">

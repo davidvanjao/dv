@@ -25,7 +25,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
         <meta charset="utf-8">
         <title>Catalogo de Endereço</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/cesta-basica.css">
+        <link rel="stylesheet" href="assets/css/endereco.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -44,15 +44,15 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="endereco.painel.php">Voltar</a>
+                                <a href="endereco.painel.1.php">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
                             <div class="conteudo-Geral">
 
-                                <div class="body-cesta">
+                                <div class="body-conteudo">
                                     <div class="campo-inserir">
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="endereco.processo.adicionar.php">
+                                        <form class="form-cesta-2" name="buscar-form" method="POST" action="endereco.processo.adicionar.php">
 
                                             <div class="">
                                                 <label>Cep:</label></br>
@@ -84,19 +84,10 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 <input type="text" autocomplete="off" name="regiao"/>
                                             </div>
 
-                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
+                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Salvar">
                                         </form>
                                     </div>
-
-                                    <div class="tabela-titulo">
-
-                                    </div>
-
-                                    <div class="campo-listar">                
-                                        <div class="tabela-lancamentos">
-
-                                        </div>
-                                    </div>                                    
+                                  
                                 </div> 
 
                             </div> 

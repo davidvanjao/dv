@@ -27,8 +27,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
         <meta charset="utf-8">
         <title>Tela de Entrega</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/cesta-basica.css">
-        <link rel="stylesheet" href="assets/css/pesquisa.css">
+        <link rel="stylesheet" href="assets/css/delivery.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -46,7 +45,6 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="cliente.endereco.pesquisa.php">Cadastrar Cliente</a>
                                 <a href="delivery.painel.1.php">Voltar</a>
 
                             </div>
@@ -54,12 +52,12 @@ if($usuarios->temPermissao('USUARIO') == false) {
                         <section class="page">
                             <div class="conteudo-Geral">
 
-                                <div class="body-cesta">
+                                <div class="body-conteudo">
                                     <div class="campo-inserir">
 
                                         <form class="busca-area" name="buscar-form" method="POST">
                                             <input class="input-busca-produto" type="text" autocomplete="off" name="cliente" placeholder="Digite o cliente">
-                                            <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
+                                            <input class="input-botao" type="submit" name="pesquisar" value="Pesquisar Cliente">
                                         </form>
                                         
                                     </div>
@@ -70,17 +68,14 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 <th style="width:10%;">Nome</th>
                                                 <th style="width:10%;">Telefone</th>
                                                 <th style="width:10%;">Cidade</th>
-                                                <th style="width:10%;">Bairro</th>
                                                 <th style="width:10%;">Endereço</th>
                                                 <th style="width:10%;">Numero</th>
-                                                <th style="width:10%;">Região</th>
-                                                <th style="width:10%;">Ações</th>
                                             </tr>
                                         </table> 
                                     </div>
 
                                     <div class="campo-listar">                
-                                        <div class="tabela-lancamentos">
+                                        <div class="busca-resultado">
                                             <table>
                                                 <?php
 
@@ -89,9 +84,9 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         $cliente = addslashes($_POST['cliente']);
 
                                                         $sql = "SELECT a.id, a.nome, a.telefone, b.cidadeEstado, b.bairro, b.logradouro, a.numero, b.regiao
-                                                        from tb_cliente as a join tb_endereco as b
-                                                        on a.idEndereco = b.id 
+                                                        from tb_cliente a, tb_endereco b
                                                         WHERE a.nome LIKE '%".$cliente."%' 
+                                                        AND a.idEndereco = b.id 
                                                         order by a.nome";
                                                         
                                                         $sql = $pdo->query($sql);   
@@ -99,15 +94,12 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                         if($sql->rowCount() > 0) {
                                                             foreach($sql->fetchAll() as $cliente) {
 
-                                                                echo "<tr>";
+                                                                echo '<tr ondblclick=location.href="delivery.processo.php?cliente='.$cliente['id'].'" style="cursor:pointer">';
                                                                 echo "<td style='width:10%;'>".$cliente['nome']."</td>";
                                                                 echo "<td style='width:10%;'>".$cliente['telefone']."</td>";
                                                                 echo "<td style='width:10%;'>".$cliente['cidadeEstado']."</td>";
-                                                                echo "<td style='width:10%;'>".$cliente['bairro']."</td>";
                                                                 echo "<td style='width:10%;'>".$cliente['logradouro']."</td>";  
-                                                                echo "<td style='width:10%;'>".$cliente['numero']."</td>";
-                                                                echo "<td style='width:10%;'>".$cliente['regiao']."</td>";                                  
-                                                                echo '<td style="width:10%;"><a href="delivery.processo.adicionar1.php?id='.$cliente['id'].'">Add</a>'; 
+                                                                echo "<td style='width:10%;'>".$cliente['numero']."</td>";                               
                                                                 echo "</tr>";  
                                                             }
                                                         } else {

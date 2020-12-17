@@ -400,3 +400,188 @@ if(isset($_GET['orcamentoPainelExcluir'])) {
     header("Location:/modelo.painel.1.php");
 
 }
+
+
+
+
+
+
+.body-busca {
+    flex: 1;
+    /*background-color: red;*/
+    height: 100%;
+}
+
+.busca-area {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.busca-area input, label {
+    height: 35px;
+    font-size: 16px;
+    margin-left: 10px;
+    
+
+}
+
+.busca-area input[type=submit] {
+    height: 35px;
+    width: 150px;
+    margin-left: 10px;
+
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+}
+.busca-area .input1 {
+    width: 390px;
+
+}
+.busca-area .input2 {
+    width: 150px;
+
+}
+.busca-area .input3 {
+    width: 150px;
+
+}
+.busca-area .input5 {
+    width: 70px;
+
+}
+
+.formulario-documento, .formulario-busca {
+    display: flex;
+    margin-top: 10px;
+    align-items: flex-end;
+}
+.formulario-busca {
+    margin-top: 20px;
+
+}
+
+
+.formulario-busca input[type=text] {
+    height: 35px;
+    width: 520px;
+    margin-left: 10px;
+}
+/*===========================================================*/
+
+.tabela-titulo table th{
+    text-align: left;
+    font-size: 16px;
+    
+} 
+
+.tabela-titulo table td { 
+    border: 1px solid #000; 
+    font-size: 20px;
+}
+
+/*===========================================================*/
+.busca-resultado {
+    overflow: auto;
+}
+.busca-resultado table{
+    width: 100%;
+    
+}
+.busca-resultado table th{
+    text-align: left;
+    
+} 
+.busca-resultado table tr:nth-child(even){
+    background-color: #E6E6E6;
+    
+} 
+
+.busca-resultado table tr:hover {
+    background-color: green;
+    color: #fff;   
+}
+.inputOrcamento {
+    height: 35px;
+    font-size: 16px;
+    margin-left: 10px;
+    width: 110px;
+}
+.formulario-cliente {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.quantidade {
+    background-color: transparent;
+    font-size: 16px;
+    border: none;    
+    width: 100px;
+}
+
+.titulo {
+    border: 1px solid #000;
+}
+
+/*===========================================================*/
+
+.busca-resultado table a {
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #ff0000;
+    display: block;
+    text-align: center;
+    /* line-height: 50px; */
+    width: 70px;
+    margin-right: 4px;
+}
+
+
+/*========================TESTE===================================*/
+.conteudo-Geral {
+    overflow: scroll;
+}
+.teste{
+    display: flex;
+    height: 80%;
+    /*overflow: auto;*/
+}
+.blocoNotasCorpo {
+    display: none;
+    width: 30%;
+    height: 96%;
+    flex: 1;
+    margin-left: 20px;
+}
+.blocoNotasCorpo form, textarea {
+    width: 100%;    
+    height: 100%;
+    resize: none;
+    margin-top: 12px;
+}
+
+.largura {
+    width: 100%;
+}
+
+.blocoNotas {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    
+}
+
+.blocoNotas input {
+    width: 20px;
+    height: 20px;
+}
+
+.blocoNotas label {
+    text-align: center;
+    line-height: 34px;
+}

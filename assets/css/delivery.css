@@ -1,0 +1,198 @@
+/*==========================================PAINEL 1===================================================*/
+.campo-listar {
+    /*border: 1px solid;*/
+    height: 88%;
+    overflow: auto;
+}
+.tabela-titulo table{
+    width: 100%;
+    border: 1px solid;
+    margin-bottom: 10px;    
+}
+.tabela-titulo table th {
+    text-align: left;
+}
+.tabela-lancamentos table{
+    width: 100%;    
+}
+.busca-resultado table a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #ff0000;
+    display: block;
+    text-align: center;
+}
+.tabela-lancamentos table a:hover {
+    background-color: #fff;
+    color: #ff0000;
+}
+.busca-resultado table tr:nth-child(even){
+    background-color: #E6E6E6;
+} 
+.busca-resultado table tr:hover {
+    background-color: green;
+    color: #fff;   
+}
+
+/*==========================================PERSONALIZAVEL===================================================*/
+
+/*.campo-inserir{
+    display: flex;
+}*/
+
+.campo-inserir form{
+    display: flex;
+    align-items:flex-end;
+    flex-wrap: wrap;
+}
+.campo-inserir form input{
+    height: 30px;
+    margin-right: 10px;
+} 
+.input-pesquisa {
+    width: 400px;
+    height: 35px;
+}
+
+/*==========================================PAINEL 2===================================================*/
+
+.formulario-cliente {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.formulario-cliente .input-nome {
+    width: 270px;
+}
+.formulario-cliente .input-pagamento {
+    width: 150px;
+}
+.formulario-cliente .input-orc, .input-total {
+    width: 100px;
+}
+.formulario-cliente input, select {
+    height: 30px;
+}
+.form-cliente-caixa {
+    display: flex;
+}
+.form-cliente-caixa .valor-total {
+    margin-left: 10px;
+}
+
+/*=============================================================================================*/
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/*=============================================================================================*/
+
+.formulario-controle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.formulario-controle .bottoens {
+    display: flex;
+}
+
+.formulario-controle .bottoens form input {
+    width: 120px;
+}
+
+/*=============================================================================================*/
+
+.busca-resultado {
+    overflow: auto;
+ 
+}
+.busca-resultado table {
+    width: 100%;
+    overflow: auto;
+ 
+}
+
+.busca-resultado table th{
+    text-align: left;
+    
+    
+}
+
+.largura {
+    width: 100%;
+}
+/*=============================================================================================*/
+.corpo-lista{
+    display: flex;
+    height: 80%;
+}
+.blocoNotasCorpo {
+    display: none;
+    width: 30%;
+    height: 96%;
+    flex: 1;
+    margin-left: 20px;
+}
+.blocoNotasCorpo form, textarea {
+    width: 100%;    
+    height: 100%;
+    resize: none;
+    margin-top: 12px;
+}
+
+.blocoNotas {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    
+}
+
+.blocoNotas input {
+    width: 20px;
+    height: 20px;
+}
+
+.blocoNotas label {
+    text-align: center;
+    line-height: 34px;
+}
+
+/*=============================================================================================*/
+
+.quantidade {
+    background-color: transparent;
+    font-size: 16px;
+    border: none;    
+    width: 70px;
+}
+.observacao {
+    background-color: transparent;
+    font-size: 16px;
+    border: none;    
+    width: 100px;
+}
+input[type=number]::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+    
+}
+
+
+@media (max-height:1000px) {
+    .corpo-lista {
+        height:75%;
+    }
+}
+@media (max-height:800px) {
+    .corpo-lista {
+        height:70%;
+    }
+}
+@media (max-height:655px) {
+    .corpo-lista {
+        height:65%;
+    }
+}

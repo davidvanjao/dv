@@ -18,6 +18,10 @@ if($usuarios->temPermissao('USUARIO') == false) {
     exit;
 }
 
+if(isset($_GET['id'])) {
+    $id = addslashes($_GET['id']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +30,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
         <meta charset="utf-8">
         <title>Pesquisar Endereço</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/entrega.css">
+        <link rel="stylesheet" href="assets/css/cadastroCliente.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -40,7 +44,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="entrega.painel.php">voltar ao formulario de entrega</a>
+                                <a href="cadastro.cliente.painel.1.php">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
@@ -48,8 +52,8 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                 <div class="body-conteudo">
                                     <div class="campo-inserir">
-                                        <form class="form-cesta-2" name="buscar-form" method="POST">
-                                            <input class="input-busca-produto" type="text" autocomplete="off" name="endereco" placeholder="Digite o endereço">
+                                        <form class="busca-area"method="POST">
+                                            <input class="input-pesquisa" type="text" autocomplete="off" name="endereco" placeholder="Digite o endereço">
                                             <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
                                         </form>
                                     </div>
@@ -87,9 +91,19 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                             echo "<td style='width:10%;'>".$endereco['cidadeEstado']."</td>";
                                                             echo "<td style='width:10%;'>".$endereco['bairro']."</td>";
                                                             echo "<td style='width:20%;'>".$endereco['logradouro']."</td>";
-                                                            echo "<td style='width:10%;'>".$endereco['nomeEdificio']."</td>";      
-                                                            echo "<td style='width:5%;'>".$endereco['regiao']."</td>";                            
-                                                            echo '<td style="width:10%;"><a href="entrega.painel.2.php?id='.$endereco['id'].'">adicionar</a>';
+                                                            echo "<td style='width:10%;'>".$endereco['nomeEdificio']."</td>";  
+                                                            echo "<td style='width:5%;'>".$endereco['regiao']."</td>";        
+                                                            if(isset($_GET['id'])) {
+
+                                                                echo '<td style="width:10%;"><a href="cadastro.cliente.editar.php?idEnd='.$endereco['id'].'&id='.$id.'">adicionar</a>';  
+
+                                                            } else {
+
+                                                                echo '<td style="width:10%;"><a href="cadastro.cliente.painel.2.php?idEnd='.$endereco['id'].'">adicionar</a>';
+
+                                                            }
+                                                                                  
+                                                            
                                                             echo "</tr>";  
                                                         }
                                                     } else {

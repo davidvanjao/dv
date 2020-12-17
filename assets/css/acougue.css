@@ -1,0 +1,151 @@
+/*==========================================PAINEL 1===================================================*/
+.campo-listar {
+    /*border: 1px solid;*/
+    height: 88%;
+    overflow: auto;
+}
+.tabela-titulo table{
+    width: 100%;
+    border: 1px solid;
+    margin-bottom: 10px;    
+}
+.tabela-titulo table th {
+    text-align: left;
+}
+.tabela-lancamentos table{
+    width: 100%;    
+}
+.busca-resultado table a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #ff0000;
+    display: block;
+    text-align: center;
+}
+.tabela-lancamentos table a:hover {
+    background-color: #fff;
+    color: #ff0000;
+}
+.busca-resultado table tr:nth-child(even){
+    background-color: #E6E6E6;
+} 
+.busca-resultado table tr:hover {
+    background-color: green;
+    color: #fff;   
+}
+
+/*==========================================PERSONALIZAVEL===================================================*/
+
+.campo-inserir{
+    text-align: center;
+    font-size: 20px;
+}
+
+.campo-inserir form{
+    display: flex;
+    align-items:flex-end;
+    flex-wrap: wrap;
+}
+.campo-inserir form input{
+    height: 30px;
+    margin-right: 10px;
+} 
+.input-pesquisa {
+    width: 400px;
+    height: 35px;
+}
+
+/*==========================================PAINEL 2===================================================*/
+
+
+
+/*=============================================================================================*/
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/*=============================================================================================*/
+
+.formulario-controle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.formulario-controle .bottoens {
+    display: flex;
+}
+
+.formulario-controle .bottoens form input {
+    width: 120px;
+}
+
+/*=============================================================================================*/
+
+.busca-resultado {
+    overflow: auto;
+    height: 88%;
+ 
+}
+.busca-resultado table {
+    width: 100%;
+    overflow: auto;
+ 
+}
+
+.busca-resultado table th{
+    text-align: left;
+    
+    
+}
+
+.largura {
+    width: 100%;
+}
+/*=============================================================================================*/
+
+/*=======================================ACOUGUE======================================================*/
+.botao-acougue {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+}
+.botao-acougue input {
+    width: 150px;
+    height: 30px;
+    color: #fff;
+    margin-right: 10px;
+    background-color: #008000;
+    
+}
+.tecket-estrutura {
+
+    border: 1px solid #000;
+    padding: 10px 0px 10px 0px;
+}
+
+.tabela-pedido-cabecalho {
+    background-color: #008000;
+    margin-bottom: 5px;
+    color: #fff;
+
+}
+
+
+@media (max-height:1000px) {
+    .corpo-lista {
+        height:75%;
+    }
+}
+@media (max-height:800px) {
+    .corpo-lista {
+        height:70%;
+    }
+}
+@media (max-height:655px) {
+    .corpo-lista {
+        height:65%;
+    }
+}

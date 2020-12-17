@@ -20,7 +20,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
 $data = date('Y-m-d');
 
-$sql = "SELECT a.id, a.dataa, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, c.regiao, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+$sql = "SELECT a.id, a.orcamento, a.dataa, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, c.regiao, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
             from tb_log_delivery a, tb_cliente b, tb_endereco c
             WHERE a.dataa LIKE '$data'
             and a.idCliente = b.id 
@@ -32,7 +32,7 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
 
     $data = addslashes($_GET['data']);
 
-    $sql = "SELECT a.id, a.dataa, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, c.regiao, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+    $sql = "SELECT a.id, a.orcamento, a.dataa, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, c.regiao, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
             from tb_log_delivery a, tb_cliente b, tb_endereco c
             WHERE a.dataa LIKE '$data'
             and a.idCliente = b.id 
@@ -48,7 +48,7 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
         <meta charset="utf-8">
         <title>Delivery Entrega</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/cesta-basica.css">
+        <link rel="stylesheet" href="assets/css/delivery.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -67,16 +67,16 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="delivery.painel.1.php">Delivery</a>
-                                <a href="delivery.painel.2.php">Logistica</a>
-                                <a href="delivery.painel.5.php">Painel Geral</a>
-                                <a href="sair.php">Sair</a>
+                                <a href="delivery.painel.1.php">Lista</a>                              
+                                <a href="delivery.painel.3.php">Controle</a> 
+                                <a href="delivery.painel.5.php">Status</a>
+                                <a href="index.php">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
                             <div class="conteudo-Geral">
 
-                                <div class="body-cesta">
+                                <div class="body-conteudo">
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar" method="GET">
                                             <input class="input-busca-delivery"type="date" value="<?php echo $data;?>" name="data" autocomplete="off" required="required" onchange="this.form.submit()"/>
@@ -92,7 +92,6 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                 <th style="width:10%;">Cidade</th>
                                                 <th style="width:20%;">Endereço</th>
                                                 <th style="width:5%;">Numero</th>
-                                                <th style="width:6%;">Região</th>
                                                 <th style="width:10%;">Status</th>
                                             </tr>
                                         </table> 
@@ -121,13 +120,12 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                             }  
 
                                                             echo "<tr>";
-                                                            echo "<td style='width:5%;'>".$delivery['id']."</td>";
+                                                            echo "<td style='width:5%;'>".$delivery['orcamento']."</td>";
                                                             echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
                                                             echo "<td style='width:20%;'>".$delivery['nome']."</td>";
                                                             echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
                                                             echo "<td style='width:20%;'>".$delivery['logradouro']."</td>";  
                                                             echo "<td style='width:5%;'>".$delivery['numero']."</td>"; 
-                                                            echo "<td style='width:6%;'>".$delivery['regiao']."</td>";
 
 
                                                             echo "<td style='width:10%; background-color:$cor;'>".$delivery['statuss']."</td>";                        
