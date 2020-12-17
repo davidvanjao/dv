@@ -18,7 +18,7 @@ if(isset($_GET['liberarAcougue'])) {
     $orcamento = $_GET['liberarAcougue'];
     $pedido = 'S';
 
-    $sql = $pdo->prepare("UPDATE tb_orcamento SET pedido = :pedido WHERE orcamento = $orcamento AND c_gondola = '97'");
+    $sql = $pdo->prepare("UPDATE tb_orcamento SET pedido = :pedido WHERE orcamento = $orcamento AND c_gondola = '96'");
     $sql->bindValue(":pedido", $pedido);
     $sql->execute();
 
