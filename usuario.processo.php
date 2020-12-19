@@ -66,16 +66,17 @@ if(isset($_POST['nome']) && empty($_POST['nome']) == false) {
 
 //==============================================================EDITAR======================================================
 
-/*if(isset($_POST['id']) && empty($_POST['id']) == false) {
-    $id = addslashes($_POST['id']);
+if(isset($_POST['idAtualiza']) && empty($_POST['idAtualiza']) == false) {
 
-    if(isset($_POST['nome']) && empty($_POST['nome']) == false) {
+    $id = addslashes($_POST['idAtualiza']);
 
-        $nome = $_POST['nome'];
-        $sobrenome = $_POST['sobrenome'];
+    if(isset($_POST['nomeAtualiza']) && empty($_POST['nomeAtualiza']) == false) {
+
+        $nome = $_POST['nomeAtualiza'];
+        $sobrenome = $_POST['sobrenomeAtualiza'];
         $nomeCompleto = "$nome $sobrenome";
         $usuario = "$nome.$sobrenome";
-        $senha = $_POST['senha'];
+        $senha = $_POST['senhaAtualiza'];
         $per = $_POST['permissao'];
 
         $per0 = "";
@@ -96,16 +97,16 @@ if(isset($_POST['nome']) && empty($_POST['nome']) == false) {
         $permissoes = $per0.$per1;
 
         $sql = $pdo->prepare("UPDATE tb_usuarios SET nome = :nome, usuario = :usuario, senha = :senha, permissao = :permissao WHERE id = $id");
-        $sql->bindValue(":nome", $$nomeCompleto);
+        $sql->bindValue(":nome", $nomeCompleto);
         $sql->bindValue(":usuario", $usuario);
         $sql->bindValue(":senha", $senha);
         $sql->bindValue(":permissao", $permissoes);  
     
         $sql->execute();
     
-        header("Location:/usuario.painel.1.php");
+        //header("Location:/usuario.painel.1.php");
 
     }
-}*/
+}
 
 ?>

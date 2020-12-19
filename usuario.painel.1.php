@@ -84,7 +84,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                         <div class="tabela-lancamentos">
                                             <table>
                                                 <?php
-                                                $sql = "SELECT * FROM tb_usuarios ORDER BY nome";
+                                                $sql = "SELECT * FROM tb_usuarios ORDER BY id";
                                                 $sql = $pdo->query($sql);   
                                                 if($sql->rowCount() > 0) {
                                                     foreach($sql->fetchAll() as $usuario) {
