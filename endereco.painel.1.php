@@ -52,7 +52,6 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="endereco.painel.2.php">Adicionar</a>
                                 <a href="sair.php">Sair</a>
                             </div>
                         </header>
