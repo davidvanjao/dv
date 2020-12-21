@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <title>Daruma – Exemplo em PHP de envio de Texto – Comunicação Direta com a Porta Serial</title>
+        <meta http-equiv="Content-Type" content="text/html" charset="iso-8859-1">
+    </head>
+
+ 
+
+    <body bgcolor="#FFFFFF" link="#0066FF" vlink="#6666CC" alink="#330066">
+
+        <form name="form_envia_sms" method="post" action="dual_envia_txt.php">
+
+            <table width="809" height="237" border="2" align="center" cellpadding="2" cellspacing="5" bordercolor="#006600" bgcolor="#FFFFFF">
+
+                <tr>
+
+                <td width="244" height="27" bgcolor="#B9ECC0"><font size="3" face="Verdana, Arial, Helvetica, sans-serif">Selecionar
+
+                    Porta:</font></td>
+
+                <td width="319" bgcolor="#B9ECC0"><font size="3" face="Verdana, Arial, Helvetica, sans-serif">Digitar
+
+                    Texto:</font></td>
+
+                <td width="204" bgcolor="#B9ECC0"><font size="3" face="Verdana, Arial, Helvetica, sans-serif">Selecione
+
+                    Modo:</font></td>
+
+                </tr>
+
+                <tr>
+
+                <td valign="top" bordercolor="#FFFFFF"> <p>
+
+                    <select name="set_porta" size="1">
+
+                        <option value="0"> </option>
+
+                        <option value="com1" selected>COM1</option>
+
+                        <option value="com2">COM2</option>
+
+                        <option value="com3">COM3</option>
+
+                        <option value="com4">COM4</option>
+
+                        <option value="com5">COM5</option>
+
+                        <option value="com6">COM6</option>
+
+                        <option value="com7">COM7</option>
+
+                        <option value="com8">COM8</option>
+
+                        <option value="com9">COM9</option>
+
+                        <option value="com10">COM10</option>
+
+                    </select>
+
+                    <p>&nbsp; </td>
+
+                <td rowspan="3" align="left" valign="top" bordercolor="#FFFFFF"> <textarea cols="37" name="texto" rows="8" wrap="VIRTUAL">Teste</textarea>
+
+                </td>
+
+                <td rowspan="3" align="left" valign="top" bordercolor="#FFFFFF"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+
+                    <input type="radio" name="modo" value="negrito">
+
+                    <strong>Negrito </strong><br>
+
+                    <input type="radio" name="modo" value="sublinhado">
+
+                    <u>Sublinhado</u> <br>
+
+                    <input type="radio" name="modo" value="condensado">
+
+                    <font size="1">Condensado</font> <br>
+
+                    <input type="radio" name="modo" value="expandido">
+
+                    <font size="3">Expandido</font> <br>
+
+                    <input type="radio" name="modo" value="dupla_altura">
+
+                    <font size="4" face="Tahoma, Arial, Courier">Dupla Altura</font> <br>
+
+                    <input name="modo" type="radio" value="normal" checked>
+
+                    Sem Formatação </font><br> </td>
+
+                </tr>
+
+                <tr>
+
+                <td valign="top" bgcolor="#B9ECC0"><font size="3" face="Verdana, Arial, Helvetica, sans-serif">Selecionar
+
+                    Velocidade:</font></td>
+
+                </tr>
+
+                <tr>
+
+                <td align="left" valign="top" bordercolor="#FFFFFF"> <p>
+
+                    <select name="set_velocidade" size="1">
+
+                        <option value="0"> </option>
+
+                        <option value="9600" selected>9600</option>
+
+                        <option value="38400">38400</option>
+
+                        <option value="115200">115200</option>
+
+                    </select>
+
+                </td>
+
+                </tr>
+
+                <tr>
+
+                <td align="left" valign="top" bordercolor="#FFFFFF">&nbsp;</td>
+
+                <td bordercolor="#FFFFFF"><input name="reset" type="reset" value="Limpar"></td>
+
+                <td bordercolor="#FFFFFF"><input name="dual_envia_txt" type="submit" value="Enviar Texto"></td>
+
+                </tr>
+
+            </table>
+
+        </form>
+
+    </body>
+
+</html>
