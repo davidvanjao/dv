@@ -73,7 +73,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .busca-resultado table tr:hover {
     background-color: green;
-    color: #fff;   
+    color: #000;   
 
 }
 
