@@ -116,8 +116,13 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                     echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
                                                     echo "<td style='width:15%;'>".$delivery['logradouro']."</td>";  
                                                     echo "<td style='width:3%;'>".$delivery['numero']."</td>";     
-                                                    echo "<td style='width:10%; background-color:$cor;'>".$delivery['statuss']."</td>";  
-                                                    echo '<td style="width:10%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'" target="_blank">Imprimir</a>';                       
+                                                    echo "<td style='width:10%; background-color:$cor;'>".$delivery['statuss']."</td>";   
+                                                    echo '<td style="width:10%;">';
+                                                    echo "<div class='menuAcoes'>";
+                                                    echo '<div><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'" target="_blank">Imprimir</a></div>';  
+                                                    echo '<div><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></div>';     
+                                                    echo "</div>";  
+                                                    echo "</td>";     
                                                     echo "</tr>";  
 
                                                 

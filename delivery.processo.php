@@ -465,3 +465,21 @@ if(isset($_GET['excluir'])) {
         
     }
 }
+
+//================================EDITAR EXCLUIR PRODUTO================================================================
+
+if(isset($_GET['Editarexcluir'])) {
+
+    $produto = $_GET['Editarexcluir'];
+    $orcamento = $_GET['orcamento'];
+
+    $sql = $pdo->prepare("DELETE FROM tb_orcamento WHERE orcamento = :orcamento AND c_produto = :c_produto");
+    $sql->bindValue(":orcamento", $orcamento);
+    $sql->bindValue(":c_produto", $produto);
+    $sql->execute();   
+ 
+    header("Location:/delivery.editar.php?orcamento=$orcamento");  
+    exit;
+    //echo $orcamento;
+
+}
