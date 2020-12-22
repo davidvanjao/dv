@@ -70,8 +70,8 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:5%;">EAN</th>
-                                                <th style="width:5%;">COD</th>
+                                                <th style="width:5%;">EAN/BALANÇA</th>
+                                                <th style="width:2%;">COD</th>
                                                 <th style="width:20%;">PRODUTO</th>
                                                 <th style="width:5%;">PREÇO</th>
                                                 <th style="width:5%;">PROMOÇÃO</th>
@@ -105,7 +105,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                 AND a.seqproduto = d.seqproduto
                                                 AND d.tipcodigo IN ('E', 'B')
                                                 AND b.desccompleta LIKE '%".$pesquisa."%'
-                                                ORDER BY a.seqproduto";
+                                                ORDER BY b.desccompleta";
                                                 
                                                 //prepara uma instrucao para execulsao
                                                 $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
@@ -117,11 +117,20 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                                 echo "<tr>";
                                                 echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
-                                                echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
+                                                echo "<td style='width:2%;'>".$produto['SEQPRODUTO']."</td>";
                                                 echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  
-                                                echo "<td style='width:5%;'>".$produto['PRECO']."</td>";   
-                                                echo "<td style='width:5%;'>".$produto['PRECOPROM']."</td>";  
-                                                echo "<td style='width:5%;'>".$produto['ESTQLOJA']."</td>";    
+                                                echo "<td style='width:5%;'>R$ ".number_format($produto['PRECO'],2,",",".")."</td>";   
+                                                if($produto['PRECOPROM'] > 0) {
+
+                                                    echo "<td style='width:5%; background-color:#ffff00; font-weight:bold;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>"; 
+
+                                                } else {                                                    
+
+                                                    echo "<td style='width:5%;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>"; 
+                                                }
+
+
+                                                echo "<td style='width:5%;'>".number_format($produto['ESTQLOJA'],3,".",".")."</td>";      
                                                 
                                                 echo "</tr>"; 
                                                 }
