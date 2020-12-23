@@ -2,6 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -26,7 +27,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
         <meta charset="utf-8">
         <title>Tela de Pesquisa</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/delivery.css">
+        <link rel="stylesheet" href="assets/css/pesquisa.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -68,7 +69,8 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                             <tr>
                                                 <th style="width:10%;">Código</th>
                                                 <th style="width:50%;">Produto</th>
-                                                <th style="width:20%;">Preço</th>
+                                                <th style="width:10%;">Preço</th>
+                                                <th style="width:10%;">Promoção</th>
                                                 <th style="width:10%;">Estoque</th>
                                                 <!--<th style="width:10%;">Ações</th>-->
                                             </tr>
@@ -78,7 +80,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                         <table>
                                             <?php
-                                                if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
+                                                /*if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
 
                                                     $pesquisa = addslashes($_POST['pesquisa']);
                                                     $sql = "SELECT * FROM tb_produto
@@ -97,6 +99,62 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                                             echo '</tr>';  
                                                         }
                                                     } 
+                                                }*/
+
+                                                if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
+
+                                                    $pesquisa = addslashes($_POST['pesquisa']);
+                                                    $pesquisa = strtoupper($pesquisa);
+    
+                                                    $consulta = "SELECT a.nroempresa, a.nrogondola, c.gondola, a.seqproduto, b.desccompleta, d.qtdembalagem, a.estqloja, d.codacesso, consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
+                                                    consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom
+                                                    FROM
+                                                    consinco.mrl_produtoempresa a, 
+                                                    consinco.map_produto b, 
+                                                    consinco.mrl_gondola c,
+                                                    consinco.map_prodcodigo d,
+                                                    consinco.max_empresa e
+                                                    WHERE
+                                                    a.nroempresa = '1'
+                                                    AND e.nroempresa = '1'
+                                                    AND d.qtdembalagem = '1'
+                                                    AND a.nrogondola = c.nrogondola
+                                                    AND a.seqproduto = b.seqproduto
+                                                    AND a.seqproduto = d.seqproduto
+                                                    AND d.tipcodigo IN ('E', 'B')
+                                                    AND b.desccompleta LIKE '%".$pesquisa."%'
+                                                    ORDER BY b.desccompleta";
+                                                    
+                                                    //prepara uma instrucao para execulsao
+                                                    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
+    
+                                                    //Executa os comandos SQL
+                                                    oci_execute($resultado);
+    
+                                                    while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
+
+                                                        
+    
+                                                    echo "<tr>";
+                                                    echo '<tr ondblclick=location.href="delivery.processo.php?produto='.$produto['SEQPRODUTO'].'" style="cursor:pointer">';
+                                                    echo "<td style='width:10%;'>".$produto['CODACESSO']."</td>";
+                                                    echo "<td style='width:50%;'>".$produto['DESCCOMPLETA']."</td>";  
+                                                    echo "<td style='width:10%;'>R$ ".number_format($produto['PRECO'],2,",",".")."</td>";   
+                                                    if($produto['PRECOPROM'] > 0) {
+    
+                                                        echo "<td style='width:10%; background-color:#ffff00; font-weight:bold;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>"; 
+    
+                                                    } else {                                                    
+    
+                                                        echo "<td style='width:10%;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>"; 
+                                                    }
+    
+    
+                                                    echo "<td style='width:10%;'>".number_format($produto['ESTQLOJA'],3,".",".")."</td>";      
+                                                    
+                                                    echo "</tr>"; 
+                                                    }
+    
                                                 }
                                                 
                                             ?>                                        

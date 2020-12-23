@@ -2,6 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
+require 'conexao.banco.oracle.php';
 
 //================================VARIAVEIS=========================================================================
 
@@ -256,7 +257,9 @@ if(isset($_POST['blocoNotas'])) {
 
 //================================ADICIONAR PRODUTO================================================================
 
-if(isset($_GET['produto'])) {
+
+//servidor local
+/*if(isset($_GET['produto'])) {
 
     $produto = $_GET['produto'];
     
@@ -317,6 +320,91 @@ if(isset($_GET['produto'])) {
     } else {
 
          echo "Pesquisa no banco não deu certo!";
+    }
+
+    
+}*/
+
+//servidor consinco
+if(isset($_GET['produto'])) {
+
+    $produto = $_GET['produto'];
+    
+    $consulta = "SELECT a.nroempresa, a.nrogondola, c.gondola, a.seqproduto, b.desccompleta, d.qtdembalagem, a.estqloja, d.codacesso, consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
+                consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom
+                FROM
+                consinco.mrl_produtoempresa a, 
+                consinco.map_produto b, 
+                consinco.mrl_gondola c,
+                consinco.map_prodcodigo d,
+                consinco.max_empresa e
+                WHERE
+                a.nroempresa = '1'
+                AND e.nroempresa = '1'
+                AND d.qtdembalagem = '1'
+                AND a.nrogondola = c.nrogondola
+                AND a.seqproduto = b.seqproduto
+                AND a.seqproduto = d.seqproduto
+                AND d.tipcodigo IN ('E', 'B')
+                AND a.seqproduto = $produto
+                ORDER BY b.desccompleta";    
+
+    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
+        
+    //Executa os comandos SQL
+    oci_execute($resultado);
+
+    while (($value = oci_fetch_array($resultado, OCI_ASSOC)) != false) { 
+
+            if(isset($_SESSION['lista'][$produto])) {
+
+                if(isset($_GET['observacao'])) {
+
+                    $produto = $_GET['produto'];
+                    $observacao = $_GET['observacao'];                       
+                
+                    $_SESSION['lista'][$produto]['observacao'] = $observacao;                
+                
+                    header("Location:/delivery.painel.2.php");     
+
+                } 
+                if(isset($_GET['quantidade'])) {
+                
+                    $produto = $_GET['produto'];
+                    $quantidade = number_format($_GET['quantidade'],3,".",",");
+                
+                    $_SESSION['lista'][$produto]['quantidade'] = $quantidade;
+
+                    header("Location:/delivery.painel.2.php");                
+                
+                }     
+                if(isset($_GET['medida'])) {
+                
+                    $produto = $_GET['produto'];
+                    $medida = addslashes($_GET['medida']);
+
+                    $_SESSION['lista'][$produto]['medida'] = $medida;
+
+                    header("Location:/delivery.painel.2.php");                
+                
+                }  
+                
+            } else {
+
+                $_SESSION['lista'][$produto] = array('medida'=>$medida, 'quantidade'=>$quantidade, 'gondola'=>$value['NROGONDOLA'], 'produto'=>$value['DESCCOMPLETA'],
+                'preco'=>floatval($value['PRECO']), 'estoque'=>$value['ESTQLOJA'], 'codigo'=>$value['SEQPRODUTO'], 'codigoEan'=>$value['CODACESSO'], 'observacao'=>$observacao);
+
+                var_dump($value);
+
+                header("Location:/delivery.painel.2.php");
+
+            }        
+                    
+         
+        
+        
+   
+
     }
 
     

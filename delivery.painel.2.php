@@ -247,7 +247,7 @@ if(isset($_SESSION['blocoNotas'])) {
                                                         $resultado = number_format($preco*$quantidade,2,",",".");
 
                                                         echo "<tr>";
-                                                        echo "<td>".$value['codigo']."</td>";
+                                                        echo "<td>".$value['codigoEan']."</td>";
                                                         echo "<td>".$value['produto']."</td>";
                                                         echo "<td>
                                                                     <form class='form-pagamento' action='delivery.processo.php' method='GET'>

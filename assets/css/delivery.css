@@ -106,9 +106,10 @@ hr {
 /*=============================================================================================*/
 
 .busca-resultado {
+    height: 87%;
     overflow: auto;
- 
 }
+
 .busca-resultado table {
     width: 100%;
     overflow: auto;
