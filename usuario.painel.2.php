@@ -55,7 +55,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href=""></a>
+                                <a href="usuario.painel.1.php">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
@@ -73,14 +73,35 @@ if($usuarios->temPermissao('USUARIO') == false) {
                                             <label for="senha">Senha</label>
                                             <input type="password" name="senha" id="senha" autocomplete="off" placeholder="Digite sua senha">
 
+                                            <!--<div class="checkbox">
+
+                                                <label for="senha">Permissões</label><br>
+                                                <input type="checkbox" name="permissao[]" value="USUARIO" checked>Usuário
+                                                <input type="checkbox" name="permissao[]" value="ADMINISTRADOR">Administrador
+                                                <input type="checkbox" name="permissao[]" value="ADMINISTRADOR">Administrador
+                                                <input type="checkbox" name="permissao[]" value="ADMINISTRADOR">Administrador
+                                            
+                                            </div>-->
+
                                             <div class="checkbox">
 
-                                            <label for="senha">Permissões</label><br>
-                                            <input type="checkbox" name="permissao[]" value="USUARIO" checked>Usuário
-                                            <input type="checkbox" name="permissao[]" value="USUARIO,ADMINISTRADOR">Administrador
-                                            
-                                            </div>  
+                                                <H3>Permissões</H3><br>
+                                                    <?php
+                                                    $sql = "SELECT * FROM tb_permissao";
+                                                    $sql = $pdo->query($sql);   
+                                                    if($sql->rowCount() > 0) {
+                                                        foreach($sql->fetchAll() as $permissao) {
+                                                            ?>
+                                                            <input type="checkbox" name="permissao[]" value="<?php echo $permissao['permissao']; ?>"> <?php echo $permissao['descricao']; ?><br>
+                                                            <?php
+                                                        }
+                                                    } else {
+                                                            
+                                                            echo "Nenhuma permissão encontrada.";
+                                                        }
+                                                    ?> 
 
+                                            </div>
                                             <input type="submit" name="btnCadastar" value="Cadastar">
                                         </form>
 

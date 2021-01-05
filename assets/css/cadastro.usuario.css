@@ -54,5 +54,7 @@
     width: 15px;
     height: 15px;
     margin: 0;
-    text-align: center;
+}
+.checkbox {
+    text-align: left;
 }

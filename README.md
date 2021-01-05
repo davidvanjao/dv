@@ -121,3 +121,14 @@ CREATE TABLE tb_cestabasica(
     data_entrada varchar(20),	
     primary key(id))
     default charset = utf8;	
+
+-----------------------------------------------------------------------------
+05-01 - CRIACAO DA TABELA PERMISSAO
+
+CREATE TABLE tb_permissao(
+    id	int	not null auto_increment,
+    permissao varchar(3),
+    descricao varchar(20),	
+    data_criacao date,		
+    primary key(id))
+    default charset = utf8;	
