@@ -106,3 +106,18 @@ TABELA: tb_log_delivery
 
 alter table tb_orcamento modify column quantidade decimal(12,3);
 
+-----------------------------------------------------------------------------
+04-01 - ALTERAÇÕES NA TABELA CESTABASICA
+
+CREATE TABLE tb_cestabasica(
+    id	int	not null auto_increment,	
+    data_criacao date,	
+    responsavel	varchar(20),		
+    quantidade 	int(4),		
+    valor	decimal(5,2),		
+    tipocesta	varchar(20),		
+    tipopessoa varchar(20),	
+    usuario varchar(20),	
+    data_entrada varchar(20),	
+    primary key(id))
+    default charset = utf8;	

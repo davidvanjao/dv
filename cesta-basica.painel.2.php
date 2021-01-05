@@ -69,7 +69,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                             <div class="">
                                                 <label>Quantidade:</label></br>
-                                                <input type="number" min='0' autocomplete="off" name="quantidade" placeholder="" required="required">
+                                                <input type="number" min='1' step="1" autocomplete="off" name="quantidade" placeholder="" required="required">
                                             </div>
 
                                             <div class="">
@@ -79,7 +79,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                             <div class="">
                                                 <label>Tipo de Cesta:</label></br>
-                                                <select required="required" name="tipoCesta">
+                                                <select required="required" name="tipocesta">
                                                     <option value=""></option>
                                                     <option value="Personalizada">Personalizada</option>
                                                     <option value="Venda 1">Venda 1</option>
@@ -90,7 +90,7 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                             <div class="">
                                                 <label>Tipo de Pessoa:</label></br>
-                                                <select required="required" name="tipoPessoa">
+                                                <select required="required" name="tipopessoa">
                                                     <option value=""></option>
                                                     <option value="Fisica">Física</option>
                                                     <option value="Juridica">Jurídica</option>

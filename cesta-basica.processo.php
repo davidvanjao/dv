@@ -12,20 +12,22 @@ if(!empty($_SESSION['logado'])) {
 
 if(isset($_POST['data']) && empty($_POST['data']) == false) {
 
-	$data = $_POST['data'];
-    $responsavel = $_POST['responsavel'];
-    $quantidade = $_POST['quantidade'];
-    $valor = str_replace(",",".",$_POST['valor']);
-    $tipoCesta = $_POST['tipoCesta'];
-	$tipoPessoa = $_POST['tipoPessoa'];
+	$data = addslashes($_POST['data']);
+    $responsavel = addslashes($_POST['responsavel']);
+    $quantidade = addslashes($_POST['quantidade']);
+    $valor = addslashes(str_replace(",",".",$_POST['valor']));
+    $tipocesta = addslashes($_POST['tipocesta']);
+	$tipopessoa = addslashes($_POST['tipopessoa']);
 
-	$sql = $pdo->prepare("INSERT INTO tb_cestabasica SET dataa = :dataa, responsavel = :responsavel, quantidade = :quantidade, valor = :valor, tipoCesta = :tipoCesta, tipoPessoa = :tipoPessoa, usuario = :usuario");
-	$sql->bindValue(":dataa", $data);
+	$sql = $pdo->prepare("INSERT INTO tb_cestabasica SET data_criacao = :data_criacao, responsavel = :responsavel,
+    quantidade = :quantidade, valor = :valor, tipocesta = :tipocesta, tipopessoa = :tipopessoa, usuario = :usuario, data_entrada = NOW()");
+
+	$sql->bindValue(":data_criacao", $data);
     $sql->bindValue(":responsavel", $responsavel);
     $sql->bindValue(":quantidade", $quantidade);
     $sql->bindValue(":valor", $valor);
-    $sql->bindValue(":tipoCesta", $tipoCesta);
-    $sql->bindValue(":tipoPessoa", $tipoPessoa);
+    $sql->bindValue(":tipocesta", $tipocesta);
+    $sql->bindValue(":tipopessoa", $tipopessoa);
     $sql->bindValue(":usuario", $usuario);
     $sql->execute();
 
@@ -37,25 +39,26 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
 
     header("Location:/cesta-basica.painel.1.php");
 
+
 }
 
+//-----------------------------------------APAGAR INFORMACAO-------------------------------------------------------------------
 
 
-//------------------------------------------------------------------------------------------------------------
-
-
-if(isset($_GET['id']) && empty($_GET['id']) == false) {
-    $id = addslashes($_GET['id']);
+if(isset($_GET['idcesta']) && empty($_GET['idcesta']) == false) {
+    $id = addslashes($_GET['idcesta']);
 
     $sql = $pdo->prepare("DELETE FROM tb_cestabasica WHERE id = '$id'");
     $sql->execute();
 
     header("Location: cesta-basica.painel.1.php");
 
+    exit;    
+
 } else {
     
     header("Location: cesta-basica.painel.1.php");
+
 }
 
-?>
 ?>

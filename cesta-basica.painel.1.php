@@ -95,8 +95,8 @@ if(isset($_GET['filtroData']) && empty($_GET['filtroData']) == false) {
                                                 <th style="width:10%;">Responsável</th>
                                                 <th style="width:10%;">Quantidade</th>
                                                 <th style="width:10%;">Valor</th>
-                                                <th style="width:10%;">Tipo Cesta</th>
-                                                <th style="width:10%;">Tipo Pessoa</th>
+                                                <th style="width:10%;">Cesta</th>
+                                                <th style="width:10%;">Pessoa</th>
                                                 <th style="width:10%;">Ações</th>
                                             </tr>
                                         </table> 
@@ -106,7 +106,7 @@ if(isset($_GET['filtroData']) && empty($_GET['filtroData']) == false) {
                                         <div class="tabela-lancamentos">
                                             <table>
                                                 <?php
-                                                $sql = "SELECT *, DATE_FORMAT(dataa,'%d/%m/%Y') as saida_data FROM tb_cestabasica WHERE dataa >= '$data'";
+                                                $sql = "SELECT *, DATE_FORMAT(data_criacao,'%d/%m/%Y') as saida_data FROM tb_cestabasica WHERE data_criacao >= '$data' ORDER BY data_criacao, id";
                                                 $sql = $pdo->query($sql);   
                                                 if($sql->rowCount() > 0) {
                                                     foreach($sql->fetchAll() as $cesta) {
@@ -115,16 +115,16 @@ if(isset($_GET['filtroData']) && empty($_GET['filtroData']) == false) {
                                                         echo "<td style='width:10%;'>".$cesta['saida_data']."</td>";
                                                         echo "<td style='width:10%;'>".$cesta['responsavel']."</td>";
                                                         echo "<td style='width:10%;'>".$cesta['quantidade']."</td>";
-                                                        echo "<td style='width:10%;'>R$ ".$cesta['valor']."</td>";
-                                                        echo "<td style='width:10%;'>".$cesta['tipoCesta']."</td>";
-                                                        echo "<td style='width:10%;'>".$cesta['tipoPessoa']."</td>";                                   
-                                                        echo '<td style="width:10%;"><a href="cesta-basica.processo.php?id='.$cesta['id'].'">Excluir</a>';
+                                                        echo "<td style='width:10%;'>R$ ".number_format($cesta['valor'],2,",",".")."</td>";                                                        
+                                                        echo "<td style='width:10%;'>".$cesta['tipocesta']."</td>";
+                                                        echo "<td style='width:10%;'>".$cesta['tipopessoa']."</td>";                                   
+                                                        echo '<td style="width:10%;"><a href="cesta-basica.processo.php?idcesta='.$cesta['id'].'">Excluir</a>';
                                                         echo "</tr>";  
                                                     }
                                                 } else {
                                                         
-                                                        echo "Nenhum lançamento encontrado.";
-                                                    }
+                                                    echo "Nenhum lançamento encontrado.";
+                                                }
                                                 ?>                                             
 
                                             </table>

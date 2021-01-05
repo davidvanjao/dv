@@ -14,7 +14,7 @@
     <body>
         <div class="painel-menu-menu">
 
-            <?php if($usuarios->temPermissao('USUARIO')): ?>
+            <?php if($usuarios->temPermissao('ADMINISTRADOR')): ?>
                 <div class="painel-menu-widget">
                     <a href="produto.painel.pesquisa.php">
                         <img src="assets/img/lupa.png" title="Pesquisar Produto">                                        

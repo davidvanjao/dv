@@ -1,7 +1,7 @@
 /*==========================================PAINEL 1===================================================*/
 .campo-listar {
     /*border: 1px solid;*/
-    height: 88%;
+    height: 82%;
     overflow: auto;
 }
 .tabela-titulo table{
@@ -46,4 +46,22 @@ input[type=number]::-webkit-inner-spin-button {
 
 .campo-inserir {
     display: flex;
+}
+
+/*==========================================ADAPTAVEL A TELA===================================================*/
+
+@media (max-height:1000px) {
+    .corpo-lista {
+        height:75%;
+    }
+}
+@media (max-height:800px) {
+    .corpo-lista {
+        height:70%;
+    }
+}
+@media (max-height:655px) {
+    .corpo-lista {
+        height:65%;
+    }
 }
