@@ -54,23 +54,41 @@ $nomeUsuario = $_SESSION['logado'];
                         </div>
                     </div>
                 </div>
-                <div class="conteudo-Central">
-                    <div class="corpo">
-                        <header class="desktop_header">
-                            <div class="logo">
-                                <img src="">
-                            </div>
-                            <div class="superiorMenu">
-                                <a href="sair.php">Sair</a>
-                            </div>
-                        </header>
-                        <section class="page">
-                            <div class="conteudo-Geral semCorFundo alinhar-centro">
-                                <h1>Seja Bem Vindo <?php echo $nome[0]?>!</h1>
-                            </div> 
-                        </section>
+
+                <?php 
+
+                if (1 < 0) {
+
+                    require 'acougue.painel - teste.1.php';
+
+                } else {
+                    ?>
+
+                    <div class="conteudo-Central">
+                        <div class="corpo">
+                            <header class="desktop_header">
+                                <div class="logo">
+                                    <img src="">
+                                </div>
+                                <div class="superiorMenu">
+                                    <a href="sair.php">Sair</a>
+                                </div>
+                            </header>
+                            <section class="page">
+                                <div class="conteudo-Geral semCorFundo alinhar-centro">
+                                    <h1 style="font-size:100px; color:#fff;">Seja Bem Vindo <?php echo $nome[0]?>!</h1>
+                                </div> 
+                            </section>
+                        </div>
                     </div>
-                </div>
+
+                <?php   
+
+                }
+
+
+                ?>
+                
             </div>
         </div>
 

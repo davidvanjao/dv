@@ -55,7 +55,7 @@ if($usuarios->temPermissao('CON') == false) {
                         </header>
                         <section class="page">
                             <div class="conteudo-Geral semCorFundo alinhar-centro">
-                                <h1>Painel de Configuração</h1>
+                                <h1 style="font-size:100px; color:#fff;">Painel de Configuração</h1>
                             </div> 
                         </section>
                     </div>

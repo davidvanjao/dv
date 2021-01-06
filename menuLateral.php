@@ -16,7 +16,7 @@
 
             <?php if($usuarios->temPermissao('PES')): ?>
                 <div class="painel-menu-widget">
-                    <a href="produto.painel.pesquisa.php">
+                    <a href="produto.painel.pesquisa.php" name="teste">
                         <img src="assets/img/lupa.png" title="Pesquisar Produto">                                        
                     </a>                        
                 </div>
