@@ -8,7 +8,7 @@
     $usuarios = new Usuarios($pdo);
     $usuarios->setUsuario($_SESSION['logado']);
 
-    if($usuarios->temPermissao('USUARIO') == false) {
+    if($usuarios->temPermissao('CONF') == false) {
         header("Location:index.php");
         exit;
     }

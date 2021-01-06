@@ -13,7 +13,7 @@ if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
 $usuarios = new Usuarios($pdo);
 $usuarios->setUsuario($_SESSION['logado']);
 
-if($usuarios->temPermissao('USUARIO') == false) {
+if($usuarios->temPermissao('CON') == false) {
     header("Location:index.php");
     exit;
 }
@@ -72,16 +72,6 @@ if($usuarios->temPermissao('USUARIO') == false) {
 
                                             <label for="senha">Senha</label>
                                             <input type="password" name="senha" id="senha" autocomplete="off" placeholder="Digite sua senha">
-
-                                            <!--<div class="checkbox">
-
-                                                <label for="senha">Permissões</label><br>
-                                                <input type="checkbox" name="permissao[]" value="USUARIO" checked>Usuário
-                                                <input type="checkbox" name="permissao[]" value="ADMINISTRADOR">Administrador
-                                                <input type="checkbox" name="permissao[]" value="ADMINISTRADOR">Administrador
-                                                <input type="checkbox" name="permissao[]" value="ADMINISTRADOR">Administrador
-                                            
-                                            </div>-->
 
                                             <div class="checkbox">
 

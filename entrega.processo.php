@@ -4,19 +4,6 @@ require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
 
-if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
-} else {
-    header("Location: login.php");
-}
-
-$usuarios = new Usuarios($pdo);
-$usuarios->setUsuario($_SESSION['logado']);
-
-if($usuarios->temPermissao('USUARIO') == false) {
-    header("Location:index.php");
-    exit;
-}
-
 //=================================================ADICIONAR==========================================================================
 
 if(isset($_POST['data']) && empty($_POST['data']) == false) {

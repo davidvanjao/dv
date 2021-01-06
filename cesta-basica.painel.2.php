@@ -13,7 +13,7 @@ if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
 $usuarios = new Usuarios($pdo);
 $usuarios->setUsuario($_SESSION['logado']);
 
-if($usuarios->temPermissao('USUARIO') == false) {
+if($usuarios->temPermissao('CES') == false) {
     header("Location:index.php");
     exit;
 }

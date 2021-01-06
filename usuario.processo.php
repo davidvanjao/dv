@@ -4,19 +4,6 @@ require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
 
-if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
-} else {
-    header("Location: login.php");
-}
-
-$usuarios = new Usuarios($pdo);
-$usuarios->setUsuario($_SESSION['logado']);
-
-if($usuarios->temPermissao('USUARIO') == false) {
-    header("Location:index.php");
-    exit;
-}
-
 //==============================================================ADICIONAR======================================================
 
 if(isset($_POST['nome']) && empty($_POST['nome']) == false) {
@@ -27,24 +14,9 @@ if(isset($_POST['nome']) && empty($_POST['nome']) == false) {
     $senha = $_POST['senha'];
     $per = $_POST['permissao'];
     
-    $per0 = "";
-    $per1 = "";
-
-    if(empty($per[0])) {
-
-    } else {
-        $per0 = $per[0];
-    }   
-
-    if(empty($per[1])) {
-
-    } else {
-        $per1 = substr_replace($per[1], ',',0,0);
-    } 
-
-    $permissoes = $per0.$per1;
-
-    //var_dump($permissoes);           
+    for($x = 0; $x < count($per); $x++) {
+        $permissoes = implode(',',$per);
+    }        
 
     $sql = $pdo->prepare("INSERT INTO tb_usuarios SET nome = :nome, usuario = :usuario, senha = :senha, permissao = :permissao");
     $sql->bindValue(":nome", $nomeCompleto);
@@ -57,10 +29,6 @@ if(isset($_POST['nome']) && empty($_POST['nome']) == false) {
     header("Location:/usuario.painel.1.php");
 
     exit;
-
-} else {
-
-    header("Location:/usuario.painel.1.php");
 
 }
 
@@ -77,24 +45,12 @@ if(isset($_POST['idAtualiza']) && empty($_POST['idAtualiza']) == false) {
         $nomeCompleto = "$nome $sobrenome";
         $usuario = "$nome.$sobrenome";
         $senha = $_POST['senhaAtualiza'];
-        $per = $_POST['permissao'];
+        $per = $_POST['permissao'];        
 
-        $per0 = "";
-        $per1 = "";
-
-        if(empty($per[0])) {
-
-        } else {
-            $per0 = $per[0];
-        }   
-
-        if(empty($per[1])) {
-
-        } else {
-            $per1 = substr_replace($per[1], ',',0,0);
-        } 
-
-        $permissoes = $per0.$per1;
+        for($x = 0; $x < count($per); $x++) {
+            $permissoes = implode(',',$per);
+        }
+        
 
         $sql = $pdo->prepare("UPDATE tb_usuarios SET nome = :nome, usuario = :usuario, senha = :senha, permissao = :permissao WHERE id = $id");
         $sql->bindValue(":nome", $nomeCompleto);
@@ -104,9 +60,8 @@ if(isset($_POST['idAtualiza']) && empty($_POST['idAtualiza']) == false) {
     
         $sql->execute();
     
-        //header("Location:/usuario.painel.1.php");
+        header("Location:/usuario.painel.1.php");
 
     }
 }
-
-?>
+//var_dump($permissoes);

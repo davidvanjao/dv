@@ -132,3 +132,14 @@ CREATE TABLE tb_permissao(
     data_criacao date,		
     primary key(id))
     default charset = utf8;	
+
+PERMISSÕES
+
+1 - PES - PESQUISA DE PRODUTOS
+2 - DEL - DELIVERY
+3 - CES - CESTA BASICA
+4 - ACO - PAINEL ACOUGUE
+5 - ENT - ENTREGA
+6 - END - ENDERECOS
+7 - CLI - CLIENTES
+8 - CON - CONFIGURACAO

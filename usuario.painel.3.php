@@ -13,7 +13,7 @@ if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
 $usuarios = new Usuarios($pdo);
 $usuarios->setUsuario($_SESSION['logado']);
 
-if($usuarios->temPermissao('USUARIO') == false) {
+if($usuarios->temPermissao('CON') == false) {
     header("Location:index.php");
     exit;
 }
@@ -31,12 +31,17 @@ if(isset($_GET['id'])) {
 
         $usuario = $sql->fetch();
         $nomeSobrenome = explode(" ",$usuario['nome']);
+        $permissoes = explode(",",$usuario['permissao']);
 
     }
 
 }
 
+//var_dump($permissoes);
+
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -60,7 +65,7 @@ if(isset($_GET['id'])) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href=""></a>
+                                <a href="usuario.painel.1.php">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
@@ -82,13 +87,28 @@ if(isset($_GET['id'])) {
 
                                             <div class="checkbox">
 
-                                            <label for="senha">Permissão</label><br>
-                                            <input type="checkbox" name="permissao[]" value="USUARIO">Usuário
-                                            <input type="checkbox" name="permissao[]" value="ADMINISTRADOR">Administrador
+                                                <H3>Permissões</H3><br>
+                                                    <?php
+                                                    $sql = "SELECT * FROM tb_permissao";
+                                                    $sql = $pdo->query($sql);   
+                                                    if($sql->rowCount() > 0) {
+                                                        foreach($sql->fetchAll() as $permissao) {
+                                                            ?>
+                                                            <input type="checkbox" name="permissao[]" 
 
-                                        
-                                            
-                                            </div>  
+                                                            <?php echo (in_array($permissao['permissao'], $permissoes, true))?'checked':'';?>                                                            
+
+                                                            value="<?php echo $permissao['permissao']; ?>" > <?php echo $permissao['descricao']; ?><br>
+
+                                                            <?php
+                                                        }
+                                                    } else {
+                                                            
+                                                            echo "Nenhuma permissão encontrada.";
+                                                        }
+                                                    ?> 
+
+                                            </div>
 
                                             <input type="submit" name="btnCadastar" value="Cadastar">
                                         </form>
