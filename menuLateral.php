@@ -1,19 +1,3 @@
-<?php
-
-?>
-
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="utf-8">
-        <!--<link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/index.css">-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-
-    <body>
-        <div class="painel-menu-menu">
-
             <?php if($usuarios->temPermissao('PES')): ?>
                 <div class="painel-menu-widget">
                     <a href="produto.painel.pesquisa.php" name="teste">
@@ -32,7 +16,7 @@
 
             <?php if($usuarios->temPermissao('CES')): ?>
                 <div class="painel-menu-widget">
-                    <a href="cesta-basica.painel.1.php">
+                    <a href="index.php?p=cesta-basica1">
                         <img src="assets/img/cesta-basica.png" title="Lançamento de Cesta Básica">                                        
                     </a>                        
                 </div>
@@ -40,7 +24,7 @@
 
             <?php if($usuarios->temPermissao('ACO')): ?>
                 <div class="painel-menu-widget">
-                    <a href="acougue.painel.1.php">
+                    <a href="index.php?p=acougue">
                         <img src="assets/img/acougue.png" title="Pedidos Açougue">                                        
                     </a>                        
                 </div>
@@ -77,11 +61,3 @@
                     </a>                        
                 </div>
             <?php endif; ?>
-            
-        </div>
-                            
-                        
-    </body>
-
-
-</html>

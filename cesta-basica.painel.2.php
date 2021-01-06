@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+//session_start();
 require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
@@ -45,7 +45,7 @@ if($usuarios->temPermissao('CES') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="cesta-basica.painel.1.php">Voltar</a>
+                                <a href="index.php?p=cesta-basica1">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
