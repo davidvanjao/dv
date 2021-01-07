@@ -203,14 +203,23 @@ input[type=number]::-webkit-inner-spin-button {
     .corpo-lista {
         height:75%;
     }
+    .busca-resultado, .tabela-lancamentos {
+        font-size: 14px;
+    }
 }
 @media (max-height:800px) {
     .corpo-lista {
         height:70%;
     }
+    .busca-resultado, .tabela-lancamentos {
+        font-size: 14px;
+    }
 }
 @media (max-height:655px) {
     .corpo-lista {
         height:65%;
+    }
+    .busca-resultado, .tabela-lancamentos {
+        font-size: 14px;
     }
 }

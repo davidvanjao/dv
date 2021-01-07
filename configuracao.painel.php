@@ -49,7 +49,7 @@ if($usuarios->temPermissao('CON') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="usuario.painel.1.php">Painel de Usuários</a>
+                                <a href="usuario.painel.1.php">Usuários</a>
                                 <a href="sair.php">Sair</a>
                             </div>
                         </header>

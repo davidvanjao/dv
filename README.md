@@ -143,3 +143,14 @@ PERMISSÕES
 6 - END - ENDERECOS
 7 - CLI - CLIENTES
 8 - CON - CONFIGURACAO
+
+-----------------------------------------------------------------------------
+07-01 - CRIACAO DA TABELA LOG DE ACESSO
+
+CREATE TABLE tb_log_sessao(
+    id	int	not null auto_increment,
+    usuario varchar(3),
+    data_login datetime,	
+    data_exit datetime	
+    primary key(id))
+    default charset = utf8;	

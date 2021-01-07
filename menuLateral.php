@@ -16,7 +16,7 @@
 
             <?php if($usuarios->temPermissao('CES')): ?>
                 <div class="painel-menu-widget">
-                    <a href="index.php?p=cesta-basica1">
+                    <a href="cesta-basica.painel.1.php">
                         <img src="assets/img/cesta-basica.png" title="Lançamento de Cesta Básica">                                        
                     </a>                        
                 </div>
@@ -24,7 +24,7 @@
 
             <?php if($usuarios->temPermissao('ACO')): ?>
                 <div class="painel-menu-widget">
-                    <a href="index.php?p=acougue">
+                    <a href="acougue.painel.1.php">
                         <img src="assets/img/acougue.png" title="Pedidos Açougue">                                        
                     </a>                        
                 </div>

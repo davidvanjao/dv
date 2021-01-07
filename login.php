@@ -13,9 +13,11 @@ if(!empty($_POST['usuario'])) {
     $usuarios = new Usuarios($pdo);
 
     if($usuarios->fazerLogin($usuario, $senha)) {
+        
         header("Location: index.php");
         exit;
     } else {
+
         $erro = "Usuário ou senha incorretos!";
 
     }
@@ -30,6 +32,7 @@ if(!empty($_POST['usuario'])) {
         <title>Tela de Login</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/login.css">
+        <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>

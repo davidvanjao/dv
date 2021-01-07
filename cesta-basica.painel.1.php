@@ -1,6 +1,6 @@
 <?php
 
-//session_start();
+session_start();
 require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
@@ -71,7 +71,7 @@ if(isset($_GET['filtroData']) && empty($_GET['filtroData']) == false) {
                                 <div class="body-conteudo">
                                     <div class="campo-inserir">
 
-                                        <form name="form-adicionar" method="POST" action="index.php?p=cesta-basica2">
+                                        <form name="form-adicionar" method="POST" action="cesta-basica.painel.2.php">
                                             <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
                                         </form>
 

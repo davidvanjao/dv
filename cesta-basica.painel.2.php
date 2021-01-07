@@ -1,6 +1,6 @@
 <?php
 
-//session_start();
+session_start();
 require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 

@@ -21,10 +21,22 @@ class Usuarios {
             $sql = $sql->fetch();
 
             $_SESSION['logado'] = $sql['id'];
+            //inserir dados de acesso no log
+            $this->logSessao($sql['id']);
 
             return true;
         }
         return false;
+    }
+    //usada para alimentar a tabela log_sessao.
+    public function logSessao($usuario) {
+
+        $sql = "INSERT INTO tb_log_sessao SET usuario = :usuario, data_login = NOW(), status = 'S'";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindValue(":usuario", $usuario);
+        $sql->execute();
+
+        return true;
     }
 
     public function setUsuario($id) {

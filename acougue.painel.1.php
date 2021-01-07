@@ -1,6 +1,6 @@
 <?php
 
-//session_start();
+session_start();
 require 'conexao.banco.php';
 require 'classes/usuarios.class.php';
 
@@ -33,6 +33,7 @@ if($usuarios->temPermissao('ACO') == false) {
         <title>Açougue</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/acougue.css">
+        <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -63,10 +64,6 @@ if($usuarios->temPermissao('ACO') == false) {
 
                                 <div class="body-conteudo">
                                     <div class="campo-inserir">
-                                        <!--<form class="busca-area" name="buscar-form" method="POST" action="delivery.processo.php">
-                                            <input class="input-botao" type="submit" name="adicionaLista" value="Adicionar Lista">
-                                        </form>-->
-
                                         <h1>PAINEL DE PEDIDOS - DELIVERY<h1>
                                     </div>
                                     

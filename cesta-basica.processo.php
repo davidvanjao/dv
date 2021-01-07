@@ -31,13 +31,13 @@ if(isset($_POST['data']) && empty($_POST['data']) == false) {
     $sql->bindValue(":usuario", $usuario);
     $sql->execute();
 
-    header("Location:/index.php?p=cesta-basica1");
+    header("Location:/cesta-basica.painel.1.php");
 
     exit;
 
 } else {
 
-    header("Location:/index.php?p=cesta-basica1");
+    header("Location:/cesta-basica.painel.1.php");
 
 
 }
@@ -51,13 +51,13 @@ if(isset($_GET['idcesta']) && empty($_GET['idcesta']) == false) {
     $sql = $pdo->prepare("DELETE FROM tb_cestabasica WHERE id = '$id'");
     $sql->execute();
 
-    header("Location:/index.php?p=cesta-basica1");
+    header("Location:/cesta-basica.painel.1.php");
 
     exit;    
 
 } else {
     
-    header("Location:/index.php?p=cesta-basica1");
+    header("Location:/cesta-basica.painel.1.php");
 
 }
 

@@ -64,46 +64,48 @@ if($usuarios->temPermissao('PES') == false) {
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST">
                                             <input class="input-busca-produto" id="pesquisaProduto" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
-                                            <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
-                                        </form>
+                                            <input class="input-botao" type="submit" name="pesquisa-produto" value="Pesquisar">
+                                        </form>                                     
                                     </div>
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:5%;">EAN/BALANÇA</th>
-                                                <th style="width:2%;">COD</th>
+                                                <th style="width:5%;">EAN/BALANÇA  </th>
+                                                <th style="width:5%;">CÓDIGO</th>
                                                 <th style="width:20%;">PRODUTO</th>
                                                 <th style="width:5%;">PREÇO</th>
-                                                <th style="width:5%;">PROMOÇÃO</th>
                                                 <th style="width:5%;">ESTOQUE</th>
                                             </tr>
                                         </table> 
                                     </div>                                    
                                     <div class="busca-resultado" id="resultado"> 
 
+                                    
+
                                     <table>
                                         <?php
-                                            if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
+                                        
+                                            if(isset($_POST['pesquisa']) && !empty($_POST['pesquisa'])) { //se existir/ e ele nao estiver vazio.
 
                                                 $pesquisa = addslashes($_POST['pesquisa']);
                                                 $pesquisa = strtoupper($pesquisa);
 
-                                                $consulta = "SELECT a.nroempresa, a.nrogondola, c.gondola, a.seqproduto, b.desccompleta, d.qtdembalagem, a.estqloja, d.codacesso, consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
-                                                consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom
+                                                $consulta = "SELECT  d.codacesso, a.seqproduto, b.desccompleta, a.estqloja,
+                                                consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
+                                                consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom,
+                                                a.estqloja
                                                 FROM
                                                 consinco.mrl_produtoempresa a, 
                                                 consinco.map_produto b, 
-                                                consinco.mrl_gondola c,
                                                 consinco.map_prodcodigo d,
                                                 consinco.max_empresa e
                                                 WHERE
                                                 a.nroempresa = '1'
                                                 AND e.nroempresa = '1'
-                                                AND d.qtdembalagem = '1'
-                                                AND a.nrogondola = c.nrogondola
                                                 AND a.seqproduto = b.seqproduto
                                                 AND a.seqproduto = d.seqproduto
                                                 AND d.tipcodigo IN ('E', 'B')
+                                                AND a.statuscompra = 'A'
                                                 AND b.desccompleta LIKE '%".$pesquisa."%'
                                                 ORDER BY b.desccompleta";
                                                 
@@ -117,25 +119,19 @@ if($usuarios->temPermissao('PES') == false) {
 
                                                 echo "<tr>";
                                                 echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
-                                                echo "<td style='width:2%;'>".$produto['SEQPRODUTO']."</td>";
+                                                echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
                                                 echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  
-                                                echo "<td style='width:5%;'>R$ ".number_format($produto['PRECO'],2,",",".")."</td>";   
-                                                if($produto['PRECOPROM'] > 0) {
-
-                                                    echo "<td style='width:5%; background-color:#ffff00; font-weight:bold;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>"; 
-
+                                                if($produto['PRECOPROM'] > '0') {                                                    
+                                                echo "<td style='width:5%; background-color:#ffff00; font-weight:bold;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>";
                                                 } else {                                                    
-
-                                                    echo "<td style='width:5%;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>"; 
+                                                echo "<td style='width:5%;'>R$ ".number_format($produto['PRECO'],2,",",".")."</td>";
                                                 }
-
-
-                                                echo "<td style='width:5%;'>".number_format($produto['ESTQLOJA'],3,".",".")."</td>";      
-                                                
+                                                echo "<td style='width:5%;'>".number_format($produto['ESTQLOJA'],3,".",".")."</td>";                                    
                                                 echo "</tr>"; 
                                                 }
 
                                             }
+                                            
                                         ?>                                        
                                     </table>
                                         

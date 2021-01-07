@@ -8,7 +8,7 @@
 }
 
 .busca-area .input-busca-produto  {
-    width: 400px;
+    width: 300px;
     height: 35px;
     font-size: 16px;
 }
@@ -18,7 +18,7 @@
     font-size: 16px;
 }
 .busca-area .input-botao {
-    width: 150px;
+    width: 120px;
     height: 35px;
     font-size: 16px;
 }
@@ -34,6 +34,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     margin-bottom: 20px;
     border: 1px solid;
     padding: 10px;
+
+    display: flex;
+}
+
+.campo-inserir form {
+    margin-right: 10px;
+
 }
 .tabela-titulo table{
     width: 100%;
@@ -89,4 +96,23 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     /* line-height: 50px; */
     width: 70px;
     margin-right: 4px;
+}
+
+/*===========================================================*/
+
+@media (max-height:1000px) {
+    .busca-resultado {
+        height:87%;
+    }
+}
+@media (max-height:800px) {
+    .busca-resultado {
+        height:84%;
+    }
+}
+@media (max-height:655px) {
+    .busca-resultado {
+        height:79%;
+        font-size: 14px;
+    }
 }
