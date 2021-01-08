@@ -24,6 +24,7 @@ if($sql->rowCount() > 0) {
     $nome = explode(" ", $nome['nome']); //divide uma string por uma string.
 
 }
+var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>

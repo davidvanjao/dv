@@ -21,6 +21,8 @@ class Usuarios {
             $sql = $sql->fetch();
 
             $_SESSION['logado'] = $sql['id'];
+            $_SESSION['h_login'] = date('Y-m-d H:i:s', strtotime('-1 hour', strtotime(date('Y-m-d H:i:s'))));
+            
             //inserir dados de acesso no log
             $this->logSessao($sql['id']);
 
@@ -28,6 +30,7 @@ class Usuarios {
         }
         return false;
     }
+
     //usada para alimentar a tabela log_sessao.
     public function logSessao($usuario) {
 
