@@ -16,12 +16,15 @@ if(!empty($_POST['usuario'])) {
         
         header("Location: index.php");
         exit;
+
     } else {
 
         $erro = "Usuário ou senha incorretos!";
 
     }
 }
+
+//var_dump($_SESSION);
 ?>
 
 
