@@ -7,8 +7,8 @@ require 'classes/usuarios.class.php';
 //==============================================================ADICIONAR======================================================
 
 if(isset($_POST['nome']) && empty($_POST['nome']) == false) {
-    $nome = $_POST['nome'];
-    $sobrenome = $_POST['sobrenome'];
+    $nome = strtoupper($_POST['nome']);
+    $sobrenome = strtoupper($_POST['sobrenome']);
     $nomeCompleto = "$nome $sobrenome";
 	$usuario = "$nome.$sobrenome";
     $senha = $_POST['senha'];
@@ -40,8 +40,8 @@ if(isset($_POST['idAtualiza']) && empty($_POST['idAtualiza']) == false) {
 
     if(isset($_POST['nomeAtualiza']) && empty($_POST['nomeAtualiza']) == false) {
 
-        $nome = $_POST['nomeAtualiza'];
-        $sobrenome = $_POST['sobrenomeAtualiza'];
+        $nome = strtoupper($_POST['nomeAtualiza']);
+        $sobrenome = strtoupper($_POST['sobrenomeAtualiza']);
         $nomeCompleto = "$nome $sobrenome";
         $usuario = "$nome.$sobrenome";
         $senha = $_POST['senhaAtualiza'];

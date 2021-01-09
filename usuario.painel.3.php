@@ -77,9 +77,9 @@ if(isset($_GET['id'])) {
                                         <form method="POST" action="usuario.processo.php">
 
                                             <label for="email">Nome</label>
-                                            <input type="text" value="<?php echo $nomeSobrenome['0'];?>" name="nomeAtualiza" id="nome" placeholder="Digite seu nome completo">
+                                            <input type="text" style="text-transform: uppercase;" value="<?php echo $nomeSobrenome['0'];?>" name="nomeAtualiza" id="nome" placeholder="Digite seu nome completo">
                                             <label for="email">Sobrenome</label>
-                                            <input type="text" value="<?php echo $nomeSobrenome['1'];?>" name="sobrenomeAtualiza" id="sobrenome" placeholder="Digite seu usuário">
+                                            <input type="text" style="text-transform: uppercase;" value="<?php echo $nomeSobrenome['1'];?>" name="sobrenomeAtualiza" id="sobrenome" placeholder="Digite seu usuário">
                                             <label for="senha">Senha</label>
                                             <input type="password" value="<?php echo $usuario['senha'];?>" name="senhaAtualiza" id="senha" placeholder="Digite sua senha">
 

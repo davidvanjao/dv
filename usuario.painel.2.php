@@ -66,9 +66,9 @@ if($usuarios->temPermissao('CON') == false) {
                                     <div class="login__leftside">
                                         <form method="POST" action="usuario.processo.php">
                                             <label for="email">Nome</label>
-                                            <input type="text" name="nome" id="nome" autocomplete="off" placeholder="Digite seu primeiro nome">
+                                            <input type="text" name="nome" style="text-transform: uppercase;" id="nome" autocomplete="off" placeholder="Digite seu primeiro nome">
                                             <label for="email">Sobrenome</label>
-                                            <input type="text" name="sobrenome" id="nome" autocomplete="off" placeholder="Digite seu sobrenome">
+                                            <input type="text" name="sobrenome" style="text-transform: uppercase;" id="nome" autocomplete="off" placeholder="Digite seu sobrenome">
 
                                             <label for="senha">Senha</label>
                                             <input type="password" name="senha" id="senha" autocomplete="off" placeholder="Digite sua senha">

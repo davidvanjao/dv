@@ -94,6 +94,7 @@ if($usuarios->temPermissao('CES') == false) {
                                                     <option value=""></option>
                                                     <option value="Fisica">Física</option>
                                                     <option value="Juridica">Jurídica</option>
+                                                    <option value="Diversos">Diversos</option>
                                                 </select>
                                             </div>
 

@@ -13,11 +13,11 @@ if(!empty($_SESSION['logado'])) {
 if(isset($_POST['data']) && empty($_POST['data']) == false) {
 
 	$data = addslashes($_POST['data']);
-    $responsavel = addslashes($_POST['responsavel']);
+    $responsavel = addslashes(strtoupper($_POST['responsavel']));
     $quantidade = addslashes($_POST['quantidade']);
     $valor = addslashes(str_replace(",",".",$_POST['valor']));
-    $tipocesta = addslashes($_POST['tipocesta']);
-	$tipopessoa = addslashes($_POST['tipopessoa']);
+    $tipocesta = addslashes(strtoupper($_POST['tipocesta']));
+	$tipopessoa = addslashes(strtoupper($_POST['tipopessoa']));
 
 	$sql = $pdo->prepare("INSERT INTO tb_cestabasica SET data_criacao = :data_criacao, responsavel = :responsavel,
     quantidade = :quantidade, valor = :valor, tipocesta = :tipocesta, tipopessoa = :tipopessoa, usuario = :usuario, data_entrada = NOW()");
