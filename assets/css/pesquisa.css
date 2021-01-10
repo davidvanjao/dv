@@ -12,6 +12,12 @@
     height: 35px;
     font-size: 16px;
 }
+
+.busca-area .input-tipoBusca  {
+    width: 150px;
+    height: 35px;
+    font-size: 16px;
+}
 .busca-area .input-busca-codigo  {
     width: 250px;
     height: 35px;

@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-require 'conexao.banco.oracle.php';
+//require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -19,6 +19,7 @@ if($usuarios->temPermissao('PES') == false) {
     exit;
 }
 
+var_dump($_POST);
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +64,12 @@ if($usuarios->temPermissao('PES') == false) {
                                 <div class="body-busca">
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST">
+
+                                            <select class="input-tipoBusca" required="required" name="tipobusca">
+                                                <option value="produto" <?php echo ($_POST['tipobusca']=="produto")?'selected="selected"':'';?>>Produto</option>
+                                                <option value="codigo" <?php echo ($_POST['tipobusca']=="codigo")?'selected="selected"':'';?>>Código</option>
+                                            </select>
+                                            
                                             <input class="input-busca-produto" id="pesquisaProduto" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
                                             <input class="input-botao" type="submit" name="pesquisa-produto" value="Pesquisar">
                                         </form>                                     
@@ -83,31 +90,56 @@ if($usuarios->temPermissao('PES') == false) {
                                     
 
                                     <table>
-                                        <?php
+                                        <?php                                        
                                         
-                                            if(isset($_POST['pesquisa']) && !empty($_POST['pesquisa'])) { //se existir/ e ele nao estiver vazio.
+                                            if(isset($_POST['pesquisa']) && !empty($_POST['pesquisa'])) { //se existir e ele nao estiver vazio.
 
                                                 $pesquisa = addslashes($_POST['pesquisa']);
                                                 $pesquisa = strtoupper($pesquisa);
 
-                                                $consulta = "SELECT  d.codacesso, a.seqproduto, b.desccompleta, a.estqloja,
-                                                consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
-                                                consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom,
-                                                a.estqloja
-                                                FROM
-                                                consinco.mrl_produtoempresa a, 
-                                                consinco.map_produto b, 
-                                                consinco.map_prodcodigo d,
-                                                consinco.max_empresa e
-                                                WHERE
-                                                a.nroempresa = '1'
-                                                AND e.nroempresa = '1'
-                                                AND a.seqproduto = b.seqproduto
-                                                AND a.seqproduto = d.seqproduto
-                                                AND d.tipcodigo IN ('E', 'B')
-                                                AND a.statuscompra = 'A'
-                                                AND b.desccompleta LIKE '%".$pesquisa."%'
-                                                ORDER BY b.desccompleta";
+                                                if(isset($_POST['tipobusca']['produto'])) { //se existir e ele nao estiver vazio.
+
+                                                    $consulta = "SELECT  d.codacesso, a.seqproduto, b.desccompleta, a.estqloja,
+                                                    consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
+                                                    consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom,
+                                                    a.estqloja
+                                                    FROM
+                                                    consinco.mrl_produtoempresa a, 
+                                                    consinco.map_produto b, 
+                                                    consinco.map_prodcodigo d,
+                                                    consinco.max_empresa e
+                                                    WHERE
+                                                    a.nroempresa = '1'
+                                                    AND e.nroempresa = '1'
+                                                    AND a.seqproduto = b.seqproduto
+                                                    AND a.seqproduto = d.seqproduto
+                                                    AND d.tipcodigo IN ('E', 'B')
+                                                    AND a.statuscompra = 'A'
+                                                    AND b.desccompleta LIKE '%".$pesquisa."%'
+                                                    ORDER BY b.desccompleta";
+
+                                                } else {
+
+                                                    $consulta = "SELECT  d.codacesso, a.seqproduto, b.desccompleta, a.estqloja,
+                                                    consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
+                                                    consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom,
+                                                    a.estqloja
+                                                    FROM
+                                                    consinco.mrl_produtoempresa a, 
+                                                    consinco.map_produto b, 
+                                                    consinco.map_prodcodigo d,
+                                                    consinco.max_empresa e
+                                                    WHERE
+                                                    a.nroempresa = '1'
+                                                    AND e.nroempresa = '1'
+                                                    AND a.seqproduto = b.seqproduto
+                                                    AND a.seqproduto = d.seqproduto
+                                                    AND d.tipcodigo IN ('E', 'B')
+                                                    AND a.statuscompra = 'A'
+                                                    AND d.codacesso = $pesquisa
+                                                    ORDER BY b.desccompleta";
+
+                                                }
                                                 
                                                 //prepara uma instrucao para execulsao
                                                 $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
@@ -131,6 +163,8 @@ if($usuarios->temPermissao('PES') == false) {
                                                 }
 
                                             }
+
+                                       
                                             
                                         ?>                                        
                                     </table>
