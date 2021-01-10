@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-//require 'conexao.banco.oracle.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -19,7 +19,16 @@ if($usuarios->temPermissao('PES') == false) {
     exit;
 }
 
-var_dump($_POST);
+$tipoBusca = "produto";
+
+if(isset($_POST['pesquisa'])) {
+
+    $tipoBusca = $_POST['tipobusca'];
+
+}
+
+//var_dump($_POST);
+//var_dump($tipoBusca);
 ?>
 
 <!DOCTYPE html>
@@ -66,11 +75,11 @@ var_dump($_POST);
                                         <form class="busca-area" name="buscar-form" method="POST">
 
                                             <select class="input-tipoBusca" required="required" name="tipobusca">
-                                                <option value="produto" <?php echo ($_POST['tipobusca']=="produto")?'selected="selected"':'';?>>Produto</option>
-                                                <option value="codigo" <?php echo ($_POST['tipobusca']=="codigo")?'selected="selected"':'';?>>Código</option>
+                                                <option value="produto" <?php echo ($tipoBusca=="produto")?'selected="selected"':'';?>>Produto</option>
+                                                <option value="codigo" <?php echo ($tipoBusca=="codigo")?'selected="selected"':'';?>>Código</option>
                                             </select>
                                             
-                                            <input class="input-busca-produto" id="pesquisaProduto" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
+                                            <input class="input-busca-produto" id="pesquisaProduto" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite sua busca">
                                             <input class="input-botao" type="submit" name="pesquisa-produto" value="Pesquisar">
                                         </form>                                     
                                     </div>
@@ -97,7 +106,7 @@ var_dump($_POST);
                                                 $pesquisa = addslashes($_POST['pesquisa']);
                                                 $pesquisa = strtoupper($pesquisa);
 
-                                                if(isset($_POST['tipobusca']['produto'])) { //se existir e ele nao estiver vazio.
+                                                if($_POST['tipobusca'] == 'produto') { //se existir e ele nao estiver vazio.
 
                                                     $consulta = "SELECT  d.codacesso, a.seqproduto, b.desccompleta, a.estqloja,
                                                     consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
@@ -136,7 +145,7 @@ var_dump($_POST);
                                                     AND a.seqproduto = d.seqproduto
                                                     AND d.tipcodigo IN ('E', 'B')
                                                     AND a.statuscompra = 'A'
-                                                    AND d.codacesso = $pesquisa
+                                                    AND d.codacesso = '$pesquisa'
                                                     ORDER BY b.desccompleta";
 
                                                 }
