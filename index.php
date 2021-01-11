@@ -25,6 +25,7 @@ if($sql->rowCount() > 0) {
 
 }
 //var_dump($_SESSION);
+//var_dump($_SERVER);
 ?>
 
 <!DOCTYPE html>
@@ -72,6 +73,4 @@ if($sql->rowCount() > 0) {
         </div>
 
     </body>
-
-
 </html>

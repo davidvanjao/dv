@@ -64,4 +64,28 @@ if(isset($_POST['idAtualiza']) && empty($_POST['idAtualiza']) == false) {
 
     }
 }
-//var_dump($permissoes);
+
+//==============================================================LIBERAR======================================================
+
+if(isset($_GET['liberar']) && !empty($_SESSION['h_login'])) {
+    $usuario = $_GET['liberar'];
+
+    $sql = $pdo->prepare("SELECT * FROM tb_log_sessao WHERE usuario = :usuario AND status = 'S' ORDER BY data_login DESC LIMIT 1");
+    $sql->bindValue(":usuario", $usuario);
+    $sql->execute();
+
+    if($sql->rowCount() > 0) {
+
+        $sql = $pdo->prepare("UPDATE tb_log_sessao SET data_exit = NOW(), status = 'N' WHERE usuario = :usuario");
+        $sql->bindValue(":usuario", $usuario);
+        $sql->execute();
+
+        header("Location: usuario.painel.1.php");
+
+    }  else {
+        
+        echo "<script>alert('Não existe usuario para ser liberado!');</script>";
+        header("Location: usuario.painel.1.php");
+        
+    }
+}

@@ -75,6 +75,7 @@ if($usuarios->temPermissao('CON') == false) {
                                                 <th style="width:10%;">Usuário</th>
                                                 <th style="width:10%;">Permições</th>
                                                 <th style="width:10%;">Ações</th>
+                                                
                                             </tr>
                                         </table> 
                                     </div>
@@ -93,7 +94,8 @@ if($usuarios->temPermissao('CON') == false) {
                                                         echo "<td style='width:10%;'>".$usuario['nome']."</td>";
                                                         echo "<td style='width:10%;'>".$usuario['usuario']."</td>";
                                                         echo "<td style='width:10%;'>".$usuario['permissao']."</td>";                                
-                                                        echo '<td style="width:10%;"><a href="usuario.painel.3.php?id='.$usuario['id'].'">Editar</a>';
+                                                        echo '<td style="width:5%;"><a href="usuario.painel.3.php?id='.$usuario['id'].'">Editar</a>';
+                                                        echo '<td style="width:5%;"><a style="background-color: #008000;" href="usuario.processo.php?liberar='.$usuario['id'].'">Liberar</a>';
                                                         echo "</tr>";  
                                                     }
                                                 } else {
