@@ -48,7 +48,7 @@
 
             <?php if($usuarios->temPermissao('CLI')): ?>
                 <div class="painel-menu-widget">
-                    <a href="cadastro.cliente.painel.1.php">
+                    <a href="cliente.painel.pesquisa.php">
                         <img src="assets/img/usuario.png" title="Lista de Clientes">                                        
                     </a>                        
                 </div>
