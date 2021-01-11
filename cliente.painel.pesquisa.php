@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-//require 'conexao.banco.oracle.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -20,6 +20,7 @@ if($usuarios->temPermissao('PES') == false) {
 }
 
 //=================================================================================================================
+
 
 $tipoBusca = "nome";
 
@@ -90,7 +91,7 @@ if(isset($_POST['pesquisa'])) {
                                                 <th style="width:20%;">CLIENTE</th>
                                                 <th style="width:2%;">PESSOA</th>
                                                 <th style="width:5%;">CPF/CNPJ</th>
-                                                <th style="width:5%;">STATUS</th>
+                                                <th style="width:2%;">STATUS</th>
                                                 <th style="width:5%;">TELEFONE</th>
                                             </tr>
                                         </table> 
@@ -149,11 +150,31 @@ if(isset($_POST['pesquisa'])) {
                                                 echo "<td style='width:5%;'>".$cliente['NROCGCCPF'].'-'.$cliente['DIGCGCCPF']."</td>"; 
 
                                                 if($cliente['STATUS'] == 'A') {
-                                                    echo "<td style='width:5%;'>ATIVO</td>";
+                                                    echo "<td style='width:2%;'>ATIVO</td>";
                                                 } else {
-                                                    echo "<td style='width:5%;'>INATIVO</td>";
-                                                }                                                
-                                                echo "<td style='width:5%;'>".$cliente['FONEDDD1'].'-'.$cliente['FONENRO1']."</td>";                                
+                                                    echo "<td style='width:2%;'>INATIVO</td>";
+                                                }   
+
+                                                if(empty($cliente['FONEDDD1']) && !empty($cliente['FONENRO1'])) {
+
+                                                    echo "<td style='width:5%;'>".$cliente['FONENRO1']."</td>";  
+                                                    
+                                                } elseif(empty($cliente['FONENRO1']) && !empty($cliente['FONEDDD1'])) {
+
+                                                    echo "<td style='width:5%;'>".$cliente['FONEDDD1']."</td>";     
+                                                    
+                                                } elseif(!empty($cliente['FONENRO1']) && !empty($cliente['FONEDDD1'])){
+
+                                                    echo "<td style='width:5%;'>".$cliente['FONEDDD1'].'-'.$cliente['FONENRO1']."</td>";   
+
+                                                } else {
+
+                                                    echo "<td style='width:5%;'></td>";  
+
+                                                }
+                                                
+                                                
+                                                                           
                                                 echo "</tr>"; 
 
                                                 }

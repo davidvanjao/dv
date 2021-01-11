@@ -59,20 +59,17 @@ input[type=number]::-webkit-inner-spin-button {
     height: 87%;
     overflow: auto;
 }
+.busca-resultado table{
+    border: 1px solid #000;
+    margin-bottom: 10px;
+    height: 50px;
+    line-height: 50px;
+    
+}
 .busca-resultado table th{
     text-align: left;
     
 } 
-.busca-resultado table tr:nth-child(even){
-    background-color: #E6E6E6;
-    
-} 
-
-.busca-resultado table tr:hover {
-    background-color: green;
-    color: #000;   
-
-}
 
 .campo-inserir{
     display: flex;
