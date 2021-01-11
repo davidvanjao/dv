@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-require 'conexao.banco.oracle.php';
+//require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -19,6 +19,8 @@ if($usuarios->temPermissao('PES') == false) {
     exit;
 }
 
+//=================================================================================================================
+
 $tipoBusca = "nome";
 
 if(isset($_POST['pesquisa'])) {
@@ -27,8 +29,6 @@ if(isset($_POST['pesquisa'])) {
 
 }
 
-//var_dump($_POST);
-//var_dump($tipoBusca);
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +37,7 @@ if(isset($_POST['pesquisa'])) {
         <meta charset="utf-8">
         <title>Tela de Pesquisa</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/pesquisa.css">
+        <link rel="stylesheet" href="assets/css/cadastroCliente.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -70,7 +70,7 @@ if(isset($_POST['pesquisa'])) {
                         <section class="page">
                             <div class="conteudo-Geral">
 
-                                <div class="body-busca">
+                                <div class="body-conteudo">
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST">
 
@@ -105,9 +105,7 @@ if(isset($_POST['pesquisa'])) {
                                             if(isset($_POST['pesquisa']) && !empty($_POST['pesquisa'])) { //se existir e ele nao estiver vazio.
 
                                                 $pesquisa = addslashes($_POST['pesquisa']);
-                                                $pesquisa = strtoupper($pesquisa);
-
-                                                
+                                                $pesquisa = strtoupper($pesquisa);                                               
 
 
                                                 if($_POST['tipobusca'] == 'nome') { //se existir e ele nao estiver vazio.
@@ -138,9 +136,6 @@ if(isset($_POST['pesquisa'])) {
                                                 oci_execute($resultado);
 
                                                 while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
-
-                                                $cliente['FONEDDD1'] = "";
-                                                $cliente['FONENRO1'] = "";
 
                                                 echo "<tr ondblclick=location.href='cliente.painel.resultado.php?cliente=".$cliente['SEQPESSOA']."' style='cursor:pointer'>";
                                                 echo "<td style='width:5%;'>".$cliente['SEQPESSOA']."</td>";

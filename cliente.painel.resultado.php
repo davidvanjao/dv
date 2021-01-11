@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-require 'conexao.banco.oracle.php';
+//require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -114,13 +114,6 @@ if(isset($_GET['cliente']) && !empty($_GET['cliente'])) { //se existir e ele nao
                                             oci_execute($resultado);
 
                                             while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
-                                                
-                                                $cliente['FONEDDD1'] = "";
-                                                $cliente['FONENRO1'] = "";
-                                                $cliente['FONEDDD2'] = "";
-                                                $cliente['FONENRO2'] = "";
-                                                $cliente['FONEDDD3'] = "";
-                                                $cliente['FONENRO3'] = "";
 
                                                 echo "<table width=100%;>";
                                                 echo "<tr>";
