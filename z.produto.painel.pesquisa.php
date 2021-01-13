@@ -89,7 +89,6 @@ if(isset($_POST['pesquisa'])) {
                                                 <th style="width:5%;">EAN/BALANÇA  </th>
                                                 <th style="width:5%;">CÓDIGO</th>
                                                 <th style="width:20%;">PRODUTO</th>
-                                                <th style="width:5%;">EMBALAGEM</th>
                                                 <th style="width:5%;">PREÇO</th>
                                                 <th style="width:5%;">ESTOQUE</th>
                                             </tr>
@@ -108,7 +107,6 @@ if(isset($_POST['pesquisa'])) {
                                                 $pesquisa = strtoupper($pesquisa);
 
                                                 if($_POST['tipobusca'] == 'produto') { //se existir e ele nao estiver vazio.
-
 
                                                     $consulta = "SELECT  d.codacesso, a.seqproduto, b.desccompleta, a.estqloja,
                                                     consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
@@ -158,44 +156,12 @@ if(isset($_POST['pesquisa'])) {
                                                 //Executa os comandos SQL
                                                 oci_execute($resultado);
 
-                                                while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {                                                    
+                                                while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
 
-                                                    echo "<tr>";
-                                                    echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
-                                                    echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
-                                                    echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  
-
-                                                    echo "<td style='width:5%;'>";
-                                                        echo "<select name='tipocesta' style='width:50%; background-color:transparent; border:none;'>";
-
-                                                            if($produto['SEQPRODUTO']) { //se existir e ele nao estiver vazio.
-                                                                $codigo = $produto['SEQPRODUTO'];                                                        
-
-                                                                $consulta2 = "SELECT a.seqproduto, a.seqfamilia, b.qtdembalagem, b.embalagem
-                                                                FROM
-                                                                consinco.map_produto a, 
-                                                                consinco.map_famembalagem b
-                                                                WHERE
-                                                                a.seqfamilia = b.seqfamilia
-                                                                AND a.seqproduto = '$codigo'
-                                                                ORDER BY b.qtdembalagem";
-
-                                                                //prepara uma instrucao para execulsao
-                                                                $resultado2 = oci_parse($ora_conexao, $consulta2) or die ("erro");
-
-                                                                //Executa os comandos SQL
-                                                                oci_execute($resultado2);
-
-                                                                while (($quantidade = oci_fetch_array($resultado2, OCI_ASSOC)) != false) { 
-
-                                                                    echo "<option>".$quantidade['QTDEMBALAGEM']." ".$quantidade['EMBALAGEM']."</option>";
-
-                                                                } 
-                                                            }
-                                                        echo "</select>";
-                                                    echo "</td>";  
-
-
+                                                echo "<tr>";
+                                                echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
+                                                echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
+                                                echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  
                                                 if($produto['PRECOPROM'] > '0') {                                                    
                                                 echo "<td style='width:5%; background-color:#ffff00; font-weight:bold;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>";
                                                 } else {                                                    

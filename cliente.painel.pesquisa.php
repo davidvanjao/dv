@@ -138,7 +138,7 @@ if(isset($_POST['pesquisa'])) {
 
                                                 while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
 
-                                                echo "<tr ondblclick=location.href='cliente.painel.resultado.php?cliente=".$cliente['SEQPESSOA']."' style='cursor:pointer'>";
+                                                echo "<tr onclick=location.href='cliente.painel.resultado.php?cliente=".$cliente['SEQPESSOA']."' style='cursor:pointer'>";
                                                 echo "<td style='width:5%;'>".$cliente['SEQPESSOA']."</td>";
                                                 echo "<td style='width:20%;'>".$cliente['NOMERAZAO']."</td>";
                                                 
