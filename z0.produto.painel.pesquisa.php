@@ -92,7 +92,6 @@ if(isset($_POST['pesquisa'])) {
                                                 <th style="width:5%;">EMBALAGEM</th>
                                                 <th style="width:5%;">PREÇO</th>
                                                 <th style="width:5%;">ESTOQUE</th>
-                                                <th style="width:5%;">DATA EST.</th>
                                             </tr>
                                         </table> 
                                     </div>                                    
@@ -202,40 +201,7 @@ if(isset($_POST['pesquisa'])) {
                                                 } else {                                                    
                                                 echo "<td style='width:5%;'>R$ ".number_format($produto['PRECO'],2,",",".")."</td>";
                                                 }
-                                                echo "<td style='width:5%;'>".number_format($produto['ESTQLOJA'],3,".",".")."</td>";      
-                                                
-                                                
-                                                /*echo "<td style='width:5%;'>";                                                        
-
-                                                    if($produto['SEQPRODUTO']) { //se existir e ele nao estiver vazio.
-                                                        $codigo = $produto['SEQPRODUTO'];                                                        
-
-                                                        $consulta3 = "SELECT a.seqproduto, b.desccompleta, a.codgeraloper, a.qtdlancto,  a.dtaentradasaida
-                                                        FROM 
-                                                        consinco.mrl_lanctoestoque a,
-                                                        consinco.map_produto b
-                                                        WHERE 
-                                                        a.seqproduto = '$codigo'
-                                                        AND a.seqproduto = b.seqproduto
-                                                        AND a.seqmovtoestq = (SELECT MAX(seqmovtoestq) FROM CONSINCO.mrl_lanctoestoque WHERE seqproduto =  '$codigo' AND codgeraloper = '300')
-                                                        GROUP BY a.seqproduto, b.desccompleta, a.dtaentradasaida, a.codgeraloper, a.qtdlancto";
-
-                                                        //prepara uma instrucao para execulsao
-                                                        $resultado3 = oci_parse($ora_conexao, $consulta3) or die ("erro");
-
-                                                        //Executa os comandos SQL
-                                                        oci_execute($resultado3);
-
-                                                        while (($data = oci_fetch_array($resultado3, OCI_ASSOC)) != false) { 
-
-                                                        echo $data['DTAENTRADASAIDA'];
-
-                                                        } 
-                                                    }
-                                                        
-                                                echo "</td>"; */
-
-                                                    
+                                                echo "<td style='width:5%;'>".number_format($produto['ESTQLOJA'],3,".",".")."</td>";                                    
                                                 echo "</tr>"; 
                                                 }
 

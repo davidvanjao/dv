@@ -80,7 +80,7 @@ if(isset($_GET['liberar']) && !empty($_SESSION['h_login'])) {
         $sql->bindValue(":usuario", $usuario);
         $sql->execute();
 
-        header("Location: usuario.painel.1.php");
+        header("Location: usuario.painel.online.php");
 
     }  else {
         

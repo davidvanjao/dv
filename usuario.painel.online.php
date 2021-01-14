@@ -52,29 +52,22 @@ if($usuarios->temPermissao('CON') == false) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a style='background-color: #008000; color:#fff;' href="usuario.painel.online.php">Online</a>
-                                <a href="sair.php">Sair</a>
+                                <a href="usuario.painel.1.php">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
                             <div class="conteudo-Geral">
 
-                                <div class="body-conteudo">
-                                    <div class="campo-inserir">
-                                        
-                                        <form class="cesta-area" id="cesta-area" name="buscar-form" method="POST" action="usuario.painel.2.php">
-                                            <input class="input-botao" type="submit" name="botao-adicionar" value="Adicionar">
-                                        </form>
-
-                                    </div>
+                                <div class="body-conteudo">                                   
 
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:10%;">Id</th>
+                                                <th style="width:2%;">Id</th>
                                                 <th style="width:10%;">Nome</th>
                                                 <th style="width:10%;">Usuário</th>
-                                                <th style="width:10%;">Permições</th>
+                                                <th style="width:10%;">Data Acesso</th>
+                                                <th style="width:3%;">Status</th>
                                                 <th style="width:3%;">Ações</th>
                                                 
                                             </tr>
@@ -85,22 +78,35 @@ if($usuarios->temPermissao('CON') == false) {
                                         <div class="tabela-lancamentos">
                                             <table>
                                                 <?php
-                                                $sql = "SELECT * FROM tb_usuarios ORDER BY id";
+
+
+                                                $sql = "SELECT b.id, b.nome, b.usuario, DATE_FORMAT(a.data_login,'%d/%m/%Y %h:%m') as data_login, a.status
+                                                FROM 
+                                                tb_log_sessao a,
+                                                tb_usuarios b
+                                                WHERE 
+                                                a.usuario = b.id
+                                                and a.status = 'S'
+                                                ORDER BY b.nome";
+
                                                 $sql = $pdo->query($sql);   
                                                 if($sql->rowCount() > 0) {
                                                     foreach($sql->fetchAll() as $usuario) {
 
                                                         echo "<tr>";
-                                                        echo "<td style='width:10%;'>".$usuario['id']."</td>";
+                                                        echo "<td style='width:2%;'>".$usuario['id']."</td>";
                                                         echo "<td style='width:10%;'>".$usuario['nome']."</td>";
                                                         echo "<td style='width:10%;'>".$usuario['usuario']."</td>";
-                                                        echo "<td style='width:10%;'>".$usuario['permissao']."</td>";                                
-                                                        echo '<td style="width:3%;"><a href="usuario.painel.3.php?id='.$usuario['id'].'">Editar</a>';
+                                                        echo "<td style='width:10%;'>".$usuario['data_login']."</td>";
+                                                        if($usuario['status'] == 'S') {
+                                                            echo "<td style='width:3%; background-color: #008000; text-align:center; color:#fff;'><strong>ONLINE</strong></td>";
+                                                        }                               
+                                                        echo '<td style="width:3%;"><a style="background-color: #ff0000;" href="usuario.processo.php?liberar='.$usuario['id'].'">Logoff</a>';
                                                         echo "</tr>";  
                                                     }
                                                 } else {
                                                         
-                                                        echo "Nenhum produto encontrado.";
+                                                        echo "Nenhum usuario online.";
                                                     }
                                                 ?>                                             
 

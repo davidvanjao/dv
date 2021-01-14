@@ -160,7 +160,7 @@ if(isset($_POST['pesquisa'])) {
 
                                                 while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {                                                    
 
-                                                    echo "<tr>";
+                                                    echo "<tr ondblclick=location.href='produto.painel.entrada.php?codigo=".$produto['SEQPRODUTO']."' style='cursor:pointer'>";
                                                     echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
                                                     echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
                                                     echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  
@@ -195,19 +195,17 @@ if(isset($_POST['pesquisa'])) {
                                                         echo "</select>";
                                                     echo "</td>";  
 
-
-                                                if($produto['PRECOPROM'] > '0') {                                                    
-                                                echo "<td style='width:5%; background-color:#ffff00; font-weight:bold;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>";
-                                                } else {                                                    
-                                                echo "<td style='width:5%;'>R$ ".number_format($produto['PRECO'],2,",",".")."</td>";
+                                                    if($produto['PRECOPROM'] > '0') {                                                    
+                                                    echo "<td style='width:5%; background-color:#ffff00; font-weight:bold;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>";
+                                                    } else {                                                    
+                                                    echo "<td style='width:5%;'>R$ ".number_format($produto['PRECO'],2,",",".")."</td>";
+                                                    }
+                                                    echo "<td style='width:5%;'>".number_format($produto['ESTQLOJA'],3,".",".")."</td>";      
+                                                        
+                                                    echo "</tr>"; 
                                                 }
-                                                echo "<td style='width:5%;'>".number_format($produto['ESTQLOJA'],3,".",".")."</td>";                                    
-                                                echo "</tr>"; 
-                                                }
 
-                                            }
-
-                                       
+                                            }                                       
                                             
                                         ?>                                        
                                     </table>
