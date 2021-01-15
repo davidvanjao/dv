@@ -59,14 +59,12 @@ if($usuarios->temPermissao('DEL') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:5%;">Ticket</th>
-                                                <th style="width:10%;">Data</th>
-                                                <th style="width:20%;">Nome</th>
-                                                <th style="width:10%;">Cidade</th>
-                                                <th style="width:20%;">Endereço</th>
-                                                <th style="width:10%;">Açougue</th>
-                                                <th style="width:20%;">Status</th>
-                                                <th style="width:20%;">Ações</th>
+                                                <th>Ticket</th>
+                                                <th>Data</th>
+                                                <th>Nome</th>
+                                                <th>Açougue</th>
+                                                <th>Status</th>
+                                                <th style="width:10%;">Ações</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -110,13 +108,11 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         }
 
                                                         echo "<tr>";
-                                                        echo "<td style='width:5%;'>".$delivery['orcamento']."</td>";
-                                                        echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
-                                                        echo "<td style='width:20%;'>".$delivery['nome']."</td>";
-                                                        echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
-                                                        echo "<td style='width:20%;'>".$delivery['logradouro']."</td>";  
+                                                        echo "<td>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</td>";
+                                                        echo "<td>".$delivery['saida_data']."</td>";
+                                                        echo "<td>".$delivery['nome']."</td>";
 
-                                                        echo "<td style='width:10%; background-color:;'>";
+                                                        echo "<td style='background-color:;'>";
                                                         
                                                             if($delivery['c_gondola'] == '96' && $delivery['pedido'] == 'N') {
 
@@ -139,8 +135,8 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         
                                                         
                                                         
-                                                        echo "<td style='width:20%; background-color:$cor;'>".$delivery['statuss']."</td>";
-                                                        echo '<td style="width:20%;">';
+                                                        echo "<td style='background-color:$cor;'>".$delivery['statuss']."</td>";
+                                                        echo '<td style="width:10%;">';
                                                         echo '<div class="teste">';
                                                         
 

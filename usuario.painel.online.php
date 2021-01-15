@@ -63,13 +63,11 @@ if($usuarios->temPermissao('CON') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:2%;">Id</th>
-                                                <th style="width:10%;">Nome</th>
+                                                <th style="width:20%;">Nome</th>
                                                 <th style="width:10%;">Usuário</th>
                                                 <th style="width:10%;">Data Acesso</th>
                                                 <th style="width:3%;">Status</th>
-                                                <th style="width:3%;">Ações</th>
-                                                
+                                                <th style="width:3%;">Ações</th>                                                
                                             </tr>
                                         </table> 
                                     </div>
@@ -80,13 +78,14 @@ if($usuarios->temPermissao('CON') == false) {
                                                 <?php
 
 
-                                                $sql = "SELECT b.id, b.nome, b.usuario, DATE_FORMAT(a.data_login,'%d/%m/%Y %h:%m') as data_login, a.status
+                                                $sql = "SELECT b.id, b.nome, b.usuario, DATE_FORMAT(a.data_login,'%d/%m/%Y %H:%m') as data_login, a.status
                                                 FROM 
                                                 tb_log_sessao a,
                                                 tb_usuarios b
                                                 WHERE 
                                                 a.usuario = b.id
-                                                and a.status = 'S'
+                                                AND a.status = 'S'
+                                                GROUP BY b.id
                                                 ORDER BY b.nome";
 
                                                 $sql = $pdo->query($sql);   
@@ -94,12 +93,13 @@ if($usuarios->temPermissao('CON') == false) {
                                                     foreach($sql->fetchAll() as $usuario) {
 
                                                         echo "<tr>";
-                                                        echo "<td style='width:2%;'>".$usuario['id']."</td>";
-                                                        echo "<td style='width:10%;'>".$usuario['nome']."</td>";
+                                                        echo "<td style='width:20%;'>".$usuario['nome']."</td>";
                                                         echo "<td style='width:10%;'>".$usuario['usuario']."</td>";
                                                         echo "<td style='width:10%;'>".$usuario['data_login']."</td>";
                                                         if($usuario['status'] == 'S') {
                                                             echo "<td style='width:3%; background-color: #008000; text-align:center; color:#fff;'><strong>ONLINE</strong></td>";
+                                                        } else {
+                                                            echo "<td style='width:3%; background-color: #FF0000; text-align:center; color:#fff;'><strong>OFFLINE</strong></td>";
                                                         }                               
                                                         echo '<td style="width:3%;"><a style="background-color: #ff0000;" href="usuario.processo.php?liberar='.$usuario['id'].'">Logoff</a>';
                                                         echo "</tr>";  

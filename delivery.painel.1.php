@@ -38,7 +38,7 @@ if($usuarios->temPermissao('DEL') == false) {
                     <div class="painel-menu">
                         <div class="painel-menu-menu">
 
-                        <?php require 'menuLateral.php'; ?>  
+                        
                             
                         </div>
                     </div>
@@ -70,14 +70,11 @@ if($usuarios->temPermissao('DEL') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:5%;">Ticket</th>
-                                                <th style="width:5%;">Data</th>
-                                                <th style="width:15%;">Nome</th>
-                                                <th style="width:10%;">Cidade</th>
-                                                <th style="width:15%;">Endereço</th>
-                                                <th style="width:3%;">Numero</th>
-                                                <th style="width:10%;">Status</th>
-                                                <th style="width:10%;">Ações</th>
+                                                <th>Ticket</th>
+                                                <th>Data</th>
+                                                <th>Nome</th>
+                                                <th>Status</th>
+                                                <th>Ações</th>
                                             </tr>
                                         </table> 
                                     </div>                                    
@@ -110,19 +107,12 @@ if($usuarios->temPermissao('DEL') == false) {
                                                     }  
 
                                                     echo "<tr>";
-                                                    echo "<td style='width:5%;'>".$delivery['orcamento']."</td>";
-                                                    echo "<td style='width:5%;'>".$delivery['saida_data']."</td>";
-                                                    echo "<td style='width:15%;'>".$delivery['nome']."</td>";
-                                                    echo "<td style='width:10%;'>".$delivery['cidadeEstado']."</td>";
-                                                    echo "<td style='width:15%;'>".$delivery['logradouro']."</td>";  
-                                                    echo "<td style='width:3%;'>".$delivery['numero']."</td>";     
-                                                    echo "<td style='width:10%; background-color:$cor;'>".$delivery['statuss']."</td>";   
-                                                    echo '<td style="width:10%;">';
-                                                    echo "<div class='menuAcoes'>";
-                                                    echo '<div><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'" target="_blank">Imprimir</a></div>';  
-                                                    echo '<div><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></div>';     
-                                                    echo "</div>";  
-                                                    echo "</td>";     
+                                                    echo "<td><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
+                                                    echo "<td>".$delivery['saida_data']."</td>";
+                                                    echo "<td>".$delivery['nome']."</td>";
+                                                    echo "<td style='background-color:$cor;'>".$delivery['statuss']."</td>"; 
+                                                    echo '<td style="width:10%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'" target="_blank">Imprimir</a></td>';   
+                                                    echo '<td style="width:10%;"><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></td>';           
                                                     echo "</tr>";  
 
                                                 

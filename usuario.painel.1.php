@@ -71,8 +71,7 @@ if($usuarios->temPermissao('CON') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:10%;">Id</th>
-                                                <th style="width:10%;">Nome</th>
+                                                <th style="width:20%;">Nome</th>
                                                 <th style="width:10%;">Usuário</th>
                                                 <th style="width:10%;">Permições</th>
                                                 <th style="width:3%;">Ações</th>
@@ -85,14 +84,13 @@ if($usuarios->temPermissao('CON') == false) {
                                         <div class="tabela-lancamentos">
                                             <table>
                                                 <?php
-                                                $sql = "SELECT * FROM tb_usuarios ORDER BY id";
+                                                $sql = "SELECT * FROM tb_usuarios ORDER BY nome";
                                                 $sql = $pdo->query($sql);   
                                                 if($sql->rowCount() > 0) {
                                                     foreach($sql->fetchAll() as $usuario) {
 
                                                         echo "<tr>";
-                                                        echo "<td style='width:10%;'>".$usuario['id']."</td>";
-                                                        echo "<td style='width:10%;'>".$usuario['nome']."</td>";
+                                                        echo "<td style='width:20%;'>".$usuario['nome']."</td>";
                                                         echo "<td style='width:10%;'>".$usuario['usuario']."</td>";
                                                         echo "<td style='width:10%;'>".$usuario['permissao']."</td>";                                
                                                         echo '<td style="width:3%;"><a href="usuario.painel.3.php?id='.$usuario['id'].'">Editar</a>';
