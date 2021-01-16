@@ -86,11 +86,11 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th>Ticket</th>
-                                                <th>Data</th>
-                                                <th>Nome</th>
-                                                <th>Endereço</th>
-                                                <th>Status</th>
+                                                <th style='width:10%;'>Ticket</th>
+                                                <th style='width:10%;'>Data</th>
+                                                <th style='width:10%;'>Nome</th>
+                                                <th style='width:10%;'>Endereço</th>
+                                                <th style="width:10%;">Status</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -118,12 +118,12 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                             }  
 
                                                             echo "<tr>";
-                                                            echo "<td>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</td>";
-                                                            echo "<td>".$delivery['saida_data']."</td>";
-                                                            echo "<td>".$delivery['nome']."</td>";
-                                                            echo "<td>".$delivery['logradouro'].' '.$delivery['numero']."</td>";  
+                                                            echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
+                                                            echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
+                                                            echo "<td style='width:10%;'>".$delivery['nome']."</td>";
+                                                            echo "<td style='width:10%;'>".$delivery['logradouro'].' '.$delivery['numero']."</td>";  
                                                             
-                                                            echo "<td background-color:$cor;'>".$delivery['statuss']."</td>";                        
+                                                            echo "<td style='background-color:$cor; width:10%;'>".$delivery['statuss']."</td>";                        
                                                             echo "</tr>";  
 
                                                         

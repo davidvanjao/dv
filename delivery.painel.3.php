@@ -59,11 +59,11 @@ if($usuarios->temPermissao('DEL') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th>Ticket</th>
-                                                <th>Data</th>
-                                                <th>Nome</th>
-                                                <th>Açougue</th>
-                                                <th>Status</th>
+                                                <th style="width:10%;">Ticket</th>
+                                                <th style="width:10%;">Data</th>
+                                                <th style="width:10%;">Nome</th>
+                                                <th style="width:10%;">Açougue</th>
+                                                <th style="width:10%;">Status</th>
                                                 <th style="width:10%;">Ações</th>
                                             </tr>
                                         </table> 
@@ -108,11 +108,11 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         }
 
                                                         echo "<tr>";
-                                                        echo "<td>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</td>";
-                                                        echo "<td>".$delivery['saida_data']."</td>";
-                                                        echo "<td>".$delivery['nome']."</td>";
+                                                        echo "<td style='width:10%;'>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</td>";
+                                                        echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
+                                                        echo "<td style='width:10%;'>".$delivery['nome']."</td>";
 
-                                                        echo "<td style='background-color:;'>";
+                                                        echo "<td style='width:10%;'>";
                                                         
                                                             if($delivery['c_gondola'] == '96' && $delivery['pedido'] == 'N') {
 
@@ -135,29 +135,29 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         
                                                         
                                                         
-                                                        echo "<td style='background-color:$cor;'>".$delivery['statuss']."</td>";
+                                                        echo "<td style='background-color:$cor; width:10%;'>".$delivery['statuss']."</td>";
                                                         echo '<td style="width:10%;">';
-                                                        echo '<div class="teste">';
-                                                        
+                                                            echo '<div class="teste">';
+                                                            
 
-                                                                    if($delivery['statuss'] == 'PEDIDO REALIZADO') {
+                                                                        if($delivery['statuss'] == 'PEDIDO REALIZADO') {
 
-                                                                        echo '<a class="iniciar" href="delivery.processo.php?andamento='.$delivery['id'].'">Iniciar</a>';
+                                                                            echo '<a class="iniciar" href="delivery.processo.php?andamento='.$delivery['id'].'">Iniciar</a>';
 
-                                                                    }
-                                                                    
-                                                                    if($delivery['statuss'] == 'EM ANDAMENTO') {
+                                                                        }
+                                                                        
+                                                                        if($delivery['statuss'] == 'EM ANDAMENTO') {
 
-                                                                       echo '<a class="liberar" href="delivery.painel.4.php?id='.$delivery['id'].'">Liberar</a>';
+                                                                        echo '<a class="liberar" href="delivery.painel.4.php?id='.$delivery['id'].'">Liberar</a>';
 
-                                                                    }
-                                                                    
-                                                                    if($delivery['statuss'] == 'LIBERADO PARA ENTREGA') {
+                                                                        }
+                                                                        
+                                                                        if($delivery['statuss'] == 'LIBERADO PARA ENTREGA') {
 
-                                                                        echo '<a class="entregar" href="delivery.processo.php?saiu='.$delivery['id'].'">Entregar</a>';
- 
-                                                                    }
-                                                        echo '</div>';                                                             
+                                                                            echo '<a class="entregar" href="delivery.processo.php?saiu='.$delivery['id'].'">Entregar</a>';
+    
+                                                                        }
+                                                            echo '</div>';                                                             
                                                         echo '</td>';                           
                                                         echo "</tr>";                                                      
                                                                      
