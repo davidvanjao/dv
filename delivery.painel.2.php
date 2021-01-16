@@ -71,7 +71,7 @@ if(isset($_SESSION['blocoNotas'])) {
 //=================================================================================================================
 
 
-//var_dump($_SESSION);
+var_dump($_SESSION);
 //echo $bloco;
 //var_dump($valorGeral);
 
@@ -116,17 +116,17 @@ if(isset($_SESSION['blocoNotas'])) {
                                 <div class="body-conteudo">
                                     <div class="campo-inserir">
 
-                                        <div class="formulario-cliente">    
+                                        <div class="formulario-cliente">   
+
                                             <div class="form-cliente-caixa">
                                                 <form class="form-cliente" name="buscar-form" method="POST" action="delivery.cliente.pesquisa.php">
                                                     <div>
-                                                        <input class="input5" type="hidden" min='0' autocomplete="off" name="numero" value="<?php echo $codigoCliente ?>" readonly="readonly"/>
+                                                        <input class="input5" type="hidden" autocomplete="off" name="numero" value="<?php echo $codigoCliente ?>" readonly="readonly"/>
                                                     </div> 
                                                     <div>
                                                         <label>Nome:</label></br>
-                                                        <input class="input-nome" type="text" autocomplete="off" name="nome" placeholder="" value="<?php echo $nomeCliente ?>" readonly="readonly"/>    
-                                                    </div> 
-                                                    
+                                                        <input class="input-nome" type="text" autocomplete="off" name="nome" value="<?php echo $nomeCliente ?>" readonly="readonly"/>    
+                                                    </div>                                                     
                                                     <input class="input-botao" type="submit" name="adicionarCliente" value="Cliente"/>  
                                                 </form>
                                             </div>
@@ -140,6 +140,7 @@ if(isset($_SESSION['blocoNotas'])) {
                                                             <option value="Dinheiro">Dinheiro</option> 
                                                             <option value="Cartão">Cartão</option>
                                                             <option value="Cheque">Cheque</option>
+                                                            <option value="Transferencia">Transferência</option>
                                                         </select>
                                                     </div>
                                                 </form>
@@ -148,11 +149,11 @@ if(isset($_SESSION['blocoNotas'])) {
                                             <div class="form-cliente-caixa">
                                                 <div>
                                                     <label>N. Orç.</label></br>
-                                                    <input class="input-orc" minlength="3" type="text" autocomplete="off" name="pesquisa" value="<?php echo $orcamento?>" readonly="readonly">
+                                                    <input class="input-orc" type="text" name="pesquisa" value="<?php echo $orcamento?>" readonly="readonly">
                                                 </div>
                                                 <div class="valor-total">
                                                     <label>V. Total</label></br>
-                                                    <input class="input-total" minlength="3" type="text" autocomplete="off" name="pesquisa" value='<?php echo "R$ ".number_format($valorTotal,2,",",".")?>' readonly="readonly">
+                                                    <input class="input-total" type="text" name="pesquisa" value='<?php echo "R$ ".number_format($valorTotal,2,",",".")?>' readonly="readonly">
                                                 </div>
                                             </div>
 
@@ -252,11 +253,11 @@ if(isset($_SESSION['blocoNotas'])) {
                                                         echo "<td>
                                                                     <form class='form-pagamento' action='delivery.processo.php' method='GET'>
                                                                         <div>
-                                                                            <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
+                                                                            <input value=".$value['codigo']." class='quantidade' type='hidden' name='codigoProduto' required='required'>
                                                                             <select class='input-pagamento' name='medida' onchange='this.form.submit()'>
                                                                                 <option value=''>".$medida."</option> 
-                                                                                <option value='Kg'>Kg</option> 
-                                                                                <option value='Un'>Un</option>
+                                                                                <option value='KG'>KG</option> 
+                                                                                <option value='UN'>UN</option>
                                                                             </select>
                                                                         </div>
                                                                     </form>    
@@ -265,7 +266,7 @@ if(isset($_SESSION['blocoNotas'])) {
                                                         echo "<td>
                                                                     <form class='' name='teste' method='GET' action='delivery.processo.php'>      
 
-                                                                        <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
+                                                                        <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='codigoProduto' required='required'>
                                                                         <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>                                                        
 
                                                                     </form>     
@@ -276,7 +277,7 @@ if(isset($_SESSION['blocoNotas'])) {
                                                         echo "<td>
                                                                     <form class='' name='teste' method='GET' action='delivery.processo.php'>      
 
-                                                                        <input value=".$value['codigo']." class='observacao' type='hidden' min='0'  name='produto' required='required'>
+                                                                        <input value=".$value['codigo']." class='observacao' type='hidden' min='0'  name='codigoProduto' required='required'>
                                                                         <input value=".$observacao." class='observacao' type='text' min='0'  name='observacao' onchange='this.form.submit()'>                                                        
 
                                                                     </form>     

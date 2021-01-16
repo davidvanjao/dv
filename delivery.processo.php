@@ -109,7 +109,7 @@ if(isset($_GET['saiu'])) {
     
 
 
-//================================NUMERO DE ORÇAMENTO================================================================
+//================================NUMERO DE ORÇAMENTO(ADICIONAR LISTA)================================================================
 
 if(isset($_POST['adicionaLista'])) {
 
@@ -133,14 +133,15 @@ if(isset($_POST['adicionaLista'])) {
             $sql->bindValue(":usuario", $usuario);
             $sql->execute();   
             
-            header("Location:/delivery.painel.2.php?orcamento=$orcamento");
-            //exit;  
+            header("Location:/delivery.painel.2.php?orcamento=$orcamento"); 
         
         }
     
     } else {
     
         $orcamento = 1;
+
+        $_SESSION['orcamento'] = $orcamento; // cria a sessao orcamento
 
         if(isset($_SESSION['logado'])) {
             $usuario = $_SESSION['logado'];
@@ -153,7 +154,6 @@ if(isset($_POST['adicionaLista'])) {
             $sql->execute();   
             
             header("Location:/delivery.painel.2.php?orcamento=$orcamento");
-            //exit;  
         
         }
         
@@ -161,43 +161,43 @@ if(isset($_POST['adicionaLista'])) {
 
 }
 
-//================================ADICIONAR CLIENTE================================================================
+//================================ADICIONAR CLIENTE (CODCLIENTE)================================================================
 
-if(isset($_GET['cliente'])) {
+if(isset($_GET['codCliente'])) {
 
-    $cliente = addslashes($_GET['cliente']);
+    $codCliente = addslashes($_GET['codCliente']);                                  
+
+    $consulta = "SELECT * FROM CONSINCO.GE_PESSOA WHERE SEQPESSOA = '$codCliente'";                                         
     
-    $sql = "SELECT id, idEndereco, nome FROM tb_cliente WHERE id = '$cliente'";
+    //prepara uma instrucao para execulsao
+    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
 
-    $sql = $pdo->query($sql);
+    //Executa os comandos SQL
+    oci_execute($resultado);
 
-    if($sql->rowCount() > 0) {   
+    while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
 
-        foreach($sql as $key => $value) {  
+        if(isset($_SESSION['cliente'])) {   
 
-            if(isset($_SESSION['cliente'])) {   
+            //SE EXISTIR, APAGUE E COLOQUE
+            unset( $_SESSION['cliente'] );
+            $_SESSION['cliente'] = array('id'=>$cliente['SEQPESSOA'], 'nome'=>$cliente['NOMERAZAO']);         
+            
+            header("Location:/delivery.painel.2.php?cliente=$cliente");
 
-                //SE EXISTIR, APAGUE E COLOQUE
-                unset( $_SESSION['cliente'] );
-                $_SESSION['cliente'] = array('id'=>$value['id'], 'idEndereco'=>$value['idEndereco'], 'nome'=>$value['nome']);         
-                
-                header("Location:/delivery.painel.2.php?cliente=$cliente");
+        } else {
 
-            } else {
+            //SE NAO EXISTIR, COLOQUE
+            $_SESSION['cliente'] = array('id'=>$cliente['SEQPESSOA'], 'nome'=>$cliente['NOMERAZAO']); 
 
-                //SE NAO EXISTIR, COLOQUE
-                $_SESSION['cliente'] = array('id'=>$value['id'], 'idEndereco'=>$value['idEndereco'], 'nome'=>$value['nome']);  
+            header("Location:/delivery.painel.2.php?cliente=$codCliente");        
 
-                header("Location:/delivery.painel.2.php?cliente=$cliente");        
-
-            }
         }
-           
-    }      
-    
+
+    }
 }
 
-//================================ADICIONAR FORMA DE PAGAMENTO================================================================
+//================================ADICIONAR FORMA DE PAGAMENTO (FORMAPAGAMENTO)================================================================
 
 if(isset($_POST['formaPagamento'])) {
 
@@ -258,162 +258,122 @@ if(isset($_POST['blocoNotas'])) {
 //================================ADICIONAR PRODUTO================================================================
 
 
-//servidor local
-/*if(isset($_GET['produto'])) {
+if(isset($_GET['codigoProduto'])) {    
 
-    $produto = $_GET['produto'];
-    
-    $sql = "SELECT n_gondola, c_produto, d_produto, preco, estoque FROM tb_produto WHERE c_produto = $produto";    
-    $sql = $pdo->query($sql);                                    
-    
-    if($sql->rowCount() > 0) {
-        foreach($sql as $key => $value) {
+    $codigoProduto = $_GET['codigoProduto'];
 
-            if(isset($_SESSION['lista'][$produto])) {
+    $consulta = "SELECT d.codacesso, a.seqproduto, b.desccompleta, a.estqloja, a.nrogondola,
+    consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
+    consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom,
+    a.estqloja
+    FROM
+    consinco.mrl_produtoempresa a, 
+    consinco.map_produto b, 
+    consinco.map_prodcodigo d,
+    consinco.max_empresa e
+    WHERE
+    a.nroempresa = '1'
+    AND e.nroempresa = '1'
+    AND a.seqproduto = b.seqproduto
+    AND a.seqproduto = d.seqproduto
+    AND d.tipcodigo IN ('E', 'B')
+    AND a.statuscompra = 'A'
+    AND a.seqproduto = '$codigoProduto'
+    ORDER BY b.desccompleta";
 
-                if(isset($_GET['observacao'])) {
-
-                    $produto = $_GET['produto'];
-                    $observacao = $_GET['observacao'];                       
-                
-                    $_SESSION['lista'][$produto]['observacao'] = $observacao;                
-                
-                    header("Location:/delivery.painel.2.php");     
-
-                } 
-                if(isset($_GET['quantidade'])) {
-                
-                    $produto = $_GET['produto'];
-                    $quantidade = number_format($_GET['quantidade'],3,".",",");
-                
-                    $_SESSION['lista'][$produto]['quantidade'] = $quantidade;
-
-                    header("Location:/delivery.painel.2.php");                
-                
-                }     
-                if(isset($_GET['medida'])) {
-                
-                    $produto = $_GET['produto'];
-                    $medida = addslashes($_GET['medida']);
-
-                    $_SESSION['lista'][$produto]['medida'] = $medida;
-
-                    header("Location:/delivery.painel.2.php");                
-                
-                }  
-                
-                
-
-
-            } else {
-
-                $_SESSION['lista'][$produto] = array('medida'=>$medida, 'quantidade'=>$quantidade, 'gondola'=>$value['n_gondola'], 'produto'=>$value['d_produto'],
-                'preco'=>floatval($value['preco']), 'estoque'=>$value['estoque'], 'codigo'=>$value['c_produto'], 'observacao'=>$observacao);
-
-                header("Location:/delivery.painel.2.php");
-
-            }        
-                    
-        }   
-        
-        
-    } else {
-
-         echo "Pesquisa no banco não deu certo!";
-    }
-
-    
-}*/
-
-//servidor consinco
-if(isset($_GET['produto'])) {
-
-    $produto = $_GET['produto'];
-    
-    $consulta = "SELECT a.nroempresa, a.nrogondola, c.gondola, a.seqproduto, b.desccompleta, d.qtdembalagem, a.estqloja, d.codacesso, consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
-                consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom
-                FROM
-                consinco.mrl_produtoempresa a, 
-                consinco.map_produto b, 
-                consinco.mrl_gondola c,
-                consinco.map_prodcodigo d,
-                consinco.max_empresa e
-                WHERE
-                a.nroempresa = '1'
-                AND e.nroempresa = '1'
-                AND d.qtdembalagem = '1'
-                AND a.nrogondola = c.nrogondola
-                AND a.seqproduto = b.seqproduto
-                AND a.seqproduto = d.seqproduto
-                AND d.tipcodigo IN ('E', 'B')
-                AND a.seqproduto = $produto
-                ORDER BY b.desccompleta";    
-
+    //prepara uma instrucao para execulsao
     $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
-        
+
     //Executa os comandos SQL
     oci_execute($resultado);
 
-    while (($value = oci_fetch_array($resultado, OCI_ASSOC)) != false) { 
-
-            if(isset($_SESSION['lista'][$produto])) {
-
-                if(isset($_GET['observacao'])) {
-
-                    $produto = $_GET['produto'];
-                    $observacao = $_GET['observacao'];                       
-                
-                    $_SESSION['lista'][$produto]['observacao'] = $observacao;                
-                
-                    header("Location:/delivery.painel.2.php");     
-
-                } 
-                if(isset($_GET['quantidade'])) {
-                
-                    $produto = $_GET['produto'];
-                    $quantidade = number_format($_GET['quantidade'],3,".",",");
-                
-                    $_SESSION['lista'][$produto]['quantidade'] = $quantidade;
-
-                    header("Location:/delivery.painel.2.php");                
-                
-                }     
-                if(isset($_GET['medida'])) {
-                
-                    $produto = $_GET['produto'];
-                    $medida = addslashes($_GET['medida']);
-
-                    $_SESSION['lista'][$produto]['medida'] = $medida;
-
-                    header("Location:/delivery.painel.2.php");                
-                
-                }  
-                
-            } else {
-
-                $_SESSION['lista'][$produto] = array('medida'=>$medida, 'quantidade'=>$quantidade, 'gondola'=>$value['NROGONDOLA'], 'produto'=>$value['DESCCOMPLETA'],
-                'preco'=>floatval($value['PRECO']), 'estoque'=>$value['ESTQLOJA'], 'codigo'=>$value['SEQPRODUTO'], 'codigoEan'=>$value['CODACESSO'], 'observacao'=>$observacao);
-
-                var_dump($value);
-
-                header("Location:/delivery.painel.2.php");
-
-            }        
-                    
-         
+    while (($value = oci_fetch_array($resultado, OCI_ASSOC)) != false) {     
         
-        
-   
+        if(isset($_SESSION['lista'][$codigoProduto])) {
 
+            if(isset($_GET['observacao'])) {
+
+                $codigoProduto = $_GET['codigoProduto'];
+                $observacao = $_GET['observacao'];                       
+            
+                $_SESSION['lista'][$codigoProduto]['observacao'] = $observacao;                
+            
+                header("Location:/delivery.painel.2.php");     
+
+            } 
+            
+            if(isset($_GET['quantidade'])) {
+            
+                $codigoProduto = $_GET['codigoProduto'];
+                $quantidade = number_format($_GET['quantidade'],3,".",",");
+            
+                $_SESSION['lista'][$codigoProduto]['quantidade'] = $quantidade;
+
+                header("Location:/delivery.painel.2.php");                
+            
+            }     
+
+            if(isset($_GET['medida'])) {
+            
+                $codigoProduto = $_GET['codigoProduto'];
+                $medida = addslashes($_GET['medida']);
+
+                $_SESSION['lista'][$codigoProduto]['medida'] = $medida;
+
+                header("Location:/delivery.painel.2.php");                
+            
+            }  
+            
+        } else {
+
+            $consulta2 = "SELECT *
+            FROM (SELECT a.seqproduto, a.seqfamilia, b.qtdembalagem, b.embalagem FROM consinco.map_produto a, consinco.map_famembalagem b WHERE a.seqfamilia = b.seqfamilia AND a.seqproduto = '$codigoProduto' ORDER BY b.qtdembalagem) 
+            WHERE rownum <= 1";
+
+            //prepara uma instrucao para execulsao
+            $resultado2 = oci_parse($ora_conexao, $consulta2) or die ("erro");
+
+            //Executa os comandos SQL
+            oci_execute($resultado2);
+
+            while (($embalagem = oci_fetch_array($resultado2, OCI_ASSOC)) != false) { 
+
+                $medida = $embalagem['EMBALAGEM'];
+
+                //var_dump($medida);
+
+            }  
+            
+            if($value['PRECOPROM'] > '0') {                                                    
+                $valor = $value['PRECOPROM'];
+            } else {                                                    
+                $valor = $value['PRECO'];
+            }
+
+            $_SESSION['lista'][$codigoProduto] = array(
+                'medida'=>$medida, 
+                'quantidade'=>$quantidade, 
+                'gondola'=>$value['NROGONDOLA'], 
+                'produto'=>$value['DESCCOMPLETA'],
+                'preco'=>floatval($valor), 
+                'estoque'=>$value['ESTQLOJA'], 
+                'codigo'=>$value['SEQPRODUTO'], 
+                'codigoEan'=>$value['CODACESSO'], 
+                'observacao'=>$observacao);
+
+            header("Location:/delivery.painel.2.php");
+
+        }  
+        header("Location:/delivery.painel.2.php");
     }
-
-    
+    header("Location:/delivery.painel.2.php");
 }
 
 
 //================================PESQUISAR PRODUTO================================================================
 
-if(!empty($_POST['pesquisa'])) { //se existir/ e ele nao estiver vazio.
+
+/*if(!empty($_POST['pesquisa'])) { //se existir/ e ele nao estiver vazio.
 
 	$pesquisa = $_POST['pesquisa'];
 	$sql = "SELECT * FROM tb_produto WHERE preco !='0' AND d_produto LIKE '".$pesquisa."%'";
@@ -432,47 +392,36 @@ if(!empty($_POST['pesquisa'])) { //se existir/ e ele nao estiver vazio.
             echo "</table>";
 		}
 	} 
-}
+}*/
 
 
 //================================SALVAR LISTA DE PRODUTOS================================================================
 
 if(isset($_POST['salvarLista'])) {
 
-    if(isset($_SESSION['cliente'], $_SESSION['formaPagamento'], $_SESSION['orcamento'], $_SESSION['lista'])) {  
-
-        if(!empty($_SESSION['logado'])) {       
+    if(isset($_SESSION['cliente'], $_SESSION['formaPagamento'], $_SESSION['orcamento'], $_SESSION['lista'])) {             
         
-            $usuario = $_SESSION['logado'];           
-            
-        }
+        $usuario = $_SESSION['logado']; 
+        $orcamento = $_SESSION['orcamento'];   
+        $idCliente = $_SESSION['cliente']['id']; 
+        $formaPagamento = $_SESSION['formaPagamento'];
 
-        if(!empty($_SESSION['orcamento'])) {
+        if(!empty($_SESSION['cliente'])) {              
 
-            $orcamento = $_SESSION['orcamento'];
-            
-        }
-
-        if(!empty($_SESSION['cliente'])) {               
-        
-            $idCliente = $_SESSION['cliente']['id']; 
-            $idEndereco = $_SESSION['cliente']['idEndereco'];
-            $formaPagamento = $_SESSION['formaPagamento'];
             $status = 'PEDIDO REALIZADO';     
             
-            $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, idEndereco = :idEndereco, pagamento = :pagamento, statuss = :statuss, dataPedido = NOW() WHERE orcamento = '$orcamento'");
+            $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, pagamento = :pagamento, statuss = :statuss, dataPedido = NOW() WHERE orcamento = :orcamento");
             $sql->bindValue(":idCliente", $idCliente);
-            $sql->bindValue(":idEndereco", $idEndereco);    
             $sql->bindValue(":pagamento", $formaPagamento);
             $sql->bindValue(":statuss", $status);
+            $sql->bindValue(":orcamento", $orcamento);
             $sql->execute();          
         
         }    
 
-        if(!empty($_SESSION['cliente'])) {
+        if(!empty($_SESSION['lista'])) {
 
             foreach($_SESSION['lista'] as $key=>$value) {
-                $data = date('Y-m-d');
         
                 $quantidade = $value['quantidade'];
                 $gondola = $value['gondola'];
@@ -483,9 +432,8 @@ if(isset($_POST['salvarLista'])) {
                 $pedido = 'N';
                 $observacao = $value['observacao'];
 
-                $sql = $pdo->prepare("INSERT INTO tb_orcamento SET dataa = :dataa, medida = :medida, orcamento = :orcamento, c_gondola = :c_gondola,
+                $sql = $pdo->prepare("INSERT INTO tb_orcamento SET dataa = NOW(), medida = :medida, orcamento = :orcamento, c_gondola = :c_gondola,
                 c_produto = :c_produto, quantidade = :quantidade, valor_total = :valorTotal, estoque = :estoque, pedido = :pedido, observacao = :observacao, usuario = :usuario");
-                $sql->bindValue(":dataa", $data);
                 $sql->bindValue(":orcamento", $orcamento);
                 $sql->bindValue(":c_gondola", $gondola);
                 $sql->bindValue(":c_produto", $codigo);
@@ -503,16 +451,15 @@ if(isset($_POST['salvarLista'])) {
             unset( $_SESSION['cliente'] );
             unset( $_SESSION['orcamento'] );    
             unset( $_SESSION['formaPagamento'] ); 
-            unset( $_SESSION['formaPagamento'] );
             unset( $_SESSION['blocoNotas']); 
         }
 
         header("Location:/delivery.painel.1.php");
-        exit;
 
     } else {
 
        header("Location:/delivery.painel.2.php");
+
     }
     
 

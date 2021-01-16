@@ -90,7 +90,7 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                 <th style='width:10%;'>Data</th>
                                                 <th style='width:10%;'>Nome</th>
                                                 <th style='width:10%;'>Endereço</th>
-                                                <th style="width:10%;">Status</th>
+                                                <th style="width:5%;">Status</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -123,7 +123,7 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                             echo "<td style='width:10%;'>".$delivery['nome']."</td>";
                                                             echo "<td style='width:10%;'>".$delivery['logradouro'].' '.$delivery['numero']."</td>";  
                                                             
-                                                            echo "<td style='background-color:$cor; width:10%;'>".$delivery['statuss']."</td>";                        
+                                                            echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";                        
                                                             echo "</tr>";  
 
                                                         

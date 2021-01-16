@@ -62,9 +62,9 @@ if($usuarios->temPermissao('DEL') == false) {
                                                 <th style="width:10%;">Ticket</th>
                                                 <th style="width:10%;">Data</th>
                                                 <th style="width:10%;">Nome</th>
-                                                <th style="width:10%;">Açougue</th>
-                                                <th style="width:10%;">Status</th>
-                                                <th style="width:10%;">Ações</th>
+                                                <th style="width:5%;">Açougue</th>
+                                                <th style="width:5%;">Status</th>
+                                                <th style="width:5%;">Ações</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -112,7 +112,7 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['nome']."</td>";
 
-                                                        echo "<td style='width:10%;'>";
+                                                        echo "<td style='width:5%;'>";
                                                         
                                                             if($delivery['c_gondola'] == '96' && $delivery['pedido'] == 'N') {
 
@@ -135,8 +135,8 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         
                                                         
                                                         
-                                                        echo "<td style='background-color:$cor; width:10%;'>".$delivery['statuss']."</td>";
-                                                        echo '<td style="width:10%;">';
+                                                        echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";
+                                                        echo '<td style="width:5%;">';
                                                             echo '<div class="teste">';
                                                             
 

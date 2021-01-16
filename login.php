@@ -57,9 +57,9 @@ if(!empty($_POST['usuario'])) {
                                     <div class="login__leftside">
                                         <form method="POST">
                                             <label for="email">Usuário</label>
-                                            <input type="text" style="text-transform: uppercase;" name="usuario" id="usuario" placeholder="Digite seu usuário">
+                                            <input type="text" name="usuario" id="usuario" placeholder="Digite seu usuário">
                                             <label for="senha">Senha</label>
-                                            <input type="password" style="text-transform: uppercase;" name="senha" id="senha" placeholder="Digite sua senha">
+                                            <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
                                             <input type="submit" name="btnLogin" value="Entrar">
                                         </form>
                                         <?php 

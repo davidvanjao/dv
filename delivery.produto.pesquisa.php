@@ -14,11 +14,21 @@ if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
 $usuarios = new Usuarios($pdo);
 $usuarios->setUsuario($_SESSION['logado']);
 
-if($usuarios->temPermissao('DEL') == false) {
+if($usuarios->temPermissao('PES') == false) {
     header("Location:index.php");
     exit;
 }
 
+$tipoBusca = "produto";
+
+if(isset($_POST['pesquisa'])) {
+
+    $tipoBusca = $_POST['tipobusca'];
+
+}
+
+//var_dump($_POST);
+//var_dump($tipoBusca);
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +47,11 @@ if($usuarios->temPermissao('DEL') == false) {
                     <div class="painel-menu">
                         <div class="painel-menu-menu">
         
-
+                        <div class="painel-menu-menu">
+        
+                        
+                            
+                        </div>
                             
                         </div>
                     </div>
@@ -56,111 +70,146 @@ if($usuarios->temPermissao('DEL') == false) {
                         <section class="page">
                             <div class="conteudo-Geral">
 
-                                <div class="body-conteudo">
-                                    
+                                <div class="body-busca">
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST">
-                                            <input class="input-busca-produto" id="pesquisaModelo" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite o nome do produto">
-                                            <input class="input-botao" type="submit" name="botao-pesquisar" value="Pesquisar">
-                                        </form>
+
+                                            <select class="input-tipoBusca" required="required" name="tipobusca">
+                                                <option value="produto" <?php echo ($tipoBusca=="produto")?'selected="selected"':'';?>>Produto</option>
+                                                <option value="codigo" <?php echo ($tipoBusca=="codigo")?'selected="selected"':'';?>>Código</option>
+                                            </select>
+                                            
+                                            <input class="input-busca-produto" id="pesquisaProduto" minlength="3" type="text" autocomplete="off" name="pesquisa" placeholder="Digite sua busca">
+                                            <input class="input-botao" type="submit" name="pesquisa-produto" value="Pesquisar">
+                                        </form>                                     
                                     </div>
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:10%;">Código</th>
-                                                <th style="width:50%;">Produto</th>
-                                                <th style="width:10%;">Preço</th>
-                                                <th style="width:10%;">Promoção</th>
-                                                <th style="width:10%;">Estoque</th>
-                                                <!--<th style="width:10%;">Ações</th>-->
+                                                <th style="width:5%;">EAN/BALANÇA  </th>
+                                                <th style="width:5%;">CÓDIGO</th>
+                                                <th style="width:20%;">PRODUTO</th>
+                                                <th style="width:5%;">EMBALAGEM</th>
+                                                <th style="width:5%;">PREÇO</th>
+                                                <th style="width:5%;">ESTOQUE</th>
                                             </tr>
                                         </table> 
                                     </div>                                    
                                     <div class="busca-resultado" id="resultado"> 
 
-                                        <table>
-                                            <?php
-                                                /*if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
+                                    
 
-                                                    $pesquisa = addslashes($_POST['pesquisa']);
-                                                    $sql = "SELECT * FROM tb_produto
-                                                    WHERE preco !='0' AND d_produto LIKE '".$pesquisa."%'";
-                                                    
-                                                    $sql = $pdo->query($sql);                                    
+                                    <table>
+                                        <?php                                        
+                                        
+                                            if(isset($_POST['pesquisa']) && !empty($_POST['pesquisa'])) { //se existir e ele nao estiver vazio.
 
-                                                    if($sql->rowCount() > 0) {
-                                                        foreach($sql->fetchAll() as $produto) {
-                                                            echo '<tr ondblclick=location.href="delivery.processo.php?produto='.$produto['c_produto'].'" style="cursor:pointer">';
-                                                            echo "<td style='width:10%;'>".$produto['c_produto']."</td>";
-                                                            echo "<td style='width:50%;'>".$produto['d_produto']."</td>";
-                                                            echo "<td style='width:20%;'>R$ ".$produto['preco']."</td>";
-                                                            echo "<td style='width:10%;'>".$produto['estoque']."</td>";
-                                                            //echo '<td style="width:10%;"><a href="modelo.painel.2.php?adicionar='.$produto['c_produto'].'">Add</a>';
-                                                            echo '</tr>';  
-                                                        }
-                                                    } 
-                                                }*/
+                                                $pesquisa = addslashes($_POST['pesquisa']);
+                                                $pesquisa = strtoupper($pesquisa);
 
-                                                if(isset($_POST['pesquisa']) && empty($_POST['pesquisa']) == false) { //se existir/ e ele nao estiver vazio.
+                                                if($_POST['tipobusca'] == 'produto') { //se existir e ele nao estiver vazio.
 
-                                                    $pesquisa = addslashes($_POST['pesquisa']);
-                                                    $pesquisa = strtoupper($pesquisa);
-    
-                                                    $consulta = "SELECT a.nroempresa, a.nrogondola, c.gondola, a.seqproduto, b.desccompleta, d.qtdembalagem, a.estqloja, d.codacesso, consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
-                                                    consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom
+
+                                                    $consulta = "SELECT  d.codacesso, a.seqproduto, b.desccompleta, a.estqloja,
+                                                    consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
+                                                    consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom,
+                                                    a.estqloja
                                                     FROM
                                                     consinco.mrl_produtoempresa a, 
                                                     consinco.map_produto b, 
-                                                    consinco.mrl_gondola c,
                                                     consinco.map_prodcodigo d,
                                                     consinco.max_empresa e
                                                     WHERE
                                                     a.nroempresa = '1'
                                                     AND e.nroempresa = '1'
-                                                    AND d.qtdembalagem = '1'
-                                                    AND a.nrogondola = c.nrogondola
                                                     AND a.seqproduto = b.seqproduto
                                                     AND a.seqproduto = d.seqproduto
                                                     AND d.tipcodigo IN ('E', 'B')
+                                                    AND a.statuscompra = 'A'
                                                     AND b.desccompleta LIKE '%".$pesquisa."%'
                                                     ORDER BY b.desccompleta";
-                                                    
-                                                    //prepara uma instrucao para execulsao
-                                                    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
-    
-                                                    //Executa os comandos SQL
-                                                    oci_execute($resultado);
-    
-                                                    while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
 
-                                                        
-    
-                                                    echo "<tr>";
-                                                    echo '<tr ondblclick=location.href="delivery.processo.php?produto='.$produto['SEQPRODUTO'].'" style="cursor:pointer">';
-                                                    echo "<td style='width:10%;'>".$produto['CODACESSO']."</td>";
-                                                    echo "<td style='width:50%;'>".$produto['DESCCOMPLETA']."</td>";  
-                                                    echo "<td style='width:10%;'>R$ ".number_format($produto['PRECO'],2,",",".")."</td>";   
-                                                    if($produto['PRECOPROM'] > 0) {
-    
-                                                        echo "<td style='width:10%; background-color:#ffff00; font-weight:bold;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>"; 
-    
-                                                    } else {                                                    
-    
-                                                        echo "<td style='width:10%;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>"; 
-                                                    }
-    
-    
-                                                    echo "<td style='width:10%;'>".number_format($produto['ESTQLOJA'],3,".",".")."</td>";      
-                                                    
-                                                    echo "</tr>"; 
-                                                    }
-    
+                                                } else {
+
+                                                    $consulta = "SELECT  d.codacesso, a.seqproduto, b.desccompleta, a.estqloja,
+                                                    consinco.fprecoembnormal(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) preco,
+                                                    consinco.fprecoembpromoc(a.seqproduto, 1, e.nrosegmentoprinc, a.nroempresa) precoprom,
+                                                    a.estqloja
+                                                    FROM
+                                                    consinco.mrl_produtoempresa a, 
+                                                    consinco.map_produto b, 
+                                                    consinco.map_prodcodigo d,
+                                                    consinco.max_empresa e
+                                                    WHERE
+                                                    a.nroempresa = '1'
+                                                    AND e.nroempresa = '1'
+                                                    AND a.seqproduto = b.seqproduto
+                                                    AND a.seqproduto = d.seqproduto
+                                                    AND d.tipcodigo IN ('E', 'B')
+                                                    AND a.statuscompra = 'A'
+                                                    AND d.codacesso = '$pesquisa'
+                                                    ORDER BY b.desccompleta";
+
                                                 }
                                                 
-                                            ?>                                        
-                                        </table>
-                                                                            
+                                                //prepara uma instrucao para execulsao
+                                                $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
 
+                                                //Executa os comandos SQL
+                                                oci_execute($resultado);
+
+                                                while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {                                                    
+
+                                                    echo '<tr onclick=location.href="delivery.processo.php?codigoProduto='.$produto['SEQPRODUTO'].'" style="cursor:pointer">';
+                                                    echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
+                                                    echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
+                                                    echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  
+
+                                                    echo "<td style='width:5%;'>";
+                                                        echo "<select name='tipocesta' style='width:50%; background-color:transparent; border:none;'>";
+
+                                                            if($produto['SEQPRODUTO']) { //se existir e ele nao estiver vazio.
+                                                                $codigo = $produto['SEQPRODUTO'];                                                        
+
+                                                                $consulta2 = "SELECT a.seqproduto, a.seqfamilia, b.qtdembalagem, b.embalagem
+                                                                FROM
+                                                                consinco.map_produto a, 
+                                                                consinco.map_famembalagem b
+                                                                WHERE
+                                                                a.seqfamilia = b.seqfamilia
+                                                                AND a.seqproduto = '$codigo'
+                                                                ORDER BY b.qtdembalagem";
+
+                                                                //prepara uma instrucao para execulsao
+                                                                $resultado2 = oci_parse($ora_conexao, $consulta2) or die ("erro");
+
+                                                                //Executa os comandos SQL
+                                                                oci_execute($resultado2);
+
+                                                                while (($quantidade = oci_fetch_array($resultado2, OCI_ASSOC)) != false) { 
+
+                                                                    echo "<option>".$quantidade['QTDEMBALAGEM']." ".$quantidade['EMBALAGEM']."</option>";
+
+                                                                } 
+                                                            }
+                                                        echo "</select>";
+                                                    echo "</td>";  
+
+                                                    if($produto['PRECOPROM'] > '0') {                                                    
+                                                    echo "<td style='width:5%; background-color:#ffff00; font-weight:bold;'>R$ ".number_format($produto['PRECOPROM'],2,",",".")."</td>";
+                                                    } else {                                                    
+                                                    echo "<td style='width:5%;'>R$ ".number_format($produto['PRECO'],2,",",".")."</td>";
+                                                    }
+                                                    echo "<td style='width:5%;'>".number_format($produto['ESTQLOJA'],3,".",".")."</td>";      
+                                                        
+                                                    echo "</tr>"; 
+                                                }
+
+                                            }                                       
+                                            
+                                        ?>                                        
+                                    </table>
+                                        
                                     </div>
                                 </div> 
 
@@ -170,10 +219,6 @@ if($usuarios->temPermissao('DEL') == false) {
                 </div>
             </div>
         </div>
-
-        <!--<script type="text/javascript" src="assets/js/jquery.min.js"></script>
-        <script type="text/javascript" src="assets/js/script3.js"></script>-->
-
     </body>
 
 
