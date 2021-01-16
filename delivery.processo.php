@@ -28,12 +28,6 @@ if(isset($_GET['liberarAcougue'])) {
 
 }
 
-
-
-
-
-
-
 //================================PROCESSO DE STATUS================================================================
 
 
@@ -101,9 +95,6 @@ if(isset($_GET['saiu'])) {
         exit;
         
     }
-
-
-
 } 
 
     
@@ -249,9 +240,6 @@ if(isset($_POST['blocoNotas'])) {
         header("Location:/delivery.painel.2.php");        
 
     }
-        
-           
-        
     
 }
 
@@ -368,32 +356,6 @@ if(isset($_GET['codigoProduto'])) {
     }
     header("Location:/delivery.painel.2.php");
 }
-
-
-//================================PESQUISAR PRODUTO================================================================
-
-
-/*if(!empty($_POST['pesquisa'])) { //se existir/ e ele nao estiver vazio.
-
-	$pesquisa = $_POST['pesquisa'];
-	$sql = "SELECT * FROM tb_produto WHERE preco !='0' AND d_produto LIKE '".$pesquisa."%'";
-	
-	$sql = $pdo->query($sql);                                    
-
-	if($sql->rowCount() > 0) {
-		foreach($sql->fetchAll() as $produto) {
-            echo "<table>";
-			echo '<tr ondblclick=location.href="delivery.processo.php?produto='.$produto['c_produto'].'" style="cursor:pointer">';
-			echo "<td style='width:10%;'>".$produto['c_produto']."</td>";
-			echo "<td style='width:50%;'>".$produto['d_produto']."</td>";
-			echo "<td style='width:20%;'>R$ ".$produto['preco']."</td>";
-			echo "<td style='width:10%;'>".$produto['estoque']."</td>";
-            echo '</tr>';  
-            echo "</table>";
-		}
-	} 
-}*/
-
 
 //================================SALVAR LISTA DE PRODUTOS================================================================
 
