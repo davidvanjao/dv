@@ -368,7 +368,7 @@ if(isset($_POST['salvarLista'])) {
         $idCliente = $_SESSION['cliente']['id']; 
         $formaPagamento = $_SESSION['formaPagamento'];
 
-        if(!empty($_SESSION['cliente'])) {              
+        if(!empty($_SESSION['cliente'])) {             
 
             $status = 'PEDIDO REALIZADO';     
             
@@ -377,7 +377,12 @@ if(isset($_POST['salvarLista'])) {
             $sql->bindValue(":pagamento", $formaPagamento);
             $sql->bindValue(":statuss", $status);
             $sql->bindValue(":orcamento", $orcamento);
-            $sql->execute();          
+            $sql->execute();     
+            
+            echo $idCliente; 
+            echo $formaPagamento; 
+            echo $status; 
+            echo $orcamento; 
         
         }    
 
@@ -419,8 +424,8 @@ if(isset($_POST['salvarLista'])) {
         header("Location:/delivery.painel.1.php");
 
     } else {
-
-       header("Location:/delivery.painel.2.php");
+ 
+        header("Location:/delivery.painel.2.php");
 
     }
     

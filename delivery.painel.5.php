@@ -2,6 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -20,24 +21,26 @@ if($usuarios->temPermissao('DEL') == false) {
 
 $data = date('Y-m-d');
 
-$sql = "SELECT a.id, a.orcamento, a.dataa, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, c.regiao, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
-            from tb_log_delivery a, tb_cliente b, tb_endereco c
-            WHERE a.dataa LIKE '$data'
-            and a.idCliente = b.id 
-            and b.idEndereco = c.id
-            order by a.statuss";
+$sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+        FROM 
+        tb_log_delivery a
+        WHERE 
+        a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
+        AND a.dataa = '$data'
+        GROUP BY a.orcamento";
 
 
 if(isset($_GET['data']) && empty($_GET['data']) == false){
 
     $data = addslashes($_GET['data']);
 
-    $sql = "SELECT a.id, a.orcamento, a.dataa, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, c.regiao, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
-            from tb_log_delivery a, tb_cliente b, tb_endereco c
-            WHERE a.dataa LIKE '$data'
-            and a.idCliente = b.id 
-            and b.idEndereco = c.id
-            order by a.statuss";
+    $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+            FROM 
+            tb_log_delivery a
+            WHERE 
+            a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
+            AND a.dataa = '$data'
+            GROUP BY a.orcamento";
 }
 
 ?>
@@ -104,6 +107,8 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                     if($sql->rowCount() > 0) {
                                                         foreach($sql->fetchAll() as $delivery) {
 
+                                                            $codCliente = $delivery['idCliente'];
+
                                                             if($delivery['statuss']=="PEDIDO REALIZADO"){
                                                                 $cor="";
                                                             }
@@ -120,8 +125,25 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                             echo "<tr>";
                                                             echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                             echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
-                                                            echo "<td style='width:10%;'>".$delivery['nome']."</td>";
-                                                            echo "<td style='width:10%;'>".$delivery['logradouro'].' '.$delivery['numero']."</td>";  
+
+                                                            $consulta = "SELECT a.seqpessoa, a.nomerazao, a.nomerazao, a.logradouro, a.nrologradouro
+                                                            FROM 
+                                                            CONSINCO.GE_PESSOA a
+                                                            WHERE
+                                                            a.seqpessoa = '$codCliente'";
+
+                                                            //prepara uma instrucao para execulsao
+                                                            $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
+
+                                                            //Executa os comandos SQL
+                                                            oci_execute($resultado);
+
+                                                            while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
+
+                                                                echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
+                                                                echo "<td style='width:10%;'>".$cliente['LOGRADOURO'].' '.$cliente['NROLOGRADOURO']."</td>";  
+
+                                                            }
                                                             
                                                             echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";                        
                                                             echo "</tr>";  

@@ -2,6 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -82,16 +83,18 @@ if($usuarios->temPermissao('DEL') == false) {
                                         <table>
                                             <?php                                 
 
-                                            $sql = "SELECT a.id, a.orcamento, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
-                                            from tb_log_delivery as a join tb_cliente as b join tb_endereco as c 
-                                            on a.idCliente = b.id 
-                                            and b.idEndereco = c.id
-                                            where a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
-                                            order by a.id";
+                                            $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+                                            FROM 
+                                            tb_log_delivery a
+                                            WHERE 
+                                            a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
+                                            ORDER BY a.id";
 
                                             $sql = $pdo->query($sql);   
                                             if($sql->rowCount() > 0) {
                                                 foreach($sql->fetchAll() as $delivery) {
+
+                                                    $codCliente = $delivery['idCliente'];
 
                                                     if($delivery['statuss']=="PEDIDO REALIZADO"){
                                                         $cor="";
@@ -109,7 +112,24 @@ if($usuarios->temPermissao('DEL') == false) {
                                                     echo "<tr>";
                                                     echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                     echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
-                                                    echo "<td style='width:10%;'>".$delivery['nome']."</td>";
+
+                                                    $consulta = "SELECT a.seqpessoa, a.nomerazao
+                                                    FROM 
+                                                    CONSINCO.GE_PESSOA a
+                                                    WHERE
+                                                    a.seqpessoa = '$codCliente'";
+
+                                                     //prepara uma instrucao para execulsao
+                                                    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
+
+                                                    //Executa os comandos SQL
+                                                    oci_execute($resultado);
+
+                                                    while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
+
+                                                        echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
+
+                                                    }
                                                     echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>"; 
                                                     echo '<td style="width:5%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'" target="_blank">Imprimir</a></td>';   
                                                     echo '<td style="width:5%;"><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></td>';           

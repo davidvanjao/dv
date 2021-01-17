@@ -2,6 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -74,18 +75,21 @@ if($usuarios->temPermissao('DEL') == false) {
                                             <table>
                                                 <?php
 
-                                                $sql = "SELECT a.id, a.orcamento, b.nome, c.cidadeEstado, c.logradouro, b.numero, d.pedido, d.c_gondola, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
-                                                from tb_log_delivery a, tb_cliente b, tb_endereco c, tb_orcamento d
-                                                where a.idCliente = b.id 
-                                                and a.orcamento = d.orcamento 
-                                                and b.idEndereco = c.id
-                                                and a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
-                                                group by a.orcamento";
-                                                                                                
+                                                $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, b.pedido, b.c_gondola, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+                                                FROM 
+                                                tb_log_delivery a,
+                                                tb_orcamento b
+                                                WHERE 
+                                                a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
+                                                AND a.orcamento = b.orcamento
+                                                GROUP BY a.orcamento";
+                                                                                                                                                
 
                                                 $sql = $pdo->query($sql);   
                                                 if($sql->rowCount() > 0) {
                                                     foreach($sql->fetchAll() as $delivery) {
+
+                                                        $codCliente = $delivery['idCliente'];
 
                                                         if($delivery['statuss']=="PEDIDO REALIZADO"){
                                                             $cor="";
@@ -110,7 +114,24 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         echo "<tr>";
                                                         echo "<td style='width:10%;'>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
-                                                        echo "<td style='width:10%;'>".$delivery['nome']."</td>";
+
+                                                        $consulta = "SELECT a.seqpessoa, a.nomerazao
+                                                        FROM 
+                                                        CONSINCO.GE_PESSOA a
+                                                        WHERE
+                                                        a.seqpessoa = '$codCliente'";
+
+                                                        //prepara uma instrucao para execulsao
+                                                        $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
+
+                                                        //Executa os comandos SQL
+                                                        oci_execute($resultado);
+
+                                                        while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
+
+                                                            echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
+
+                                                        }
 
                                                         echo "<td style='width:5%;'>";
                                                         
