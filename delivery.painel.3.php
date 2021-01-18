@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-require 'conexao.banco.oracle.php';
+//require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -75,19 +75,19 @@ if($usuarios->temPermissao('DEL') == false) {
                                             <table>
                                                 <?php
 
-                                                $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, b.pedido, b.c_gondola, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+                                                $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
                                                 FROM 
-                                                tb_log_delivery a,
-                                                tb_orcamento b
+                                                tb_log_delivery a
                                                 WHERE 
                                                 a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
-                                                AND a.orcamento = b.orcamento
                                                 GROUP BY a.orcamento";
                                                                                                                                                 
 
                                                 $sql = $pdo->query($sql);   
                                                 if($sql->rowCount() > 0) {
                                                     foreach($sql->fetchAll() as $delivery) {
+
+                                                        $orcamento = $delivery['orcamento'];
 
                                                         $codCliente = $delivery['idCliente'];
 
@@ -104,18 +104,11 @@ if($usuarios->temPermissao('DEL') == false) {
                                                             $cor="#008000";
                                                         }     
                                                         
-                                                        if($delivery['c_gondola'] == '96' && $delivery['pedido'] == 'N'){
-                                                            $cor2="";
-                                                        }
-                                                        if($delivery['c_gondola'] == '96' && $delivery['pedido'] == 'S'){
-                                                            $cor2="#008000";
-                                                        }
-
                                                         echo "<tr>";
                                                         echo "<td style='width:10%;'>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
 
-                                                        $consulta = "SELECT a.seqpessoa, a.nomerazao
+                                                        /*$consulta = "SELECT a.seqpessoa, a.nomerazao
                                                         FROM 
                                                         CONSINCO.GE_PESSOA a
                                                         WHERE
@@ -131,31 +124,63 @@ if($usuarios->temPermissao('DEL') == false) {
 
                                                             echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
 
+                                                        }*/
+
+                                                        $sql = "SELECT c_gondola, pedido
+                                                        FROM 
+                                                        tb_orcamento
+                                                        WHERE 
+                                                        orcamento = '$orcamento'";
+
+                                                        $sql = $pdo->query($sql); 
+                                                        if($sql->rowCount() > 0) {
+
+                                                            $acougue = $sql->fetchAll();
+
+                                                            if (in_array('96', $acougue)) {
+                                                                echo "encontrado</br>";
+                                                            } else {
+                                                                echo "nao encontrado</br>";
+                                                            }
+
+                                                            /*foreach($sql->fetchAll() as $acougue) {
+
+                                                                if (in_array('96', $acougue)) {
+                                                                    echo "encontrado</br>";
+                                                                } else {
+                                                                    echo "nao encontrado</br>";
+                                                                }
+
+
+
+                                                            }*/
+
+                                                            var_dump($acougue['c_gondola']);
+
+
+                                                            /*echo "<td style='width:5%;'>";
+                                                        
+                                                                if($acougue['c_gondola'] == '96' && $acougue['pedido'] == 'N') {
+
+                                                                    echo "AGUARDANDO";
+
+                                                                }
+                                                                if($acougue['c_gondola'] == '96' && $acougue['pedido'] == 'S') {
+
+                                                                    echo "PRONTO";
+
+                                                                }
+                                                                if($acougue['c_gondola'] != '96' && $acougue['pedido'] == 'N') {
+
+                                                                    echo "-";
+
+                                                                }
+                                                        
+                                                            "</td>";*/
+
+                                                            
                                                         }
 
-                                                        echo "<td style='width:5%;'>";
-                                                        
-                                                            if($delivery['c_gondola'] == '96' && $delivery['pedido'] == 'N') {
-
-                                                                echo "AGUARDANDO";
-
-                                                            }
-                                                            if($delivery['c_gondola'] == '96' && $delivery['pedido'] == 'S') {
-
-                                                                echo "PRONTO";
-
-                                                            }
-                                                            if($delivery['c_gondola'] != '96' && $delivery['pedido'] == 'N') {
-
-                                                                echo "-";
-
-                                                            }
-                                                        
-                                                        "</td>";
-
-                                                        
-                                                        
-                                                        
                                                         echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";
                                                         echo '<td style="width:5%;">';
                                                             echo '<div class="teste">';

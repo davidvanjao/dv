@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-require 'conexao.banco.oracle.php';
+//require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -126,7 +126,7 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                             echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                             echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
 
-                                                            $consulta = "SELECT a.seqpessoa, a.nomerazao, a.nomerazao, a.logradouro, a.nrologradouro
+                                                            /*$consulta = "SELECT a.seqpessoa, a.nomerazao, a.nomerazao, a.logradouro, a.nrologradouro
                                                             FROM 
                                                             CONSINCO.GE_PESSOA a
                                                             WHERE
@@ -143,7 +143,7 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                                 echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
                                                                 echo "<td style='width:10%;'>".$cliente['LOGRADOURO'].' '.$cliente['NROLOGRADOURO']."</td>";  
 
-                                                            }
+                                                            }*/
                                                             
                                                             echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";                        
                                                             echo "</tr>";  
