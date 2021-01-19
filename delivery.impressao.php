@@ -1,56 +1,57 @@
 <?php
 
 require 'conexao.banco.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 $html = "";
 $seq = "1";
 $pagamento = "";
-
-
-if(isset($_GET['orcamento'])) {
-
-    $orcamento = addslashes($_GET['orcamento']);
-    
-    $sql = "SELECT a.id, a.nome, a.idEndereco, b.logradouro, a.numero, b.cidadeEstado, a.telefone, b.cidadeEstado, c.orcamento, c.pagamento, d.usuario, DATE_FORMAT(c.dataPedido,'%d/%m/%Y %H:%i') as saida_data
-    from tb_cliente a, tb_endereco b, tb_log_delivery c, tb_usuarios d
-    where c.orcamento = '$orcamento'
-    and c.idCliente = a.id
-    and c.usuario = d.id
-    and c.idEndereco = b.id";
-
-    $sql = $pdo->query($sql);
-
-    if($sql->rowCount() > 0) {        
-
-        foreach($sql->fetchAll() as $delivery) { 
-            $idNome = $delivery['id'];
-            $nome = $delivery['nome'];
-            $idEndereco = $delivery['idEndereco'];
-            $endereco = $delivery['logradouro'];
-            $numero = $delivery['numero'];
-            $orcamento = $delivery['orcamento'];
-            $dataPedido = $delivery['saida_data'];  
-            $usuario  = explode(".", $delivery['usuario']);
-            $pagamento = $delivery['pagamento']; 
-            $cidade = $delivery['cidadeEstado']; 
-            $telefone = $delivery['telefone']; 
-
-
-        }   
-                
-    }
-}
 $total = "";
 $valorTotal = floatval("00,00");
 
-if(!empty($orcamento)) {
+if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
     
-    $sql = "SELECT d.c_produto, e.d_produto, d.quantidade, d.medida, e.preco, e.estoque, d.observacao
-    from tb_log_delivery c, tb_orcamento d, tb_produto e
-    where c.orcamento = '$orcamento'
-    and c.orcamento = d.orcamento
-    and d.c_produto = e.c_produto";
+}
+
+
+if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
+
+    $orcamento = addslashes($_GET['orcamento']);
+    $codCliente = addslashes($_GET['cliente']);
+    
+    $consulta = "SELECT NOMERAZAO, LOGRADOURO, NROLOGRADOURO, CIDADE, FONEDDD1, FONENRO1
+    FROM 
+    CONSINCO.GE_PESSOA 
+    WHERE 
+    SEQPESSOA = '$codCliente'";                                         
+    
+    //prepara uma instrucao para execulsao
+    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
+
+    //Executa os comandos SQL
+    oci_execute($resultado);
+
+    while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
+
+            $nome = $cliente['NOMERAZAO'];
+            $endereco = $cliente['LOGRADOURO'];
+            $numero = $cliente['NROLOGRADOURO'];
+            $cidade = $cliente['CIDADE']; 
+            $ddd = $cliente['FONEDDD1']; 
+            $telefone = $cliente['FONENRO1']; 
+
+    }
+    
+}
+
+if(isset($orcamento) && !empty($orcamento)) {
+    
+    $sql = "SELECT ean, produto, medida, quantidade, valor_total, estoque, observacao
+    from 
+    tb_orcamento
+    where   
+    orcamento = '$orcamento'";
 
     $sql = $pdo->query($sql);
 
@@ -69,10 +70,9 @@ if(!empty($orcamento)) {
     $html .= '</tr>';
     $html .= '</thead>';
 
-
     while ($linha = $sql->fetch(PDO::FETCH_ASSOC)) {
         
-        $preco = floatval($linha['preco']);
+        $preco = floatval($linha['valor_total']);
         $quantidade = floatval($linha['quantidade']);
         $resultado = $preco*$quantidade;
 
@@ -80,8 +80,8 @@ if(!empty($orcamento)) {
         $html .='<tbody class="tabelaProduto">';
         $html .= '<tr>';
         $html .= '<td>'.$seq++.'</td>';
-        $html .= '<td>'.$linha['c_produto'] .'</td>';
-        $html .= '<td>'.$linha['d_produto'] .'</td>';
+        $html .= '<td>'.$linha['ean'] .'</td>';
+        $html .= '<td>'.$linha['produto'] .'</td>';
         $html .= '<td>'.$linha['medida'] .'</td>';
         $html .= '<td>'.$linha['quantidade'] .'</td>';
         $html .= '<td> R$ '.number_format($preco,2,",",".") .'</td>';
@@ -127,23 +127,23 @@ $dompdf->load_html('
             <div class="cabecalho">
                 <table width=100%;>
                     <tr>
-                        <td style="width:60%;"><strong>Nome:</strong> '.$nome.'</td>
-                        <td><strong>Tel:</strong> '.$telefone.'</td>   
-                        <td style="text-align:right; font-size:20px;"><strong>Orç. Nº:'.$orcamento.'</strong></td>
+                        <td><strong>Nome:</strong> '.$nome.'</td>
+                        <td><strong>Tel:('.$ddd.') '.$telefone.' </strong></td>   
+                        <td style="text-align:right; font-size:20px;"><strong>Orç. Nº: '.$orcamento.'</strong></td>
                     </tr>
                 </table>
                 <table width=100%;>
                     <tr>
-                        <td style="width:60%;"><strong>Endereco:</strong> '.$endereco.' <strong>N°:</strong>'.$numero.' </td>
+                        <td><strong>Endereco:</strong> '.$endereco.' <strong>N°:</strong>'.$numero.' </td>
                                              
-                        <td style="text-align:right;"><strong>Cidade:</strong> '.$cidade.'</td>
+                        <td style="text-align:right;"><strong>Cidade: '.$cidade.'</strong></td>
                     </tr>
                 </table>
                 <table width=100%;>
                     <tr>
-                        <td style="text-transform: capitalize"><strong>Usuario:</strong> '.$usuario['0'].'</td>
-                        <td><strong>Data:</strong> '.$dataPedido.'</td>
-                        <td><strong>F. Pagamento:</strong> '.$pagamento.'</td>
+                        <td style="text-transform: capitalize"><strong>Usuario:</strong></td>
+                        <td><strong>Data:</strong></td>
+                        <td><strong>F. Pagamento:</strong></td>
                         <td style="text-align:right; font-size:20px;"><strong>Total: R$'.number_format($valorTotal,2,",",".").'</strong></td>
                     </tr>
                 </table>        

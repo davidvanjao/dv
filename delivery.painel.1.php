@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-//require 'conexao.banco.oracle.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -113,7 +113,7 @@ if($usuarios->temPermissao('DEL') == false) {
                                                     echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                     echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
 
-                                                    /*$consulta = "SELECT a.seqpessoa, a.nomerazao
+                                                    $consulta = "SELECT a.seqpessoa, a.nomerazao
                                                     FROM 
                                                     CONSINCO.GE_PESSOA a
                                                     WHERE
@@ -129,9 +129,9 @@ if($usuarios->temPermissao('DEL') == false) {
 
                                                         echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
 
-                                                    }*/
+                                                    }
                                                     echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>"; 
-                                                    echo '<td style="width:5%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'" target="_blank">Imprimir</a></td>';   
+                                                    echo '<td style="width:5%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'&cliente='.$delivery['idCliente'].'" target="_blank">Imprimir</a></td>';   
                                                     echo '<td style="width:5%;"><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></td>';           
                                                     echo "</tr>";  
 

@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-//require 'conexao.banco.oracle.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -107,8 +107,9 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         echo "<tr>";
                                                         echo "<td style='width:10%;'>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
+                                                        
 
-                                                        /*$consulta = "SELECT a.seqpessoa, a.nomerazao
+                                                        $consulta = "SELECT a.seqpessoa, a.nomerazao
                                                         FROM 
                                                         CONSINCO.GE_PESSOA a
                                                         WHERE
@@ -124,62 +125,51 @@ if($usuarios->temPermissao('DEL') == false) {
 
                                                             echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
 
-                                                        }*/
+                                                        }
 
                                                         $sql = "SELECT c_gondola, pedido
                                                         FROM 
                                                         tb_orcamento
                                                         WHERE 
-                                                        orcamento = '$orcamento'";
+                                                        orcamento = '$orcamento'
+                                                        and c_gondola = '96'
+                                                        group by c_gondola";
 
                                                         $sql = $pdo->query($sql); 
                                                         if($sql->rowCount() > 0) {
 
-                                                            $acougue = $sql->fetchAll();
-
-                                                            if (in_array('96', $acougue)) {
-                                                                echo "encontrado</br>";
-                                                            } else {
-                                                                echo "nao encontrado</br>";
-                                                            }
-
-                                                            /*foreach($sql->fetchAll() as $acougue) {
+                                                            foreach($sql->fetchAll() as $acougue) {
 
                                                                 if (in_array('96', $acougue)) {
-                                                                    echo "encontrado</br>";
-                                                                } else {
-                                                                    echo "nao encontrado</br>";
-                                                                }
 
-
-
-                                                            }*/
-
-                                                            var_dump($acougue['c_gondola']);
-
-
-                                                            /*echo "<td style='width:5%;'>";
+                                                                    echo "<td style='width:5%;'>";
                                                         
-                                                                if($acougue['c_gondola'] == '96' && $acougue['pedido'] == 'N') {
+                                                                        if($acougue['c_gondola'] == '96' && $acougue['pedido'] == 'N') {
 
-                                                                    echo "AGUARDANDO";
+                                                                            echo "AGUARDANDO";
 
-                                                                }
-                                                                if($acougue['c_gondola'] == '96' && $acougue['pedido'] == 'S') {
+                                                                        } elseif($acougue['c_gondola'] == '96' && $acougue['pedido'] == 'S') {
 
-                                                                    echo "PRONTO";
+                                                                            echo "PRONTO";
 
-                                                                }
-                                                                if($acougue['c_gondola'] != '96' && $acougue['pedido'] == 'N') {
-
-                                                                    echo "-";
-
-                                                                }
+                                                                        }
                                                         
-                                                            "</td>";*/
+                                                                    "</td>";
 
-                                                            
+                                                                }
+                                                            }
+                                                           
+                                                        } else {
+
+                                                            echo "<td style='width:5%;'>-</td>";
                                                         }
+                                                        
+
+
+
+
+
+
 
                                                         echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";
                                                         echo '<td style="width:5%;">';

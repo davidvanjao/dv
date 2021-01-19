@@ -224,17 +224,18 @@ if(isset($_SESSION['blocoNotas'])) {
 
                                         <div class="busca-resultado largura"> 
                                             <table>   
-                                                <tr>
-                                                    <th style="width:5%;">Código</th>
-                                                    <th style="width:40%;">Produto</th>
-                                                    <th style="width:5%;">Med</th>
-                                                    <th style="width:5%;">Qtd</th>
-                                                    <th style="width:5%;">Preco</th>
-                                                    <th style="width:5%;">Total</th>                                                
-                                                    <th style="width:5%;">Est</th>
-                                                    <th style="width:5%;">Obs</th>
-                                                    <th style="width:10%;" >Ações</th>
-                                                </tr> 
+                                                <tr class="cabecalho" style="border:1px solid #000;">
+                                                    <th>Código</th>
+                                                    <th>Produto</th>
+                                                    <th>Med</th>
+                                                    <th>Qtd</th>
+                                                    <th>Preco</th>
+                                                    <th>Total</th>                                                
+                                                    <th>Est</th>
+                                                    <th>Obs</th>
+                                                    <th>Ações</th>                                                    
+                                                </tr>
+
                                                 <?php
 
                                                 if(!empty($_SESSION['lista'])) {
@@ -246,6 +247,8 @@ if(isset($_SESSION['blocoNotas'])) {
                                                         $observacao = $value['observacao'];
                                                         $medida = $value['medida'];
                                                         $resultado = number_format($preco*$quantidade,2,",",".");
+
+                                            
 
                                                         echo "<tr>";
                                                         echo "<td>".$value['codigoEan']."</td>";
@@ -285,13 +288,7 @@ if(isset($_SESSION['blocoNotas'])) {
                                                         echo '<td><a href="delivery.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
                                                         echo "</tr>";  
                                                     }
-
-                                                } else {
-
-                                                    echo "</br>";
-                                                    echo "Lista não iniciada!";
-                                                
-                                                } 
+                                                }
                                                 ?>                                        
                                             </table>
                                         </div>

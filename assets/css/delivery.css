@@ -1,13 +1,12 @@
 /*==========================================PAINEL 1===================================================*/
 .campo-listar {
-    /*border: 1px solid;*/
     height: 88%;
     overflow: auto;
 }
 .tabela-titulo table{
     width: 100%;
-    border: 1px solid;
     margin-bottom: 10px;    
+    border: 1px solid #000;
 }
 .tabela-titulo table th {
     text-align: left;
@@ -21,6 +20,7 @@
     background-color: #ff0000;
     display: block;
     text-align: center;
+    margin:1px;
 }
 .tabela-lancamentos table a:hover {
     background-color: #fff;
@@ -35,10 +35,6 @@
 }
 
 /*==========================================PERSONALIZAVEL===================================================*/
-
-/*.campo-inserir{
-    display: flex;
-}*/
 
 .campo-inserir form{
     display: flex;
@@ -126,6 +122,12 @@ hr {
     width: 100%;
 }
 /*=============================================================================================*/
+
+table {
+    border-collapse: collapse;
+
+}
+
 .corpo-lista{
     display: flex;
     height: 80%;

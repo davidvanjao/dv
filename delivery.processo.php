@@ -392,6 +392,8 @@ if(isset($_POST['salvarLista'])) {
         
                 $quantidade = $value['quantidade'];
                 $gondola = $value['gondola'];
+                $ean = $value['codigoEan'];
+                $produto = $value['produto'];
                 $preco = $value['preco'];
                 $codigo = $value['codigo'];
                 $medida = $value['medida'];
@@ -400,10 +402,14 @@ if(isset($_POST['salvarLista'])) {
                 $observacao = $value['observacao'];
 
                 $sql = $pdo->prepare("INSERT INTO tb_orcamento SET dataa = NOW(), medida = :medida, orcamento = :orcamento, c_gondola = :c_gondola,
-                c_produto = :c_produto, quantidade = :quantidade, valor_total = :valorTotal, estoque = :estoque, pedido = :pedido, observacao = :observacao, usuario = :usuario");
+                ean = :ean, produto = :produto, c_produto = :c_produto, quantidade = :quantidade, valor_total = :valorTotal, estoque = :estoque, pedido = :pedido,
+                observacao = :observacao, usuario = :usuario");
+                
                 $sql->bindValue(":orcamento", $orcamento);
                 $sql->bindValue(":c_gondola", $gondola);
                 $sql->bindValue(":c_produto", $codigo);
+                $sql->bindValue(":ean", $ean);
+                $sql->bindValue(":produto", $produto);
                 $sql->bindValue(":quantidade",$quantidade);
                 $sql->bindValue(":valorTotal", $preco);
                 $sql->bindValue(":usuario", $usuario);
