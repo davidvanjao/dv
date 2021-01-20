@@ -14,7 +14,7 @@ if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
 $usuarios = new Usuarios($pdo);
 $usuarios->setUsuario($_SESSION['logado']);
 
-if($usuarios->temPermissao('DEL') == false) {
+if($usuarios->temPermissao('ORC') == false) {
     header("Location:index.php");
     exit;
 }
@@ -160,7 +160,7 @@ if(isset($_POST['pesquisa'])) {
 
                                                 while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {                                                    
 
-                                                    echo '<tr onclick=location.href="delivery.processo.php?codigoProduto='.$produto['SEQPRODUTO'].'" style="cursor:pointer">';
+                                                    echo '<tr onclick=location.href="orcamento.processo.php?codigoProduto='.$produto['SEQPRODUTO'].'" style="cursor:pointer">';
                                                     echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
                                                     echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
                                                     echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  

@@ -60,7 +60,7 @@ if($usuarios->temPermissao('DEL') == false) {
 
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar" method="GET">
-                                            <input class="input-busca-delivery"type="date" value="" name="data" autocomplete="off" required="required" onchange="this.form.submit()"/>
+                                            <input class="input-busca-delivery"type="button" value="" name="data"/>
                                         </form>                                        
                                     </div>
 
@@ -71,9 +71,9 @@ if($usuarios->temPermissao('DEL') == false) {
                                                 <th style="width:10%;">DATA</th>
                                                 <th style="width:10%;">NOME</th>
                                                 <th style="width:5%;">AÇOUGUE</th>
-                                                <th style="width:5%;">STATUS</th>
-                                                <th style="width:5%;">ATENDENTE</th>
-                                                <th style="width:5%;">AÇÕES</th>
+                                                <th style="width:5%; text-align:center;">STATUS</th>
+                                                <th style="width:5%; text-align:center;">ATENDENTE</th>
+                                                <th style="width:5%; text-align:center;">AÇÕES</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -174,8 +174,8 @@ if($usuarios->temPermissao('DEL') == false) {
                                                             echo "<td style='width:5%;'>-</td>";
                                                         }
 
-                                                        echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";
-                                                        echo "<td style='width:5%;'>".$delivery['nome']."</td>";   
+                                                        echo "<td style='background-color:$cor; width:5%; text-align:center;'>".$delivery['statuss']."</td>";
+                                                        echo "<td style='width:5%; text-align:center;'><strong>".$delivery['nome']."</strong></td>";   
                                                         echo '<td style="width:5%;">';
                                                             echo '<div class="teste">';
                                                             

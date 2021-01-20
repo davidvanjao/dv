@@ -6,6 +6,14 @@
                 </div>
             <?php endif; ?>        
 
+            <?php if($usuarios->temPermissao('ORC')): ?>
+                <div class="painel-menu-widget">
+                    <a href="orcamento.painel.1.php">
+                        <img src="assets/img/orcamento.png" title="Orçamento">                                        
+                    </a>                        
+                </div>
+            <?php endif; ?>
+
             <?php if($usuarios->temPermissao('DEL')): ?>
                 <div class="painel-menu-widget">
                     <a href="delivery.painel.1.php">

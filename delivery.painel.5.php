@@ -99,8 +99,8 @@ $seq = "1";
                                                 <th style='width:10%;'>DATA</th>
                                                 <th style='width:10%;'>NOME</th>
                                                 <th style='width:10%;'>ENDEREÇO</th>
-                                                <th style="width:5%;">STATUS</th>
-                                                <th style="width:5%;">ATENDENTE</th>
+                                                <th style="width:5%; text-align:center;">STATUS</th>
+                                                <th style="width:5%; text-align:center;">ATENDENTE</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -153,8 +153,8 @@ $seq = "1";
 
                                                             }
                                                             
-                                                            echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";   
-                                                            echo "<td style='width:5%;'>".$delivery['nome']."</td>";                       
+                                                            echo "<td style='background-color:$cor; width:5%; text-align:center;'>".$delivery['statuss']."</td>";   
+                                                            echo "<td style='width:5%; text-align:center;'><strong>".$delivery['nome']."</strong></td>";                       
                                                             echo "</tr>";  
 
                                                         

@@ -14,7 +14,7 @@ if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
 $usuarios = new Usuarios($pdo);
 $usuarios->setUsuario($_SESSION['logado']);
 
-if($usuarios->temPermissao('DEL') == false) {
+if($usuarios->temPermissao('ORC') == false) {
     header("Location:index.php");
     exit;
 }
@@ -136,7 +136,7 @@ if(isset($_POST['pesquisa'])) {
 
                                             while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
 
-                                                echo '<tr onclick=location.href="delivery.processo.php?codCliente='.$cliente['SEQPESSOA'].'" style="cursor:pointer">';
+                                                echo '<tr onclick=location.href="orcamento.processo.php?codCliente='.$cliente['SEQPESSOA'].'" style="cursor:pointer">';
                                                     echo "<td style='width:5%;'>".$cliente['SEQPESSOA']."</td>";
                                                     echo "<td style='width:20%;'>".$cliente['NOMERAZAO']."</td>";
                                                     

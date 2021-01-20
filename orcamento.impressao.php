@@ -90,8 +90,6 @@ if(isset($orcamento) && !empty($orcamento)) {
     $html .= '<th>PREÇO UN</th>';
     $html .= '<th>QTD</th>';
     $html .= '<th>TOTAL</th>';
-    $html .= '<th>ESTOQUE</th>';
-    $html .= '<th>OBS</th>';
     $html .= '</tr>';
     $html .= '</thead>';
 
@@ -110,8 +108,6 @@ if(isset($orcamento) && !empty($orcamento)) {
         $html .= '<td> R$ '.number_format($preco,2,",",".") .'</td>';
         $html .= '<td>'.number_format($linha['quantidade'],3,",",".").' '.$linha['medida'].'</td>';
         $html .= '<td> R$ '.number_format($resultado,2,",",".").'</td>';
-        $html .= '<td>'.$linha['estoque'] .'</td>';
-        $html .= '<td>'.$linha['observacao'] .'</td>';
         $html .= '</tr>';
         $html .='</tbody>';	
 
@@ -171,7 +167,7 @@ $dompdf->load_html('
 
             <hr>
 
-            <h1>LISTA DE COMPRA N° '.$orcamento.'</H1>
+            <h1>ORÇAMENTO N° '.$orcamento.'</H1>
 
 
             <div class="produto">                
