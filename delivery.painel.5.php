@@ -21,27 +21,32 @@ if($usuarios->temPermissao('DEL') == false) {
 
 $data = date('Y-m-d');
 
-$sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+$sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data, a.usuario, b.nome
         FROM 
-        tb_log_delivery a
+        tb_log_delivery a,
+        tb_usuarios b
         WHERE 
-        a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
+        a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA', 'SAIU PARA ENTREGA' )
         AND a.dataa = '$data'
+        and a.usuario = b.id
         GROUP BY a.orcamento";
-
 
 if(isset($_GET['data']) && empty($_GET['data']) == false){
 
     $data = addslashes($_GET['data']);
 
-    $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
-            FROM 
-            tb_log_delivery a
-            WHERE 
-            a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
-            AND a.dataa = '$data'
-            GROUP BY a.orcamento";
+    $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data, a.usuario, b.nome
+        FROM 
+        tb_log_delivery a,
+        tb_usuarios b
+        WHERE 
+        a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA', 'SAIU PARA ENTREGA' )
+        AND a.dataa = '$data'
+        and a.usuario = b.id
+        GROUP BY a.orcamento";
 }
+
+$seq = "1";
 
 ?>
 
@@ -89,11 +94,13 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style='width:10%;'>Ticket</th>
-                                                <th style='width:10%;'>Data</th>
-                                                <th style='width:10%;'>Nome</th>
-                                                <th style='width:10%;'>Endereço</th>
-                                                <th style="width:5%;">Status</th>
+                                                <th style="width:2%;">Nº</th>
+                                                <th style='width:10%;'>TICKET</th>
+                                                <th style='width:10%;'>DATA</th>
+                                                <th style='width:10%;'>NOME</th>
+                                                <th style='width:10%;'>ENDEREÇO</th>
+                                                <th style="width:5%;">STATUS</th>
+                                                <th style="width:5%;">ATENDENTE</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -123,6 +130,7 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                             }  
 
                                                             echo "<tr>";
+                                                            echo "<td style='width:2%;'>".$seq++."</td>";
                                                             echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                             echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
 
@@ -140,12 +148,13 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
 
                                                             while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
 
-                                                                echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
-                                                                echo "<td style='width:10%;'>".$cliente['LOGRADOURO'].' '.$cliente['NROLOGRADOURO']."</td>";  
+                                                                echo "<td style='width:10%;'>".@$cliente['NOMERAZAO']."</td>";
+                                                                echo "<td style='width:10%;'>".@$cliente['LOGRADOURO'].' '.@$cliente['NROLOGRADOURO']."</td>";  
 
                                                             }
                                                             
-                                                            echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";                        
+                                                            echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";   
+                                                            echo "<td style='width:5%;'>".$delivery['nome']."</td>";                       
                                                             echo "</tr>";  
 
                                                         

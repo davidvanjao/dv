@@ -48,6 +48,23 @@ if(isset($_GET['andamento']) && empty($_GET['andamento']) == false) {
 
 if(isset($_GET['liberado'])) {
 
+    $id = $_GET['liberado'];  
+    $status = 'LIBERADO PARA ENTREGA';
+    $dataLiberar = "";
+
+    $sql = $pdo->prepare("UPDATE tb_log_delivery SET statuss = :statuss, dataLiberar = NOW() WHERE id = $id");
+    $sql->bindValue(":statuss", $status);
+    $sql->execute();
+
+    header("Location:/delivery.painel.3.php");
+    exit;
+
+}
+
+//DESATIVADO TEMPORARIAMENTE. PROCESSO DE LIBERAR COM INFORME DE CUPOM E DATA.
+
+/*if(isset($_GET['liberado'])) {
+
     $id = $_POST['id'];
     $data = $_POST['data'];
     $cupom = $_POST['cupom']; 
@@ -65,36 +82,21 @@ if(isset($_GET['liberado'])) {
     header("Location:/delivery.painel.3.php");
     exit;
 
-}
+}*/
 
 if(isset($_GET['saiu'])) {
-    $id = addslashes($_GET['saiu']);
 
-    $sql = "SELECT a.id, a.dataa, b.nome, c.cidadeEstado, c.logradouro, b.numero, a.statuss
-    from tb_log_delivery as a join tb_cliente as b join tb_endereco as c 
-    on a.idCliente = b.id 
-    and b.idEndereco = c.id
-    where a.id = '$id'";
+    $id = $_GET['saiu'];  
+    $status = 'SAIU PARA ENTREGA';
+    $dataLiberar = "";
 
-    $sql = $pdo->query($sql);
+    $sql = $pdo->prepare("UPDATE tb_log_delivery SET statuss = :statuss, dataEntregar = NOW() WHERE id = $id");
+    $sql->bindValue(":statuss", $status);
+    $sql->execute();
 
-    if($sql->rowCount() > 0) {
+    header("Location:/delivery.painel.3.php");
+    exit;
 
-        $log = $sql->fetch();
-        
-        $status = 'SAIU PARA ENTREGA';
-        $data = date('Y-m-d');
-        $dataEntregar = "";
-    
-        $sql = $pdo->prepare("UPDATE tb_log_delivery SET dataa = :dataa, statuss = :statuss, dataEntregar = NOW() WHERE id = $id");
-        $sql->bindValue(":dataa", $data);
-        $sql->bindValue(":statuss", $status);
-        $sql->execute();
-    
-        header("Location:/delivery.painel.3.php");    
-        exit;
-        
-    }
 } 
 
     

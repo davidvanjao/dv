@@ -19,6 +19,8 @@ if($usuarios->temPermissao('DEL') == false) {
     exit;
 }
 
+$usuario = $_SESSION['logado'];
+
 //=================================================================================================================
 
 ?>
@@ -71,11 +73,11 @@ if($usuarios->temPermissao('DEL') == false) {
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:10%;">Ticket</th>
-                                                <th style="width:10%;">Data</th>
-                                                <th style="width:10%;">Nome</th>
-                                                <th style="width:5%;">Status</th>
-                                                <th style="width:10%;">Ações</th>
+                                                <th style="width:10%;">TICKET</th>
+                                                <th style="width:10%;">DATA</th>
+                                                <th style="width:10%;">NOME</th>
+                                                <th style="width:5%;">STATUS</th>
+                                                <!--<th style="width:5%;">AÇÕES</th>-->
                                             </tr>
                                         </table> 
                                     </div>                                    
@@ -87,7 +89,8 @@ if($usuarios->temPermissao('DEL') == false) {
                                             FROM 
                                             tb_log_delivery a
                                             WHERE 
-                                            a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
+                                            a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA')
+                                            and a.usuario = '$usuario'
                                             ORDER BY a.id";
 
                                             $sql = $pdo->query($sql);   
@@ -131,8 +134,8 @@ if($usuarios->temPermissao('DEL') == false) {
 
                                                     }
                                                     echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>"; 
-                                                    echo '<td style="width:5%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'&cliente='.$delivery['idCliente'].'" target="_blank">Imprimir</a></td>';   
-                                                    echo '<td style="width:5%;"><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></td>';           
+                                                    //echo '<td style="width:5%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'&cliente='.$delivery['idCliente'].'" target="_blank">Imprimir</a></td>';   
+                                                    //echo '<td style="width:5%;"><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></td>';           
                                                     echo "</tr>";  
 
                                                 

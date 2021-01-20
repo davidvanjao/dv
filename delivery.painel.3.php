@@ -57,15 +57,23 @@ if($usuarios->temPermissao('DEL') == false) {
                             <div class="conteudo-Geral">
 
                                 <div class="body-conteudo">
+
+                                    <div class="campo-inserir">
+                                        <form class="busca-area" name="buscar" method="GET">
+                                            <input class="input-busca-delivery"type="date" value="" name="data" autocomplete="off" required="required" onchange="this.form.submit()"/>
+                                        </form>                                        
+                                    </div>
+
                                     <div class="tabela-titulo">
                                         <table>
-                                            <tr>
-                                                <th style="width:10%;">Ticket</th>
-                                                <th style="width:10%;">Data</th>
-                                                <th style="width:10%;">Nome</th>
-                                                <th style="width:5%;">Açougue</th>
-                                                <th style="width:5%;">Status</th>
-                                                <th style="width:5%;">Ações</th>
+                                            <tr>                                                
+                                                <th style="width:10%;">TICKET</th>
+                                                <th style="width:10%;">DATA</th>
+                                                <th style="width:10%;">NOME</th>
+                                                <th style="width:5%;">AÇOUGUE</th>
+                                                <th style="width:5%;">STATUS</th>
+                                                <th style="width:5%;">ATENDENTE</th>
+                                                <th style="width:5%;">AÇÕES</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -75,11 +83,13 @@ if($usuarios->temPermissao('DEL') == false) {
                                             <table>
                                                 <?php
 
-                                                $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+                                                $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data, a.usuario, b.nome
                                                 FROM 
-                                                tb_log_delivery a
+                                                tb_log_delivery a,
+                                                tb_usuarios b
                                                 WHERE 
                                                 a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
+                                                and a.usuario = b.id
                                                 GROUP BY a.orcamento";
                                                                                                                                                 
 
@@ -104,8 +114,8 @@ if($usuarios->temPermissao('DEL') == false) {
                                                             $cor="#008000";
                                                         }     
                                                         
-                                                        echo "<tr>";
-                                                        echo "<td style='width:10%;'>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</td>";
+                                                        echo "<tr>";                                                        
+                                                        echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                         echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
                                                         
 
@@ -163,15 +173,9 @@ if($usuarios->temPermissao('DEL') == false) {
 
                                                             echo "<td style='width:5%;'>-</td>";
                                                         }
-                                                        
-
-
-
-
-
-
 
                                                         echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";
+                                                        echo "<td style='width:5%;'>".$delivery['nome']."</td>";   
                                                         echo '<td style="width:5%;">';
                                                             echo '<div class="teste">';
                                                             
@@ -184,7 +188,8 @@ if($usuarios->temPermissao('DEL') == false) {
                                                                         
                                                                         if($delivery['statuss'] == 'EM ANDAMENTO') {
 
-                                                                        echo '<a class="liberar" href="delivery.painel.4.php?id='.$delivery['id'].'">Liberar</a>';
+                                                                        //echo '<a class="liberar" href="delivery.painel.4.php?id='.$delivery['id'].'">Liberar</a>';
+                                                                        echo '<a class="liberar" href="delivery.processo.php?liberado='.$delivery['id'].'">Liberar</a>';
 
                                                                         }
                                                                         
@@ -194,7 +199,8 @@ if($usuarios->temPermissao('DEL') == false) {
     
                                                                         }
                                                             echo '</div>';                                                             
-                                                        echo '</td>';                           
+                                                        echo '</td>'; 
+                                                                                 
                                                         echo "</tr>";                                                      
                                                                      
                                                     }
