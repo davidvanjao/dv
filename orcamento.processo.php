@@ -3,6 +3,21 @@
 session_start();
 require 'conexao.banco.php';
 require 'conexao.banco.oracle.php';
+require 'classes/usuarios.class.php';
+
+if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
+} else {
+    header("Location: login.php");
+}
+
+$usuarios = new Usuarios($pdo);
+$usuarios->setUsuario($_SESSION['logado']);
+
+if($usuarios->temPermissao('ORC') == false) {
+    header("Location:index.php");
+    exit;
+}
+
 
 //================================VARIAVEIS=========================================================================
 
@@ -381,17 +396,17 @@ if(isset($_GET['excluir'])) {
 
 //================================EDITAR EXCLUIR PRODUTO================================================================
 
-if(isset($_GET['Editarexcluir'])) {
+if(isset($_GET['excluirEditar'])) {
 
-    $produto = $_GET['Editarexcluir'];
+    $produto = $_GET['excluirEditar'];
     $orcamento = $_GET['orcamento'];
+    $cliente = $_GET['cliente'];
 
     $sql = $pdo->prepare("DELETE FROM tb_orcamento WHERE orcamento = :orcamento AND c_produto = :c_produto");
     $sql->bindValue(":orcamento", $orcamento);
     $sql->bindValue(":c_produto", $produto);
     $sql->execute();   
  
-    header("Location:/orcamento.editar.php?orcamento=$orcamento");  
-    exit;
+    header("Location:/orcamento.editar.php?orcamento='.$orcamento.'&cliente='.$cliente.'");  
 
 }

@@ -19,6 +19,8 @@ if($usuarios->temPermissao('ORC') == false) {
     exit;
 }
 
+//==============================================================================================
+
 $tipoBusca = "produto";
 
 if(isset($_POST['pesquisa'])) {

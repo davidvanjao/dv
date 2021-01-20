@@ -41,6 +41,7 @@ $usuario = $_SESSION['logado'];
                     <div class="painel-menu">
                         <div class="painel-menu-menu">
 
+                        <?php require 'menuLateral.php'; ?>
                         
                             
                         </div>
@@ -57,7 +58,7 @@ $usuario = $_SESSION['logado'];
                                 <a href="delivery.painel.1.php">Lista</a>                              
                                 <a href="delivery.painel.3.php">Controle</a> 
                                 <a href="delivery.painel.5.php">Status</a>
-                                <a href="index.php">Voltar</a>
+                                <a href="sair.php">Sair</a>
                             </div>
                         </header>
                         <section class="page">
@@ -66,7 +67,7 @@ $usuario = $_SESSION['logado'];
                                 <div class="body-conteudo">
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar-form" method="POST" action="delivery.processo.php">
-                                            <input class="input-botao" type="submit" name="adicionaLista" value="Adicionar Lista">
+                                            <input class="input-botao" type="submit" name="adicionaLista" value="Criar Lista">
                                         </form>
                                     </div>
                                     

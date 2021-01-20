@@ -19,6 +19,9 @@ if($usuarios->temPermissao('PES') == false) {
     exit;
 }
 
+//=================================================================================================
+
+
 $tipoBusca = "produto";
 
 if(isset($_POST['pesquisa'])) {

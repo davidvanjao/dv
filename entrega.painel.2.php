@@ -19,6 +19,9 @@ if($usuarios->temPermissao('ENT') == false) {
 }
 
 
+//========================================================================================================
+
+
 $id = 0;
 if(isset($_GET['id']) && empty($_GET['id']) == false) {
     $id = addslashes($_GET['id']);

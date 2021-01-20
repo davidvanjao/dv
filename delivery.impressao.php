@@ -1,14 +1,31 @@
 <?php
 
+session_start();
 require 'conexao.banco.php';
 require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
+
+if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
+} else {
+    header("Location: login.php");
+}
+
+$usuarios = new Usuarios($pdo);
+$usuarios->setUsuario($_SESSION['logado']);
+
+if($usuarios->temPermissao('DEL') == false) {
+    header("Location:index.php");
+    exit;
+}
+
+//=================================================================================================================
 
 $html = "";
 $seq = "1";
 $pagamento = "";
 $total = "";
 $valorTotal = floatval("00,00");
+$dataHora = date('d/m/Y \à\s H:i:s');
 
 // DADOS DO CLIENTE - SISTEMA CONSINCO.
 
@@ -171,7 +188,7 @@ $dompdf->load_html('
 
             <hr>
 
-            <h1>LISTA DE COMPRA N° '.$orcamento.'</H1>
+            <h2>LISTA DE COMPRA N° '.$orcamento.'</h2>
 
 
             <div class="produto">                
@@ -181,12 +198,13 @@ $dompdf->load_html('
             </div>
 
             <footer>
-
-            <hr>
-            <p>Desenvolvido por David Vanjão</p>
-
-
-
+                <hr>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="font-size:12px;">Desenvolvido por: David Vanjão</td>
+                        <td style="text-align:right; font-size:12px;">Impresso em: '.$dataHora.'</td>
+                    </tr>
+                </table>   
             </footer>
 
         </body>

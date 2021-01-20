@@ -19,6 +19,8 @@ if($usuarios->temPermissao('PES') == false) {
     exit;
 }
 
+//====================================================================================================
+
 if(isset($_GET['codigo']) && !empty($_GET['codigo'])) { //se existir e ele nao estiver vazio.
 
     $codigo = addslashes($_GET['codigo']);                                        

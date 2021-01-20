@@ -19,6 +19,9 @@ if($usuarios->temPermissao('DEL') == false) {
     exit;
 }
 
+//=========================================================================================================
+
+
 $tipoBusca = "produto";
 
 if(isset($_POST['pesquisa'])) {
@@ -27,8 +30,6 @@ if(isset($_POST['pesquisa'])) {
 
 }
 
-//var_dump($_POST);
-//var_dump($tipoBusca);
 ?>
 
 <!DOCTYPE html>

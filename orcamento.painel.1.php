@@ -20,6 +20,31 @@ if($usuarios->temPermissao('ORC') == false) {
 }
 
 $usuario = $_SESSION['logado'];
+$data = date('Y-m-d');
+
+
+    $sql = "SELECT a.id, a.orcamento, a.idCliente, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+    FROM 
+    tb_log_delivery a
+    WHERE 
+    a.tipo = 'O'
+    and a.usuario = '$usuario'
+    and a.dataa = '$data'
+    ORDER BY a.orcamento";
+
+if(isset($_GET['data']) && empty($_GET['data']) == false){
+
+    $data = addslashes($_GET['data']);
+
+    $sql = "SELECT a.id, a.orcamento, a.idCliente, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+    FROM 
+    tb_log_delivery a
+    WHERE 
+    a.tipo = 'O'
+    and a.usuario = '$usuario'
+    and a.dataa = '$data'
+    ORDER BY a.orcamento";
+}
 
 //=================================================================================================================
 
@@ -39,8 +64,10 @@ $usuario = $_SESSION['logado'];
             <div class="main_styled">
                 <div class="menu-lateral">
                     <div class="painel-menu">
-                        <div class="painel-menu-menu">                        
-                            
+                        <div class="painel-menu-menu"> 
+
+                            <?php require 'menuLateral.php'; ?> 
+
                         </div>
                     </div>
                 </div>
@@ -51,18 +78,23 @@ $usuario = $_SESSION['logado'];
                             <div class="logo">
                                 <img src="">
                             </div>
-                            <div class="superiorMenu">                                
-                                <a href="index.php">Voltar</a>
+                            <div class="superiorMenu">   
+
+                                <a href="sair.php">Sair</a>                             
+                                
                             </div>
                         </header>
                         <section class="page">
                             <div class="conteudo-Geral">
 
                                 <div class="body-conteudo">
-                                    <div class="campo-inserir">
+                                    <div class="campo-inserir orcamento1">
                                         <form class="busca-area" name="buscar-form" method="POST" action="orcamento.processo.php">
                                             <input class="input-botao" type="submit" name="adicionarOrcamento" value="Criar Orçamento">
                                         </form>
+                                        <form class="busca-area" name="buscar" method="GET">
+                                            <input class="input-busca-delivery"type="date" value="<?php echo $data;?>" name="data" autocomplete="off" required="required" onchange="this.form.submit()"/>
+                                        </form>    
                                     </div>
                                     
                                     <div class="tabela-titulo">
@@ -77,16 +109,8 @@ $usuario = $_SESSION['logado'];
                                     </div>                                    
                                     <div class="busca-resultado"> 
                                         <table>
-                                            <?php                                 
-
-                                            $sql = "SELECT a.id, a.orcamento, a.idCliente, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
-                                            FROM 
-                                            tb_log_delivery a
-                                            WHERE 
-                                            a.tipo = 'O'
-                                            and a.usuario = '$usuario'
-                                            ORDER BY a.orcamento";
-
+                                            <?php          
+                                            
                                             $sql = $pdo->query($sql);   
                                             if($sql->rowCount() > 0) {
                                                 foreach($sql->fetchAll() as $orcamento) {
@@ -115,7 +139,7 @@ $usuario = $_SESSION['logado'];
 
                                                     }
                                                     echo '<td style="width:5%;"><a href="orcamento.impressao.php?orcamento='.$orcamento['orcamento'].'&cliente='.$orcamento['idCliente'].'" target="_blank">Imprimir</a></td>';   
-                                                    echo '<td style="width:5%;"><a href="orcamento.editar.php?orcamento='.$orcamento['orcamento'].'">Editar</a></td>';           
+                                                    echo '<td style="width:5%;"><a href="orcamento.editar.php?orcamento='.$orcamento['orcamento'].'&cliente='.$orcamento['idCliente'].'">Editar</a></td>';           
                                                     echo "</tr>";  
 
                                                 

@@ -65,6 +65,13 @@ $seq = "1";
                 <div class="menu-lateral">
                     <div class="painel-menu">
 
+                        <div class="painel-menu-menu">
+
+                            <?php require 'menuLateral.php'; ?>
+
+                            
+                        </div>
+
                     </div>
                 </div>
 
@@ -78,7 +85,7 @@ $seq = "1";
                                 <a href="delivery.painel.1.php">Lista</a>                              
                                 <a href="delivery.painel.3.php">Controle</a> 
                                 <a href="delivery.painel.5.php">Status</a>
-                                <a href="index.php">Voltar</a>
+                                <a href="sair.php">Sair</a>
                             </div>
                         </header>
                         <section class="page">

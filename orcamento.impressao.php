@@ -1,14 +1,31 @@
 <?php
 
+session_start();
 require 'conexao.banco.php';
 require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
+
+if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
+} else {
+    header("Location: login.php");
+}
+
+$usuarios = new Usuarios($pdo);
+$usuarios->setUsuario($_SESSION['logado']);
+
+if($usuarios->temPermissao('ORC') == false) {
+    header("Location:index.php");
+    exit;
+}
+
+//=================================================================================================================
 
 $html = "";
 $seq = "1";
 $pagamento = "";
 $total = "";
 $valorTotal = floatval("00,00");
+$dataHora = date('d/m/Y \à\s H:i:s');
 
 // DADOS DO CLIENTE - SISTEMA CONSINCO.
 
@@ -87,7 +104,7 @@ if(isset($orcamento) && !empty($orcamento)) {
     $html .= '<th>N</th>';
     $html .= '<th>CÓDIGO</th>';
     $html .= '<th>PRODUTO</th>';
-    $html .= '<th>PREÇO UN</th>';
+    $html .= '<th>PREÇO</th>';
     $html .= '<th>QTD</th>';
     $html .= '<th>TOTAL</th>';
     $html .= '</tr>';
@@ -167,22 +184,29 @@ $dompdf->load_html('
 
             <hr>
 
-            <h1>ORÇAMENTO N° '.$orcamento.'</H1>
+            <h2>ORÇAMENTO N° '.$orcamento.'</h2>
 
 
             <div class="produto">                
 
-                '.$html.'
+                '.$html.'    
+                
+                <table style="width:100%; margin-top:10px; font-size:20px;">
+                    <tr>
+                        <td style="text-align:right;"><strong>TOTAL:<strong> R$'.number_format($valorTotal,2,",",".").'</td>
+                    </tr>
+                </table>   
 
             </div>
 
             <footer>
-
-            <hr>
-            <p>Desenvolvido por David Vanjão</p>
-
-
-
+                <hr>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="font-size:12px;">Desenvolvido por: David Vanjão</td>
+                        <td style="text-align:right; font-size:12px;">Impresso em: '.$dataHora.'</td>
+                    </tr>
+                </table>   
             </footer>
 
         </body>

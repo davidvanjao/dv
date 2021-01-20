@@ -53,6 +53,13 @@ table tr{
     height: 35px;
 }
 
+.orcamento1 {
+    display: flex;
+}
+.orcamento1 form {
+    margin-right: 5px;
+}
+
 /*==========================================PAINEL 2===================================================*/
 
 .formulario-cliente {
