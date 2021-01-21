@@ -22,8 +22,7 @@ if($usuarios->temPermissao('ORC') == false) {
 $usuario = $_SESSION['logado'];
 $data = date('Y-m-d');
 
-
-    $sql = "SELECT a.id, a.orcamento, a.idCliente, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+    $sql = "SELECT a.id, a.nomeCliente, a.orcamento, a.idCliente, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
     FROM 
     tb_log_delivery a
     WHERE 
@@ -36,7 +35,7 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
 
     $data = addslashes($_GET['data']);
 
-    $sql = "SELECT a.id, a.orcamento, a.idCliente, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+    $sql = "SELECT a.id, a.nomeCliente, a.orcamento, a.idCliente, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
     FROM 
     tb_log_delivery a
     WHERE 
@@ -90,7 +89,7 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                 <div class="body-conteudo">
                                     <div class="campo-inserir orcamento1">
                                         <form class="busca-area" name="buscar-form" method="POST" action="orcamento.processo.php">
-                                            <input class="input-botao" type="submit" name="adicionarOrcamento" value="Criar Orçamento">
+                                            <input class="input-botao" type="submit" name="novoOrcamento" value="NOVO">
                                         </form>
                                         <form class="busca-area" name="buscar" method="GET">
                                             <input class="input-busca-delivery"type="date" value="<?php echo $data;?>" name="data" autocomplete="off" required="required" onchange="this.form.submit()"/>
@@ -120,26 +119,9 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                     echo "<tr>";
                                                     echo "<td style='width:10%;'><strong>".str_pad($orcamento['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                     echo "<td style='width:10%;'>".$orcamento['saida_data']."</td>";
-
-                                                    $consulta = "SELECT a.seqpessoa, a.nomerazao
-                                                    FROM 
-                                                    CONSINCO.GE_PESSOA a
-                                                    WHERE
-                                                    a.seqpessoa = '$codCliente'";
-
-                                                     //prepara uma instrucao para execulsao
-                                                    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
-
-                                                    //Executa os comandos SQL
-                                                    oci_execute($resultado);
-
-                                                    while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
-
-                                                        echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
-
-                                                    }
+                                                    echo "<td style='width:10%;'>".$orcamento['nomeCliente']."</td>";                                                   
                                                     echo '<td style="width:5%;"><a href="orcamento.impressao.php?orcamento='.$orcamento['orcamento'].'&cliente='.$orcamento['idCliente'].'" target="_blank">Imprimir</a></td>';   
-                                                    echo '<td style="width:5%;"><a href="orcamento.editar.php?orcamento='.$orcamento['orcamento'].'&cliente='.$orcamento['idCliente'].'">Editar</a></td>';           
+                                                    echo '<td style="width:5%;"><a href="orcamento.editar.php?orcamento='.$orcamento['orcamento'].'">Editar</a></td>';           
                                                     echo "</tr>";  
 
                                                 

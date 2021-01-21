@@ -19,28 +19,29 @@ if($usuarios->temPermissao('ORC') == false) {
     exit;
 }
 
+var_dump($_SESSION);
+
 //=========================================VARIAVEIS========================================================================
 
 $codigoCliente = "";
 $nomeCliente = "";
 $valorTotal = "00.00";
-$formaPagamento = "";
-$bloco =".";
-$checkbox = "";
 
-
+//PUXA DADOS DO CABECALHO
 if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
 
     $orcamento = addslashes($_GET['orcamento']);
-    $codigoCliente = addslashes($_GET['cliente']);
+    //$codigoCliente = addslashes($_GET['cliente']);
 
-    $sql = "SELECT orcamento, pagamento
+    $sql = "SELECT a.orcamento, a.pagamento, a.nomeCliente, b.quantidade, b.valor_total
     FROM 
-    tb_log_delivery
+    tb_log_delivery a,
+    tb_orcamento b
     WHERE 
-    orcamento = '$orcamento'
+    a.orcamento = '$orcamento'
     and tipo = 'O'
-    ORDER BY id";
+    and a.orcamento = b.orcamento
+    ORDER BY a.id";
 
     $sql = $pdo->query($sql);   
     if($sql->rowCount() > 0) {
@@ -48,49 +49,10 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
         foreach($sql->fetchAll() as $key=>$dados) {
 
             $formaPagamento = $dados['pagamento'];
+            $nomeCliente = $dados['nomeCliente'];
 
-        }
-    }
-
-
-    $consulta = "SELECT a.seqpessoa, a.nomerazao, a.fisicajuridica, a.nrocgccpf, a.digcgccpf, a.status, a.foneddd1, a.fonenro1
-    FROM 
-    CONSINCO.GE_PESSOA a
-    WHERE
-    a.seqpessoa = '$codigoCliente'";
-    
-    //prepara uma instrucao para execulsao
-    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
-
-    //Executa os comandos SQL
-    oci_execute($resultado);
-
-    while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
-
-        $nomeCliente = $cliente['NOMERAZAO'];
-
-
-    }   
-}
-
-if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
-
- 
-    $sql = "SELECT quantidade, valor_total
-    FROM 
-    tb_orcamento
-    WHERE 
-    orcamento = '$orcamento'";
-
-      
-
-    $sql = $pdo->query($sql);   
-    if($sql->rowCount() > 0) {
-
-        foreach($sql->fetchAll() as $key=>$value) {
-
-            $quantidade = $value['quantidade'];
-            $valor = $value['valor_total'];
+            $quantidade = $dados['quantidade'];
+            $valor = $dados['valor_total'];
 
             $soma = $valor * $quantidade;
 
@@ -98,9 +60,8 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
 
         }
     }
-
+  
 }
-
 
 ?>
 
@@ -118,8 +79,7 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
             <div class="main_styled">
                 <div class="menu-lateral">
                     <div class="painel-menu">
-                        <div class="painel-menu-menu">
-        
+                        <div class="painel-menu-menu">        
 
                             
                         </div>
@@ -133,7 +93,7 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="orcamento.painel.1.php">Voltar</a>
+                                <a href="orcamento.processo.editar.php?excluirEditar">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
@@ -145,7 +105,7 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                                         <div class="formulario-cliente">   
 
                                             <div class="form-cliente-caixa">
-                                                <form class="form-cliente" name="buscar-form" method="POST" action="orcamento.cliente.pesquisa.php">
+                                                <form class="form-cliente" name="buscar-form">
                                                     <div>
                                                         <label>Nome:</label></br>
                                                         <input class="input-nome" type="text" autocomplete="off" name="nome" value="<?php echo $nomeCliente ?>" readonly="readonly"/>    
@@ -154,7 +114,7 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                                             </div>
 
                                             <div class="form-cliente-caixa">
-                                                <form class="form-pagamento" action='orcamento.processo.php' method='POST'>
+                                                <form class="form-pagamento">
                                                     <div>
                                                         <label>F. Pagamento</label></br>
                                                         <input class="input-nome" type="text" autocomplete="off" name="nome" value="<?php echo $formaPagamento ?>" readonly="readonly"/>
@@ -178,12 +138,14 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
 
                                         <div class="formulario-controle">
                                             <div class="bottoens">
-                                                <form class="busca-area" name="buscar-form" method="POST" action="orcamento.produto.pesquisa.php">
-                                                    <input type="submit" name="adicionarProduto" value="Incluir Produto">
+                                                <form class="busca-area" name="buscar-form" method="GET" action="orcamento.produto.pesquisa.php">
+                                                    <input type="hidden" name="orcamento" value="<?php echo $orcamento ?>">
+                                                    <input type="submit" name="adicionarEditar" value="Incluir Produto">
                                                 </form>   
 
-                                                <form class="busca-area" name="buscar-form" method="POST" action="orcamento.processo.php">
-                                                    <input type="submit" name="salvarLista" value="Atualiza Lista">
+                                                <form class="busca-area" name="buscar-form" method="GET" action="orcamento.processo.editar.php">
+                                                    <input type="hidden" name="orcamento" value="<?php echo $orcamento ?>">
+                                                    <input type="submit" name="atualizar" value="Atualizar">
                                                 </form>
                                             </div>
                                         </div>
@@ -234,18 +196,44 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                                                             echo "<td style='width:10%;'>".$value['ean']."</td>";
                                                             echo "<td style='width:20%;'>".$value['produto']."</td>";
                                                             echo "<td style='width:5%;'>".$medida."</td>";
-                                                            echo "<td style='width:5%;'>
-                                                                    <form class='' name='teste' method='GET' action='orcamento.processo.php'>      
-                                                                        <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'> 
-                                                                    </form>     
-                                                                </td>";                                                       
+                                                            echo "<td style='width:5%;'>".$quantidade."</td>";                                                     
                                                             echo "<td style='width:5%;'>R$".number_format($preco,2,",",".")."</td>";
                                                             echo "<td style='width:5%;'>R$".$resultado."</td>";
                                                             echo '<td style="width:5%;"><a href="orcamento.processo.php?excluirEditar='.$value['c_produto'].'&orcamento='.$orcamento.'cliente='.$codigoCliente.'">Excluir</a>';
                                                             echo "</tr>";  
                                                         } 
                                                     }
-                                                }                                         
+                                                }   
+                                                
+                                                if(!empty($_SESSION['lista'])) {
+
+                                                    foreach($_SESSION['lista'] as $key=>$value) {
+
+                                                        $preco = $value['preco'];
+                                                        $quantidade = $value['quantidade'];
+                                                        $observacao = $value['observacao'];
+                                                        $medida = $value['medida'];
+                                                        $resultado = number_format($preco*$quantidade,2,",",".");                                            
+
+                                                        echo "<tr>";
+                                                        echo "<td style='width:10%;'>".$value['codigoEan']."</td>";
+                                                        echo "<td style='width:20%;'>".$value['produto']."</td>";
+                                                        echo "<td style='width:5%;'>".$medida."</td>";
+                                                        echo "<td>
+                                                                <form class='' name='teste' method='GET' action='orcamento.processo.php'>      
+
+                                                                    <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='codigoProduto' required='required'>
+                                                                    <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>                                                        
+
+                                                                </form>     
+                                                               </td>"; 
+
+                                                        echo "<td style='width:5%;'>R$".number_format($preco,2,",",".")."</td>";
+                                                        echo "<td style='width:5%;'>R$".$resultado."</td>";
+                                                        echo '<td style="width:5%;"><a href="orcamento.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
+                                                        echo "</tr>";  
+                                                    }
+                                                }
 
 
                                                 ?>                                        
@@ -260,8 +248,6 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                 </div>
             </div>
         </div>
-        <script type="text/javascript" src="assets/js/scriptcheckbox.js"></script> 
-
     </body>
 
 

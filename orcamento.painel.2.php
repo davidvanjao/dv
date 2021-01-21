@@ -92,10 +92,8 @@ if(isset($_SESSION['blocoNotas'])) {
             <div class="main_styled">
                 <div class="menu-lateral">
                     <div class="painel-menu">
-                        <div class="painel-menu-menu">
-        
-
-                            
+                        <div class="painel-menu-menu"> 
+                        
                         </div>
                     </div>
                 </div>
@@ -174,7 +172,6 @@ if(isset($_SESSION['blocoNotas'])) {
                                                 </form>
 
                                                 <form class="busca-area" name="buscar-form" method="POST" action="orcamento.processo.php">
-
                                                     <?php 
                                                     if(isset($_SESSION['cliente'], $_SESSION['formaPagamento'], $_SESSION['orcamento'], $_SESSION['lista'])) {
                                                     ?>
@@ -232,7 +229,6 @@ if(isset($_SESSION['blocoNotas'])) {
                                                     <th>PREÇO</th>
                                                     <th>TOTAL</th>                                                
                                                     <th>ESTOQUE</th>
-                                                    <th>OBSERVAÇÃO</th>
                                                     <th>AÇÕES</th>                                                    
                                                 </tr>
 
@@ -277,14 +273,6 @@ if(isset($_SESSION['blocoNotas'])) {
                                                         echo "<td>R$".number_format($preco,2,",",".")."</td>";
                                                         echo "<td>R$".$resultado."</td>";
                                                         echo "<td>".$value['estoque']."</td>"; 
-                                                        echo "<td>
-                                                                    <form class='' name='teste' method='GET' action='orcamento.processo.php'>      
-
-                                                                        <input value=".$value['codigo']." class='observacao' type='hidden' min='0'  name='codigoProduto' required='required'>
-                                                                        <input value=".$observacao." class='observacao' type='text' min='0'  name='observacao' onchange='this.form.submit()'>                                                        
-
-                                                                    </form>     
-                                                              </td>";
                                                         echo '<td><a href="delivery.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
                                                         echo "</tr>";  
                                                     }

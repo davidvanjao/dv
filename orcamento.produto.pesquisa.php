@@ -48,12 +48,6 @@ if(isset($_POST['pesquisa'])) {
                 <div class="menu-lateral">
                     <div class="painel-menu">
                         <div class="painel-menu-menu">
-        
-                        <div class="painel-menu-menu">
-        
-                        
-                            
-                        </div>
                             
                         </div>
                     </div>
@@ -66,7 +60,10 @@ if(isset($_POST['pesquisa'])) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
+
                                 <a href="sair.php">Sair</a>
+
+
                             </div>
                         </header>
                         <section class="page">
@@ -160,9 +157,20 @@ if(isset($_POST['pesquisa'])) {
                                                 //Executa os comandos SQL
                                                 oci_execute($resultado);
 
-                                                while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {                                                    
+                                                while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {  
 
-                                                    echo '<tr onclick=location.href="orcamento.processo.php?codigoProduto='.$produto['SEQPRODUTO'].'" style="cursor:pointer">';
+
+                                                    //DIRECIONAR PARA O ORQUIVO EDITAR
+                                                    if(isset($_GET['adicionarEditar'])) {
+                                                        $orcamento = addslashes($_GET['orcamento']);
+
+                                                        echo '<tr onclick=location.href="orcamento.processo.editar.php?produto='.$produto['SEQPRODUTO'].'&orcamento='.$orcamento.'" style="cursor:pointer">';
+
+                                                    } else {
+
+                                                        echo '<tr onclick=location.href="orcamento.processo.php?codigoProduto='.$produto['SEQPRODUTO'].'" style="cursor:pointer">';
+                                                    }
+
                                                     echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
                                                     echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
                                                     echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  

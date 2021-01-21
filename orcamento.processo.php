@@ -18,7 +18,6 @@ if($usuarios->temPermissao('ORC') == false) {
     exit;
 }
 
-
 //================================VARIAVEIS=========================================================================
 
 $quantidade = "1.000";
@@ -27,7 +26,7 @@ $medida = "Un";
 
 //================================NUMERO DE ORÇAMENTO(ADICIONAR LISTA)================================================================
 
-if(isset($_POST['adicionarOrcamento'])) {
+if(isset($_POST['novoOrcamento'])) {
 
     $sql = "SELECT MAX(orcamento) FROM tb_log_delivery";
     $sql = $pdo->query($sql);
@@ -170,7 +169,7 @@ if(isset($_POST['blocoNotas'])) {
     
 }
 
-//================================ADICIONAR PRODUTO================================================================
+//================================ADICIONAR PRODUTOS E OUTRAS INFORMAÇOES================================================================
 
 
 if(isset($_GET['codigoProduto'])) {    
@@ -205,17 +204,6 @@ if(isset($_GET['codigoProduto'])) {
     while (($value = oci_fetch_array($resultado, OCI_ASSOC)) != false) {     
         
         if(isset($_SESSION['lista'][$codigoProduto])) {
-
-            if(isset($_GET['observacao'])) {
-
-                $codigoProduto = $_GET['codigoProduto'];
-                $observacao = $_GET['observacao'];                       
-            
-                $_SESSION['lista'][$codigoProduto]['observacao'] = $observacao;                
-            
-                header("Location:/orcamento.painel.2.php");     
-
-            } 
             
             if(isset($_GET['quantidade'])) {
             
@@ -255,8 +243,6 @@ if(isset($_GET['codigoProduto'])) {
 
                 $medida = $embalagem['EMBALAGEM'];
 
-                //var_dump($medida);
-
             }  
             
             if($value['PRECOPROM'] > '0') {                                                    
@@ -276,12 +262,12 @@ if(isset($_GET['codigoProduto'])) {
                 'codigoEan'=>$value['CODACESSO'], 
                 'observacao'=>$observacao);
 
-            header("Location:/orcamento.painel.2.php");
+            header("Location:/orcamento.painel.2.php");  
 
         }  
-        header("Location:/orcamento.painel.2.php");
+
     }
-    header("Location:/orcamento.painel.2.php");
+    
 }
 
 //================================SALVAR LISTA DE PRODUTOS================================================================
@@ -293,13 +279,15 @@ if(isset($_POST['salvarLista'])) {
         $usuario = $_SESSION['logado']; 
         $orcamento = $_SESSION['orcamento'];   
         $idCliente = $_SESSION['cliente']['id']; 
+        $nomeCliente = $_SESSION['cliente']['nome'];
         $formaPagamento = $_SESSION['formaPagamento'];
 
         if(!empty($_SESSION['cliente'])) {             
 
             
-            $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, pagamento = :pagamento, dataPedido = NOW() WHERE orcamento = :orcamento");
+            $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, nomeCliente = :nomeCliente, pagamento = :pagamento, dataPedido = NOW() WHERE orcamento = :orcamento");
             $sql->bindValue(":idCliente", $idCliente);
+            $sql->bindValue(":nomeCliente", $nomeCliente);
             $sql->bindValue(":pagamento", $formaPagamento);
             $sql->bindValue(":orcamento", $orcamento);
             $sql->execute();     
@@ -392,21 +380,4 @@ if(isset($_GET['excluir'])) {
         header("Location:/orcamento.painel.2.php");
         
     }
-}
-
-//================================EDITAR EXCLUIR PRODUTO================================================================
-
-if(isset($_GET['excluirEditar'])) {
-
-    $produto = $_GET['excluirEditar'];
-    $orcamento = $_GET['orcamento'];
-    $cliente = $_GET['cliente'];
-
-    $sql = $pdo->prepare("DELETE FROM tb_orcamento WHERE orcamento = :orcamento AND c_produto = :c_produto");
-    $sql->bindValue(":orcamento", $orcamento);
-    $sql->bindValue(":c_produto", $produto);
-    $sql->execute();   
- 
-    header("Location:/orcamento.editar.php?orcamento='.$orcamento.'&cliente='.$cliente.'");  
-
 }
