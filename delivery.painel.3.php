@@ -39,8 +39,7 @@ if($usuarios->temPermissao('DEL') == false) {
 
                         <div class="painel-menu-menu">
 
-                            <?php require 'menuLateral.php'; ?>
-                            
+                            <?php require 'menuLateral.php'; ?>                            
                                 
                         </div>
 
@@ -90,7 +89,7 @@ if($usuarios->temPermissao('DEL') == false) {
                                             <table>
                                                 <?php
 
-                                                $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data, a.usuario, b.nome
+                                                $sql = "SELECT a.id, a.orcamento, a.idCliente, a.nomeCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data, a.usuario, b.nome
                                                 FROM 
                                                 tb_log_delivery a,
                                                 tb_usuarios b
@@ -124,25 +123,8 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         echo "<tr>";                                                        
                                                         echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                         echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
+                                                        echo "<td style='width:10%;'>".$delivery['nomeCliente']."</td>";
                                                         
-
-                                                        $consulta = "SELECT a.seqpessoa, a.nomerazao
-                                                        FROM 
-                                                        CONSINCO.GE_PESSOA a
-                                                        WHERE
-                                                        a.seqpessoa = '$codCliente'";
-
-                                                        //prepara uma instrucao para execulsao
-                                                        $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
-
-                                                        //Executa os comandos SQL
-                                                        oci_execute($resultado);
-
-                                                        while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
-
-                                                            echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
-
-                                                        }
 
                                                         $sql = "SELECT c_gondola, pedido
                                                         FROM 
@@ -214,7 +196,7 @@ if($usuarios->temPermissao('DEL') == false) {
 
                                                 } else {
                                                         
-                                                    echo "Nenhum lista de compra pendente.";
+                                                    echo "NENHUMA LISTA DE COMPRA PENDENTE";
                                                 }
                                                 ?>                                             
 

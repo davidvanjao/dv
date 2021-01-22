@@ -138,34 +138,34 @@ if(isset($_POST['pesquisa'])) {
 
                                                 while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
 
-                                                echo "<tr onclick=location.href='cliente.painel.resultado.php?cliente=".$cliente['SEQPESSOA']."' style='cursor:pointer'>";
-                                                echo "<td style='width:5%;'>".$cliente['SEQPESSOA']."</td>";
-                                                echo "<td style='width:20%;'>".$cliente['NOMERAZAO']."</td>";
+                                                echo "<tr onclick=location.href='cliente.painel.resultado.php?cliente=".@$cliente['SEQPESSOA']."' style='cursor:pointer'>";
+                                                echo "<td style='width:5%;'>".@$cliente['SEQPESSOA']."</td>";
+                                                echo "<td style='width:20%;'>".@$cliente['NOMERAZAO']."</td>";
                                                 
-                                                if($cliente['FISICAJURIDICA'] == 'F') {
+                                                if(@$cliente['FISICAJURIDICA'] == 'F') {
                                                     echo "<td style='width:2%;'>FISÍCA</td>";
                                                 } else {
                                                     echo "<td style='width:2%;'>JURÍDICA</td>";
                                                 }
-                                                echo "<td style='width:5%;'>".$cliente['NROCGCCPF'].'-'.$cliente['DIGCGCCPF']."</td>"; 
+                                                echo "<td style='width:5%;'>".@$cliente['NROCGCCPF'].'-'.@$cliente['DIGCGCCPF']."</td>"; 
 
-                                                if($cliente['STATUS'] == 'A') {
+                                                if(@$cliente['STATUS'] == 'A') {
                                                     echo "<td style='width:2%;'>ATIVO</td>";
                                                 } else {
                                                     echo "<td style='width:2%;'>INATIVO</td>";
                                                 }   
 
-                                                if(empty($cliente['FONEDDD1']) && !empty($cliente['FONENRO1'])) {
+                                                if(empty(@$cliente['FONEDDD1']) && !empty($cliente['FONENRO1'])) {
 
                                                     echo "<td style='width:5%;'>".$cliente['FONENRO1']."</td>";  
                                                     
-                                                } elseif(empty($cliente['FONENRO1']) && !empty($cliente['FONEDDD1'])) {
+                                                } elseif(empty(@$cliente['FONENRO1']) && !empty($cliente['FONEDDD1'])) {
 
-                                                    echo "<td style='width:5%;'>".$cliente['FONEDDD1']."</td>";     
+                                                    echo "<td style='width:5%;'>".@$cliente['FONEDDD1']."</td>";     
                                                     
-                                                } elseif(!empty($cliente['FONENRO1']) && !empty($cliente['FONEDDD1'])){
+                                                } elseif(!empty(@$cliente['FONENRO1']) && !empty($cliente['FONEDDD1'])){
 
-                                                    echo "<td style='width:5%;'>".$cliente['FONEDDD1'].'-'.$cliente['FONENRO1']."</td>";   
+                                                    echo "<td style='width:5%;'>".@$cliente['FONEDDD1'].'-'.$cliente['FONENRO1']."</td>";   
 
                                                 } else {
 

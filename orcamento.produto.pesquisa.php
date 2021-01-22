@@ -61,8 +61,7 @@ if(isset($_POST['pesquisa'])) {
                             </div>
                             <div class="superiorMenu">
 
-                                <a href="sair.php">Sair</a>
-
+                                <a href='orcamento.painel.2.php'>Voltar</a>
 
                             </div>
                         </header>

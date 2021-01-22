@@ -102,7 +102,7 @@ if(isset($orcamento) && !empty($orcamento)) {
     $html .= '<table width=100%>';
     $html .= '<thead class="tabelaProduto">';
     $html .= '<tr>';
-    $html .= '<th>N</th>';
+    $html .= '<th>N°</th>';
     $html .= '<th>CÓDIGO</th>';
     $html .= '<th>PRODUTO</th>';
     $html .= '<th>PREÇO</th>';

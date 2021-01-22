@@ -71,7 +71,17 @@ if(isset($_SESSION['blocoNotas'])) {
 //=================================================================================================================
 
 
-//var_dump($_SESSION);
+if(isset($_SESSION['dataEntrega'])) {
+
+    $data = $_SESSION['dataEntrega'];
+
+} else {
+
+    $data = date('Y-m-d');
+}
+
+
+var_dump($_SESSION);
 //echo $bloco;
 //var_dump($valorGeral);
 
@@ -129,7 +139,7 @@ if(isset($_SESSION['blocoNotas'])) {
                                                     </div>                                                     
                                                     <input class="input-botao" type="submit" name="adicionarCliente" value="Cliente"/>  
                                                 </form>
-                                            </div>
+                                            </div>                                      
 
                                             <div class="form-cliente-caixa">
                                                 <form class="form-pagamento" action='delivery.processo.php' method='POST'>
@@ -145,6 +155,15 @@ if(isset($_SESSION['blocoNotas'])) {
                                                     </div>
                                                 </form>
                                             </div>
+
+                                            <div class="form-cliente-caixa">
+                                                <form class="form-cliente" name="buscar-form" method="POST" action="delivery.processo.php"> 
+                                                    <div>
+                                                        <label>Data de Entrega:</label></br>
+                                                        <input class="input-busca-delivery"type="date" value="<?php echo $data;?>" name="dataEntrega" autocomplete="off" required="required" onchange="this.form.submit()"/>  
+                                                    </div>                                                     
+                                                </form>
+                                            </div>    
                                             
                                             <div class="form-cliente-caixa">
                                                 <div>

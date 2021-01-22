@@ -117,27 +117,27 @@ if(isset($_GET['cliente']) && !empty($_GET['cliente'])) { //se existir e ele nao
 
                                                 echo "<table width=100%;>";
                                                 echo "<tr>";
-                                                echo "<td><strong>Endereco:</strong> ".$cliente['LOGRADOURO'].'<strong>  Nº</strong>'.$cliente['NROLOGRADOURO']."</td>";
-                                                echo "<td><strong>Bairro:</strong> ".$cliente['BAIRRO']."</td>";
-                                                echo "<td><strong>Cidade:</strong> ".$cliente['CIDADE']."</td>";
-                                                echo "<td><strong>CEP:</strong> ".$cliente['CEP']."</td>"; 
+                                                echo "<td><strong>Endereco:</strong> ".@$cliente['LOGRADOURO'].'<strong>  Nº</strong>'.@$cliente['NROLOGRADOURO']."</td>";
+                                                echo "<td><strong>Bairro:</strong> ".@$cliente['BAIRRO']."</td>";
+                                                echo "<td><strong>Cidade:</strong> ".@$cliente['CIDADE']."</td>";
+                                                echo "<td><strong>CEP:</strong> ".@$cliente['CEP']."</td>"; 
                                                 echo "<tr>";
                                                 echo "</table>";  
 
                                                 echo "<table width=100%;>";
                                                 echo "<tr>";
 
-                                                if(empty($cliente['FONEDDD1']) && !empty($cliente['FONENRO1'])) {
+                                                if(empty(@$cliente['FONEDDD1']) && !empty(@$cliente['FONENRO1'])) {
 
-                                                    echo "<td><strong>Tel:</strong> ".$cliente['FONENRO1']."</td>";  
+                                                    echo "<td><strong>Tel:</strong> ".@$cliente['FONENRO1']."</td>";  
                                                     
-                                                } elseif(empty($cliente['FONENRO1']) && !empty($cliente['FONEDDD1'])) {
+                                                } elseif(empty(@$cliente['FONENRO1']) && !empty(@$cliente['FONEDDD1'])) {
 
-                                                    echo "<td><strong>Tel:</strong> ".$cliente['FONEDDD1']."</td>";     
+                                                    echo "<td><strong>Tel:</strong> ".@$cliente['FONEDDD1']."</td>";     
                                                     
-                                                } elseif(!empty($cliente['FONENRO1']) && !empty($cliente['FONEDDD1'])){
+                                                } elseif(!empty(@$cliente['FONENRO1']) && !empty(@$cliente['FONEDDD1'])){
 
-                                                    echo "<td><strong>Tel:</strong> ".$cliente['FONEDDD1'].'-'.$cliente['FONENRO1']."</td>";   
+                                                    echo "<td><strong>Tel:</strong> ".@$cliente['FONEDDD1'].'-'.@$cliente['FONENRO1']."</td>";   
 
                                                 } else {
 
@@ -146,17 +146,17 @@ if(isset($_GET['cliente']) && !empty($_GET['cliente'])) { //se existir e ele nao
                                                 }
 
 
-                                                if(empty($cliente['FONEDDD2']) && !empty($cliente['FONENRO2'])) {
+                                                if(empty($cliente['FONEDDD2']) && !empty(@$cliente['FONENRO2'])) {
 
-                                                    echo "<td><strong>Tel:</strong> ".$cliente['FONENRO2']."</td>";  
+                                                    echo "<td><strong>Tel:</strong> ".@$cliente['FONENRO2']."</td>";  
                                                     
-                                                } elseif(empty($cliente['FONENRO2']) && !empty($cliente['FONEDDD2'])) {
+                                                } elseif(empty(@$cliente['FONENRO2']) && !empty(@$cliente['FONEDDD2'])) {
 
-                                                    echo "<td><strong>Tel:</strong> ".$cliente['FONEDDD2']."</td>";     
+                                                    echo "<td><strong>Tel:</strong> ".@$cliente['FONEDDD2']."</td>";     
                                                     
-                                                } elseif(!empty($cliente['FONENRO2']) && !empty($cliente['FONEDDD2'])){
+                                                } elseif(!empty(@$cliente['FONENRO2']) && !empty(@$cliente['FONEDDD2'])){
 
-                                                    echo "<td><strong>Tel:</strong> ".$cliente['FONEDDD2'].'-'.$cliente['FONENRO2']."</td>";   
+                                                    echo "<td><strong>Tel:</strong> ".@$cliente['FONEDDD2'].'-'.@$cliente['FONENRO2']."</td>";   
 
                                                 } else {
 
@@ -165,17 +165,17 @@ if(isset($_GET['cliente']) && !empty($_GET['cliente'])) { //se existir e ele nao
                                                 }
 
 
-                                                if(empty($cliente['FONEDDD3']) && !empty($cliente['FONENRO3'])) {
+                                                if(empty(@$cliente['FONEDDD3']) && !empty(@$cliente['FONENRO3'])) {
 
-                                                    echo "<td><strong>Tel:</strong> ".$cliente['FONENRO3']."</td>";  
+                                                    echo "<td><strong>Tel:</strong> ".@$cliente['FONENRO3']."</td>";  
                                                     
-                                                } elseif(empty($cliente['FONENRO3']) && !empty($cliente['FONEDDD3'])) {
+                                                } elseif(empty(@$cliente['FONENRO3']) && !empty(@$cliente['FONEDDD3'])) {
 
-                                                    echo "<td><strong>Tel:</strong> ".$cliente['FONEDDD3']."</td>";     
+                                                    echo "<td><strong>Tel:</strong> ".@$cliente['FONEDDD3']."</td>";     
                                                     
-                                                } elseif(!empty($cliente['FONENRO3']) && !empty($cliente['FONEDDD3'])){
+                                                } elseif(!empty(@$cliente['FONENRO3']) && !empty(@$cliente['FONEDDD3'])){
 
-                                                    echo "<td><strong>Tel:</strong> ".$cliente['FONEDDD3'].'-'.$cliente['FONENRO3']."</td>";   
+                                                    echo "<td><strong>Tel:</strong> ".@$cliente['FONEDDD3'].'-'.@$cliente['FONENRO3']."</td>";   
 
                                                 } else {
 
@@ -214,26 +214,26 @@ if(isset($_GET['cliente']) && !empty($_GET['cliente'])) { //se existir e ele nao
                                                 ?>
 
 
-                                                <table width=100%; <?php echo ($credito["STATUSCREDITO"] == 'L')?'style="background-color:#008000"':'';?>>
+                                                <table width=100%; <?php echo (@$credito["STATUSCREDITO"] == 'L')?'style="background-color:#008000"':'';?>>
                                                 
 
                                                 <?php
                                                 echo "<tr>";
                                                
-                                                echo "<td><strong>Forma de Pagamento:</strong> ".$credito['FORMAPAGTO']."</td>";
-                                                if($credito['STATUSCREDITO'] == 'L') {
+                                                echo "<td><strong>Forma de Pagamento:</strong> ".@$credito['FORMAPAGTO']."</td>";
+                                                if(@$credito['STATUSCREDITO'] == 'L') {
                                                     echo "<td><strong>Status:</strong> LIBERADO</td>";
                                                 } else {
                                                     echo "<td><strong>Status:</strong> BLOQUEADO</td>";
                                                 }  
-                                                echo "<td><strong>Limite:</strong>R$ ".$credito['VLRLIMITECREDITO']."</td>";
-                                                if(empty($credito['CONVENIADOCODIGO'])) {
+                                                echo "<td><strong>Limite:</strong>R$ ".@$credito['VLRLIMITECREDITO']."</td>";
+                                                if(empty(@$credito['CONVENIADOCODIGO'])) {
 
                                                     echo "<td></td>";
 
                                                 } else {
 
-                                                    echo "<td><strong>Convênio Nº:</strong> ".$credito['CONVENIADOCODIGO']."</td>";
+                                                    echo "<td><strong>Convênio Nº:</strong> ".@$credito['CONVENIADOCODIGO']."</td>";
 
                                                 }
                                                 
@@ -267,13 +267,13 @@ if(isset($_GET['cliente']) && !empty($_GET['cliente'])) { //se existir e ele nao
 
                                                 echo "<table width=100%;>";
                                                 echo "<tr>"; 
-                                                if(empty($observacao['OBSERVACAO'])) {
+                                                if(empty(@$observacao['OBSERVACAO'])) {
 
                                                     echo "<td><strong>Observacão:</strong></td>";
 
                                                 } else {
 
-                                                    echo "<td><strong>Observacão:</strong> ".$observacao['OBSERVACAO']."</td>";
+                                                    echo "<td><strong>Observacão:</strong> ".@$observacao['OBSERVACAO']."</td>";
 
                                                 }
                                                 

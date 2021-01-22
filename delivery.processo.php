@@ -25,7 +25,6 @@ $observacao = ".";
 $medida = "Un";
 
 
-
 //================================PROCESSO ACOUGUE================================================================
 
 if(isset($_GET['liberarAcougue'])) {
@@ -132,11 +131,9 @@ if(isset($_POST['adicionaLista'])) {
 
         if(isset($_SESSION['logado'])) {
             $usuario = $_SESSION['logado'];
-            $data = date('Y-m-d');
             $tipo = 'L'; 
                 
-            $sql = $pdo->prepare("INSERT INTO tb_log_delivery SET orcamento = :orcamento, dataa = :dataa, usuario = :usuario, tipo = :tipo");
-            $sql->bindValue(":dataa", $data);
+            $sql = $pdo->prepare("INSERT INTO tb_log_delivery SET orcamento = :orcamento, usuario = :usuario, tipo = :tipo");
             $sql->bindValue(":orcamento", $orcamento);
             $sql->bindValue(":usuario", $usuario);
             $sql->bindValue(":tipo", $tipo);
@@ -228,10 +225,33 @@ if(isset($_POST['formaPagamento'])) {
 
         header("Location:/delivery.painel.2.php");        
 
-    }
+    } 
+    
+}
+
+//================================ADICIONAR DATA DA ENTREGA================================================================
+
+if(isset($_POST['dataEntrega'])) {
+
+    $dataEntrega= addslashes($_POST['dataEntrega']);
+    
+
+    if(isset($_SESSION['dataEntrega'])) {   
+
+        //SE EXISTIR, APAGUE E COLOQUE
+        unset( $_SESSION['dataEntrega'] );
+        $_SESSION['dataEntrega'] = $dataEntrega;         
         
-           
-        
+        header("Location:/delivery.painel.2.php");
+
+    } else {
+
+        //SE NAO EXISTIR, COLOQUE
+        $_SESSION['dataEntrega'] = $dataEntrega;    
+
+        header("Location:/delivery.painel.2.php");        
+
+    } 
     
 }
 
@@ -346,8 +366,6 @@ if(isset($_GET['codigoProduto'])) {
 
                 $medida = $embalagem['EMBALAGEM'];
 
-                //var_dump($medida);
-
             }  
             
             if($value['PRECOPROM'] > '0') {                                                    
@@ -370,9 +388,9 @@ if(isset($_GET['codigoProduto'])) {
             header("Location:/delivery.painel.2.php");
 
         }  
-        header("Location:/delivery.painel.2.php");
+        
     }
-    header("Location:/delivery.painel.2.php");
+    
 }
 
 //================================SALVAR LISTA DE PRODUTOS================================================================
@@ -384,24 +402,23 @@ if(isset($_POST['salvarLista'])) {
         $usuario = $_SESSION['logado']; 
         $orcamento = $_SESSION['orcamento'];   
         $idCliente = $_SESSION['cliente']['id']; 
+        $nomeCliente = $_SESSION['cliente']['nome'];
         $formaPagamento = $_SESSION['formaPagamento'];
+        $dataEntrega = $_SESSION['dataEntrega'];
 
         if(!empty($_SESSION['cliente'])) {             
 
             $status = 'PEDIDO REALIZADO';     
             
-            $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, pagamento = :pagamento, statuss = :statuss, dataPedido = NOW() WHERE orcamento = :orcamento");
+            $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, nomeCliente = :nomeCliente, pagamento = :pagamento, statuss = :statuss, dataa = :dataa, dataPedido = NOW() WHERE orcamento = :orcamento");
             $sql->bindValue(":idCliente", $idCliente);
             $sql->bindValue(":pagamento", $formaPagamento);
+            $sql->bindValue(":nomeCliente", $nomeCliente);
+            $sql->bindValue(":dataa", $dataEntrega);
             $sql->bindValue(":statuss", $status);
             $sql->bindValue(":orcamento", $orcamento);
             $sql->execute();     
-            
-            echo $idCliente; 
-            echo $formaPagamento; 
-            echo $status; 
-            echo $orcamento; 
-        
+       
         }    
 
         if(!empty($_SESSION['lista'])) {
@@ -443,16 +460,12 @@ if(isset($_POST['salvarLista'])) {
             unset( $_SESSION['orcamento'] );    
             unset( $_SESSION['formaPagamento'] ); 
             unset( $_SESSION['blocoNotas']); 
+            unset( $_SESSION['dataEntrega']);
+
+            header("Location:/delivery.painel.1.php");
         }
 
-        header("Location:/delivery.painel.1.php");
-
-    } else {
- 
-        header("Location:/delivery.painel.2.php");
-
-    }
-    
+    }   
 
 }
 
@@ -471,6 +484,7 @@ if(isset($_POST['excluirLista']) OR isset($_GET['excluirLista'])) {
     unset( $_SESSION['lista'] );
     unset( $_SESSION['formaPagamento'] );
     unset( $_SESSION['blocoNotas']);
+    unset( $_SESSION['dataEntrega']);
     
 
     header("Location:/delivery.painel.1.php");  
