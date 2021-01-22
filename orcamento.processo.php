@@ -136,11 +136,8 @@ if(isset($_POST['formaPagamento'])) {
 
         header("Location:/orcamento.painel.2.php");        
 
-    }
-        
-           
-        
-    
+    }   
+
 }
 
 //================================BLOCO DE NOTAS================================================================
@@ -282,9 +279,8 @@ if(isset($_POST['salvarLista'])) {
         $nomeCliente = $_SESSION['cliente']['nome'];
         $formaPagamento = $_SESSION['formaPagamento'];
 
-        if(!empty($_SESSION['cliente'])) {             
+        if(!empty($_SESSION['cliente'])) { 
 
-            
             $sql = $pdo->prepare("UPDATE tb_log_delivery SET idCliente = :idCliente, nomeCliente = :nomeCliente, pagamento = :pagamento, dataPedido = NOW() WHERE orcamento = :orcamento");
             $sql->bindValue(":idCliente", $idCliente);
             $sql->bindValue(":nomeCliente", $nomeCliente);
@@ -328,11 +324,11 @@ if(isset($_POST['salvarLista'])) {
                 $sql->execute();  
             }
 
-            unset( $_SESSION['lista'] );
-            unset( $_SESSION['cliente'] );
-            unset( $_SESSION['orcamento'] );    
-            unset( $_SESSION['formaPagamento'] ); 
-            unset( $_SESSION['blocoNotas']); 
+                unset( $_SESSION['lista'] );
+                unset( $_SESSION['cliente'] );
+                unset( $_SESSION['orcamento'] );    
+                unset( $_SESSION['formaPagamento'] ); 
+                unset( $_SESSION['blocoNotas']); 
         }
 
         header("Location:/orcamento.painel.1.php");
@@ -341,8 +337,7 @@ if(isset($_POST['salvarLista'])) {
  
         header("Location:/orcamento.painel.2.php");
 
-    }
-    
+    }    
 
 }
 
@@ -360,11 +355,9 @@ if(isset($_POST['excluirLista']) OR isset($_GET['excluirLista'])) {
     unset( $_SESSION['cliente'] );
     unset( $_SESSION['lista'] );
     unset( $_SESSION['formaPagamento'] );
-    unset( $_SESSION['blocoNotas']);
-    
+    unset( $_SESSION['blocoNotas']);    
 
     header("Location:/orcamento.painel.1.php");  
-    exit;
 
 }
 

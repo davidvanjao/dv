@@ -164,7 +164,7 @@ if(isset($_POST['pesquisa'])) {
                                                     if(isset($_GET['adicionarEditar'])) {
                                                         $orcamento = addslashes($_GET['orcamento']);
 
-                                                        echo '<tr onclick=location.href="orcamento.processo.editar.php?produto='.$produto['SEQPRODUTO'].'&orcamento='.$orcamento.'" style="cursor:pointer">';
+                                                        echo '<tr onclick=location.href="orcamento.processo.editar.php?codigoProduto='.$produto['SEQPRODUTO'].'&orcamento='.$orcamento.'" style="cursor:pointer">';
 
                                                     } else {
 

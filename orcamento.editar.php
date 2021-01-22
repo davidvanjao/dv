@@ -19,7 +19,7 @@ if($usuarios->temPermissao('ORC') == false) {
     exit;
 }
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
 
 //=========================================VARIAVEIS========================================================================
 
@@ -27,11 +27,17 @@ $codigoCliente = "";
 $nomeCliente = "";
 $valorTotal = "00.00";
 
+
+//VARIAVEIS DA SESSAO REFERENTE A SOMA TOTAL
+$precoSessao = "";
+$quantidadeSessao = "";    
+$soma2 = "";
+
+
 //PUXA DADOS DO CABECALHO
 if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
 
     $orcamento = addslashes($_GET['orcamento']);
-    //$codigoCliente = addslashes($_GET['cliente']);
 
     $sql = "SELECT a.orcamento, a.pagamento, a.nomeCliente, b.quantidade, b.valor_total
     FROM 
@@ -60,6 +66,22 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
 
         }
     }
+
+    if(!empty($_SESSION['lista'])) {
+
+        foreach($_SESSION['lista'] as $key=>$value) {
+
+            $precoSessao = $value['preco'];
+            $quantidadeSessao = $value['quantidade'];    
+            
+            $soma2 = $precoSessao * $quantidadeSessao;
+
+            $valorTotal += $soma2; 
+
+        }
+    }
+
+
   
 }
 
@@ -93,7 +115,7 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="orcamento.processo.editar.php?excluirEditar">Voltar</a>
+                                <a href="orcamento.processo.editar.php?sairEditar">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
@@ -199,7 +221,7 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                                                             echo "<td style='width:5%;'>".$quantidade."</td>";                                                     
                                                             echo "<td style='width:5%;'>R$".number_format($preco,2,",",".")."</td>";
                                                             echo "<td style='width:5%;'>R$".$resultado."</td>";
-                                                            echo '<td style="width:5%;"><a href="orcamento.processo.php?excluirEditar='.$value['c_produto'].'&orcamento='.$orcamento.'cliente='.$codigoCliente.'">Excluir</a>';
+                                                            echo '<td style="width:5%;"><a href="orcamento.processo.editar.php?excluirItem='.$value['c_produto'].'&orcamento='.$orcamento.'">Excluir</a>';
                                                             echo "</tr>";  
                                                         } 
                                                     }
@@ -220,17 +242,18 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                                                         echo "<td style='width:20%;'>".$value['produto']."</td>";
                                                         echo "<td style='width:5%;'>".$medida."</td>";
                                                         echo "<td>
-                                                                <form class='' name='teste' method='GET' action='orcamento.processo.php'>      
+                                                                <form class='' name='teste' method='GET' action='orcamento.processo.editar.php'>   
 
-                                                                    <input value=".$value['codigo']." class='quantidade' type='hidden' min='0'  name='codigoProduto' required='required'>
-                                                                    <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>                                                        
+                                                                    <input value=".$orcamento." class='quantidade' type='hidden' name='orcamento' required='required'>   
+                                                                    <input value=".$value['codigo']." class='quantidade' type='hidden' name='codigoProduto' required='required'>
+                                                                    <input value=".$quantidade." class='quantidade' type='number' min='0' name='quantidade' required='required' onchange='this.form.submit()'>                                                        
 
                                                                 </form>     
                                                                </td>"; 
 
                                                         echo "<td style='width:5%;'>R$".number_format($preco,2,",",".")."</td>";
                                                         echo "<td style='width:5%;'>R$".$resultado."</td>";
-                                                        echo '<td style="width:5%;"><a href="orcamento.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
+                                                        echo '<td style="width:5%;"><a href="orcamento.processo.editar.php?excluirItemSessao='.$value['codigo'].'&orcamento='.$orcamento.'">Excluir</a>';
                                                         echo "</tr>";  
                                                     }
                                                 }

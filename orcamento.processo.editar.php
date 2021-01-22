@@ -25,27 +25,11 @@ $quantidade = "1.000";
 $observacao = ".";
 $medida = "Un";
 
-//================================EDITAR EXCLUIR PRODUTO================================================================
+//================================ADICIONAR PRODUTO================================================================
 
-if(isset($_GET['excluirEditar'])) {
+if(isset($_GET['codigoProduto']) && !empty($_GET['orcamento'])) {    
 
-    $produto = $_GET['excluirEditar'];
-    $orcamento = $_GET['orcamento'];
-    $cliente = $_GET['cliente'];
-
-    $sql = $pdo->prepare("DELETE FROM tb_orcamento WHERE orcamento = :orcamento AND c_produto = :c_produto");
-    $sql->bindValue(":orcamento", $orcamento);
-    $sql->bindValue(":c_produto", $produto);
-    $sql->execute();   
- 
-    header("Location:/orcamento.editar.php?orcamento='.$orcamento.'&cliente='.$cliente.'");  
-
-}
-//================================EDITAR ADICIONAR PRODUTO================================================================
-
-if(isset($_GET['produto'])) {    
-
-    $produto = $_GET['produto'];
+    $produto = $_GET['codigoProduto'];
     $orcamento = $_GET['orcamento'];
 
     $consulta = "SELECT d.codacesso, a.seqproduto, b.desccompleta, a.estqloja, a.nrogondola,
@@ -84,9 +68,11 @@ if(isset($_GET['produto'])) {
             
                 $_SESSION['lista'][$produto]['quantidade'] = $quantidade;
 
-                header("Location:/orcamento.editar.php");                
+                header("Location:/orcamento.editar.php?orcamento=$orcamento");              
             
             }     
+
+            header("Location:/orcamento.editar.php?orcamento=$orcamento"); 
             
         } else {
 
@@ -128,9 +114,9 @@ if(isset($_GET['produto'])) {
             header("Location:/orcamento.editar.php?orcamento=$orcamento");
 
         }  
-        header("Location:/orcamento.editar.php?orcamento=$orcamento");
+        
     }
-    header("Location:/orcamento.editar.php?orcamento=$orcamento");
+
 }
 
 //=====================================ATUALIZAR LISTA=========================================================
@@ -138,39 +124,38 @@ if(isset($_GET['produto'])) {
 if(isset($_GET['atualizar'])) {
 
     $orcamento = $_GET['orcamento'];
+    $usuario = $_SESSION['logado'];
 
     if(isset($_SESSION['lista'])) { 
 
         foreach($_SESSION['lista'] as $key=>$value) {
-    
+
+            $medida = $value['medida'];
             $quantidade = $value['quantidade'];
             $gondola = $value['gondola'];
-            $ean = $value['codigoEan'];
             $produto = $value['produto'];
             $preco = $value['preco'];
-            $codigo = $value['codigo'];
-            $medida = $value['medida'];
             $estoque = $value['estoque'];
-            $pedido = 'N';
-            $observacao = $value['observacao'];
+            $codigo = $value['codigo'];
+            $ean = $value['codigoEan'];
 
-            $sql = $pdo->prepare("INSERT INTO tb_orcamento SET dataa = NOW(), medida = :medida, c_gondola = :c_gondola,
-            ean = :ean, produto = :produto, c_produto = :c_produto, quantidade = :quantidade, valor_total = :valorTotal, estoque = :estoque, pedido = :pedido,
-            observacao = :observacao, usuario = :usuario WHERE orcamento = :orcamento");
-            
-            $sql->bindValue(":orcamento", $orcamento);
+
+            $sql = $pdo->prepare("INSERT INTO tb_orcamento SET dataa = NOW(), medida = :medida, quantidade = :quantidade, c_gondola = :c_gondola, produto = :produto,
+            valor_total = :valor_total, estoque = :estoque, c_produto = :c_produto, ean = :ean, usuario = :usuario, orcamento = :orcamento");
+
+            $sql->bindValue(":medida", $medida);
+            $sql->bindValue(":quantidade",$quantidade);
             $sql->bindValue(":c_gondola", $gondola);
+            $sql->bindValue(":produto", $produto);
+            $sql->bindValue(":valor_total", $preco);
+            $sql->bindValue(":estoque", $estoque);
             $sql->bindValue(":c_produto", $codigo);
             $sql->bindValue(":ean", $ean);
-            $sql->bindValue(":produto", $produto);
-            $sql->bindValue(":quantidade",$quantidade);
-            $sql->bindValue(":valorTotal", $preco);
             $sql->bindValue(":usuario", $usuario);
-            $sql->bindValue(":estoque", $estoque);
-            $sql->bindValue(":medida", $medida);
-            $sql->bindValue(":pedido", $pedido);
-            $sql->bindValue(":observacao", $observacao);
-            $sql->execute();  
+            $sql->bindValue(":orcamento", $orcamento);
+            $sql->execute(); 
+
+ 
         }
 
             unset( $_SESSION['lista'] );
@@ -181,10 +166,6 @@ if(isset($_GET['atualizar'])) {
 
             header("Location:/orcamento.painel.1.php");
 
-    } else {
- 
-        header("Location:/orcamento.painel.2.php");
-
     }
     
 
@@ -192,18 +173,47 @@ if(isset($_GET['atualizar'])) {
 
 //====================================LIMPAR LISTA AO SAIR=================================================
 
-if(isset($_GET['excluirEditar'])) {
-
-    $orcamento = $_SESSION['orcamento'];
+if(isset($_GET['sairEditar'])) {
 
     unset( $_SESSION['orcamento'] );
     unset( $_SESSION['cliente'] );
     unset( $_SESSION['lista'] );
     unset( $_SESSION['formaPagamento'] );
-    unset( $_SESSION['blocoNotas']);
-    
+    unset( $_SESSION['blocoNotas']);    
 
     header("Location:/orcamento.painel.1.php");  
     exit;
 
+}
+
+//================================EXCLUIR ITEM================================================================
+
+if(isset($_GET['excluirItem'])) {
+
+    $produto = $_GET['excluirItem'];
+    $orcamento = $_GET['orcamento'];
+
+    $sql = $pdo->prepare("DELETE FROM tb_orcamento WHERE orcamento = :orcamento AND c_produto = :c_produto");
+    $sql->bindValue(":orcamento", $orcamento);
+    $sql->bindValue(":c_produto", $produto);
+    $sql->execute();   
+ 
+    header("Location:/orcamento.editar.php?orcamento=$orcamento"); 
+    exit;
+
+}
+
+//================================EXCLUIR ITEM DA SESSAO================================================================
+
+if(isset($_GET['excluirItemSessao'])) {
+
+    $produto = $_GET['excluirItemSessao'];
+    $orcamento = $_GET['orcamento'];
+
+    if(isset($_SESSION['lista'])){
+
+        unset($_SESSION['lista'][$produto]);
+        header("Location:/orcamento.editar.php?orcamento=$orcamento"); 
+        exit;        
+    }
 }

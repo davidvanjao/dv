@@ -25,7 +25,8 @@ $seq = "1";
 $pagamento = "";
 $total = "";
 $valorTotal = floatval("00,00");
-$dataHora = date('d/m/Y \à\s H:i:s');
+$dataHora = date('d/m/Y \à\s H:i:s', strtotime('-1 hour', strtotime(date('Y-m-d H:i:s'))) );
+
 
 // DADOS DO CLIENTE - SISTEMA CONSINCO.
 
