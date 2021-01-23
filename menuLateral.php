@@ -72,7 +72,7 @@
 
             <?php if($usuarios->temPermissao('CON')): ?>
                 <div class="painel-menu-widget">
-                    <a href="z.produto.painel.pesquisa.php">
+                    <a href="teste.php">
                         <img src="assets/img/novo.png" title="Configuração">                                        
                     </a>                        
                 </div>
