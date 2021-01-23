@@ -19,6 +19,35 @@ if($usuarios->temPermissao('DEL') == false) {
     exit;
 }
 
+$data = date('Y-m-d');
+
+    $sql = "SELECT a.id, a.orcamento, a.idCliente, a.nomeCliente, a.statuss, a.dataa, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data, a.usuario, b.nome
+            FROM 
+            tb_log_delivery a,
+            tb_usuarios b
+            WHERE 
+            a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
+            AND a.dataa = '$data'
+            AND a.tipo = 'L'
+            AND a.usuario = b.id
+            GROUP BY a.orcamento";
+
+if(isset($_GET['data']) && empty($_GET['data']) == false){
+
+    $data = addslashes($_GET['data']);
+
+    $sql = "SELECT a.id, a.orcamento, a.idCliente, a.nomeCliente, a.statuss, a.dataa, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data, a.usuario, b.nome
+        FROM 
+        tb_log_delivery a,
+        tb_usuarios b
+        WHERE 
+        a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
+        AND a.dataa = '$data'
+        AND a.tipo = 'L'
+        AND a.usuario = b.id
+        GROUP BY a.orcamento";
+
+}
 
 ?>
 
@@ -66,15 +95,15 @@ if($usuarios->temPermissao('DEL') == false) {
 
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar" method="GET">
-                                            <input class="input-busca-delivery"type="button" value="" name="data"/>
-                                        </form>                                        
+                                            <input class="input-busca-delivery"type="date" value="<?php echo $data;?>" name="data" autocomplete="off" required="required" onchange="this.form.submit()"/>
+                                        </form>                                       
                                     </div>
 
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>                                                
                                                 <th style="width:10%;">TICKET</th>
-                                                <th style="width:10%;">DATA</th>
+                                                <th style="width:10%;">DATA DE ENTREGA</th>
                                                 <th style="width:10%;">NOME</th>
                                                 <th style="width:5%;">AÇOUGUE</th>
                                                 <th style="width:5%; text-align:center;">STATUS</th>
@@ -88,16 +117,6 @@ if($usuarios->temPermissao('DEL') == false) {
                                         <div class="busca-resultado">
                                             <table>
                                                 <?php
-
-                                                $sql = "SELECT a.id, a.orcamento, a.idCliente, a.nomeCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data, a.usuario, b.nome
-                                                FROM 
-                                                tb_log_delivery a,
-                                                tb_usuarios b
-                                                WHERE 
-                                                a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
-                                                and a.usuario = b.id
-                                                GROUP BY a.orcamento";
-                                                                                                                                                
 
                                                 $sql = $pdo->query($sql);   
                                                 if($sql->rowCount() > 0) {
@@ -166,27 +185,26 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         echo "<td style='background-color:$cor; width:5%; text-align:center;'>".$delivery['statuss']."</td>";
                                                         echo "<td style='width:5%; text-align:center;'><strong>".$delivery['nome']."</strong></td>";   
                                                         echo '<td style="width:5%;">';
-                                                            echo '<div class="teste">';
-                                                            
+                                                            echo '<div class="teste">';                                                            
 
-                                                                        if($delivery['statuss'] == 'PEDIDO REALIZADO') {
+                                                                if($delivery['statuss'] == 'PEDIDO REALIZADO') {
 
-                                                                            echo '<a class="iniciar" href="delivery.processo.php?andamento='.$delivery['id'].'">Iniciar</a>';
+                                                                    echo '<a class="iniciar" href="delivery.processo.php?andamento='.$delivery['id'].'">Iniciar</a>';
 
-                                                                        }
-                                                                        
-                                                                        if($delivery['statuss'] == 'EM ANDAMENTO') {
+                                                                }
+                                                                
+                                                                if($delivery['statuss'] == 'EM ANDAMENTO') {
 
-                                                                        //echo '<a class="liberar" href="delivery.painel.4.php?id='.$delivery['id'].'">Liberar</a>';
-                                                                        echo '<a class="liberar" href="delivery.processo.php?liberado='.$delivery['id'].'">Liberar</a>';
+                                                                //echo '<a class="liberar" href="delivery.painel.4.php?id='.$delivery['id'].'">Liberar</a>';
+                                                                echo '<a class="liberar" href="delivery.processo.php?liberado='.$delivery['id'].'">Liberar</a>';
 
-                                                                        }
-                                                                        
-                                                                        if($delivery['statuss'] == 'LIBERADO PARA ENTREGA') {
+                                                                }
+                                                                
+                                                                if($delivery['statuss'] == 'LIBERADO PARA ENTREGA') {
 
-                                                                            echo '<a class="entregar" href="delivery.processo.php?saiu='.$delivery['id'].'">Entregar</a>';
-    
-                                                                        }
+                                                                    echo '<a class="entregar" href="delivery.processo.php?saiu='.$delivery['id'].'">Entregar</a>';
+
+                                                                }
                                                             echo '</div>';                                                             
                                                         echo '</td>'; 
                                                                                  
@@ -213,6 +231,23 @@ if($usuarios->temPermissao('DEL') == false) {
                 </div>
             </div>
         </div>
+
+        <script>
+            function funcao1()
+            {
+            var x;
+            var r=confirm("Escolha um valor!");
+            if (r==true)
+            {
+            x="você pressionou OK!";
+            }
+            else
+            {
+            x="Você pressionou Cancelar!";
+            }
+            document.getElementById("demo").innerHTML=x;
+            }
+        </script>
         
     </body>
 

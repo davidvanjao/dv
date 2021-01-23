@@ -68,18 +68,16 @@ if(isset($_SESSION['blocoNotas'])) {
 
 }
 
-//=================================================================================================================
+//==========================================SE REFERE DATA DE ENTREGA=======================================================================
 
 
 if(isset($_SESSION['dataEntrega'])) {
 
     $data = $_SESSION['dataEntrega'];
 
-} else {
-
-    $data = date('Y-m-d');
 }
 
+//=================================================================================================================
 
 var_dump($_SESSION);
 //echo $bloco;
@@ -193,15 +191,16 @@ var_dump($_SESSION);
                                                 </form>
 
                                                 <form class="busca-area" name="buscar-form" method="POST" action="delivery.processo.php">
-
+                                                    <!--BOTÃO SALVAR CASO OS DEMAIS CAMPOS TENHAM SIDO PREENCHIDOS-->
                                                     <?php 
                                                     if(isset($_SESSION['cliente'], $_SESSION['formaPagamento'], $_SESSION['orcamento'], $_SESSION['lista'])) {
                                                     ?>
                                                         <input type="submit" name="salvarLista" value="Salvar Lista">
                                                     <?php
-                                                    } else {
                                                     }
                                                     ?>
+
+
                                                 </form>
                                             </div>
 

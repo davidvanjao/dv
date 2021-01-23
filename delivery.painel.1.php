@@ -75,7 +75,7 @@ $usuario = $_SESSION['logado'];
                                         <table>
                                             <tr>
                                                 <th style="width:10%;">TICKET</th>
-                                                <th style="width:10%;">DATA</th>
+                                                <th style="width:10%;">DATA DE ENTREGA</th>
                                                 <th style="width:10%;">NOME</th>
                                                 <th style="width:5%;">STATUS</th>
                                                 <th style="width:10%;">AÇÕES</th>
