@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-require 'conexao.banco.oracle.php';
+//require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -75,10 +75,10 @@ $usuario = $_SESSION['logado'];
                                         <table>
                                             <tr>
                                                 <th style="width:10%;">TICKET</th>
-                                                <th style="width:10%;">DATA</th>
+                                                <th style="width:10%;">DATA DE ENTREGA</th>
                                                 <th style="width:10%;">NOME</th>
                                                 <th style="width:5%;">STATUS</th>
-                                                <!--<th style="width:5%;">AÇÕES</th>-->
+                                                <th style="width:10%;">AÇÕES</th>
                                             </tr>
                                         </table> 
                                     </div>                                    
@@ -86,7 +86,7 @@ $usuario = $_SESSION['logado'];
                                         <table>
                                             <?php                                 
 
-                                            $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+                                            $sql = "SELECT a.id, a.orcamento, a.idCliente, nomeCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
                                             FROM 
                                             tb_log_delivery a
                                             WHERE 
@@ -116,34 +116,18 @@ $usuario = $_SESSION['logado'];
                                                     echo "<tr>";
                                                     echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                     echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
-
-                                                    $consulta = "SELECT a.seqpessoa, a.nomerazao
-                                                    FROM 
-                                                    CONSINCO.GE_PESSOA a
-                                                    WHERE
-                                                    a.seqpessoa = '$codCliente'";
-
-                                                     //prepara uma instrucao para execulsao
-                                                    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
-
-                                                    //Executa os comandos SQL
-                                                    oci_execute($resultado);
-
-                                                    while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
-
-                                                        echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
-
-                                                    }
+                                                    echo "<td style='width:10%;'>".$delivery['nomeCliente']."</td>";
                                                     echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>"; 
-                                                    //echo '<td style="width:5%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'&cliente='.$delivery['idCliente'].'" target="_blank">Imprimir</a></td>';   
-                                                    //echo '<td style="width:5%;"><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></td>';           
+                                                    echo '<td style="width:5%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'&cliente='.$delivery['idCliente'].'" target="_blank">Imprimir</a></td>';   
+                                                    echo '<td style="width:5%;"><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></td>';           
                                                     echo "</tr>";  
 
                                                 
                                                 }
                                             } else {   
 
-                                                echo "Nenhuma compra pendente.";
+                                                echo "NENHUMA COMPRA PENDENTE!";
+
                                             }
 
                                                 

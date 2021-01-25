@@ -273,7 +273,7 @@ if(isset($_SESSION['blocoNotas'])) {
                                                         echo "<td>R$".number_format($preco,2,",",".")."</td>";
                                                         echo "<td>R$".$resultado."</td>";
                                                         echo "<td>".$value['estoque']."</td>"; 
-                                                        echo '<td><a href="delivery.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
+                                                        echo '<td><a href="orcamento.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
                                                         echo "</tr>";  
                                                     }
                                                 }
@@ -297,9 +297,6 @@ if(isset($_SESSION['blocoNotas'])) {
             </div>
         </div>
         <script type="text/javascript" src="assets/js/scriptcheckbox.js"></script> 
-                                            
-        <!--<script type="text/javascript" src="jquery.min.js"></script>
-        <script type="text/javascript" src="script2.js"></script>-->
 
     </body>
 

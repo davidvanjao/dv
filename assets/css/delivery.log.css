@@ -1,0 +1,45 @@
+.busca-resultado {
+    display: flex;
+}
+
+
+.campo-inserir form input {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.estrutura {
+    border:1px solid #000;
+    border-radius: 10px;
+    padding: 10px;
+    width: 210px;
+    height: 230px;
+    margin: 10px;
+}
+.estrutura h4 {
+    margin-bottom: 10%;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+
+}
+.horario {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.horarioInicio, .horarioFim {
+    width: 100%;
+    margin-right: 2px;
+}
+
+.horario input {
+    width: 100%;
+}
+
+.nome input {
+    width: 100%;
+    height: 30px;
+    margin-bottom: 5px;
+
+}

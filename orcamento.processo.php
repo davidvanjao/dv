@@ -324,21 +324,16 @@ if(isset($_POST['salvarLista'])) {
                 $sql->execute();  
             }
 
-                unset( $_SESSION['lista'] );
-                unset( $_SESSION['cliente'] );
-                unset( $_SESSION['orcamento'] );    
-                unset( $_SESSION['formaPagamento'] ); 
-                unset( $_SESSION['blocoNotas']); 
+            unset( $_SESSION['lista'] );
+            unset( $_SESSION['cliente'] );
+            unset( $_SESSION['orcamento'] );    
+            unset( $_SESSION['formaPagamento'] ); 
+            unset( $_SESSION['blocoNotas']); 
+
+            header("Location:/orcamento.painel.1.php");
         }
 
-        header("Location:/orcamento.painel.1.php");
-
-    } else {
- 
-        header("Location:/orcamento.painel.2.php");
-
-    }    
-
+    }
 }
 
 //================================LIMPAR LISTA DE PRODUTOS================================================================

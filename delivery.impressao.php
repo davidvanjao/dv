@@ -25,7 +25,7 @@ $seq = "1";
 $pagamento = "";
 $total = "";
 $valorTotal = floatval("00,00");
-$dataHora = date('d/m/Y \à\s H:i:s');
+$dataHora = date('d/m/Y \à\s H:i:s', strtotime('-1 hour', strtotime(date('Y-m-d H:i:s'))) );
 
 // DADOS DO CLIENTE - SISTEMA CONSINCO.
 
@@ -101,10 +101,10 @@ if(isset($orcamento) && !empty($orcamento)) {
     $html .= '<table width=100%>';
     $html .= '<thead class="tabelaProduto">';
     $html .= '<tr>';
-    $html .= '<th>N</th>';
+    $html .= '<th>N°</th>';
     $html .= '<th>CÓDIGO</th>';
     $html .= '<th>PRODUTO</th>';
-    $html .= '<th>PREÇO UN</th>';
+    $html .= '<th>PREÇO</th>';
     $html .= '<th>QTD</th>';
     $html .= '<th>TOTAL</th>';
     $html .= '<th>ESTOQUE</th>';
@@ -194,6 +194,12 @@ $dompdf->load_html('
             <div class="produto">                
 
                 '.$html.'
+
+                <table style="width:100%; margin-top:10px; font-size:20px;">
+                    <tr>
+                        <td style="text-align:right;"><strong>TOTAL:<strong> R$'.number_format($valorTotal,2,",",".").'</td>
+                    </tr>
+                </table>  
 
             </div>
 

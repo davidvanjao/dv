@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-require 'conexao.banco.oracle.php';
+//require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -19,6 +19,35 @@ if($usuarios->temPermissao('DEL') == false) {
     exit;
 }
 
+$data = date('Y-m-d');
+
+    $sql = "SELECT a.id, a.orcamento, a.idCliente, a.nomeCliente, a.statuss, a.dataa, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data, a.usuario, b.nome
+            FROM 
+            tb_log_delivery a,
+            tb_usuarios b
+            WHERE 
+            a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
+            AND a.dataa = '$data'
+            AND a.tipo = 'L'
+            AND a.usuario = b.id
+            GROUP BY a.orcamento";
+
+if(isset($_GET['data']) && empty($_GET['data']) == false){
+
+    $data = addslashes($_GET['data']);
+
+    $sql = "SELECT a.id, a.orcamento, a.idCliente, a.nomeCliente, a.statuss, a.dataa, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data, a.usuario, b.nome
+        FROM 
+        tb_log_delivery a,
+        tb_usuarios b
+        WHERE 
+        a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
+        AND a.dataa = '$data'
+        AND a.tipo = 'L'
+        AND a.usuario = b.id
+        GROUP BY a.orcamento";
+
+}
 
 ?>
 
@@ -39,8 +68,7 @@ if($usuarios->temPermissao('DEL') == false) {
 
                         <div class="painel-menu-menu">
 
-                            <?php require 'menuLateral.php'; ?>
-                            
+                            <?php require 'menuLateral.php'; ?>                            
                                 
                         </div>
 
@@ -67,15 +95,15 @@ if($usuarios->temPermissao('DEL') == false) {
 
                                     <div class="campo-inserir">
                                         <form class="busca-area" name="buscar" method="GET">
-                                            <input class="input-busca-delivery"type="button" value="" name="data"/>
-                                        </form>                                        
+                                            <input class="input-busca-delivery"type="date" value="<?php echo $data;?>" name="data" autocomplete="off" required="required" onchange="this.form.submit()"/>
+                                        </form>                                       
                                     </div>
 
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>                                                
                                                 <th style="width:10%;">TICKET</th>
-                                                <th style="width:10%;">DATA</th>
+                                                <th style="width:10%;">DATA DE ENTREGA</th>
                                                 <th style="width:10%;">NOME</th>
                                                 <th style="width:5%;">AÇOUGUE</th>
                                                 <th style="width:5%; text-align:center;">STATUS</th>
@@ -89,16 +117,6 @@ if($usuarios->temPermissao('DEL') == false) {
                                         <div class="busca-resultado">
                                             <table>
                                                 <?php
-
-                                                $sql = "SELECT a.id, a.orcamento, a.idCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data, a.usuario, b.nome
-                                                FROM 
-                                                tb_log_delivery a,
-                                                tb_usuarios b
-                                                WHERE 
-                                                a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA' )
-                                                and a.usuario = b.id
-                                                GROUP BY a.orcamento";
-                                                                                                                                                
 
                                                 $sql = $pdo->query($sql);   
                                                 if($sql->rowCount() > 0) {
@@ -124,25 +142,8 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         echo "<tr>";                                                        
                                                         echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                         echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
+                                                        echo "<td style='width:10%;'>".$delivery['nomeCliente']."</td>";
                                                         
-
-                                                        $consulta = "SELECT a.seqpessoa, a.nomerazao
-                                                        FROM 
-                                                        CONSINCO.GE_PESSOA a
-                                                        WHERE
-                                                        a.seqpessoa = '$codCliente'";
-
-                                                        //prepara uma instrucao para execulsao
-                                                        $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
-
-                                                        //Executa os comandos SQL
-                                                        oci_execute($resultado);
-
-                                                        while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
-
-                                                            echo "<td style='width:10%;'>".$cliente['NOMERAZAO']."</td>";
-
-                                                        }
 
                                                         $sql = "SELECT c_gondola, pedido
                                                         FROM 
@@ -184,27 +185,28 @@ if($usuarios->temPermissao('DEL') == false) {
                                                         echo "<td style='background-color:$cor; width:5%; text-align:center;'>".$delivery['statuss']."</td>";
                                                         echo "<td style='width:5%; text-align:center;'><strong>".$delivery['nome']."</strong></td>";   
                                                         echo '<td style="width:5%;">';
-                                                            echo '<div class="teste">';
-                                                            
+                                                            echo '<div class="teste">';                                                            
 
-                                                                        if($delivery['statuss'] == 'PEDIDO REALIZADO') {
+                                                                if($delivery['statuss'] == 'PEDIDO REALIZADO') {
 
-                                                                            echo '<a class="iniciar" href="delivery.processo.php?andamento='.$delivery['id'].'">Iniciar</a>';
+                                                                    //echo "<input class='' type='button' name='' value='INICIAR' onclick='funcao1()'>";
+                                                                    echo '<a class="iniciar" onclick="return funcao1()" href="delivery.log.php?orcamento='.$orcamento.'">Iniciar</a>';
+                                                                    //echo '<a class="iniciar" onclick="return funcao1()" href="delivery.processo.php?andamento='.$delivery['id'].'">Iniciar</a>';
 
-                                                                        }
-                                                                        
-                                                                        if($delivery['statuss'] == 'EM ANDAMENTO') {
+                                                                }
+                                                                
+                                                                if($delivery['statuss'] == 'EM ANDAMENTO') {
 
-                                                                        //echo '<a class="liberar" href="delivery.painel.4.php?id='.$delivery['id'].'">Liberar</a>';
-                                                                        echo '<a class="liberar" href="delivery.processo.php?liberado='.$delivery['id'].'">Liberar</a>';
+                                                                    //echo '<a class="liberar" href="delivery.painel.4.php?id='.$delivery['id'].'">Liberar</a>';
+                                                                    echo '<a class="liberar" href="delivery.processo.php?liberado='.$delivery['id'].'">Liberar</a>';
 
-                                                                        }
-                                                                        
-                                                                        if($delivery['statuss'] == 'LIBERADO PARA ENTREGA') {
+                                                                }
+                                                                
+                                                                if($delivery['statuss'] == 'LIBERADO PARA ENTREGA') {
 
-                                                                            echo '<a class="entregar" href="delivery.processo.php?saiu='.$delivery['id'].'">Entregar</a>';
-    
-                                                                        }
+                                                                    echo '<a class="entregar" href="delivery.processo.php?saiu='.$delivery['id'].'">Entregar</a>';
+
+                                                                }
                                                             echo '</div>';                                                             
                                                         echo '</td>'; 
                                                                                  
@@ -214,7 +216,7 @@ if($usuarios->temPermissao('DEL') == false) {
 
                                                 } else {
                                                         
-                                                    echo "Nenhum lista de compra pendente.";
+                                                    echo "NENHUMA LISTA DE COMPRA PENDENTE";
                                                 }
                                                 ?>                                             
 
@@ -231,6 +233,23 @@ if($usuarios->temPermissao('DEL') == false) {
                 </div>
             </div>
         </div>
+
+        <script>
+            function funcao1() {
+
+                var confirmar = confirm("Voce Deseja Iniciar a compra?");
+
+                if(confirmar == true) {
+
+                    return true;
+
+                } else {
+
+                    return false;
+                }
+            }
+
+        </script>
         
     </body>
 

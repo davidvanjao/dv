@@ -72,7 +72,7 @@
 
             <?php if($usuarios->temPermissao('CON')): ?>
                 <div class="painel-menu-widget">
-                    <a href="teste.php">
+                    <a href="delivery.log.php">
                         <img src="assets/img/novo.png" title="Configuração">                                        
                     </a>                        
                 </div>
