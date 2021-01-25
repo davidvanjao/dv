@@ -79,7 +79,7 @@ if(isset($_SESSION['dataEntrega'])) {
 
 //=================================================================================================================
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
 //echo $bloco;
 //var_dump($valorGeral);
 

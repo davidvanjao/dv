@@ -112,66 +112,79 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                                     <div class="busca-resultado"> 
 
                                         <div class="estrutura">
-                                            <h4>COMPRA EM ANDAMENTO</h4>
-                                            <form method="GET" action="delivery.processo.log.php">
+                                            <h4>PROCESSO DE COMPRA</h4>
+                                            <form class="box-separacao" method="GET" action="delivery.processo.log.php">
                                                 <input value="<?php echo $orcamento; ?>" type='hidden' name='orcamento'>
-                                                <div class="horario">
-                                                    <div class="horarioInicio">
-                                                        <label>INICIO</label></br>
-                                                        <input type="time" class="" value="<?php echo $andamentoInicio; ?>" name="andamentoInicio" onchange='this.form.submit()'/>   
-                                                    </div>    
-                                                    <div class="horarioFim">
-                                                        <label>FIM</label></br>
-                                                        <input type="time" class="" value="<?php echo $andamentoFim; ?>" name="andamentoFim" onchange='this.form.submit()'/>   
+                                           
+                                                    <div class="horario">
+                                                        <div class="horarioInicio">
+                                                            <label>INICIO</label></br>
+                                                            <input type="time" class="" value="<?php echo $andamentoInicio; ?>" name="andamentoInicio"/>   
+                                                        </div>    
+                                                        <div class="horarioFim">
+                                                            <label>FIM</label></br>
+                                                            <input type="time" class="" value="<?php echo $andamentoFim; ?>" name="andamentoFim"/>   
+                                                        </div>  
                                                     </div>  
-                                                </div>  
-                                                <div class="nome">
-                                                    <label>NOME</label></br>
-                                                    <input type="text" class="" value="<?php echo $quemFez; ?>" name="quemFez" onchange='this.form.submit()'/>   
-                                                </div>                                     
-                                            </form>                                        
-                                        </div>
-
-                                        <div class="estrutura">
-                                            <h4>COMPRA EM TRANSE NO PDV</h4>
-                                            <form method="GET" action="delivery.processo.log.php">
-                                                <input value="<?php echo $orcamento; ?>" type='hidden' name='codigoProduto'>
-                                                <div class="horario">
-                                                    <div class="horarioInicio">
-                                                        <label>INICIO</label></br>
-                                                        <input type="time" class="" value="<?php echo $pdvInicio; ?>" name=""/>   
-                                                    </div>    
-                                                    <div class="horarioFim">
-                                                        <label>FIM</label></br>
-                                                        <input type="time" class="" value="<?php echo $pdvFim; ?>" name=""/>   
-                                                    </div>  
-                                                </div>  
-                                                <div class="nome">
-                                                    <label>NOME</label></br>
-                                                    <input type="text" class="" value="<?php echo $quemConferiu; ?>" name="" placeholder="CONFERENTE"/>   
-                                                    <input type="text" class="" value="<?php echo $quemPassou; ?>" name="" placeholder="OPERADOR"/>   
+                                                    <div class="nome">
+                                                        <label>NOME</label></br>
+                                                        <input type="text" class="" value="<?php echo $quemFez; ?>" name="quemFez"/>   
+                                                    </div> 
+                                                
+                                                <div class="botao-salvar">
+                                                    <input value="SALVAR" type='submit' name=''>  
                                                 </div>                                    
                                             </form>                                        
                                         </div>
 
                                         <div class="estrutura">
-                                            <h4>LIBERADA PARA ENTREGA/ENTREGA</h4>
+                                            <h4>PROCESSO NO CAIXA </h4>
                                             <form method="GET" action="delivery.processo.log.php">
-                                            <input value="<?php echo $orcamento; ?>" type='hidden' name='codigoProduto'>
-                                                <div class="horario">
-                                                    <div class="horarioInicio">
-                                                        <label>INICIO</label></br>
-                                                        <input type="time" class="" value="<?php echo $entregaInicio; ?>" name=""/>   
-                                                    </div>    
-                                                    <div class="horarioFim">
-                                                        <label>FIM</label></br>
-                                                        <input type="time" class="" value="<?php echo $entregaFim; ?>" name=""/>   
+                                                <input value="<?php echo $orcamento; ?>" type='hidden' name='orcamento'>
+                                                    <div class="horario">
+                                                        <div class="horarioInicio">
+                                                            <label>INICIO</label></br>
+                                                            <input type="time" class="" value="<?php echo $pdvInicio; ?>" name="pdvInicio"/>   
+                                                        </div>    
+                                                        <div class="horarioFim">
+                                                            <label>FIM</label></br>
+                                                            <input type="time" class="" value="<?php echo $pdvFim; ?>" name="pdvFim"/>   
+                                                        </div>  
                                                     </div>  
-                                                </div>  
-                                                <div class="nome">
-                                                    <label>NOME</label></br>
-                                                    <input type="text" class="" value="<?php echo $quemEntregou; ?>" name=""/>   
-                                                </div>                                     
+                                                    <div class="nome">
+                                                        <label>NOME</label></br>
+                                                        <input type="text" class="" value="<?php echo $quemConferiu; ?>" name="quemConferiu" placeholder="CONFERENTE"/>   
+                                                        <input type="text" class="" value="<?php echo $quemPassou; ?>" name="quemPassou" placeholder="OPERADOR"/>   
+                                                    </div>  
+                                                <div class="botao-salvar">
+                                                    <input value="SALVAR" type='submit' name=''>  
+                                                </div>                                
+                                            </form>                                        
+                                        </div>
+
+                                        <div class="estrutura">
+                                            <h4>PROCESSO DE ENTREGA</h4>
+                                            <form method="GET" action="delivery.processo.log.php">
+                                                <input value="<?php echo $orcamento; ?>" type='hidden' name='orcamento'>
+
+                                                    <div class="horario">
+                                                        <div class="horarioInicio">
+                                                            <label>INICIO</label></br>
+                                                            <input type="time" class="" value="<?php echo $entregaInicio; ?>" name="entregaInicio"/>   
+                                                        </div>    
+                                                        <div class="horarioFim">
+                                                            <label>FIM</label></br>
+                                                            <input type="time" class="" value="<?php echo $entregaFim; ?>" name="entregaFim"/>   
+                                                        </div>  
+                                                    </div>  
+                                                    <div class="nome">
+                                                        <label>NOME</label></br>
+                                                        <input type="text" class="" value="<?php echo $quemEntregou; ?>" name="quemEntregou"/>   
+                                                    </div> 
+
+                                                <div class="botao-salvar">
+                                                    <input value="SALVAR" type='submit' name=''>  
+                                                </div>                                       
                                             </form>                                        
                                         </div>
                                         

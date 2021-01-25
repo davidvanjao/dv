@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-//require 'conexao.banco.oracle.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -102,13 +102,14 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>                                                
-                                                <th style="width:10%;">TICKET</th>
-                                                <th style="width:10%;">DATA DE ENTREGA</th>
+                                                <th style="width:3%;">TICKET</th>
+                                                <th style="width:5%;">DATA</th>
                                                 <th style="width:10%;">NOME</th>
                                                 <th style="width:5%;">AÇOUGUE</th>
-                                                <th style="width:5%; text-align:center;">STATUS</th>
-                                                <th style="width:5%; text-align:center;">ATENDENTE</th>
-                                                <th style="width:5%; text-align:center;">AÇÕES</th>
+                                                <th style="width:5%;">STATUS</th>
+                                                <th style="width:5%;">ATENDENTE</th>
+                                                <th style="width:3%;">AÇÕES</th>
+                                                <th style="width:3%;">AÇÕES</th>
                                             </tr>
                                         </table> 
                                     </div>
@@ -140,8 +141,8 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                         }     
                                                         
                                                         echo "<tr>";                                                        
-                                                        echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
-                                                        echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
+                                                        echo "<td style='width:3%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
+                                                        echo "<td style='width:5%;'>".$delivery['saida_data']."</td>";
                                                         echo "<td style='width:10%;'>".$delivery['nomeCliente']."</td>";
                                                         
 
@@ -182,34 +183,34 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                             echo "<td style='width:5%;'>-</td>";
                                                         }
 
-                                                        echo "<td style='background-color:$cor; width:5%; text-align:center;'>".$delivery['statuss']."</td>";
-                                                        echo "<td style='width:5%; text-align:center;'><strong>".$delivery['nome']."</strong></td>";   
-                                                        echo '<td style="width:5%;">';
+                                                        echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";
+                                                        echo "<td style='width:5%;'><strong>".$delivery['nome']."</strong></td>";   
+                                                        echo '<td style="width:3%;">';
                                                             echo '<div class="teste">';                                                            
 
                                                                 if($delivery['statuss'] == 'PEDIDO REALIZADO') {
-
-                                                                    //echo "<input class='' type='button' name='' value='INICIAR' onclick='funcao1()'>";
+                
                                                                     echo '<a class="iniciar" onclick="return funcao1()" href="delivery.log.php?orcamento='.$orcamento.'">Iniciar</a>';
-                                                                    //echo '<a class="iniciar" onclick="return funcao1()" href="delivery.processo.php?andamento='.$delivery['id'].'">Iniciar</a>';
 
                                                                 }
                                                                 
                                                                 if($delivery['statuss'] == 'EM ANDAMENTO') {
 
-                                                                    //echo '<a class="liberar" href="delivery.painel.4.php?id='.$delivery['id'].'">Liberar</a>';
-                                                                    echo '<a class="liberar" href="delivery.processo.php?liberado='.$delivery['id'].'">Liberar</a>';
+
+                                                                    echo '<a class="liberar" onclick="return funcao1()" href="delivery.log.php?orcamento='.$orcamento.'">Liberar</a>';
 
                                                                 }
                                                                 
                                                                 if($delivery['statuss'] == 'LIBERADO PARA ENTREGA') {
 
-                                                                    echo '<a class="entregar" href="delivery.processo.php?saiu='.$delivery['id'].'">Entregar</a>';
+                                                                    echo '<a class="entregar" onclick="return funcao1()" href="delivery.log.php?orcamento='.$orcamento.'">Entregar</a>';
 
                                                                 }
                                                             echo '</div>';                                                             
                                                         echo '</td>'; 
-                                                                                 
+
+                                                        echo "<td style='width:3%;'><a class='liberar' href='delivery.log.php?orcamento=".$orcamento."'>HORARIO</a></td>";
+                                                                                                                                         
                                                         echo "</tr>";                                                      
                                                                      
                                                     }
@@ -237,7 +238,7 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
         <script>
             function funcao1() {
 
-                var confirmar = confirm("Voce Deseja Iniciar a compra?");
+                var confirmar = confirm("Você realmente deseja liberar?");
 
                 if(confirmar == true) {
 

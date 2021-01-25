@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-//require 'conexao.banco.oracle.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
@@ -45,10 +45,10 @@ if(isset($_GET['liberarAcougue'])) {
 
 
 if(isset($_GET['andamento']) && !empty($_GET['andamento'])) {
-    $id = $_GET['andamento'];
+    $orcamento = $_GET['andamento'];
     $status = 'EM ANDAMENTO';
 
-    $sql = $pdo->prepare("UPDATE tb_log_delivery SET statuss = :statuss, dataIniciar = NOW() WHERE id = $id");
+    $sql = $pdo->prepare("UPDATE tb_log_delivery SET statuss = :statuss, dataIniciar = NOW() WHERE orcamento = $orcamento");
     $sql->bindValue(":statuss", $status);
     $sql->execute();
 
@@ -59,10 +59,10 @@ if(isset($_GET['andamento']) && !empty($_GET['andamento'])) {
 
 if(isset($_GET['liberado']) && !empty($_GET['liberado'])) {
 
-    $id = $_GET['liberado'];  
+    $orcamento = $_GET['liberado'];  
     $status = 'LIBERADO PARA ENTREGA';
 
-    $sql = $pdo->prepare("UPDATE tb_log_delivery SET statuss = :statuss, dataLiberar = NOW() WHERE id = $id");
+    $sql = $pdo->prepare("UPDATE tb_log_delivery SET statuss = :statuss, dataLiberar = NOW() WHERE orcamento = $orcamento");
     $sql->bindValue(":statuss", $status);
     $sql->execute();
 
@@ -71,12 +71,12 @@ if(isset($_GET['liberado']) && !empty($_GET['liberado'])) {
 
 }
 
-if(isset($_GET['saiu']) && !empty($_GET['liberado'])) {
+if(isset($_GET['saiu']) && !empty($_GET['saiu'])) {
 
-    $id = $_GET['saiu'];  
+    $orcamento = $_GET['saiu'];  
     $status = 'SAIU PARA ENTREGA';
 
-    $sql = $pdo->prepare("UPDATE tb_log_delivery SET statuss = :statuss, dataEntregar = NOW() WHERE id = $id");
+    $sql = $pdo->prepare("UPDATE tb_log_delivery SET statuss = :statuss, dataEntregar = NOW() WHERE orcamento = $orcamento");
     $sql->bindValue(":statuss", $status);
     $sql->execute();
 

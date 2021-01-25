@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-//require 'conexao.banco.oracle.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 

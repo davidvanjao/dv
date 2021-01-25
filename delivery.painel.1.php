@@ -2,7 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
-//require 'conexao.banco.oracle.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -74,11 +74,11 @@ $usuario = $_SESSION['logado'];
                                     <div class="tabela-titulo">
                                         <table>
                                             <tr>
-                                                <th style="width:10%;">TICKET</th>
+                                                <th style="width:5%;">TICKET</th>
                                                 <th style="width:10%;">DATA DE ENTREGA</th>
                                                 <th style="width:10%;">NOME</th>
                                                 <th style="width:5%;">STATUS</th>
-                                                <th style="width:10%;">AÇÕES</th>
+                                                <th style="width:4%;">AÇÕES</th>
                                             </tr>
                                         </table> 
                                     </div>                                    
@@ -114,12 +114,12 @@ $usuario = $_SESSION['logado'];
                                                     }  
 
                                                     echo "<tr>";
-                                                    echo "<td style='width:10%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
+                                                    echo "<td style='width:5%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                     echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
                                                     echo "<td style='width:10%;'>".$delivery['nomeCliente']."</td>";
                                                     echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>"; 
-                                                    echo '<td style="width:5%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'&cliente='.$delivery['idCliente'].'" target="_blank">Imprimir</a></td>';   
-                                                    echo '<td style="width:5%;"><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></td>';           
+                                                    echo '<td style="width:2%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'&cliente='.$delivery['idCliente'].'" target="_blank">Imprimir</a></td>';   
+                                                    echo '<td style="width:2%;"><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></td>';           
                                                     echo "</tr>";  
 
                                                 
