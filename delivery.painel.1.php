@@ -75,7 +75,7 @@ $usuario = $_SESSION['logado'];
                                         <table>
                                             <tr>
                                                 <th style="width:5%;">TICKET</th>
-                                                <th style="width:10%;">DATA DE ENTREGA</th>
+                                                <th style="width:5%;">DATA</th>
                                                 <th style="width:10%;">NOME</th>
                                                 <th style="width:5%;">STATUS</th>
                                                 <th style="width:4%;">AÇÕES</th>
@@ -115,7 +115,7 @@ $usuario = $_SESSION['logado'];
 
                                                     echo "<tr>";
                                                     echo "<td style='width:5%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
-                                                    echo "<td style='width:10%;'>".$delivery['saida_data']."</td>";
+                                                    echo "<td style='width:5%;'>".$delivery['saida_data']."</td>";
                                                     echo "<td style='width:10%;'>".$delivery['nomeCliente']."</td>";
                                                     echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>"; 
                                                     echo '<td style="width:2%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'&cliente='.$delivery['idCliente'].'" target="_blank">Imprimir</a></td>';   

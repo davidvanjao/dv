@@ -16,6 +16,12 @@
     margin: 10px;
     background-color: #989898;
 }
+.controle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
+}
 
 .estrutura input[type=submit] {
     width: 100%;
@@ -52,7 +58,4 @@
     height: 30px;
     margin-bottom: 5px;
 
-}
-.botao-salvar {
-    height: 100px;
 }

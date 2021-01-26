@@ -58,6 +58,7 @@ $seq = "1";
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/delivery.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="refresh" content="30">
     </head>
     <body>
         <div id="__nex">

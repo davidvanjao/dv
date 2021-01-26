@@ -39,5 +39,21 @@ function relogio(){
     }		
 }	
 
+
+function funcao1() {
+
+    var confirmar = confirm("Você realmente deseja liberar?");
+
+    if(confirmar == true) {
+
+        return true;
+
+    } else {
+
+        return false;
+    }
+}
+
 atualizar = setInterval(iniciarAtualizar, 1200000);
 relogio();
+
