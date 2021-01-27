@@ -68,11 +68,11 @@ if(isset($_GET['codigoProduto']) && !empty($_GET['orcamento'])) {
             
                 $_SESSION['lista'][$produto]['quantidade'] = $quantidade;
 
-                header("Location:/orcamento.editar.php?orcamento=$orcamento");              
+                header("Location:/delivery.editar.php?orcamento=$orcamento");              
             
             }     
 
-            header("Location:/orcamento.editar.php?orcamento=$orcamento"); 
+            header("Location:/delivery.editar.php?orcamento=$orcamento"); 
             
         } else {
 
@@ -111,7 +111,7 @@ if(isset($_GET['codigoProduto']) && !empty($_GET['orcamento'])) {
                 'codigoEan'=>$value['CODACESSO'], 
                 'observacao'=>$observacao);
 
-            header("Location:/orcamento.editar.php?orcamento=$orcamento");
+            header("Location:/delivery.editar.php?orcamento=$orcamento");
 
         }  
         
@@ -198,7 +198,7 @@ if(isset($_GET['excluirItem'])) {
     $sql->bindValue(":c_produto", $produto);
     $sql->execute();   
  
-    header("Location:/orcamento.editar.php?orcamento=$orcamento"); 
+    header("Location:/delivery.editar.php?orcamento=$orcamento"); 
     exit;
 
 }
@@ -213,7 +213,7 @@ if(isset($_GET['excluirItemSessao'])) {
     if(isset($_SESSION['lista'])){
 
         unset($_SESSION['lista'][$produto]);
-        header("Location:/orcamento.editar.php?orcamento=$orcamento"); 
+        header("Location:/delivery.editar.php?orcamento=$orcamento"); 
         exit;        
     }
 }

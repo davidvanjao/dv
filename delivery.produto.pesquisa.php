@@ -159,9 +159,19 @@ if(isset($_POST['pesquisa'])) {
                                                 //Executa os comandos SQL
                                                 oci_execute($resultado);
 
-                                                while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {                                                    
+                                                while (($produto = oci_fetch_array($resultado, OCI_ASSOC)) != false) {         
+                                                    
+                                                    //DIRECIONAR PARA O ORQUIVO EDITAR
+                                                    if(isset($_GET['adicionarEditar'])) {
+                                                        $orcamento = addslashes($_GET['orcamento']);
 
-                                                    echo '<tr onclick=location.href="delivery.processo.php?codigoProduto='.$produto['SEQPRODUTO'].'" style="cursor:pointer">';
+                                                        echo '<tr onclick=location.href="delivery.processo.editar.php?codigoProduto='.$produto['SEQPRODUTO'].'&orcamento='.$orcamento.'" style="cursor:pointer">';
+
+                                                    } else {
+
+                                                        echo '<tr onclick=location.href="delivery.processo.php?codigoProduto='.$produto['SEQPRODUTO'].'" style="cursor:pointer">';
+                                                    }
+
                                                     echo "<td style='width:5%;'>".$produto['CODACESSO']."</td>";
                                                     echo "<td style='width:5%;'>".$produto['SEQPRODUTO']."</td>";
                                                     echo "<td style='width:20%;'>".$produto['DESCCOMPLETA']."</td>";  
