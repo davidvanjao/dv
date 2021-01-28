@@ -97,33 +97,28 @@ $usuario = $_SESSION['logado'];
                                             $sql = $pdo->query($sql);   
                                             if($sql->rowCount() > 0) {
                                                 foreach($sql->fetchAll() as $delivery) {
-
-                                                    $codCliente = $delivery['idCliente'];
-
-                                                    if($delivery['statuss']=="PEDIDO REALIZADO"){
-                                                        $cor="";
-                                                    }
-                                                    if($delivery['statuss']=="EM ANDAMENTO"){
-                                                        $cor="#ff0000";
-                                                    }
-                                                    if($delivery['statuss']=="LIBERADO PARA ENTREGA"){
-                                                        $cor="#ffa500";
-                                                    }
-                                                    if($delivery['statuss']=="SAIU PARA ENTREGA"){
-                                                        $cor="#008000";
-                                                    }  
-
+                                                    
                                                     echo "<tr>";
                                                     echo "<td style='width:5%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                     echo "<td style='width:5%;'>".$delivery['saida_data']."</td>";
                                                     echo "<td style='width:10%;'>".$delivery['nomeCliente']."</td>";
-                                                    echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>"; 
-                                                    echo '<td style="width:2%;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'&cliente='.$delivery['idCliente'].'" target="_blank">Imprimir</a></td>';   
-                                                    echo '<td style="width:2%;"><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></td>';           
+                                                    echo "<td style='width:5%;'>".$delivery['statuss']."</td>"; 
+                                                    echo '<td style="width:2%; background-color:#ff0000;"><a href="delivery.impressao.php?orcamento='.$delivery['orcamento'].'&cliente='.$delivery['idCliente'].'" target="_blank">Imprimir</a></td>';   
+
+                                                    if($delivery['statuss'] == "PEDIDO REALIZADO") {
+
+                                                        echo '<td style="width:2%; background-color:#008000;"><a href="delivery.editar.php?orcamento='.$delivery['orcamento'].'">Editar</a></td>'; 
+                                                    } else {
+
+                                                        echo '<td style="width:2%;"></a></td>'; 
+
+                                                    }
+
                                                     echo "</tr>";  
 
                                                 
                                                 }
+                                                
                                             } else {   
 
                                                 echo "NENHUMA COMPRA PENDENTE!";

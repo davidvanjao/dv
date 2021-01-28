@@ -17,10 +17,9 @@
 .busca-resultado table a {
     text-decoration: none;
     color: #fff;
-    background-color: #ff0000;
+    border: 1px solid #fff;
     display: block;
     text-align: center;
-    margin:1px;
 }
 .tabela-lancamentos table a:hover {
     background-color: #fff;

@@ -164,9 +164,11 @@ if(isset($_GET['atualizar'])) {
             unset( $_SESSION['formaPagamento'] ); 
             unset( $_SESSION['blocoNotas']); 
 
-            header("Location:/orcamento.painel.1.php");
+            header("Location:/delivery.painel.1.php");
 
     }
+
+    header("Location:/delivery.painel.1.php");
     
 
 }

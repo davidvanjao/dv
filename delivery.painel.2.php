@@ -303,7 +303,7 @@ if(isset($_SESSION['dataEntrega'])) {
 
                                                                     </form>     
                                                               </td>";
-                                                        echo '<td><a href="delivery.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
+                                                        echo '<td style="background-color:#ff0000;"><a href="delivery.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
                                                         echo "</tr>";  
                                                     }
                                                 }

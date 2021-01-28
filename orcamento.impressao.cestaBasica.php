@@ -1,0 +1,215 @@
+<?php
+
+session_start();
+require 'conexao.banco.php';
+require 'conexao.banco.oracle.php';
+require 'classes/usuarios.class.php';
+
+if (isset($_SESSION['logado']) && empty($_SESSION['logado']) == false) {
+} else {
+    header("Location: login.php");
+}
+
+$usuarios = new Usuarios($pdo);
+$usuarios->setUsuario($_SESSION['logado']);
+
+if($usuarios->temPermissao('ORC') == false) {
+    header("Location:index.php");
+    exit;
+}
+
+//=================================================================================================================
+
+$html = "";
+
+$seq = "1";
+$pagamento = "";
+$total = "";
+$valorTotal = floatval("00,00");
+$dataHora = date('d/m/Y \à\s H:i:s', strtotime('-1 hour', strtotime(date('Y-m-d H:i:s'))) );
+
+
+// DADOS DO CLIENTE - SISTEMA CONSINCO.
+
+if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
+
+    $orcamento = addslashes($_GET['orcamento']);
+    
+    $consulta = "SELECT A.NROPEDVENDA, B.NOMERAZAO, B.LOGRADOURO, B.NROLOGRADOURO, B.CIDADE, B.FONEDDD1, B.FONENRO1, A.DTAINCLUSAO
+    FROM 
+    CONSINCO.MAD_PEDVENDA  A,
+    CONSINCO.GE_PESSOA B
+    WHERE 
+    A.SEQPESSOA = B.SEQPESSOA
+    AND A.NROPEDVENDA = '$orcamento'";                                       
+    
+    //prepara uma instrucao para execulsao
+    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
+
+    //Executa os comandos SQL
+    oci_execute($resultado);
+
+    while (($cliente = oci_fetch_array($resultado, OCI_ASSOC)) != false) {
+
+            $nome = @$cliente['NOMERAZAO'];
+            $endereco = @$cliente['LOGRADOURO'];
+            $numero = @$cliente['NROLOGRADOURO'];
+            $cidade = @$cliente['CIDADE']; 
+            $ddd = @$cliente['FONEDDD1']; 
+            $telefone = @$cliente['FONENRO1']; 
+
+    }
+    
+}
+
+// DADOS LISTA DE PRODUTOS
+if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
+
+    $orcamento = addslashes($_GET['orcamento']);
+    
+    $consulta = "SELECT A.NROPEDVENDA, A.SEQPEDVENDAITEM, A.SEQPRODUTO, B.DESCCOMPLETA, A.QTDEMBALAGEM, A.QTDPEDIDA, A.VLREMBINFORMADO
+    FROM
+    CONSINCO.MAD_PEDVENDAITEM A,
+    CONSINCO.MAP_PRODUTO B,
+    CONSINCO.MAD_PEDVENDA C
+    WHERE
+    C.NROPEDVENDA = A.NROPEDVENDA
+    AND C.NROPEDVENDA = '$orcamento'
+    AND A.SEQPRODUTO = B.SEQPRODUTO";
+
+    //prepara uma instrucao para execulsao
+    $resultado = oci_parse($ora_conexao, $consulta) or die ("erro");
+
+    //Executa os comandos SQL
+    oci_execute($resultado);
+
+    $html .= '<table width=100%>';
+    $html .= '<thead class="tabelaProduto">';
+    $html .= '<tr>';
+    $html .= '<th>N°</th>';
+    $html .= '<th>CÓDIGO</th>';
+    $html .= '<th>PRODUTO</th>';
+    $html .= '<th>EMB</th>';
+    $html .= '<th>QTD</th>';
+    $html .= '<th>PREÇO</th>';
+    $html .= '<th>TOTAL</th>';
+    $html .= '</tr>';
+    $html .= '</thead>';
+
+    while (($linha = oci_fetch_array($resultado, OCI_ASSOC)) != false) { 
+        
+        $quantidade = $linha['QTDPEDIDA'];
+        $valorUnidade = $linha['VLREMBINFORMADO'];
+        $totalLinha = $quantidade * $valorUnidade;
+
+        $html .='<tbody class="tabelaProduto">';
+        $html .= '<tr>';
+        $html .= '<td>'.$linha['SEQPEDVENDAITEM'] .'</td>';
+        $html .= '<td>'.$linha['SEQPRODUTO'] .'</td>';
+        $html .= '<td>'.$linha['DESCCOMPLETA'] .'</td>';
+        $html .= '<td>'.$linha['QTDEMBALAGEM'] .'</td>';
+        $html .= '<td>'.$quantidade.'</td>';
+        $html .= '<td>'.number_format($valorUnidade,2,",",".").'</td>';
+        $html .= '<td>'.number_format($totalLinha,2,",",".").'</td>';
+        $html .= '</tr>';
+        $html .='</tbody>';	
+
+        $valorTotal += $totalLinha;
+
+    }
+    
+    $html .='</table>';
+    
+}
+
+
+//referenciar o DomPDF com namespace
+use Dompdf\Dompdf;
+
+//incluir arquivo de impressao
+require_once("dompdf/autoload.inc.php") ;
+
+//criando instancia
+$dompdf = new DOMPDF();
+
+//carrega o html
+$dompdf->load_html('
+
+    <html lang="pt-br">
+        <head>
+            <meta charset="utf-8">
+            <title>Impressao</title>
+            <link rel="stylesheet" href="assets/css/impressao.css">
+        </head>
+        
+        <body>
+
+            <div class="cabecalho">
+                <table width=100%;>
+                    <tr>
+                        <td><strong>NOME:</strong> '.$nome.'</td>
+                        <td><strong>TEL:('.$ddd.') '.$telefone.' </strong></td>   
+                        <td style="text-align:right;"><strong>ORC. Nº:<strong> '.$orcamento.'</td>
+                    </tr>
+                </table>
+                <table width=100%;>
+                    <tr>
+                        <td><strong>END:</strong> '.$endereco.' <strong>N°:</strong>'.$numero.' </td>
+                                             
+                        <td style="text-align:right;"><strong>CIDADE:</strong>'.$cidade.'</strong></td>
+                    </tr>
+                </table>     
+            </div>    
+
+            <hr>
+
+            <h2>ORÇAMENTO N° '.$orcamento.'</h2>
+
+
+            <div class="produto">                
+
+                '.$html.'    
+                
+                <table style="width:100%; margin-top:10px; font-size:20px;">
+                    <tr>
+                        <td style="text-align:right;"><strong>TOTAL:<strong> R$'.number_format($valorTotal,2,",",".").'</td>
+                    </tr>
+                </table>   
+
+            </div>
+
+            <footer>
+                <hr>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="font-size:12px;">Desenvolvido por: David Vanjão</td>
+                        <td style="text-align:right; font-size:12px;">Impresso em: '.$dataHora.'</td>
+                    </tr>
+                </table>   
+            </footer>
+
+        </body>
+
+    </html>
+
+
+');
+
+//$dompdf->setPaper('A4', 'landscape');
+$dompdf->setPaper('A4', 'portrait');
+
+//renderizar o html
+$dompdf->render();
+
+//exibir a página
+$dompdf->stream(
+    "relatorio_orcamento.pdf",
+    array(
+        "Attachment" => false //para realizar o dowload somente alterar para true
+    )
+);
+
+//$dompdf->getDOMPdf()->set_option('isPhpEnabled', true);
+
+?>
+
