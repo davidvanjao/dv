@@ -221,7 +221,7 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                                                             echo "<td style='width:5%;'>".$quantidade."</td>";                                                     
                                                             echo "<td style='width:5%;'>R$".number_format($preco,2,",",".")."</td>";
                                                             echo "<td style='width:5%;'>R$".$resultado."</td>";
-                                                            echo '<td style="width:5%;"><a href="orcamento.processo.editar.php?excluirItem='.$value['c_produto'].'&orcamento='.$orcamento.'">Excluir</a>';
+                                                            echo '<td style="width:5%; background-color:#ff0000;"><a href="orcamento.processo.editar.php?excluirItem='.$value['c_produto'].'&orcamento='.$orcamento.'">Excluir</a>';
                                                             echo "</tr>";  
                                                         } 
                                                     }
@@ -253,7 +253,7 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
 
                                                         echo "<td style='width:5%;'>R$".number_format($preco,2,",",".")."</td>";
                                                         echo "<td style='width:5%;'>R$".$resultado."</td>";
-                                                        echo '<td style="width:5%;"><a href="orcamento.processo.editar.php?excluirItemSessao='.$value['codigo'].'&orcamento='.$orcamento.'">Excluir</a>';
+                                                        echo '<td style="width:5%; background-color:#ff0000;"><a href="orcamento.processo.editar.php?excluirItemSessao='.$value['codigo'].'&orcamento='.$orcamento.'">Excluir</a>';
                                                         echo "</tr>";  
                                                     }
                                                 }

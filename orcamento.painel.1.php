@@ -122,8 +122,8 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                     echo "<td style='width:10%;'><strong>".str_pad($orcamento['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
                                                     echo "<td style='width:10%;'>".$orcamento['saida_data']."</td>";
                                                     echo "<td style='width:10%;'>".$orcamento['nomeCliente']."</td>";                                                   
-                                                    echo '<td style="width:5%;"><a href="orcamento.impressao.php?orcamento='.$orcamento['orcamento'].'&cliente='.$orcamento['idCliente'].'" target="_blank">Imprimir</a></td>';   
-                                                    echo '<td style="width:5%;"><a href="orcamento.editar.php?orcamento='.$orcamento['orcamento'].'">Editar</a></td>';           
+                                                    echo '<td style="width:5%; background-color:#ff0000;"><a href="orcamento.impressao.php?orcamento='.$orcamento['orcamento'].'&cliente='.$orcamento['idCliente'].'" target="_blank">Imprimir</a></td>';   
+                                                    echo '<td style="width:5%; background-color:#ff0000;"><a href="orcamento.editar.php?orcamento='.$orcamento['orcamento'].'">Editar</a></td>';           
                                                     echo "</tr>";  
 
                                                 

@@ -89,10 +89,10 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
     $html .= '<th>N°</th>';
     $html .= '<th>CÓDIGO</th>';
     $html .= '<th>PRODUTO</th>';
-    $html .= '<th>EMB</th>';
-    $html .= '<th>QTD</th>';
-    $html .= '<th>PREÇO</th>';
-    $html .= '<th>TOTAL</th>';
+    $html .= '<th style="text-align:right;">EMB</th>';
+    $html .= '<th style="text-align:right;">QTD</th>';
+    $html .= '<th style="text-align:right;">PREÇO</th>';
+    $html .= '<th style="text-align:right;">TOTAL</th>';
     $html .= '</tr>';
     $html .= '</thead>';
 
@@ -107,10 +107,10 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
         $html .= '<td>'.$linha['SEQPEDVENDAITEM'] .'</td>';
         $html .= '<td>'.$linha['SEQPRODUTO'] .'</td>';
         $html .= '<td>'.$linha['DESCCOMPLETA'] .'</td>';
-        $html .= '<td>'.$linha['QTDEMBALAGEM'] .'</td>';
-        $html .= '<td>'.$quantidade.'</td>';
-        $html .= '<td>'.number_format($valorUnidade,2,",",".").'</td>';
-        $html .= '<td>'.number_format($totalLinha,2,",",".").'</td>';
+        $html .= '<td style="text-align:right;">'.number_format($linha['QTDEMBALAGEM'],3,",",".").'</td>';
+        $html .= '<td style="text-align:right;">'.number_format($quantidade,3,",",".").'</td>';
+        $html .= '<td style="text-align:right;">R$ '.number_format($valorUnidade,2,",",".").'</td>';
+        $html .= '<td style="text-align:right;">R$ '.number_format($totalLinha,2,",",".").'</td>';
         $html .= '</tr>';
         $html .='</tbody>';	
 
@@ -147,6 +147,15 @@ $dompdf->load_html('
             <div class="cabecalho">
                 <table width=100%;>
                     <tr>
+                        <td><strong>RAZÃO SOCIAL: J.M. GASPAR & CIA LTDA</strong></td>
+                        <td style="text-align:right;"><strong>CNPJ: 48.349.633/0001-36</strong></td>
+                        <hr>
+                        
+                        
+                    </tr>
+                </table>
+                <table width=100%;>
+                    <tr>
                         <td><strong>NOME:</strong> '.$nome.'</td>
                         <td><strong>TEL:('.$ddd.') '.$telefone.' </strong></td>   
                         <td style="text-align:right;"><strong>ORC. Nº:<strong> '.$orcamento.'</td>
@@ -172,7 +181,7 @@ $dompdf->load_html('
                 
                 <table style="width:100%; margin-top:10px; font-size:20px;">
                     <tr>
-                        <td style="text-align:right;"><strong>TOTAL:<strong> R$'.number_format($valorTotal,2,",",".").'</td>
+                        <td style="text-align:right;"><strong>TOTAL:<strong> R$ '.number_format($valorTotal,2,",",".").'</td>
                     </tr>
                 </table>   
 

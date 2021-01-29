@@ -23,7 +23,7 @@ if(isset($_GET['pesquisa']) && empty($_GET['pesquisa']) == false){
 
     $pesquisa = addslashes($_GET['pesquisa']);                                                 
 
-    $consulta = "SELECT A.NROPEDVENDA, B.NOMERAZAO, B.LOGRADOURO, B.NROLOGRADOURO, B.CIDADE, B.FONEDDD1, B.FONENRO1, A.DTAINCLUSAO
+    $consulta = "SELECT A.NROPEDVENDA, B.NOMERAZAO, B.LOGRADOURO, B.NROLOGRADOURO, B.CIDADE, B.FONEDDD1, B.FONENRO1, TO_CHAR(A.DTAINCLUSAO,'DD/MM/YYYY') AS DATA_INCLUSAO
     FROM 
     CONSINCO.MAD_PEDVENDA  A,
     CONSINCO.GE_PESSOA B
@@ -79,7 +79,7 @@ if(isset($_GET['pesquisa']) && empty($_GET['pesquisa']) == false){
                                 <div class="body-conteudo">
                                     <div class="campo-inserir orcamento1">
                                         <form class="busca-area" name="buscar-form" method="GET">
-                                            <input class="input-busca-produto" minlength="3" type="text" name="pesquisa" placeholder="Digite sua busca">
+                                            <input class="input-busca-produto" minlength="3" type="number" name="pesquisa" placeholder="Digite sua busca">
                                             <input class="input-botao" type="submit" name="botao" value="Pesquisar">
                                         </form>
                                     </div>
@@ -111,7 +111,7 @@ if(isset($_GET['pesquisa']) && empty($_GET['pesquisa']) == false){
 
                                                     echo "<tr>";
                                                     echo "<td style='width:10%;'>".@$orcamento['NROPEDVENDA']."</td>";
-                                                    echo "<td style='width:10%;'>".@$orcamento['DTAINCLUSAO']."</td>";
+                                                    echo "<td style='width:10%;'>".@$orcamento['DATA_INCLUSAO']."</td>";
                                                     echo "<td style='width:10%;'>".@$orcamento['NOMERAZAO']."</td>";     
                                                     echo "<td style='width:10%;'>".@$orcamento['LOGRADOURO']."</td>";                                               
                                                     echo '<td style="width:5%; background-color:#ff0000;"><a href="orcamento.impressao.cestaBasica.php?orcamento='.@$orcamento['NROPEDVENDA'].'" target="_blank">Imprimir</a></td>';           

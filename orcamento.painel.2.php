@@ -71,7 +71,7 @@ if(isset($_SESSION['blocoNotas'])) {
 //=================================================================================================================
 
 
-//var_dump($_SESSION);
+var_dump($_SESSION);
 //echo $bloco;
 //var_dump($valorGeral);
 
@@ -273,7 +273,7 @@ if(isset($_SESSION['blocoNotas'])) {
                                                         echo "<td>R$".number_format($preco,2,",",".")."</td>";
                                                         echo "<td>R$".$resultado."</td>";
                                                         echo "<td>".$value['estoque']."</td>"; 
-                                                        echo '<td><a href="orcamento.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
+                                                        echo '<td style="background-color:#ff0000;"><a href="orcamento.processo.php?excluir='.$value['codigo'].'">Excluir</a>';
                                                         echo "</tr>";  
                                                     }
                                                 }

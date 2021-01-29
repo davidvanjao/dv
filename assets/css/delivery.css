@@ -38,6 +38,10 @@ table tr{
 
 /*==========================================PERSONALIZAVEL===================================================*/
 
+.delivery1 {
+    display: flex;
+}
+
 .campo-inserir form{
     display: flex;
     align-items:flex-end;

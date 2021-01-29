@@ -74,10 +74,7 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
             $valorTotal += $soma2; 
 
         }
-    }
-
-
-  
+    }  
 }
 
 //var_dump($_SESSION);
@@ -220,7 +217,7 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                                                                 echo "<td style='width:5%;'>R$".number_format($preco,2,",",".")."</td>";
                                                                 echo "<td style='width:5%;'>R$".$resultado."</td>";
                                                                 echo "<td style='width:5%;'>".$value['observacao']."</td>";
-                                                                echo '<td style="width:5%;"><a href="delivery.processo.editar.php?excluirItem='.$value['c_produto'].'&orcamento='.$orcamento.'">Excluir</a>';
+                                                                echo '<td style="width:5%; background-color:#ff0000;"><a href="delivery.processo.editar.php?excluirItem='.$value['c_produto'].'&orcamento='.$orcamento.'">Excluir</a>';
                                                                 echo "</tr>";  
                                                             } 
                                                         }
@@ -239,7 +236,20 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
                                                             echo "<tr>";
                                                             echo "<td style='width:10%;'>".$value['codigoEan']."</td>";
                                                             echo "<td style='width:20%;'>".$value['produto']."</td>";
-                                                            echo "<td style='width:5%;'>".$medida."</td>";
+                                                            echo "<td>
+                                                                    <form class='form-pagamento' action='delivery.processo.editar.php' method='GET'>
+                                                                        <div>
+                                                                            <input value=".$orcamento." class='quantidade' type='hidden' name='orcamento' required='required'>
+                                                                            <input value=".$value['codigo']." class='quantidade' type='hidden' name='codigoProduto' required='required'>
+                                                                            <select class='input-pagamento' name='medida' onchange='this.form.submit()'>
+                                                                                <option value=''>".$medida."</option> 
+                                                                                <option value='KG'>KG</option> 
+                                                                                <option value='UN'>UN</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </form>    
+                                                                </td>"; 
+
                                                             echo "<td>
                                                                     <form class='' name='teste' method='GET' action='delivery.processo.editar.php'>   
 
@@ -252,8 +262,18 @@ if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
 
                                                             echo "<td style='width:5%;'>R$".number_format($preco,2,",",".")."</td>";
                                                             echo "<td style='width:5%;'>R$".$resultado."</td>";
-                                                            echo "<td style='width:5%;'>".$observacao."</td>";
-                                                            echo '<td style="width:5%;"><a href="delivery.processo.editar.php?excluirItemSessao='.$value['codigo'].'&orcamento='.$orcamento.'">Excluir</a>';
+
+                                                            echo "<td>
+                                                                    <form class='' name='teste' method='GET' action='delivery.processo.editar.php'>     
+                                                                    
+                                                                        <input value=".$orcamento." class='quantidade' type='hidden' name='orcamento' required='required'>
+                                                                        <input value=".$value['codigo']." class='observacao' type='hidden' min='0'  name='codigoProduto' required='required'>
+                                                                        <input value=".$observacao." class='observacao' type='text' min='0'  name='observacao' onchange='this.form.submit()'>                                                        
+
+                                                                    </form>     
+                                                              </td>";
+
+                                                            echo '<td style="width:5%; background-color:#ff0000;"><a href="delivery.processo.editar.php?excluirItemSessao='.$value['codigo'].'&orcamento='.$orcamento.'">Excluir</a>';
                                                             echo "</tr>";  
                                                         }
                                                     }

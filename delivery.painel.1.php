@@ -18,10 +18,35 @@ if($usuarios->temPermissao('DEL') == false) {
     header("Location:index.php");
     exit;
 }
-
+$data = date('Y-m-d');
 $usuario = $_SESSION['logado'];
 
+$sql = "SELECT a.id, a.orcamento, a.idCliente, nomeCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+    FROM 
+    tb_log_delivery a
+    WHERE 
+    a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA')
+    AND a.usuario = '$usuario'
+    AND a.dataa = '$data'
+    ORDER BY a.id";
+
+if(isset($_GET['data']) && empty($_GET['data']) == false){ 
+
+    $data = addslashes($_GET['data']);
+
+    $sql = "SELECT a.id, a.orcamento, a.idCliente, nomeCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
+    FROM 
+    tb_log_delivery a
+    WHERE 
+    a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA')
+    AND a.usuario = '$usuario'
+    AND a.dataa = '$data'
+    ORDER BY a.id";
+}
+
 //=================================================================================================================
+
+//var_dump($_SESSION);
 
 ?>
 
@@ -56,7 +81,7 @@ $usuario = $_SESSION['logado'];
                             </div>
                             <div class="superiorMenu">                                
                                 <a href="delivery.painel.1.php">Lista</a>                              
-                                <a href="delivery.painel.3.php">Controle</a> 
+                                <!--<a href="delivery.painel.3.php">Controle</a>-->
                                 <a href="delivery.painel.5.php">Status</a>
                                 <a href="sair.php">Sair</a>
                             </div>
@@ -65,10 +90,13 @@ $usuario = $_SESSION['logado'];
                             <div class="conteudo-Geral">
 
                                 <div class="body-conteudo">
-                                    <div class="campo-inserir">
+                                    <div class="campo-inserir delivery1">
                                         <form class="busca-area" name="buscar-form" method="POST" action="delivery.processo.php">
                                             <input class="input-botao" type="submit" name="adicionaLista" value="Criar Lista">
                                         </form>
+                                        <form class="busca-area" name="buscar" method="GET">
+                                            <input class="input-busca-delivery"type="date" value="<?php echo $data;?>" name="data" autocomplete="off" required="required" onchange="this.form.submit()"/>
+                                        </form>   
                                     </div>
                                     
                                     <div class="tabela-titulo">
@@ -84,15 +112,7 @@ $usuario = $_SESSION['logado'];
                                     </div>                                    
                                     <div class="busca-resultado"> 
                                         <table>
-                                            <?php                                 
-
-                                            $sql = "SELECT a.id, a.orcamento, a.idCliente, nomeCliente, a.statuss, DATE_FORMAT(a.dataa,'%d/%m/%Y') as saida_data
-                                            FROM 
-                                            tb_log_delivery a
-                                            WHERE 
-                                            a.statuss IN ('PEDIDO REALIZADO', 'EM ANDAMENTO', 'LIBERADO PARA ENTREGA')
-                                            and a.usuario = '$usuario'
-                                            ORDER BY a.id";
+                                            <?php  
 
                                             $sql = $pdo->query($sql);   
                                             if($sql->rowCount() > 0) {
