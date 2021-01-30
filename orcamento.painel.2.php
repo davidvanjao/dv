@@ -71,7 +71,7 @@ if(isset($_SESSION['blocoNotas'])) {
 //=================================================================================================================
 
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
 //echo $bloco;
 //var_dump($valorGeral);
 
