@@ -5,5 +5,5 @@ backup/
 arquivos/
 projetoBonieky/
 testes/
-conexao.banco.oracle.php
-conexao.banco.php
+
+testeIgnore.php
