@@ -6,4 +6,4 @@ arquivos/
 projetoBonieky/
 testes/
 conexao.banco.php
-
+conexao.banco.oracle.php
