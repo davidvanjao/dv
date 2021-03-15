@@ -19,12 +19,11 @@ if(!empty($_POST['usuario'])) {
 
     } else {
 
-        $erro = "Usuário ou senha incorretos!";
+        echo "<script>alert('Usuário ou senha incorretos!');</script>";
 
     }
 }
 
-//var_dump($_SESSION);
 ?>
 
 
@@ -62,9 +61,6 @@ if(!empty($_POST['usuario'])) {
                                             <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
                                             <input type="submit" name="btnLogin" value="Entrar">
                                         </form>
-                                        <?php 
-                                        echo "<h3 style='color:#fff;'>$erro</h3>";
-                                        ?>
                                     </div>
                                     <div class="login__rightsite">
                                         <div class="itemArea">

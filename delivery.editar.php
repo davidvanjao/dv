@@ -2,6 +2,7 @@
 
 session_start();
 require 'conexao.banco.php';
+require 'conexao.banco.oracle.php';
 require 'classes/usuarios.class.php';
 
 
@@ -20,47 +21,63 @@ if($usuarios->temPermissao('DEL') == false) {
 
 //=========================================VARIAVEIS========================================================================
 
-$codigoCliente = "";
-$nomeCliente = "";
 $valorTotal = "00.00";
-$formaPagamento = "";
 
-//=========================================SE REFERE AO ORCAMENTO========================================================================
 
-if(isset($_GET['orcamento'])) {
-    $orcamento = $_GET['orcamento'];
-}
+//VARIAVEIS DA SESSAO REFERENTE A SOMA TOTAL
+$precoSessao = "";
+$quantidadeSessao = "";    
+$soma2 = "";
 
-//=========================================SE REFERE AO CLIENTE========================================================================
 
-if(isset($_GET['orcamento'])) {
-    
-    $sql = "SELECT a.id, a.nome, a.idEndereco, b.logradouro, a.numero, b.cidadeEstado, a.telefone, b.cidadeEstado, c.orcamento, c.pagamento, d.usuario, DATE_FORMAT(c.dataPedido,'%d/%m/%Y %H:%i') as saida_data
-    from tb_cliente a, tb_endereco b, tb_log_delivery c, tb_usuarios d
-    where c.orcamento = '$orcamento'
-    and c.idCliente = a.id
-    and c.usuario = d.id
-    and c.idEndereco = b.id";
+//PUXA DADOS DO CABECALHO
+if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
 
-    $sql = $pdo->query($sql);
+    $orcamento = addslashes($_GET['orcamento']);
 
-    if($sql->rowCount() > 0) {        
+    $sql = "SELECT a.orcamento, a.pagamento, a.nomeCliente, b.quantidade, b.valor_total
+    FROM 
+    tb_log_delivery a,
+    tb_orcamento b
+    WHERE 
+    a.orcamento = '$orcamento'
+    AND a.orcamento = b.orcamento
+    ORDER BY a.id";
 
-        foreach($sql->fetchAll() as $delivery) { 
-            $idNome = $delivery['id'];
-            $nome = $delivery['nome'];
-            $orcamento = $delivery['orcamento'];
-            $dataPedido = $delivery['saida_data'];  
-            $usuario  = explode(".", $delivery['usuario']);
-            $pagamento = $delivery['pagamento']; 
+    $sql = $pdo->query($sql);   
+    if($sql->rowCount() > 0) {
 
-        }   
-                
+        foreach($sql->fetchAll() as $key=>$dados) {
+
+            $formaPagamento = $dados['pagamento'];
+            $nomeCliente = $dados['nomeCliente'];
+
+            $quantidade = $dados['quantidade'];
+            $valor = $dados['valor_total'];
+
+            $soma = $valor * $quantidade;
+
+            $valorTotal += $soma;
+
+        }
     }
-}
-$total = "";
-$valorTotal = floatval("00,00");
 
+    if(!empty($_SESSION['lista'])) {
+
+        foreach($_SESSION['lista'] as $key=>$value) {
+
+            $precoSessao = $value['preco'];
+            $quantidadeSessao = $value['quantidade'];    
+            
+            $soma2 = $precoSessao * $quantidadeSessao;
+
+            $valorTotal += $soma2; 
+
+        }
+    }  
+}
+
+//var_dump($_SESSION);
 
 
 ?>
@@ -69,7 +86,7 @@ $valorTotal = floatval("00,00");
 <html lang="pt-br">
     <head>
         <meta charset="utf-8">
-        <title>Edição de pedido</title>
+        <title>Tela de Pedido</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/delivery.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,7 +108,7 @@ $valorTotal = floatval("00,00");
                                 <img src="">
                             </div>
                             <div class="superiorMenu">
-                                <a href="delivery.painel.1.php">Voltar</a>
+                            <a href="delivery.processo.editar.php?sairEditar">Voltar</a>
                             </div>
                         </header>
                         <section class="page">
@@ -104,11 +121,8 @@ $valorTotal = floatval("00,00");
                                             <div class="form-cliente-caixa">
                                                 <form class="form-cliente" name="buscar-form" method="POST">
                                                     <div>
-                                                        <input class="input5" type="hidden" min='0' autocomplete="off" name="numero" value="<?php echo $idNome ?>" readonly="readonly"/>
-                                                    </div> 
-                                                    <div>
                                                         <label>Nome:</label></br>
-                                                        <input class="input-nome" type="text" autocomplete="off" name="nome" placeholder="" value="<?php echo $nome ?>" readonly="readonly"/>    
+                                                        <input class="input-nome" type="text" name="nome" value="<?php echo $nomeCliente?>" readonly="readonly"/>    
                                                     </div> 
                                                 </form>
                                             </div>
@@ -117,12 +131,7 @@ $valorTotal = floatval("00,00");
                                                 <form class="form-pagamento" action='delivery.processo.php' method='POST'>
                                                     <div>
                                                         <label>F. Pagamento</label></br>
-                                                        <select class="input-pagamento" name="formaPagamento" onchange="this.form.submit()">
-                                                            <option value=""><?php echo $pagamento?></option> 
-                                                            <option value="Dinheiro">Dinheiro</option> 
-                                                            <option value="Cartão">Cartão</option>
-                                                            <option value="Cheque">Cheque</option>
-                                                        </select>
+                                                        <input class="input-nome" type="text" name="nome" value="<?php echo $formaPagamento?>" readonly="readonly"/>
                                                     </div>
                                                 </form>
                                             </div>
@@ -143,110 +152,131 @@ $valorTotal = floatval("00,00");
 
                                         <hr>
 
-                                        <div class="formulario-controle">     
-
+                                        <div class="formulario-controle">    
                                             <div class="bottoens">
-                                                <form class="busca-area" name="buscar-form" method="POST" action="delivery.produto.pesquisa.php">
-                                                    <input type="submit" name="adicionarProduto" value="Incluir Produto">
+                                                <form class="busca-area" name="buscar-form" method="GET" action="delivery.produto.pesquisa.php">
+                                                    <input type="hidden" name="orcamento" value="<?php echo $orcamento ?>">
+                                                    <input type="submit" name="adicionarEditar" value="Incluir Produto">
                                                 </form>   
 
-                                                <form class="busca-area" name="buscar-form" method="POST" action="delivery.processo.php">
-
-                                                    <input type="submit" name="salvarLista" value="Salvar Lista">
-
+                                                <form class="busca-area" name="buscar-form" method="GET" action="delivery.processo.editar.php">
+                                                    <input type="hidden" name="orcamento" value="<?php echo $orcamento ?>">
+                                                    <input type="submit" name="atualizar" value="Atualizar">
                                                 </form>
 
                                             </div>
-
                                         </div>
 
                                             
                                     </div>
                                     <div class="tabela-titulo">
                                         <table>
-                                                                                       
+                                            <tr>
+                                                <th style="width:5%;">Código</th>
+                                                <th style="width:40%;">Produto</th>
+                                                <th style="width:5%;">Med</th>
+                                                <th style="width:5%;">Qtd</th>
+                                                <th style="width:5%;">Preco</th>
+                                                <th style="width:5%;">Total</th>     
+                                                <th style="width:5%;">Obs</th>
+                                                <th style="width:5%;">Ações</th>
+                                            </tr>                                                                                        
                                         </table> 
                                     </div>
                                     <div class="corpo-lista">        
 
                                         <div class="busca-resultado largura"> 
                                             <table>   
-                                                <tr>
-                                                    <th style="width:5%;">Código</th>
-                                                    <th style="width:40%;">Produto</th>
-                                                    <th style="width:5%;">Med</th>
-                                                    <th style="width:5%;">Qtd</th>
-                                                    <th style="width:5%;">Preco</th>
-                                                    <th style="width:5%;">Total</th>                                                
-                                                    <th style="width:5%;">Est</th>
-                                                    <th style="width:5%;">Obs</th>
-                                                    <th style="width:10%;" >Ações</th>
-                                                </tr> 
-                                                <?php
+                                                
+                                                <?php                                                    
+                                                    if(isset($_GET['orcamento']) && !empty($_GET['orcamento'])) {
 
-                                                    if(!empty($orcamento)) {
+                                                        $sql = "SELECT id, orcamento, ean, produto, c_produto, medida, quantidade, valor_total, observacao
+                                                        FROM 
+                                                        tb_orcamento
+                                                        WHERE 
+                                                        orcamento = '$orcamento'
+                                                        ORDER BY produto";
+
+                                                        $sql = $pdo->query($sql); 
                                                         
-                                                        $sql = "SELECT d.c_produto, e.d_produto, d.quantidade, d.medida, e.preco, e.estoque, d.observacao
-                                                        from tb_log_delivery c, tb_orcamento d, tb_produto e
-                                                        where c.orcamento = '$orcamento'
-                                                        and c.orcamento = d.orcamento
-                                                        and d.c_produto = e.c_produto";
-
-                                                        $sql = $pdo->query($sql);
-
-                                                        if($sql->rowCount() > 0) {   
+                                                        if($sql->rowCount() > 0) {
 
                                                             foreach($sql->fetchAll() as $key=>$value) {
 
-                                                                $preco = $value['preco'];
+                                                                $preco = $value['valor_total'];
                                                                 $quantidade = $value['quantidade'];
-                                                                $observacao = $value['observacao'];
                                                                 $medida = $value['medida'];
-                                                                $resultado = number_format($preco*$quantidade,2,",",".");
+                                                                $resultado = number_format($preco*$quantidade,2,",",".");                                            
 
                                                                 echo "<tr>";
-                                                                echo "<td>".$value['c_produto']."</td>";
-                                                                echo "<td>".$value['d_produto']."</td>";
-                                                                echo "<td>
-                                                                            <form class='form-pagamento' action='delivery.processo.php' method='GET'>
-                                                                                <div>
-                                                                                    <input value=".$value['c_produto']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
-                                                                                    <select class='input-pagamento' name='medida' onchange='this.form.submit()'>
-                                                                                        <option value=''>".$medida."</option> 
-                                                                                        <option value='Kg'>Kg</option> 
-                                                                                        <option value='Un'>Un</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </form>    
-                                                                      </td>"; 
-
-                                                                echo "<td>
-                                                                        <form class='' name='teste' method='GET' action='delivery.processo.php'>      
-
-                                                                            <input value=".$value['c_produto']." class='quantidade' type='hidden' min='0'  name='produto' required='required'>
-                                                                            <input value=".$quantidade." class='quantidade' type='number' min='0'  name='quantidade' required='required' onchange='this.form.submit()'>                                                        
-
-                                                                        </form>     
-                                                                    </td>";  
-                                                                                                                         
-                                                                echo "<td>R$".number_format($preco,2,",",".")."</td>";
-                                                                echo "<td>R$".$resultado."</td>";
-                                                                echo "<td>".$value['estoque']."</td>"; 
-
-                                                                echo "<td>
-                                                                            <form class='' name='teste' method='GET' action='delivery.processo.php'>      
-
-                                                                                <input value=".$value['c_produto']." class='observacao' type='hidden' min='0'  name='produto' required='required'>
-                                                                                <input value=".$observacao." class='observacao' type='text' min='0'  name='observacao' onchange='this.form.submit()'>                                                        
-
-                                                                            </form>     
-                                                                    </td>";
-
-                                                                echo '<td><a href="delivery.processo.php?Editarexcluir='.$value['c_produto'].'&orcamento='.$orcamento.'">Excluir</a>';
+                                                                echo "<td style='width:5%;'>".$value['ean']."</td>";
+                                                                echo "<td style='width:40%;'>".$value['produto']."</td>";
+                                                                echo "<td style='width:5%;'>".$medida."</td>";
+                                                                echo "<td style='width:5%;'>".$quantidade."</td>";                                                     
+                                                                echo "<td style='width:5%;'>R$".number_format($preco,2,",",".")."</td>";
+                                                                echo "<td style='width:5%;'>R$".$resultado."</td>";
+                                                                echo "<td style='width:5%;'>".$value['observacao']."</td>";
+                                                                echo '<td style="width:5%; background-color:#ff0000;"><a href="delivery.processo.editar.php?excluirItem='.$value['c_produto'].'&orcamento='.$orcamento.'">Excluir</a>';
                                                                 echo "</tr>";  
-                                                            }
+                                                            } 
                                                         }
-                                                    } 
+                                                    }   
+
+                                                    if(!empty($_SESSION['lista'])) {
+
+                                                        foreach($_SESSION['lista'] as $key=>$value) {
+
+                                                            $preco = $value['preco'];
+                                                            $quantidade = $value['quantidade'];
+                                                            $observacao = $value['observacao'];
+                                                            $medida = $value['medida'];
+                                                            $resultado = number_format($preco*$quantidade,2,",",".");                                            
+
+                                                            echo "<tr>";
+                                                            echo "<td style='width:10%;'>".$value['codigoEan']."</td>";
+                                                            echo "<td style='width:20%;'>".$value['produto']."</td>";
+                                                            echo "<td>
+                                                                    <form class='form-pagamento' action='delivery.processo.editar.php' method='GET'>
+                                                                        <div>
+                                                                            <input value=".$orcamento." class='quantidade' type='hidden' name='orcamento' required='required'>
+                                                                            <input value=".$value['codigo']." class='quantidade' type='hidden' name='codigoProduto' required='required'>
+                                                                            <select class='input-pagamento' name='medida' onchange='this.form.submit()'>
+                                                                                <option value=''>".$medida."</option> 
+                                                                                <option value='KG'>KG</option> 
+                                                                                <option value='UN'>UN</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </form>    
+                                                                </td>"; 
+
+                                                            echo "<td>
+                                                                    <form class='' name='teste' method='GET' action='delivery.processo.editar.php'>   
+
+                                                                        <input value=".$orcamento." class='quantidade' type='hidden' name='orcamento' required='required'>   
+                                                                        <input value=".$value['codigo']." class='quantidade' type='hidden' name='codigoProduto' required='required'>
+                                                                        <input value=".$quantidade." class='quantidade' type='number' min='0' name='quantidade' required='required' onchange='this.form.submit()'>                                                        
+
+                                                                    </form>     
+                                                                </td>"; 
+
+                                                            echo "<td style='width:5%;'>R$".number_format($preco,2,",",".")."</td>";
+                                                            echo "<td style='width:5%;'>R$".$resultado."</td>";
+
+                                                            echo "<td>
+                                                                    <form class='' name='teste' method='GET' action='delivery.processo.editar.php'>     
+                                                                    
+                                                                        <input value=".$orcamento." class='quantidade' type='hidden' name='orcamento' required='required'>
+                                                                        <input value=".$value['codigo']." class='observacao' type='hidden' min='0'  name='codigoProduto' required='required'>
+                                                                        <input value=".$observacao." class='observacao' type='text' min='0'  name='observacao' onchange='this.form.submit()'>                                                        
+
+                                                                    </form>     
+                                                              </td>";
+
+                                                            echo '<td style="width:5%; background-color:#ff0000;"><a href="delivery.processo.editar.php?excluirItemSessao='.$value['codigo'].'&orcamento='.$orcamento.'">Excluir</a>';
+                                                            echo "</tr>";  
+                                                        }
+                                                    }
                                                 ?>                                        
                                             </table>
                                         </div>

@@ -68,11 +68,37 @@ if(isset($_GET['codigoProduto']) && !empty($_GET['orcamento'])) {
             
                 $_SESSION['lista'][$produto]['quantidade'] = $quantidade;
 
-                header("Location:/orcamento.editar.php?orcamento=$orcamento");              
+                header("Location:/delivery.editar.php?orcamento=$orcamento");
+                exit;              
             
             }     
 
-            header("Location:/orcamento.editar.php?orcamento=$orcamento"); 
+            if(isset($_GET['medida'])) {
+            
+                $produto = $_GET['codigoProduto'];
+                $medida = addslashes($_GET['medida']);
+
+                $_SESSION['lista'][$produto]['medida'] = $medida;
+
+                header("Location:/delivery.editar.php?orcamento=$orcamento");  
+                exit;
+                     
+            
+            }  
+
+            if(isset($_GET['observacao'])) {
+
+                $produto = $_GET['codigoProduto'];
+                $observacao = $_GET['observacao'];                       
+            
+                $_SESSION['lista'][$produto]['observacao'] = $observacao;                
+            
+                header("Location:/delivery.editar.php?orcamento=$orcamento");   
+                exit;   
+
+            } 
+
+            header("Location:/delivery.editar.php?orcamento=$orcamento"); 
             
         } else {
 
@@ -111,7 +137,7 @@ if(isset($_GET['codigoProduto']) && !empty($_GET['orcamento'])) {
                 'codigoEan'=>$value['CODACESSO'], 
                 'observacao'=>$observacao);
 
-            header("Location:/orcamento.editar.php?orcamento=$orcamento");
+            header("Location:/delivery.editar.php?orcamento=$orcamento");
 
         }  
         
@@ -138,10 +164,12 @@ if(isset($_GET['atualizar'])) {
             $estoque = $value['estoque'];
             $codigo = $value['codigo'];
             $ean = $value['codigoEan'];
+            $observacao = $value['observacao'];
+            $pedido = 'N';
 
 
             $sql = $pdo->prepare("INSERT INTO tb_orcamento SET dataa = NOW(), medida = :medida, quantidade = :quantidade, c_gondola = :c_gondola, produto = :produto,
-            valor_total = :valor_total, estoque = :estoque, c_produto = :c_produto, ean = :ean, usuario = :usuario, orcamento = :orcamento");
+            valor_total = :valor_total, estoque = :estoque, c_produto = :c_produto, ean = :ean, usuario = :usuario, orcamento = :orcamento, observacao = :observacao, pedido = :pedido");
 
             $sql->bindValue(":medida", $medida);
             $sql->bindValue(":quantidade",$quantidade);
@@ -153,6 +181,8 @@ if(isset($_GET['atualizar'])) {
             $sql->bindValue(":ean", $ean);
             $sql->bindValue(":usuario", $usuario);
             $sql->bindValue(":orcamento", $orcamento);
+            $sql->bindValue(":observacao", $observacao);
+            $sql->bindValue(":pedido", $pedido);
             $sql->execute(); 
 
  
@@ -163,10 +193,13 @@ if(isset($_GET['atualizar'])) {
             unset( $_SESSION['orcamento'] );    
             unset( $_SESSION['formaPagamento'] ); 
             unset( $_SESSION['blocoNotas']); 
+            unset( $_SESSION['dataEntrega']);
 
-            header("Location:/orcamento.painel.1.php");
+            header("Location:/delivery.painel.1.php");
 
     }
+
+    header("Location:/delivery.painel.1.php");
     
 
 }
@@ -198,7 +231,7 @@ if(isset($_GET['excluirItem'])) {
     $sql->bindValue(":c_produto", $produto);
     $sql->execute();   
  
-    header("Location:/orcamento.editar.php?orcamento=$orcamento"); 
+    header("Location:/delivery.editar.php?orcamento=$orcamento"); 
     exit;
 
 }
@@ -213,7 +246,7 @@ if(isset($_GET['excluirItemSessao'])) {
     if(isset($_SESSION['lista'])){
 
         unset($_SESSION['lista'][$produto]);
-        header("Location:/orcamento.editar.php?orcamento=$orcamento"); 
+        header("Location:/delivery.editar.php?orcamento=$orcamento"); 
         exit;        
     }
 }

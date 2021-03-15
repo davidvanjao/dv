@@ -84,7 +84,7 @@ $seq = "1";
                             </div>
                             <div class="superiorMenu">
                                 <a href="delivery.painel.1.php">Lista</a>                              
-                                <a href="delivery.painel.3.php">Controle</a> 
+                                <!--<a href="delivery.painel.3.php">Controle</a>-->
                                 <a href="delivery.painel.5.php">Status</a>
                                 <a href="sair.php">Sair</a>
                             </div>

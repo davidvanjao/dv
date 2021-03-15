@@ -20,6 +20,31 @@ class Usuarios {
         if($sql->rowCount() > 0) {
             $sql = $sql->fetch();
 
+            $_SESSION['logado'] = $sql['id'];
+            $_SESSION['h_login'] = date('Y-m-d H:i:s', strtotime('-1 hour', strtotime(date('Y-m-d H:i:s'))));   
+            
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+        
+    }
+    //DESATIVADO AS FUNCOES DE VERIFICAR SE O USUARIO ESTA ONLINE
+
+    /*public function fazerLogin($usuario, $senha) {
+
+        $sql = "SELECT * FROM tb_usuarios WHERE usuario = :usuario AND senha = :senha";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindValue(":usuario", $usuario);
+        $sql->bindValue(":senha", $senha);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $sql = $sql->fetch();
+
             if($this->existeUsuario($sql['id'])) {
 
                 if($this->verificarUsuarioOline($sql['id'])) {
@@ -53,9 +78,9 @@ class Usuarios {
         }
 
         
-    }
+    }*/
 
-    //verificar se o usuario está online
+    /*//verificar se o usuario está online
     public function verificarUsuarioOline($usuario) {
 
         $sql = "SELECT * FROM tb_log_sessao WHERE usuario = :usuario ORDER BY data_login DESC LIMIT 1";
@@ -72,13 +97,14 @@ class Usuarios {
 
             } else {
 
-                echo "<script>alert('Já existe um usuário com esse login conectado!');</script>";
+                $this->logSessaoSair($usuario, $sql['data_login']);
+                //echo "<script>alert('Já existe um usuário com esse login conectado!');</script>";
                 
             }
         }
-    }
+    }*/
 
-    //existe usuario na tabela log_sessao
+    /*//existe usuario na tabela log_sessao
     public function existeUsuario($usuario) {
 
         $sql = "SELECT * FROM tb_log_sessao WHERE usuario = :usuario";
@@ -94,10 +120,10 @@ class Usuarios {
 
             return false;
         }
-    }
+    }*/
 
 
-    //usada para alimentar a tabela log_sessao.
+    /*//usada para alimentar a tabela log_sessao.
     public function logSessao($usuario) {
 
         $sql = "INSERT INTO tb_log_sessao SET usuario = :usuario, data_login = NOW(), status = 'S'";
@@ -105,9 +131,9 @@ class Usuarios {
         $sql->bindValue(":usuario", $usuario);
         $sql->execute();
 
-    }
+    }*/
 
-    //usada para sair e alimentar a tabela log_sessao.
+    /*//usada para sair e alimentar a tabela log_sessao.
     public function logSessaoSair($usuario, $data_login) {
 
         $sql = "UPDATE tb_log_sessao SET data_exit = NOW(), status = 'N' WHERE usuario = :usuario AND data_login = :data_login";
@@ -117,7 +143,7 @@ class Usuarios {
         $sql->execute();
 
         return true;
-    }
+    }*/
     
 
     public function setUsuario($id) {

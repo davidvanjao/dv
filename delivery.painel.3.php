@@ -125,22 +125,7 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                 if($sql->rowCount() > 0) {
                                                     foreach($sql->fetchAll() as $delivery) {
 
-                                                        $orcamento = $delivery['orcamento'];
-
-                                                        $codCliente = $delivery['idCliente'];
-
-                                                        if($delivery['statuss']=="PEDIDO REALIZADO"){
-                                                            $cor="";
-                                                        }
-                                                        if($delivery['statuss']=="EM ANDAMENTO"){
-                                                            $cor="#ff0000";
-                                                        }
-                                                        if($delivery['statuss']=="LIBERADO PARA ENTREGA"){
-                                                            $cor="#ffa500";
-                                                        }
-                                                        if($delivery['statuss']=="SAIU PARA ENTREGA"){
-                                                            $cor="#008000";
-                                                        }     
+                                                        $orcamento = $delivery['orcamento'];   
                                                         
                                                         echo "<tr>";                                                        
                                                         echo "<td style='width:3%;'><strong>".str_pad($delivery['orcamento'], 4, 0, STR_PAD_LEFT)."</strong></td>";
@@ -185,9 +170,9 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                             echo "<td style='width:5%;'>-</td>";
                                                         }
 
-                                                        echo "<td style='background-color:$cor; width:5%;'>".$delivery['statuss']."</td>";
+                                                        echo "<td style='width:5%;'>".$delivery['statuss']."</td>";
                                                         echo "<td style='width:5%;'><strong>".$delivery['nome']."</strong></td>";   
-                                                        echo '<td style="width:3%;">';
+                                                        echo '<td style="width:3%; background-color:#ff0000;">';
                                                             echo '<div class="teste">';                                                            
 
                                                                 if($delivery['statuss'] == 'PEDIDO REALIZADO') {
@@ -197,7 +182,6 @@ if(isset($_GET['data']) && empty($_GET['data']) == false){
                                                                 }
                                                                 
                                                                 if($delivery['statuss'] == 'EM ANDAMENTO') {
-
 
                                                                     echo '<a class="liberar" onclick="return funcao1()" href="delivery.log.php?orcamento='.$orcamento.'">Liberar</a>';
 
